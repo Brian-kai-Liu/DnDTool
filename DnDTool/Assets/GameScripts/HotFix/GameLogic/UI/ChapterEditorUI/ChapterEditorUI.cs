@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using TEngine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -40,6 +41,7 @@ namespace GameLogic
         private const float GridLineThickness = 4f;
         private const float GridFrameThickness = 4f;
         private const float GridSelectionClickThreshold = 10f;
+        private const float GridEventMarkerSize = 18f;
         private const string ChapterEditorSaveFileName = "chapter_editor_state.json";
 
         private static readonly ChapterCreatureStaticCardData[] StaticCreatureCards =
@@ -63,8 +65,11 @@ namespace GameLogic
         private Canvas m_canvas = null!;
         private RectTransform m_addChapterButtonRect = null!;
         private Image m_addChapterButtonImage = null!;
+        private RectTransform m_rectChapterListItemTemplate = null!;
         private TMP_Text m_textAddMapHint = null!;
         private TMP_Text m_textUploadMapButton = null!;
+        private RectTransform m_btnOpenCheckPopupRect = null!;
+        private RectTransform m_btnDeleteGridEventRect = null!;
         private RectTransform m_btnUploadMapRect = null!;
         private RectTransform m_btnMapZoomToggleRect = null!;
         private RectTransform m_btnGridZoomToggleRect = null!;
@@ -75,11 +80,19 @@ namespace GameLogic
         private Image m_imgMapZoomToggle = null!;
         private Image m_imgGridZoomToggle = null!;
         private Image m_imgSaveChapterState = null!;
+        private Image m_imgDeleteGridEvent = null!;
         private Image m_imgDifficultTerrain = null!;
         private Image m_imgImpassableTerrain = null!;
         private Image m_imgClearTerrain = null!;
         private RectTransform m_rectMapSurface = null!;
         private GameObject m_goCreatureBrowserRoot = null!;
+        private Image m_imgCreatureBrowserRootBackground = null!;
+        private Image m_imgCreatureListPanelBackground = null!;
+        private RectTransform m_rectCreatureCardContainer = null!;
+        private RectTransform m_rectCreatureCardTemplate = null!;
+        private Image m_imgCreatureDetailPanelBackground = null!;
+        private RectTransform m_rectCreatureDetailTemplate = null!;
+        private CanvasGroup m_saveFeedbackCanvasGroup = null!;
         private readonly List<ChapterCreatureCardWidget> m_creatureCardWidgets = new List<ChapterCreatureCardWidget>();
         private readonly List<ChapterCreatureStaticCardData> m_creatureSeedCards = new List<ChapterCreatureStaticCardData>();
         private readonly List<ChapterCreatureStaticCardData> m_creatureRuntimeCards = new List<ChapterCreatureStaticCardData>();
@@ -113,6 +126,7 @@ namespace GameLogic
         private readonly List<RectTransform> m_verticalGridLines = new List<RectTransform>();
         private readonly List<RectTransform> m_horizontalGridLines = new List<RectTransform>();
         private readonly List<Image> m_gridSelectionHighlights = new List<Image>();
+        private readonly List<Image> m_gridEventMarkers = new List<Image>();
         private readonly List<RaycastResult> m_creatureBoardPointerHits = new List<RaycastResult>();
         private RectTransform m_verticalGridLineTemplate = null!;
         private RectTransform m_horizontalGridLineTemplate = null!;
@@ -131,11 +145,14 @@ namespace GameLogic
         private bool m_isDraggingGrid;
         private bool m_isDraggingLockedMapGrid;
         private bool m_isPendingGridCellSelection;
+        private bool m_isPendingGridCellEventPopup;
         private Vector2 m_lastMapDragLocalPoint;
         private Vector2 m_lastGridDragLocalPoint;
         private Vector2 m_lastLockedMapGridDragLocalPoint;
         private Vector2 m_gridCellSelectionMouseDownLocalPoint;
+        private Vector2 m_gridCellEventPopupMouseDownLocalPoint;
         private ChapterGridCoordinate m_gridCellSelectionMouseDownCoordinate = ChapterGridCoordinate.Zero;
+        private ChapterGridCoordinate m_gridCellEventPopupMouseDownCoordinate = ChapterGridCoordinate.Zero;
 
         protected override void OnCreate()
         {
@@ -171,6 +188,56 @@ namespace GameLogic
             GameModule.UI.ShowUIAsync<CreateModuleBasicInfoUI>();
         }
 
+        private partial void OnClickUploadMapBtn()
+        {
+            OnClickUploadMap();
+        }
+
+        private partial void OnClickMapZoomToggleBtn()
+        {
+            OnClickMapZoomToggle();
+        }
+
+        private partial void OnClickGridZoomToggleBtn()
+        {
+            OnClickGridZoomToggle();
+        }
+
+        private partial void OnClickSaveChapterStateBtn()
+        {
+            OnClickSaveChapterState();
+        }
+
+        private partial void OnClickDifficultTerrainBtn()
+        {
+            OnClickDifficultTerrain();
+        }
+
+        private partial void OnClickImpassableTerrainBtn()
+        {
+            OnClickImpassableTerrain();
+        }
+
+        private partial void OnClickClearTerrainBtn()
+        {
+            OnClickClearTerrain();
+        }
+
+        private partial void OnClickDeleteGridEventBtn()
+        {
+            OnClickDeleteGridEvent();
+        }
+
+        private partial void OnClickOpenCheckPopupBtn()
+        {
+            OpenChapterEventPopup();
+        }
+
+        private partial void OnClickOpenCreatureEntryPopupBtn()
+        {
+            OpenCreatureEntryPopup();
+        }
+
         #endregion
 
         protected override void OnDestroy()
@@ -196,6 +263,15 @@ namespace GameLogic
 
         protected override void OnUpdate()
         {
+            if (PopupWindowInputBlocker.ShouldBlockUnderlyingPointerInput())
+            {
+                m_isDraggingMap = false;
+                m_isDraggingGrid = false;
+                m_isDraggingLockedMapGrid = false;
+                CancelPendingGridCellSelection();
+                return;
+            }
+
             HandleCreatureBoardPointerProbe();
 
             if (m_rectMapPreview == null || !m_rectMapPreview.gameObject.activeInHierarchy)
@@ -308,6 +384,10 @@ namespace GameLogic
 
         private void SetupChapterList()
         {
+            m_rectChapterListItemTemplate = m_itemChapterListItemTemplate != null
+                ? m_itemChapterListItemTemplate.GetComponent<RectTransform>()
+                : null!;
+
             if (m_rectChapterListItemTemplate != null)
             {
                 m_rectChapterListItemTemplate.gameObject.SetActive(false);
@@ -775,6 +855,27 @@ namespace GameLogic
         {
             m_rectMapSurface = m_imgMapSurface != null ? m_imgMapSurface.rectTransform : null!;
             m_goCreatureBrowserRoot = m_rectCreatureBrowserRoot != null ? m_rectCreatureBrowserRoot.gameObject : null!;
+            m_rectCreatureCardContainer = m_gridCreatureCardContainer != null
+                ? m_gridCreatureCardContainer.GetComponent<RectTransform>()
+                : null!;
+            m_rectCreatureCardTemplate = m_itemCreatureCardTemplate != null
+                ? m_itemCreatureCardTemplate.GetComponent<RectTransform>()
+                : null!;
+            m_rectCreatureDetailTemplate = m_itemCreatureDetailTemplate != null
+                ? m_itemCreatureDetailTemplate.GetComponent<RectTransform>()
+                : null!;
+            m_imgCreatureBrowserRootBackground = m_rectCreatureBrowserRoot != null
+                ? m_rectCreatureBrowserRoot.GetComponent<Image>()
+                : null!;
+            m_imgCreatureListPanelBackground = m_rectCreatureListPanel != null
+                ? m_rectCreatureListPanel.GetComponent<Image>()
+                : null!;
+            m_imgCreatureDetailPanelBackground = m_rectCreatureDetailPanel != null
+                ? m_rectCreatureDetailPanel.GetComponent<Image>()
+                : null!;
+            m_saveFeedbackCanvasGroup = m_tmpSaveFeedback != null
+                ? m_tmpSaveFeedback.GetComponent<CanvasGroup>()
+                : null!;
 
             EnsureMapGridSelectionOverlay();
             CacheMapGridLines();
@@ -792,6 +893,17 @@ namespace GameLogic
             {
                 m_btnUploadMapRect = m_btnUploadMap.GetComponent<RectTransform>();
                 m_textUploadMapButton = m_btnUploadMap.GetComponentInChildren<TMP_Text>(true);
+            }
+
+            if (m_btnOpenCheckPopup != null)
+            {
+                m_btnOpenCheckPopupRect = m_btnOpenCheckPopup.GetComponent<RectTransform>();
+            }
+
+            if (m_btnDeleteGridEvent != null)
+            {
+                m_btnDeleteGridEventRect = m_btnDeleteGridEvent.GetComponent<RectTransform>();
+                m_imgDeleteGridEvent = m_btnDeleteGridEvent.GetComponent<Image>();
             }
 
             EnsureMapZoomToggleButton();
@@ -862,11 +974,7 @@ namespace GameLogic
                 m_tmpInputDmNote.text = hasSelectedChapter ? selectedChapter.DmNote ?? string.Empty : string.Empty;
             }
 
-            if (m_btnOpenCheckPopup != null)
-            {
-                m_btnOpenCheckPopup.gameObject.SetActive(hasSelectedChapter);
-                m_btnOpenCheckPopup.interactable = hasSelectedChapter && !m_isDraggingChapter;
-            }
+            UpdateGridEventActionButtons();
 
             if (m_textTerrainTag != null)
             {
@@ -1068,11 +1176,151 @@ namespace GameLogic
                 return;
             }
 
+            if (!TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
+            {
+                ShowSaveFeedbackAsync("请先选中至少一个网格后再添加事件", false).Forget();
+                return;
+            }
+
+            ChapterGridEventData existingEventData = null;
+            if (coordinates.Count == 1)
+            {
+                ChapterGridCellCollectionUtility.TryGetEventData(selectedChapter.GridCells, coordinates[0], out existingEventData);
+            }
+
+            OpenChapterEventPopup(selectedChapter, coordinates, existingEventData);
+        }
+
+        private void OpenChapterEventPopup(ChapterListItemData chapter, List<ChapterGridCoordinate> coordinates, ChapterGridEventData existingEventData)
+        {
+            if (chapter == null || coordinates == null || coordinates.Count <= 0)
+            {
+                return;
+            }
+
             GameModule.UI.ShowUIAsync<ChapterEventPopupUI>(new ChapterEventPopupRequest
             {
-                ChapterId = selectedChapter.Id,
-                ChapterName = selectedChapter.Name ?? string.Empty
+                ChapterId = chapter.Id,
+                ChapterName = chapter.Name ?? string.Empty,
+                GridCoordinate = coordinates[0],
+                GridCoordinates = new List<ChapterGridCoordinate>(coordinates),
+                ExistingEventData = ChapterGridCellCollectionUtility.CloneEventData(existingEventData),
+                OnConfirm = eventData => OnChapterGridEventConfirmed(chapter.Id, coordinates, eventData),
             });
+        }
+
+        private void OnClickDeleteGridEvent()
+        {
+            if (m_isDraggingChapter)
+            {
+                return;
+            }
+
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            if (selectedChapter == null)
+            {
+                return;
+            }
+
+            if (!TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
+            {
+                ShowSaveFeedbackAsync("请先选中至少一个网格后再删除事件", false).Forget();
+                return;
+            }
+
+            OnChapterGridEventDeleted(selectedChapter.Id, coordinates);
+        }
+
+        private void OnChapterGridEventConfirmed(int chapterId, List<ChapterGridCoordinate> coordinates, ChapterGridEventData eventData)
+        {
+            if (eventData == null || coordinates == null || coordinates.Count <= 0)
+            {
+                return;
+            }
+
+            int chapterIndex = GetChapterIndexById(chapterId);
+            if (chapterIndex < 0 || chapterIndex >= m_chapterItems.Count)
+            {
+                return;
+            }
+
+            ChapterListItemData chapter = m_chapterItems[chapterIndex];
+            chapter.GridCells ??= new List<ChapterGridCellData>();
+
+            for (int index = 0; index < coordinates.Count; index++)
+            {
+                ChapterGridCellCollectionUtility.UpsertEventData(chapter.GridCells, coordinates[index], eventData);
+            }
+
+            ChapterGridCellCollectionUtility.ClearSelectedMarks(chapter.GridCells, coordinates);
+
+            if (chapterId == m_selectedChapterId)
+            {
+                RefreshGridSelectionHighlights();
+            }
+
+            SaveChapterEditorState();
+            ShowSaveFeedbackAsync(coordinates.Count > 1 ? $"已为 {coordinates.Count} 个网格记录事件" : "事件已记录", true).Forget();
+        }
+
+        private void OnChapterGridEventDeleted(int chapterId, List<ChapterGridCoordinate> coordinates)
+        {
+            if (coordinates == null || coordinates.Count <= 0)
+            {
+                return;
+            }
+
+            int chapterIndex = GetChapterIndexById(chapterId);
+            if (chapterIndex < 0 || chapterIndex >= m_chapterItems.Count)
+            {
+                return;
+            }
+
+            ChapterListItemData chapter = m_chapterItems[chapterIndex];
+            chapter.GridCells ??= new List<ChapterGridCellData>();
+
+            int removedCount = 0;
+            for (int index = 0; index < coordinates.Count; index++)
+            {
+                if (ChapterGridCellCollectionUtility.RemoveEventData(chapter.GridCells, coordinates[index]))
+                {
+                    removedCount++;
+                }
+            }
+
+            if (removedCount <= 0)
+            {
+                ShowSaveFeedbackAsync("目标网格没有事件可删除", false).Forget();
+                return;
+            }
+
+            ChapterGridCellCollectionUtility.ClearSelectedMarks(chapter.GridCells, coordinates);
+
+            if (chapterId == m_selectedChapterId)
+            {
+                RefreshGridSelectionHighlights();
+            }
+
+            SaveChapterEditorState();
+            ShowSaveFeedbackAsync(removedCount > 1 ? $"已移除 {removedCount} 个网格的事件" : "事件已移除", true).Forget();
+        }
+
+        private static bool HasGridEventAtAnyCoordinate(List<ChapterGridCellData> gridCells, List<ChapterGridCoordinate> coordinates)
+        {
+            if (gridCells == null || coordinates == null)
+            {
+                return false;
+            }
+
+            for (int index = 0; index < coordinates.Count; index++)
+            {
+                if (ChapterGridCellCollectionUtility.HasEventAtCoordinate(gridCells, coordinates[index]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void AppendRuntimeCreature(ChapterCreatureStaticCardData creature)
@@ -2027,18 +2275,21 @@ namespace GameLogic
                 return;
             }
 
+            UpdateGridEventActionButtons();
             UpdateTerrainToolButtonState();
 
             ChapterListItemData selectedChapter = GetSelectedChapterData();
             if (selectedChapter == null || selectedChapter.GridCells == null || selectedChapter.GridCells.Count == 0)
             {
                 SetGridSelectionHighlightCount(0);
+                SetGridEventMarkerCount(0);
                 return;
             }
 
             if (!TryGetCurrentGridMetrics(out ChapterMapGridMetrics metrics))
             {
                 SetGridSelectionHighlightCount(0);
+                SetGridEventMarkerCount(0);
                 return;
             }
 
@@ -2051,6 +2302,7 @@ namespace GameLogic
             AppendVisibleGridCellsByMarkType(visibleGridCells, selectedChapter.GridCells, ChapterGridCellMarkType.DifficultTerrain, metrics, minX, maxX, minY, maxY);
             AppendVisibleGridCellsByMarkType(visibleGridCells, selectedChapter.GridCells, ChapterGridCellMarkType.ImpassableTerrain, metrics, minX, maxX, minY, maxY);
             AppendVisibleGridCellsByMarkType(visibleGridCells, selectedChapter.GridCells, ChapterGridCellMarkType.Selected, metrics, minX, maxX, minY, maxY);
+            List<ChapterGridCellData> visibleEventCells = GetVisibleGridCellsByMarkType(selectedChapter.GridCells, ChapterGridCellMarkType.Event, metrics, minX, maxX, minY, maxY);
 
             SetGridSelectionHighlightCount(visibleGridCells.Count);
             for (int index = 0; index < visibleGridCells.Count; index++)
@@ -2070,6 +2322,8 @@ namespace GameLogic
                 highlight.color = GetGridCellHighlightColor(gridCell.MarkType);
                 highlight.gameObject.SetActive(true);
             }
+
+            RefreshGridEventMarkers(visibleEventCells, metrics);
         }
 
         private void AppendVisibleGridCellsByMarkType(List<ChapterGridCellData> visibleGridCells, List<ChapterGridCellData> sourceGridCells, ChapterGridCellMarkType markType, ChapterMapGridMetrics metrics, float minX, float maxX, float minY, float maxY)
@@ -2086,6 +2340,13 @@ namespace GameLogic
 
                 visibleGridCells.Add(gridCell);
             }
+        }
+
+        private List<ChapterGridCellData> GetVisibleGridCellsByMarkType(List<ChapterGridCellData> sourceGridCells, ChapterGridCellMarkType markType, ChapterMapGridMetrics metrics, float minX, float maxX, float minY, float maxY)
+        {
+            List<ChapterGridCellData> visibleGridCells = new List<ChapterGridCellData>();
+            AppendVisibleGridCellsByMarkType(visibleGridCells, sourceGridCells, markType, metrics, minX, maxX, minY, maxY);
+            return visibleGridCells;
         }
 
         private static Color GetGridCellHighlightColor(ChapterGridCellMarkType markType)
@@ -2123,6 +2384,53 @@ namespace GameLogic
             for (int index = 0; index < m_gridSelectionHighlights.Count; index++)
             {
                 m_gridSelectionHighlights[index].gameObject.SetActive(index < visibleCount);
+            }
+        }
+
+        private void RefreshGridEventMarkers(List<ChapterGridCellData> visibleEventCells, ChapterMapGridMetrics metrics)
+        {
+            SetGridEventMarkerCount(visibleEventCells?.Count ?? 0);
+            if (visibleEventCells == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < visibleEventCells.Count; index++)
+            {
+                ChapterGridCellData gridCell = visibleEventCells[index];
+                Rect cellRect = ChapterMapGridUtility.GetLogicalCellRect(metrics, gridCell.Coordinate);
+                Image marker = m_gridEventMarkers[index];
+                RectTransform rectTransform = marker.rectTransform;
+                rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                rectTransform.anchoredPosition = new Vector2(cellRect.center.x, cellRect.center.y);
+                rectTransform.sizeDelta = new Vector2(GridEventMarkerSize, GridEventMarkerSize);
+                rectTransform.localScale = Vector3.one;
+                marker.color = new Color(0.95f, 0.65f, 0.18f, 0.96f);
+                marker.gameObject.SetActive(true);
+            }
+        }
+
+        private void SetGridEventMarkerCount(int visibleCount)
+        {
+            if (m_rectMapGridSelectionOverlay == null)
+            {
+                return;
+            }
+
+            while (m_gridEventMarkers.Count < visibleCount)
+            {
+                GameObject markerObject = new GameObject($"GridEventMarker_{m_gridEventMarkers.Count}", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                markerObject.transform.SetParent(m_rectMapGridSelectionOverlay, false);
+                Image image = markerObject.GetComponent<Image>();
+                image.raycastTarget = false;
+                m_gridEventMarkers.Add(image);
+            }
+
+            for (int index = 0; index < m_gridEventMarkers.Count; index++)
+            {
+                m_gridEventMarkers[index].gameObject.SetActive(index < visibleCount);
             }
         }
 
@@ -2712,14 +3020,26 @@ namespace GameLogic
             if (Input.GetMouseButtonUp(0))
             {
                 TryCommitGridCellSelection();
-                return;
             }
 
-            if (!Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(1))
             {
-                return;
+                TryOpenGridCellEventPopup();
             }
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                TryBeginGridCellSelection();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                TryBeginGridCellEventPopup();
+            }
+        }
+
+        private void TryBeginGridCellSelection()
+        {
             m_isPendingGridCellSelection = false;
             if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
             {
@@ -2739,6 +3059,29 @@ namespace GameLogic
             m_isPendingGridCellSelection = true;
             m_gridCellSelectionMouseDownLocalPoint = localPoint;
             m_gridCellSelectionMouseDownCoordinate = gridCoordinate;
+        }
+
+        private void TryBeginGridCellEventPopup()
+        {
+            m_isPendingGridCellEventPopup = false;
+            if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+            {
+                return;
+            }
+
+            if (!TryGetMouseLocalPointInMapPreview(out Vector2 localPoint))
+            {
+                return;
+            }
+
+            if (!TryGetGridCellCoordinateFromLocalPoint(localPoint, out ChapterGridCoordinate gridCoordinate))
+            {
+                return;
+            }
+
+            m_isPendingGridCellEventPopup = true;
+            m_gridCellEventPopupMouseDownLocalPoint = localPoint;
+            m_gridCellEventPopupMouseDownCoordinate = gridCoordinate;
         }
 
         private void TryCommitGridCellSelection()
@@ -2766,10 +3109,62 @@ namespace GameLogic
             }
 
             selectedChapter.GridCells ??= new List<ChapterGridCellData>();
+
             ChapterGridCellCollectionUtility.ToggleSelectedCell(selectedChapter.GridCells, m_gridCellSelectionMouseDownCoordinate);
 
             RefreshGridSelectionHighlights();
             SaveChapterEditorState();
+        }
+
+        private void TryOpenGridCellEventPopup()
+        {
+            if (!m_isPendingGridCellEventPopup)
+            {
+                return;
+            }
+
+            m_isPendingGridCellEventPopup = false;
+            if (!TryGetMouseLocalPointInMapPreview(out Vector2 localPoint))
+            {
+                return;
+            }
+
+            if ((localPoint - m_gridCellEventPopupMouseDownLocalPoint).sqrMagnitude > GridSelectionClickThreshold * GridSelectionClickThreshold)
+            {
+                return;
+            }
+
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            if (selectedChapter == null)
+            {
+                return;
+            }
+
+            selectedChapter.GridCells ??= new List<ChapterGridCellData>();
+            ChapterGridCellCollectionUtility.TryGetEventData(selectedChapter.GridCells, m_gridCellEventPopupMouseDownCoordinate, out ChapterGridEventData existingEventData);
+            OpenChapterEventPopup(selectedChapter, new List<ChapterGridCoordinate> { m_gridCellEventPopupMouseDownCoordinate }, existingEventData);
+        }
+
+        private static bool TryGetSelectedGridCoordinates(ChapterListItemData chapter, out List<ChapterGridCoordinate> coordinates)
+        {
+            coordinates = new List<ChapterGridCoordinate>();
+            List<ChapterGridCellData> selectedCells = ChapterGridCellCollectionUtility.GetCellsByMarkType(chapter?.GridCells, ChapterGridCellMarkType.Selected);
+            if (selectedCells.Count <= 0)
+            {
+                return false;
+            }
+
+            for (int index = 0; index < selectedCells.Count; index++)
+            {
+                if (selectedCells[index] == null)
+                {
+                    continue;
+                }
+
+                coordinates.Add(selectedCells[index].Coordinate);
+            }
+
+            return coordinates.Count > 0;
         }
 
         private bool CanHandleGridCellSelection()
@@ -2785,16 +3180,50 @@ namespace GameLogic
         private void CancelPendingGridCellSelection()
         {
             m_isPendingGridCellSelection = false;
+            m_isPendingGridCellEventPopup = false;
             m_gridCellSelectionMouseDownCoordinate = ChapterGridCoordinate.Zero;
+            m_gridCellEventPopupMouseDownCoordinate = ChapterGridCoordinate.Zero;
         }
 
         private bool IsMouseOverMapControlButton()
         {
-            return IsMouseOverRectTransform(m_btnUploadMapRect)
+            return IsMouseOverRectTransform(m_btnOpenCheckPopupRect)
+                || IsMouseOverRectTransform(m_btnDeleteGridEventRect)
+                || IsMouseOverRectTransform(m_btnUploadMapRect)
                 || IsMouseOverRectTransform(m_btnMapZoomToggleRect)
                 || IsMouseOverRectTransform(m_btnGridZoomToggleRect)
                 || IsMouseOverRectTransform(m_btnSaveChapterStateRect)
                 || IsMouseOverTerrainToolButtons();
+        }
+
+        private void UpdateGridEventActionButtons()
+        {
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            bool hasSelectedChapter = selectedChapter != null;
+            bool hasSelectedEventCells = false;
+            if (hasSelectedChapter && TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
+            {
+                hasSelectedEventCells = HasGridEventAtAnyCoordinate(selectedChapter.GridCells, coordinates);
+            }
+
+            if (m_btnOpenCheckPopup != null)
+            {
+                m_btnOpenCheckPopup.gameObject.SetActive(hasSelectedChapter);
+                m_btnOpenCheckPopup.interactable = hasSelectedChapter && !m_isDraggingChapter;
+            }
+
+            if (m_btnDeleteGridEvent != null)
+            {
+                m_btnDeleteGridEvent.gameObject.SetActive(hasSelectedChapter);
+                m_btnDeleteGridEvent.interactable = hasSelectedChapter && !m_isDraggingChapter && hasSelectedEventCells;
+            }
+
+            if (m_imgDeleteGridEvent != null)
+            {
+                m_imgDeleteGridEvent.color = hasSelectedEventCells
+                    ? new Color(0.72f, 0.29f, 0.24f, 0.98f)
+                    : new Color(0.55f, 0.58f, 0.61f, 0.72f);
+            }
         }
 
         private bool HasSelectedCellsForTerrainMarking()
@@ -3171,37 +3600,6 @@ namespace GameLogic
             return m_chapterItems[selectedChapterIndex];
         }
 
-        private static T FindChildComponentByName<T>(Transform root, string childName) where T : Component
-        {
-            Transform targetTransform = FindChildTransformByName(root, childName);
-            return targetTransform != null ? targetTransform.GetComponent<T>() : null!;
-        }
-
-        private static Transform FindChildTransformByName(Transform root, string childName)
-        {
-            if (root == null)
-            {
-                return null!;
-            }
-
-            Queue<Transform> transforms = new Queue<Transform>();
-            transforms.Enqueue(root);
-            while (transforms.Count > 0)
-            {
-                Transform current = transforms.Dequeue();
-                if (current.name == childName)
-                {
-                    return current;
-                }
-
-                for (int index = 0; index < current.childCount; index++)
-                {
-                    transforms.Enqueue(current.GetChild(index));
-                }
-            }
-
-            return null!;
-        }
     }
 
     internal sealed class ChapterEventPopupRequest
@@ -3209,11 +3607,21 @@ namespace GameLogic
         public int ChapterId { get; set; }
 
         public string ChapterName { get; set; } = string.Empty;
+
+        public ChapterGridCoordinate GridCoordinate { get; set; } = ChapterGridCoordinate.Zero;
+
+        public List<ChapterGridCoordinate> GridCoordinates { get; set; } = new List<ChapterGridCoordinate>();
+
+        public ChapterGridEventData ExistingEventData { get; set; }
+
+        public Action<ChapterGridEventData> OnConfirm { get; set; }
     }
 
-    [Window(UILayer.Top, location : "ChapterEventPopupUI", fullScreen : true)]
+    [Window(UILayer.Top, location : "ChapterEventPopupUI", fullScreen : false)]
     public sealed class ChapterEventPopupUI : UIWindow
     {
+        private const string PopupPanelPathPrefix = "Panel/";
+
         private enum ChapterEventType
         {
             Story,
@@ -3239,6 +3647,10 @@ namespace GameLogic
         {
             Ability,
             Skill,
+            Tool,
+            Contested,
+            Passive,
+            SavingThrow,
         }
 
         private enum ChapterCheckResolutionMode
@@ -3272,6 +3684,10 @@ namespace GameLogic
         {
             "属性检定",
             "技能检定",
+            "工具检定",
+            "对抗检定",
+            "被动检定",
+            "豁免检定",
         };
 
         private static readonly string[] CheckResolutionModeLabels =
@@ -3280,51 +3696,139 @@ namespace GameLogic
             "DM 直接判定",
         };
 
-        private UIBindComponent m_bindComponent = null!;
+        private static readonly string[] SkillCheckLabels =
+        {
+            "运动 Athletics",
+            "体操 Acrobatics",
+            "巧手 Sleight of Hand",
+            "隐匿 Stealth",
+            "奥秘 Arcana",
+            "历史 History",
+            "调查 Investigation",
+            "自然 Nature",
+            "宗教 Religion",
+            "驯兽 Animal Handling",
+            "洞悉 Insight",
+            "医药 Medicine",
+            "察觉 Perception",
+            "求生 Survival",
+            "欺瞒 Deception",
+            "威吓 Intimidation",
+            "表演 Performance",
+            "说服 Persuasion",
+        };
+
+        private static readonly string[] SkillCheckLabelNodeNames =
+        {
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckAthleticsLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckAcrobaticsLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckSleightOfHandLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckStealthLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckArcanaLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckHistoryLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckInvestigationLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckNatureLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckReligionLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckAnimalHandlingLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckInsightLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckMedicineLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckPerceptionLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckSurvivalLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckDeceptionLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckIntimidationLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckPerformanceLabel",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckPersuasionLabel",
+        };
+
+        private static readonly string[] SkillCheckInputNodeNames =
+        {
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckAthletics",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckAcrobatics",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckSleightOfHand",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckStealth",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckArcana",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckHistory",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckInvestigation",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckNature",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckReligion",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckAnimalHandling",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckInsight",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckMedicine",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckPerception",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckSurvival",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckDeception",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckIntimidation",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckPerformance",
+            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckPersuasion",
+        };
+
         private TextMeshProUGUI m_tmpTitle = null!;
         private Button m_btnClose = null!;
-        private TextMeshProUGUI m_tmpChapterInfo = null!;
-        private Button m_btnEventType = null!;
-        private Button m_btnTriggerMode = null!;
-        private Button m_btnCheckTargetMode = null!;
-        private Button m_btnCheckResolutionMode = null!;
-        private TextMeshProUGUI m_tmpFormPreview = null!;
+        private TMP_Dropdown m_tmpDropdownEventType = null!;
+        private TMP_Dropdown m_tmpDropdownTriggerMode = null!;
+        private TMP_Dropdown m_tmpDropdownCheckTargetMode = null!;
+        private TMP_Dropdown m_tmpDropdownCheckResolutionMode = null!;
         private Button m_btnConfirm = null!;
+        private RectTransform m_rectAbilityCheckSection = null!;
+        private RectTransform m_rectSkillCheckSection = null!;
+        private TMP_InputField m_tmpInputAbilityStrength = null!;
+        private TMP_InputField m_tmpInputAbilityDexterity = null!;
+        private TMP_InputField m_tmpInputAbilityConstitution = null!;
+        private TMP_InputField m_tmpInputAbilityIntelligence = null!;
+        private TMP_InputField m_tmpInputAbilityWisdom = null!;
+        private TMP_InputField m_tmpInputAbilityCharisma = null!;
+        private TMP_InputField m_tmpInputEventTitle = null!;
+        private TMP_InputField m_tmpInputTriggerDescription = null!;
+        private TMP_InputField m_tmpInputSuccessResult = null!;
+        private TMP_InputField m_tmpInputFailureResult = null!;
+        private TMP_InputField m_tmpInputDmNote = null!;
         private ChapterEventPopupRequest m_request = null!;
         private ChapterEventType m_eventType = ChapterEventType.Check;
         private ChapterEventTriggerMode m_triggerMode = ChapterEventTriggerMode.Automatic;
         private ChapterCheckTargetMode m_checkTargetMode = ChapterCheckTargetMode.Ability;
         private ChapterCheckResolutionMode m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
+        private readonly Dictionary<string, TMP_InputField> m_skillCheckInputs = new Dictionary<string, TMP_InputField>(StringComparer.Ordinal);
+
+        protected override void OnCreate()
+        {
+            PopupWindowPresentationHelper.Configure(this);
+        }
 
         protected override void ScriptGenerator()
         {
-            m_bindComponent = gameObject.GetComponent<UIBindComponent>();
-            if (m_bindComponent == null)
+            m_tmpTitle = BindRequiredComponent<TextMeshProUGUI>("m_tmpTitle");
+            m_btnClose = BindRequiredComponent<Button>("m_btnClose");
+            m_tmpDropdownEventType = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownEventType");
+            m_tmpDropdownTriggerMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownTriggerMode");
+            m_tmpDropdownCheckTargetMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckTargetMode");
+            m_tmpDropdownCheckResolutionMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckResolutionMode");
+            m_btnConfirm = BindRequiredComponent<Button>("m_btnConfirm");
+            m_rectAbilityCheckSection = BindRequiredComponent<RectTransform>("m_rectAbilityCheckSection");
+            m_rectSkillCheckSection = BindRequiredComponent<RectTransform>("m_rectSkillCheckSection");
+            m_tmpInputAbilityStrength = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityStrength");
+            m_tmpInputAbilityDexterity = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityDexterity");
+            m_tmpInputAbilityConstitution = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityConstitution");
+            m_tmpInputAbilityIntelligence = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityIntelligence");
+            m_tmpInputAbilityWisdom = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityWisdom");
+            m_tmpInputAbilityCharisma = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityCharisma");
+            m_tmpInputEventTitle = BindRequiredComponent<TMP_InputField>("m_tmpInputEventTitle");
+            m_tmpInputTriggerDescription = BindRequiredComponent<TMP_InputField>("m_tmpInputTriggerDescription");
+            m_tmpInputSuccessResult = BindRequiredComponent<TMP_InputField>("m_tmpInputSuccessResult");
+            m_tmpInputFailureResult = BindRequiredComponent<TMP_InputField>("m_tmpInputFailureResult");
+            m_tmpInputDmNote = BindRequiredComponent<TMP_InputField>("m_tmpInputDmNote");
+            BindSkillCheckInputComponents();
+
+            if (!HasRequiredBindings())
             {
-                Log.Error($"根物体: {gameObject.name} 缺少组件 UIBindComponent, 请检查！！！");
                 return;
             }
 
-            m_tmpTitle = m_bindComponent.GetComponent<TextMeshProUGUI>(0);
-            m_btnClose = m_bindComponent.GetComponent<Button>(1);
-            m_tmpChapterInfo = m_bindComponent.GetComponent<TextMeshProUGUI>(2);
-            m_btnEventType = m_bindComponent.GetComponent<Button>(3);
-            m_btnTriggerMode = m_bindComponent.GetComponent<Button>(4);
-            m_btnCheckTargetMode = m_bindComponent.GetComponent<Button>(5);
-            m_btnCheckResolutionMode = m_bindComponent.GetComponent<Button>(6);
-            m_tmpFormPreview = m_bindComponent.GetComponent<TextMeshProUGUI>(7);
-            m_btnConfirm = m_bindComponent.GetComponent<Button>(8);
-
             m_btnClose.onClick.RemoveAllListeners();
             m_btnClose.onClick.AddListener(OnClickCloseBtn);
-            m_btnEventType.onClick.RemoveAllListeners();
-            m_btnEventType.onClick.AddListener(OnClickCycleEventType);
-            m_btnTriggerMode.onClick.RemoveAllListeners();
-            m_btnTriggerMode.onClick.AddListener(OnClickCycleTriggerMode);
-            m_btnCheckTargetMode.onClick.RemoveAllListeners();
-            m_btnCheckTargetMode.onClick.AddListener(OnClickCycleCheckTargetMode);
-            m_btnCheckResolutionMode.onClick.RemoveAllListeners();
-            m_btnCheckResolutionMode.onClick.AddListener(OnClickCycleCheckResolutionMode);
+            SetupDropdown(m_tmpDropdownEventType, EventTypeLabels, OnEventTypeDropdownChanged);
+            SetupDropdown(m_tmpDropdownTriggerMode, TriggerModeLabels, OnTriggerModeDropdownChanged);
+            SetupDropdown(m_tmpDropdownCheckTargetMode, CheckTargetModeLabels, OnCheckTargetModeDropdownChanged);
+            SetupDropdown(m_tmpDropdownCheckResolutionMode, CheckResolutionModeLabels, OnCheckResolutionModeDropdownChanged);
             m_btnConfirm.onClick.RemoveAllListeners();
             m_btnConfirm.onClick.AddListener(OnClickConfirmBtn);
         }
@@ -3336,83 +3840,133 @@ namespace GameLogic
             m_triggerMode = ChapterEventTriggerMode.Automatic;
             m_checkTargetMode = ChapterCheckTargetMode.Ability;
             m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
+            ResetSkillCheckInputFields();
+            ResetInputField(m_tmpInputAbilityStrength, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputAbilityDexterity, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputAbilityConstitution, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputAbilityIntelligence, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputAbilityWisdom, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputAbilityCharisma, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputEventTitle, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputTriggerDescription, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputSuccessResult, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputFailureResult, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputDmNote, TMP_InputField.LineType.MultiLineNewline);
+
+            ApplyExistingEventData(m_request.ExistingEventData);
 
             RefreshView();
         }
 
-        private void OnClickCycleEventType()
+        private void OnEventTypeDropdownChanged(int index)
         {
-            int nextValue = ((int) m_eventType + 1) % EventTypeLabels.Length;
-            m_eventType = (ChapterEventType) nextValue;
+            m_eventType = (ChapterEventType) Mathf.Clamp(index, 0, EventTypeLabels.Length - 1);
             RefreshView();
         }
 
-        private void OnClickCycleTriggerMode()
+        private void OnTriggerModeDropdownChanged(int index)
         {
-            int nextValue = ((int) m_triggerMode + 1) % TriggerModeLabels.Length;
-            m_triggerMode = (ChapterEventTriggerMode) nextValue;
+            m_triggerMode = (ChapterEventTriggerMode) Mathf.Clamp(index, 0, TriggerModeLabels.Length - 1);
             RefreshView();
         }
 
-        private void OnClickCycleCheckTargetMode()
+        private void OnCheckTargetModeDropdownChanged(int index)
         {
-            int nextValue = ((int) m_checkTargetMode + 1) % CheckTargetModeLabels.Length;
-            m_checkTargetMode = (ChapterCheckTargetMode) nextValue;
+            m_checkTargetMode = (ChapterCheckTargetMode) Mathf.Clamp(index, 0, CheckTargetModeLabels.Length - 1);
             RefreshView();
         }
 
-        private void OnClickCycleCheckResolutionMode()
+        private void OnCheckResolutionModeDropdownChanged(int index)
         {
-            int nextValue = ((int) m_checkResolutionMode + 1) % CheckResolutionModeLabels.Length;
-            m_checkResolutionMode = (ChapterCheckResolutionMode) nextValue;
+            m_checkResolutionMode = (ChapterCheckResolutionMode) Mathf.Clamp(index, 0, CheckResolutionModeLabels.Length - 1);
             RefreshView();
         }
 
         private void OnClickConfirmBtn()
         {
-            Log.Info($"[ChapterEventPopupUI] 当前为 prefab 固定结构阶段。章节={m_request.ChapterId}, 事件类型={EventTypeLabels[(int) m_eventType]}");
+            ChapterGridEventData eventData = BuildEventData();
+            string abilityThresholdSummary = BuildAbilityThresholdSummary();
+            int affectedCellCount = m_request.GridCoordinates != null && m_request.GridCoordinates.Count > 0
+                ? m_request.GridCoordinates.Count
+                : 1;
+            Log.Info(
+                $"[ChapterEventPopupUI] 已记录格子事件。章节={m_request.ChapterId}, 目标格数={affectedCellCount}, 首格坐标={m_request.GridCoordinate}, 事件类型={EventTypeLabels[(int) m_eventType]}, 标题={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
+            m_request.OnConfirm?.Invoke(eventData);
             Close();
         }
 
         private void RefreshView()
         {
             bool isCheckEvent = m_eventType == ChapterEventType.Check;
+            bool isAbilityCheck = isCheckEvent && m_checkTargetMode == ChapterCheckTargetMode.Ability;
+            bool isSkillCheck = isCheckEvent && m_checkTargetMode == ChapterCheckTargetMode.Skill;
 
             if (m_tmpTitle != null)
             {
-                m_tmpTitle.text = "添加事件";
+                bool isBatchEdit = m_request.GridCoordinates != null && m_request.GridCoordinates.Count > 1;
+                m_tmpTitle.text = isBatchEdit
+                    ? $"批量标记事件 ({m_request.GridCoordinates.Count})"
+                    : m_request.ExistingEventData != null ? "编辑事件" : "添加事件";
             }
 
-            if (m_tmpChapterInfo != null)
-            {
-                string chapterName = string.IsNullOrWhiteSpace(m_request.ChapterName)
-                    ? $"章节 #{m_request.ChapterId}"
-                    : m_request.ChapterName.Trim();
-                m_tmpChapterInfo.text = $"当前章节: {chapterName}\n当前页面结构以 prefab 为准，代码仅负责状态绑定。";
-            }
-
-            SetButtonLabel(m_btnEventType, $"事件类型: {EventTypeLabels[(int) m_eventType]}");
-            SetButtonLabel(m_btnTriggerMode, $"触发方式: {TriggerModeLabels[(int) m_triggerMode]}");
-            SetButtonLabel(m_btnCheckTargetMode, $"检定对象: {CheckTargetModeLabels[(int) m_checkTargetMode]}");
-            SetButtonLabel(m_btnCheckResolutionMode, $"判定方式: {CheckResolutionModeLabels[(int) m_checkResolutionMode]}");
+            SetDropdownValue(m_tmpDropdownEventType, (int) m_eventType);
+            SetDropdownValue(m_tmpDropdownTriggerMode, (int) m_triggerMode);
+            SetDropdownValue(m_tmpDropdownCheckTargetMode, (int) m_checkTargetMode);
+            SetDropdownValue(m_tmpDropdownCheckResolutionMode, (int) m_checkResolutionMode);
             SetButtonLabel(m_btnConfirm, "确定");
 
-            if (m_btnCheckTargetMode != null)
+            if (m_tmpDropdownCheckTargetMode != null)
             {
-                m_btnCheckTargetMode.gameObject.SetActive(isCheckEvent);
+                m_tmpDropdownCheckTargetMode.gameObject.SetActive(isCheckEvent);
             }
 
-            if (m_btnCheckResolutionMode != null)
+            if (m_tmpDropdownCheckResolutionMode != null)
             {
-                m_btnCheckResolutionMode.gameObject.SetActive(isCheckEvent);
+                m_tmpDropdownCheckResolutionMode.gameObject.SetActive(isCheckEvent);
             }
 
-            if (m_tmpFormPreview != null)
+            if (m_rectAbilityCheckSection != null)
             {
-                m_tmpFormPreview.text = isCheckEvent
-                    ? "检定事件专属字段区域\n- 检定对象\n- 具体检定项\n- 判定方式\n- DC 难度\n- 成功结果\n- 失败结果"
-                    : "事件扩展区域\n后续按不同事件类型在 prefab 中补齐固定输入项。";
+                m_rectAbilityCheckSection.gameObject.SetActive(isAbilityCheck);
             }
+
+            if (m_rectSkillCheckSection != null)
+            {
+                m_rectSkillCheckSection.gameObject.SetActive(isSkillCheck);
+            }
+        }
+
+        private string BuildAbilityThresholdSummary()
+        {
+            if (m_eventType != ChapterEventType.Check)
+            {
+                return string.Empty;
+            }
+
+            if (m_checkTargetMode == ChapterCheckTargetMode.Skill)
+            {
+                List<ChapterSkillCheckThresholdData> skillCheckEntries = BuildSkillCheckEntries();
+                if (skillCheckEntries.Count == 0)
+                {
+                    return string.Empty;
+                }
+
+                List<string> summarySegments = new List<string>(skillCheckEntries.Count);
+                for (int index = 0; index < skillCheckEntries.Count; index++)
+                {
+                    ChapterSkillCheckThresholdData entry = skillCheckEntries[index];
+                    summarySegments.Add($"{entry.SkillName}:{entry.Threshold}");
+                }
+
+                return $", 技能检定=[{string.Join(", ", summarySegments)}]";
+            }
+
+            if (m_checkTargetMode != ChapterCheckTargetMode.Ability)
+            {
+                return string.Empty;
+            }
+
+            return $", 属性通过值=[STR:{GetInputValue(m_tmpInputAbilityStrength)}, DEX:{GetInputValue(m_tmpInputAbilityDexterity)}, CON:{GetInputValue(m_tmpInputAbilityConstitution)}, INT:{GetInputValue(m_tmpInputAbilityIntelligence)}, WIS:{GetInputValue(m_tmpInputAbilityWisdom)}, CHA:{GetInputValue(m_tmpInputAbilityCharisma)}]";
         }
 
         private void OnClickCloseBtn()
@@ -3432,6 +3986,293 @@ namespace GameLogic
             {
                 label.text = text;
             }
+        }
+
+        private static void SetupDropdown(TMP_Dropdown dropdown, string[] options, UnityAction<int> onValueChanged)
+        {
+            if (dropdown == null)
+            {
+                return;
+            }
+
+            dropdown.onValueChanged.RemoveAllListeners();
+            dropdown.ClearOptions();
+            dropdown.AddOptions(new List<string>(options));
+            dropdown.onValueChanged.AddListener(onValueChanged);
+            dropdown.SetValueWithoutNotify(0);
+            dropdown.RefreshShownValue();
+        }
+
+        private static void SetDropdownValue(TMP_Dropdown dropdown, int value)
+        {
+            if (dropdown == null || dropdown.options == null || dropdown.options.Count == 0)
+            {
+                return;
+            }
+
+            int clampedValue = Mathf.Clamp(value, 0, dropdown.options.Count - 1);
+            dropdown.SetValueWithoutNotify(clampedValue);
+            dropdown.RefreshShownValue();
+        }
+
+        private static void ResetInputField(TMP_InputField inputField, TMP_InputField.LineType lineType)
+        {
+            if (inputField == null)
+            {
+                return;
+            }
+
+            inputField.lineType = lineType;
+            inputField.text = string.Empty;
+        }
+
+        private T BindRequiredComponent<T>(string path) where T : Component
+        {
+            T component = ResolvePopupComponent<T>(path);
+            if (component == null)
+            {
+                Log.Error($"[ChapterEventPopupUI] 找不到节点: {path}");
+            }
+
+            return component;
+        }
+
+        private T ResolvePopupComponent<T>(string path) where T : Component
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return null;
+            }
+
+            T component = FindChildComponent<T>(path);
+            if (component != null)
+            {
+                return component;
+            }
+
+            if (path.StartsWith(PopupPanelPathPrefix, StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            return FindChildComponent<T>($"{PopupPanelPathPrefix}{path}");
+        }
+
+        private bool HasRequiredBindings()
+        {
+            return m_tmpTitle != null
+                && m_btnClose != null
+                && m_tmpDropdownEventType != null
+                && m_tmpDropdownTriggerMode != null
+                && m_tmpDropdownCheckTargetMode != null
+                && m_tmpDropdownCheckResolutionMode != null
+                && m_btnConfirm != null
+                && m_rectAbilityCheckSection != null
+                && m_rectSkillCheckSection != null
+                && m_skillCheckInputs.Count == SkillCheckLabels.Length
+                && m_tmpInputAbilityStrength != null
+                && m_tmpInputAbilityDexterity != null
+                && m_tmpInputAbilityConstitution != null
+                && m_tmpInputAbilityIntelligence != null
+                && m_tmpInputAbilityWisdom != null
+                && m_tmpInputAbilityCharisma != null
+                && m_tmpInputEventTitle != null
+                && m_tmpInputTriggerDescription != null
+                && m_tmpInputSuccessResult != null
+                && m_tmpInputFailureResult != null
+                && m_tmpInputDmNote != null;
+        }
+
+        private void ApplyExistingEventData(ChapterGridEventData eventData)
+        {
+            if (eventData == null)
+            {
+                return;
+            }
+
+            m_eventType = (ChapterEventType) Mathf.Clamp(eventData.EventType, 0, EventTypeLabels.Length - 1);
+            m_triggerMode = (ChapterEventTriggerMode) Mathf.Clamp(eventData.TriggerMode, 0, TriggerModeLabels.Length - 1);
+            m_checkTargetMode = (ChapterCheckTargetMode) Mathf.Clamp(eventData.CheckTargetMode, 0, CheckTargetModeLabels.Length - 1);
+            m_checkResolutionMode = (ChapterCheckResolutionMode) Mathf.Clamp(eventData.CheckResolutionMode, 0, CheckResolutionModeLabels.Length - 1);
+            SetInputValue(m_tmpInputEventTitle, eventData.EventTitle);
+            SetInputValue(m_tmpInputTriggerDescription, eventData.TriggerDescription);
+            SetInputValue(m_tmpInputSuccessResult, eventData.SuccessResult);
+            SetInputValue(m_tmpInputFailureResult, eventData.FailureResult);
+            SetInputValue(m_tmpInputDmNote, eventData.DmNote);
+            ApplySkillCheckValues(eventData);
+            SetInputValue(m_tmpInputAbilityStrength, eventData.AbilityStrengthThreshold);
+            SetInputValue(m_tmpInputAbilityDexterity, eventData.AbilityDexterityThreshold);
+            SetInputValue(m_tmpInputAbilityConstitution, eventData.AbilityConstitutionThreshold);
+            SetInputValue(m_tmpInputAbilityIntelligence, eventData.AbilityIntelligenceThreshold);
+            SetInputValue(m_tmpInputAbilityWisdom, eventData.AbilityWisdomThreshold);
+            SetInputValue(m_tmpInputAbilityCharisma, eventData.AbilityCharismaThreshold);
+        }
+
+        private ChapterGridEventData BuildEventData()
+        {
+            List<ChapterSkillCheckThresholdData> skillCheckEntries = BuildSkillCheckEntries();
+            ChapterSkillCheckThresholdData primarySkillCheckEntry = skillCheckEntries.Count > 0 ? skillCheckEntries[0] : null;
+
+            return new ChapterGridEventData
+            {
+                EventType = (int) m_eventType,
+                TriggerMode = (int) m_triggerMode,
+                CheckTargetMode = (int) m_checkTargetMode,
+                CheckResolutionMode = (int) m_checkResolutionMode,
+                EventTitle = GetInputValue(m_tmpInputEventTitle),
+                TriggerDescription = GetInputValue(m_tmpInputTriggerDescription),
+                SuccessResult = GetInputValue(m_tmpInputSuccessResult),
+                FailureResult = GetInputValue(m_tmpInputFailureResult),
+                DmNote = GetInputValue(m_tmpInputDmNote),
+                SkillCheckEntries = skillCheckEntries,
+                SkillCheckName = primarySkillCheckEntry != null ? primarySkillCheckEntry.SkillName : string.Empty,
+                SkillCheckThreshold = primarySkillCheckEntry != null ? primarySkillCheckEntry.Threshold : string.Empty,
+                AbilityStrengthThreshold = GetInputValue(m_tmpInputAbilityStrength),
+                AbilityDexterityThreshold = GetInputValue(m_tmpInputAbilityDexterity),
+                AbilityConstitutionThreshold = GetInputValue(m_tmpInputAbilityConstitution),
+                AbilityIntelligenceThreshold = GetInputValue(m_tmpInputAbilityIntelligence),
+                AbilityWisdomThreshold = GetInputValue(m_tmpInputAbilityWisdom),
+                AbilityCharismaThreshold = GetInputValue(m_tmpInputAbilityCharisma),
+            };
+        }
+
+        private void BindSkillCheckInputComponents()
+        {
+            if (m_rectSkillCheckSection == null)
+            {
+                return;
+            }
+
+            m_skillCheckInputs.Clear();
+
+            TextMeshProUGUI skillCheckHeader = ResolvePopupComponent<TextMeshProUGUI>("m_rectSkillCheckSection/m_tmpSkillCheckLabel");
+            if (skillCheckHeader != null)
+            {
+                skillCheckHeader.text = "技能通过值";
+            }
+
+            for (int index = 0; index < SkillCheckLabels.Length; index++)
+            {
+                TextMeshProUGUI skillLabel = ResolvePopupComponent<TextMeshProUGUI>(SkillCheckLabelNodeNames[index]);
+                if (skillLabel != null)
+                {
+                    skillLabel.text = SkillCheckLabels[index];
+                }
+
+                TMP_InputField skillInput = BindRequiredComponent<TMP_InputField>(SkillCheckInputNodeNames[index]);
+                if (skillInput != null)
+                {
+                    m_skillCheckInputs[SkillCheckLabels[index]] = skillInput;
+                }
+            }
+        }
+
+        private void ResetSkillCheckInputFields()
+        {
+            foreach (TMP_InputField inputField in m_skillCheckInputs.Values)
+            {
+                ResetInputField(inputField, TMP_InputField.LineType.SingleLine);
+            }
+        }
+
+        private void ApplySkillCheckValues(ChapterGridEventData eventData)
+        {
+            List<ChapterSkillCheckThresholdData> entries = GetEffectiveSkillCheckEntries(eventData);
+            for (int index = 0; index < entries.Count; index++)
+            {
+                ChapterSkillCheckThresholdData entry = entries[index];
+                if (entry == null || string.IsNullOrWhiteSpace(entry.SkillName))
+                {
+                    continue;
+                }
+
+                if (m_skillCheckInputs.TryGetValue(entry.SkillName, out TMP_InputField inputField))
+                {
+                    SetInputValue(inputField, entry.Threshold);
+                }
+            }
+        }
+
+        private List<ChapterSkillCheckThresholdData> BuildSkillCheckEntries()
+        {
+            List<ChapterSkillCheckThresholdData> entries = new List<ChapterSkillCheckThresholdData>();
+            for (int index = 0; index < SkillCheckLabels.Length; index++)
+            {
+                string skillLabel = SkillCheckLabels[index];
+                if (!m_skillCheckInputs.TryGetValue(skillLabel, out TMP_InputField inputField))
+                {
+                    continue;
+                }
+
+                string threshold = GetInputValue(inputField);
+                if (string.IsNullOrWhiteSpace(threshold))
+                {
+                    continue;
+                }
+
+                entries.Add(new ChapterSkillCheckThresholdData
+                {
+                    SkillName = skillLabel,
+                    Threshold = threshold,
+                });
+            }
+
+            return entries;
+        }
+
+        private static List<ChapterSkillCheckThresholdData> GetEffectiveSkillCheckEntries(ChapterGridEventData eventData)
+        {
+            List<ChapterSkillCheckThresholdData> entries = new List<ChapterSkillCheckThresholdData>();
+            if (eventData == null)
+            {
+                return entries;
+            }
+
+            if (eventData.SkillCheckEntries != null && eventData.SkillCheckEntries.Count > 0)
+            {
+                for (int index = 0; index < eventData.SkillCheckEntries.Count; index++)
+                {
+                    ChapterSkillCheckThresholdData entry = eventData.SkillCheckEntries[index];
+                    if (entry == null)
+                    {
+                        continue;
+                    }
+
+                    entries.Add(new ChapterSkillCheckThresholdData
+                    {
+                        SkillName = entry.SkillName ?? string.Empty,
+                        Threshold = entry.Threshold ?? string.Empty,
+                    });
+                }
+
+                return entries;
+            }
+
+            if (!string.IsNullOrWhiteSpace(eventData.SkillCheckName) || !string.IsNullOrWhiteSpace(eventData.SkillCheckThreshold))
+            {
+                entries.Add(new ChapterSkillCheckThresholdData
+                {
+                    SkillName = eventData.SkillCheckName ?? string.Empty,
+                    Threshold = eventData.SkillCheckThreshold ?? string.Empty,
+                });
+            }
+
+            return entries;
+        }
+
+        private static void SetInputValue(TMP_InputField inputField, string value)
+        {
+            if (inputField == null)
+            {
+                return;
+            }
+
+            inputField.text = value ?? string.Empty;
+        }
+
+        private static string GetInputValue(TMP_InputField inputField)
+        {
+            return inputField != null ? inputField.text?.Trim() ?? string.Empty : string.Empty;
         }
     }
 

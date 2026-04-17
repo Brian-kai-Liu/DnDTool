@@ -32,14 +32,18 @@ namespace GameLogic
             m_gameObject = gameObject;
             m_rectTransform = gameObject.GetComponent<RectTransform>();
 
-            UIBindComponent bindComponent = gameObject.GetComponent<UIBindComponent>();
-            m_button = bindComponent.GetComponent<Button>(0);
-            m_inputTitle = bindComponent.GetComponent<TMP_InputField>(1);
-            m_textChapterIndex = bindComponent.GetComponent<TextMeshProUGUI>(2);
-            m_deleteButton = bindComponent.GetComponent<Button>(3);
-            m_background = m_button.targetGraphic as Image;
+            m_button = gameObject.GetComponent<Button>();
+            m_inputTitle = FindChildComponent<TMP_InputField>(gameObject.transform, "m_tmpInputChapterName");
+            m_textChapterIndex = FindChildComponent<TextMeshProUGUI>(gameObject.transform, "Text");
+            m_deleteButton = FindChildComponent<Button>(gameObject.transform, "m_btnDeleteChapter");
+            m_background = m_button != null ? m_button.targetGraphic as Image : gameObject.GetComponent<Image>();
             m_dragHandler = gameObject.GetComponent<ChapterListItemDragHandler>() ?? gameObject.AddComponent<ChapterListItemDragHandler>();
             m_canvasGroup = gameObject.GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
+
+            if (m_button == null || m_inputTitle == null || m_textChapterIndex == null)
+            {
+                Log.Error("ChapterListItemView 绑定失败，请检查 ChapterEditorUI 列表项模板节点命名。需要根节点 Button、m_tmpInputChapterName、Text。");
+            }
         }
 
         public void SetVisible(bool visible)
@@ -59,6 +63,11 @@ namespace GameLogic
 
         public void Bind(ChapterListItemData data, int chapterIndex, bool isSelected, Action onClick, Action onDelete, Action<string> onTitleEditEnd)
         {
+            if (m_button == null || m_inputTitle == null || m_textChapterIndex == null)
+            {
+                return;
+            }
+
             m_textChapterIndex.text = $"第{chapterIndex}章";
             RefreshSelectionVisual(isSelected);
 
@@ -176,6 +185,22 @@ namespace GameLogic
             }
 
             m_background.color = m_isSelected ? SelectedColor : NormalColor;
+        }
+
+        private static T FindChildComponent<T>(Transform root, string path) where T : Component
+        {
+            if (root == null || string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            Transform child = root.Find(path);
+            if (child == null)
+            {
+                return null;
+            }
+
+            return child.GetComponent<T>();
         }
 
     }

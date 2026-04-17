@@ -22,7 +22,7 @@ namespace GameLogic
         public Action<ExtensionPackageInfoPopupResult> OnConfirm { get; set; } = null!;
     }
 
-    [Window(UILayer.Top, location : "ExtensionPackageInfoPopupUI", fullScreen : true)]
+    [Window(UILayer.Top, location : "ExtensionPackageInfoPopupUI", fullScreen : false)]
     public partial class ExtensionPackageInfoPopupUI
     {
         private const float CardHeight = 152f;
@@ -36,6 +36,8 @@ namespace GameLogic
 
         protected override void OnCreate()
         {
+            PopupWindowPresentationHelper.Configure(this);
+
             if (m_rectPackageCardTemplate != null)
             {
                 m_rectPackageCardTemplate.gameObject.SetActive(false);

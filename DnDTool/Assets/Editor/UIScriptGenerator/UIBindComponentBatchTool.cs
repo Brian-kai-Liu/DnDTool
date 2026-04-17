@@ -15,6 +15,7 @@ namespace GameLogic
             string prefabPath = GetCommandLineArgument("-prefabPath") ?? GetCommandLineArgument("--prefabPath");
             string outputDir = GetCommandLineArgument("-outputDir") ?? GetCommandLineArgument("--outputDir");
             string reportPath = GetCommandLineArgument("-reportPath") ?? GetCommandLineArgument("--reportPath");
+            bool savePrefab = ParseBooleanArgument(GetCommandLineArgument("-savePrefab") ?? GetCommandLineArgument("--savePrefab"));
 
             if (string.IsNullOrWhiteSpace(prefabPath))
             {
@@ -31,10 +32,10 @@ namespace GameLogic
                 reportPath = "Temp/BatchGeneratorOutput/ChapterEditorUI_report.txt";
             }
 
-            RegeneratePrefab(prefabPath, outputDir, reportPath);
+            RegeneratePrefab(prefabPath, outputDir, reportPath, savePrefab);
         }
 
-        public static void RegeneratePrefab(string prefabPath, string outputDir, string reportPath)
+        public static void RegeneratePrefab(string prefabPath, string outputDir, string reportPath, bool savePrefab = false)
         {
             GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabPath);
             if (prefabRoot == null)
@@ -88,6 +89,11 @@ namespace GameLogic
                     rootBindComponent.uiType,
                     false,
                     GetHiddenString(rootBindComponent, "impCodePath"));
+
+                if (savePrefab)
+                {
+                    PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath);
+                }
 
                 string reportDirectory = Path.GetDirectoryName(reportPath);
                 if (!string.IsNullOrWhiteSpace(reportDirectory) && !Directory.Exists(reportDirectory))
@@ -164,6 +170,18 @@ namespace GameLogic
             }
 
             return null;
+        }
+
+        private static bool ParseBooleanArgument(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            return value.Equals("1", StringComparison.OrdinalIgnoreCase)
+                || value.Equals("true", StringComparison.OrdinalIgnoreCase)
+                || value.Equals("yes", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

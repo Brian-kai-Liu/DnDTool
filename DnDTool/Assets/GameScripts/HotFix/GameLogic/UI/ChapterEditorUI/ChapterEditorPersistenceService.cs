@@ -119,6 +119,9 @@ namespace GameLogic
                         CellX = gridCell.Coordinate.CellX,
                         CellY = gridCell.Coordinate.CellY,
                         MarkType = (int) gridCell.MarkType,
+                        EventData = gridCell.MarkType == ChapterGridCellMarkType.Event
+                            ? ToSaveData(gridCell.EventData)
+                            : null,
                     });
                 }
             }
@@ -145,6 +148,7 @@ namespace GameLogic
                         MarkType = System.Enum.IsDefined(typeof(ChapterGridCellMarkType), gridCell.MarkType)
                             ? (ChapterGridCellMarkType) gridCell.MarkType
                             : ChapterGridCellMarkType.Selected,
+                        EventData = ToRuntimeData(gridCell.EventData),
                     });
                 }
 
@@ -177,6 +181,113 @@ namespace GameLogic
                     LockedGridToMapPanDelta = chapter.LockedGridToMapPanDelta,
                 },
                 GridCells = gridCells,
+            };
+        }
+
+        private static ChapterGridEventSaveData ToSaveData(ChapterGridEventData eventData)
+        {
+            if (eventData == null)
+            {
+                return null;
+            }
+
+            List<ChapterSkillCheckThresholdSaveData> skillCheckEntries = new List<ChapterSkillCheckThresholdSaveData>();
+            if (eventData.SkillCheckEntries != null)
+            {
+                for (int index = 0; index < eventData.SkillCheckEntries.Count; index++)
+                {
+                    ChapterSkillCheckThresholdData entry = eventData.SkillCheckEntries[index];
+                    if (entry == null)
+                    {
+                        continue;
+                    }
+
+                    skillCheckEntries.Add(new ChapterSkillCheckThresholdSaveData
+                    {
+                        SkillName = entry.SkillName ?? string.Empty,
+                        Threshold = entry.Threshold ?? string.Empty,
+                    });
+                }
+            }
+
+            return new ChapterGridEventSaveData
+            {
+                EventType = eventData.EventType,
+                TriggerMode = eventData.TriggerMode,
+                CheckTargetMode = eventData.CheckTargetMode,
+                CheckResolutionMode = eventData.CheckResolutionMode,
+                EventTitle = eventData.EventTitle ?? string.Empty,
+                TriggerDescription = eventData.TriggerDescription ?? string.Empty,
+                SuccessResult = eventData.SuccessResult ?? string.Empty,
+                FailureResult = eventData.FailureResult ?? string.Empty,
+                DmNote = eventData.DmNote ?? string.Empty,
+                SkillCheckEntries = skillCheckEntries,
+                SkillCheckName = eventData.SkillCheckName ?? string.Empty,
+                SkillCheckThreshold = eventData.SkillCheckThreshold ?? string.Empty,
+                AbilityStrengthThreshold = eventData.AbilityStrengthThreshold ?? string.Empty,
+                AbilityDexterityThreshold = eventData.AbilityDexterityThreshold ?? string.Empty,
+                AbilityConstitutionThreshold = eventData.AbilityConstitutionThreshold ?? string.Empty,
+                AbilityIntelligenceThreshold = eventData.AbilityIntelligenceThreshold ?? string.Empty,
+                AbilityWisdomThreshold = eventData.AbilityWisdomThreshold ?? string.Empty,
+                AbilityCharismaThreshold = eventData.AbilityCharismaThreshold ?? string.Empty,
+            };
+        }
+
+        private static ChapterGridEventData ToRuntimeData(ChapterGridEventSaveData eventData)
+        {
+            if (eventData == null)
+            {
+                return null;
+            }
+
+            List<ChapterSkillCheckThresholdData> skillCheckEntries = new List<ChapterSkillCheckThresholdData>();
+            if (eventData.SkillCheckEntries != null && eventData.SkillCheckEntries.Count > 0)
+            {
+                for (int index = 0; index < eventData.SkillCheckEntries.Count; index++)
+                {
+                    ChapterSkillCheckThresholdSaveData entry = eventData.SkillCheckEntries[index];
+                    if (entry == null)
+                    {
+                        continue;
+                    }
+
+                    skillCheckEntries.Add(new ChapterSkillCheckThresholdData
+                    {
+                        SkillName = entry.SkillName ?? string.Empty,
+                        Threshold = entry.Threshold ?? string.Empty,
+                    });
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(eventData.SkillCheckName)
+                || !string.IsNullOrWhiteSpace(eventData.SkillCheckThreshold))
+            {
+                skillCheckEntries.Add(new ChapterSkillCheckThresholdData
+                {
+                    SkillName = eventData.SkillCheckName ?? string.Empty,
+                    Threshold = eventData.SkillCheckThreshold ?? string.Empty,
+                });
+            }
+
+            return new ChapterGridEventData
+            {
+                EventType = eventData.EventType,
+                TriggerMode = eventData.TriggerMode,
+                CheckTargetMode = eventData.CheckTargetMode,
+                CheckResolutionMode = eventData.CheckResolutionMode,
+                EventTitle = eventData.EventTitle ?? string.Empty,
+                TriggerDescription = eventData.TriggerDescription ?? string.Empty,
+                SuccessResult = eventData.SuccessResult ?? string.Empty,
+                FailureResult = eventData.FailureResult ?? string.Empty,
+                DmNote = eventData.DmNote ?? string.Empty,
+                SkillCheckEntries = skillCheckEntries,
+                SkillCheckName = eventData.SkillCheckName ?? string.Empty,
+                SkillCheckThreshold = eventData.SkillCheckThreshold ?? string.Empty,
+                AbilityStrengthThreshold = eventData.AbilityStrengthThreshold ?? string.Empty,
+                AbilityDexterityThreshold = eventData.AbilityDexterityThreshold ?? string.Empty,
+                AbilityConstitutionThreshold = eventData.AbilityConstitutionThreshold ?? string.Empty,
+                AbilityIntelligenceThreshold = eventData.AbilityIntelligenceThreshold ?? string.Empty,
+                AbilityWisdomThreshold = eventData.AbilityWisdomThreshold ?? string.Empty,
+                AbilityCharismaThreshold = eventData.AbilityCharismaThreshold ?? string.Empty,
             };
         }
     }

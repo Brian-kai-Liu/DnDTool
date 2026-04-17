@@ -136,6 +136,7 @@ namespace GameLogic
                 {
                     Coordinate = gridCell.Coordinate,
                     MarkType = gridCell.MarkType,
+                    EventData = CloneEventData(gridCell.EventData),
                 });
             }
 
@@ -256,7 +257,9 @@ namespace GameLogic
             for (int index = gridCells.Count - 1; index >= 0; index--)
             {
                 ChapterGridCellData gridCell = gridCells[index];
-                if (gridCell == null || !selectedCoordinates.Contains(gridCell.Coordinate))
+                if (gridCell == null
+                    || !selectedCoordinates.Contains(gridCell.Coordinate)
+                    || gridCell.MarkType == ChapterGridCellMarkType.Event)
                 {
                     continue;
                 }
@@ -318,6 +321,99 @@ namespace GameLogic
             });
         }
 
+        public static bool TryGetEventData(List<ChapterGridCellData> gridCells, ChapterGridCoordinate coordinate, out ChapterGridEventData eventData)
+        {
+            eventData = null;
+            if (gridCells == null)
+            {
+                return false;
+            }
+
+            int existingIndex = FindIndex(gridCells, coordinate, ChapterGridCellMarkType.Event);
+            if (existingIndex < 0)
+            {
+                return false;
+            }
+
+            eventData = CloneEventData(gridCells[existingIndex]?.EventData);
+            return eventData != null;
+        }
+
+        public static bool HasEventAtCoordinate(List<ChapterGridCellData> gridCells, ChapterGridCoordinate coordinate)
+        {
+            return FindIndex(gridCells, coordinate, ChapterGridCellMarkType.Event) >= 0;
+        }
+
+        public static void UpsertEventData(List<ChapterGridCellData> gridCells, ChapterGridCoordinate coordinate, ChapterGridEventData eventData)
+        {
+            if (gridCells == null || eventData == null)
+            {
+                return;
+            }
+
+            int existingIndex = FindIndex(gridCells, coordinate, ChapterGridCellMarkType.Event);
+            if (existingIndex >= 0)
+            {
+                gridCells[existingIndex].EventData = CloneEventData(eventData);
+                return;
+            }
+
+            gridCells.Add(new ChapterGridCellData
+            {
+                Coordinate = coordinate,
+                MarkType = ChapterGridCellMarkType.Event,
+                EventData = CloneEventData(eventData),
+            });
+        }
+
+        public static bool RemoveEventData(List<ChapterGridCellData> gridCells, ChapterGridCoordinate coordinate)
+        {
+            if (gridCells == null)
+            {
+                return false;
+            }
+
+            int existingIndex = FindIndex(gridCells, coordinate, ChapterGridCellMarkType.Event);
+            if (existingIndex < 0)
+            {
+                return false;
+            }
+
+            gridCells.RemoveAt(existingIndex);
+            return true;
+        }
+
+        public static int ClearSelectedMarks(List<ChapterGridCellData> gridCells, IEnumerable<ChapterGridCoordinate> coordinates)
+        {
+            if (gridCells == null || coordinates == null)
+            {
+                return 0;
+            }
+
+            HashSet<ChapterGridCoordinate> coordinateSet = new HashSet<ChapterGridCoordinate>(coordinates);
+            if (coordinateSet.Count <= 0)
+            {
+                return 0;
+            }
+
+            int removedCount = 0;
+            for (int index = gridCells.Count - 1; index >= 0; index--)
+            {
+                ChapterGridCellData gridCell = gridCells[index];
+                if (gridCell == null
+                    || gridCell.MarkType != ChapterGridCellMarkType.Selected
+                    || !coordinateSet.Contains(gridCell.Coordinate))
+                {
+                    continue;
+                }
+
+                gridCells.RemoveAt(index);
+                removedCount++;
+            }
+
+            return removedCount;
+        }
+
         public static List<ChapterGridCellData> FromLegacyKeys(List<string> gridCellKeys)
         {
             List<ChapterGridCellData> result = new List<ChapterGridCellData>();
@@ -364,6 +460,64 @@ namespace GameLogic
 
             coordinate = new ChapterGridCoordinate(cellX, cellY);
             return true;
+        }
+
+        public static ChapterGridEventData CloneEventData(ChapterGridEventData source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            List<ChapterSkillCheckThresholdData> skillCheckEntries = new List<ChapterSkillCheckThresholdData>();
+            if (source.SkillCheckEntries != null)
+            {
+                for (int index = 0; index < source.SkillCheckEntries.Count; index++)
+                {
+                    ChapterSkillCheckThresholdData entry = source.SkillCheckEntries[index];
+                    if (entry == null)
+                    {
+                        continue;
+                    }
+
+                    skillCheckEntries.Add(new ChapterSkillCheckThresholdData
+                    {
+                        SkillName = entry.SkillName ?? string.Empty,
+                        Threshold = entry.Threshold ?? string.Empty,
+                    });
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(source.SkillCheckName)
+                || !string.IsNullOrWhiteSpace(source.SkillCheckThreshold))
+            {
+                skillCheckEntries.Add(new ChapterSkillCheckThresholdData
+                {
+                    SkillName = source.SkillCheckName ?? string.Empty,
+                    Threshold = source.SkillCheckThreshold ?? string.Empty,
+                });
+            }
+
+            return new ChapterGridEventData
+            {
+                EventType = source.EventType,
+                TriggerMode = source.TriggerMode,
+                CheckTargetMode = source.CheckTargetMode,
+                CheckResolutionMode = source.CheckResolutionMode,
+                EventTitle = source.EventTitle ?? string.Empty,
+                TriggerDescription = source.TriggerDescription ?? string.Empty,
+                SuccessResult = source.SuccessResult ?? string.Empty,
+                FailureResult = source.FailureResult ?? string.Empty,
+                DmNote = source.DmNote ?? string.Empty,
+                SkillCheckEntries = skillCheckEntries,
+                SkillCheckName = source.SkillCheckName ?? string.Empty,
+                SkillCheckThreshold = source.SkillCheckThreshold ?? string.Empty,
+                AbilityStrengthThreshold = source.AbilityStrengthThreshold ?? string.Empty,
+                AbilityDexterityThreshold = source.AbilityDexterityThreshold ?? string.Empty,
+                AbilityConstitutionThreshold = source.AbilityConstitutionThreshold ?? string.Empty,
+                AbilityIntelligenceThreshold = source.AbilityIntelligenceThreshold ?? string.Empty,
+                AbilityWisdomThreshold = source.AbilityWisdomThreshold ?? string.Empty,
+                AbilityCharismaThreshold = source.AbilityCharismaThreshold ?? string.Empty,
+            };
         }
 
         private static int FindIndex(List<ChapterGridCellData> gridCells, ChapterGridCoordinate coordinate, ChapterGridCellMarkType markType)

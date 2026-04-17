@@ -15,7 +15,7 @@ namespace GameLogic
         public Action<ChapterCreatureStaticCardData> OnConfirm { get; set; } = null!;
     }
 
-    [Window(UILayer.Top, location : "ChapterCreatureEntryPopupUI", fullScreen : true)]
+    [Window(UILayer.Top, location : "ChapterCreatureEntryPopupUI", fullScreen : false)]
     public sealed partial class ChapterCreatureEntryPopupUI : UIWindow
     {
         private const string DefaultPreviewHintText = "未选择怪物预览图\n支持 PNG / JPG / JPEG";
@@ -26,6 +26,11 @@ namespace GameLogic
         private Texture2D m_previewTexture = null!;
         private Sprite m_previewSprite = null!;
         private string m_previewImageFileName = string.Empty;
+
+        protected override void OnCreate()
+        {
+            PopupWindowPresentationHelper.Configure(this);
+        }
 
         protected override void OnRefresh()
         {

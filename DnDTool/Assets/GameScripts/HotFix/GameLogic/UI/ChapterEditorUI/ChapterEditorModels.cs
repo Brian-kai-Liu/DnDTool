@@ -77,6 +77,53 @@ namespace GameLogic
         Selected = 1,
         DifficultTerrain = 2,
         ImpassableTerrain = 3,
+        Event = 4,
+    }
+
+    internal sealed class ChapterGridEventData
+    {
+        public int EventType { get; set; } = 2;
+
+        public int TriggerMode { get; set; }
+
+        public int CheckTargetMode { get; set; }
+
+        public int CheckResolutionMode { get; set; }
+
+        public string EventTitle { get; set; } = string.Empty;
+
+        public string TriggerDescription { get; set; } = string.Empty;
+
+        public string SuccessResult { get; set; } = string.Empty;
+
+        public string FailureResult { get; set; } = string.Empty;
+
+        public string DmNote { get; set; } = string.Empty;
+
+        public List<ChapterSkillCheckThresholdData> SkillCheckEntries { get; set; } = new List<ChapterSkillCheckThresholdData>();
+
+        public string SkillCheckName { get; set; } = string.Empty;
+
+        public string SkillCheckThreshold { get; set; } = string.Empty;
+
+        public string AbilityStrengthThreshold { get; set; } = string.Empty;
+
+        public string AbilityDexterityThreshold { get; set; } = string.Empty;
+
+        public string AbilityConstitutionThreshold { get; set; } = string.Empty;
+
+        public string AbilityIntelligenceThreshold { get; set; } = string.Empty;
+
+        public string AbilityWisdomThreshold { get; set; } = string.Empty;
+
+        public string AbilityCharismaThreshold { get; set; } = string.Empty;
+    }
+
+    internal sealed class ChapterSkillCheckThresholdData
+    {
+        public string SkillName { get; set; } = string.Empty;
+
+        public string Threshold { get; set; } = string.Empty;
     }
 
     internal sealed class ChapterGridCellData
@@ -84,6 +131,8 @@ namespace GameLogic
         public ChapterGridCoordinate Coordinate { get; set; } = ChapterGridCoordinate.Zero;
 
         public ChapterGridCellMarkType MarkType { get; set; } = ChapterGridCellMarkType.Selected;
+
+        public ChapterGridEventData EventData { get; set; }
     }
 
     internal sealed class ChapterListItemData
@@ -154,5 +203,37 @@ namespace GameLogic
         public int CellX;
         public int CellY;
         public int MarkType = (int) ChapterGridCellMarkType.DifficultTerrain;
+        public ChapterGridEventSaveData EventData;
+    }
+
+    [Serializable]
+    internal sealed class ChapterGridEventSaveData
+    {
+        public int EventType = 2;
+        public int TriggerMode;
+        public int CheckTargetMode;
+        public int CheckResolutionMode;
+        public string EventTitle = string.Empty;
+        public string TriggerDescription = string.Empty;
+        public string SuccessResult = string.Empty;
+        public string FailureResult = string.Empty;
+        public string DmNote = string.Empty;
+        public List<ChapterSkillCheckThresholdSaveData> SkillCheckEntries = new List<ChapterSkillCheckThresholdSaveData>();
+        public string SkillCheckName = string.Empty;
+        public string SkillCheckThreshold = string.Empty;
+        public string AbilityStrengthThreshold = string.Empty;
+        public string AbilityDexterityThreshold = string.Empty;
+        public string AbilityConstitutionThreshold = string.Empty;
+        public string AbilityIntelligenceThreshold = string.Empty;
+        public string AbilityWisdomThreshold = string.Empty;
+        public string AbilityCharismaThreshold = string.Empty;
+    }
+
+    [Serializable]
+    internal sealed class ChapterSkillCheckThresholdSaveData
+    {
+        public string SkillName = string.Empty;
+
+        public string Threshold = string.Empty;
     }
 }
