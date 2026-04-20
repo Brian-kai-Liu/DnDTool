@@ -26,8 +26,15 @@ namespace GameLogic
                 Log.Error("索引超出范围");
                 return null;
             }
-            T c = m_components[index] as T;
 
+            Component raw = m_components[index];
+            if (raw == null)
+            {
+                // 此槽位在 Prefab 中为空（fileID: 0），属于设计上的缺省，静默返回 null
+                return null;
+            }
+
+            T c = raw as T;
             if (c == null)
             {
                 Log.Error($"没有找到对应类型: {typeof(T).FullName}");

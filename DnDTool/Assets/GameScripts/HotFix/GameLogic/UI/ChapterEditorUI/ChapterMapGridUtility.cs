@@ -499,7 +499,8 @@ namespace GameLogic
 
             return new ChapterGridEventData
             {
-                EventType = source.EventType,
+                EventCategory = source.EventCategory,
+                EventSubType = source.EventSubType,
                 TriggerMode = source.TriggerMode,
                 CheckTargetMode = source.CheckTargetMode,
                 CheckResolutionMode = source.CheckResolutionMode,

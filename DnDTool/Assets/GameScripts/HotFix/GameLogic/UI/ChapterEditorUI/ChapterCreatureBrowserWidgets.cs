@@ -8,16 +8,35 @@ namespace GameLogic
 {
     internal readonly struct ChapterCreatureStaticCardData
     {
+        // 用于静态种子数据（无结构化来源）
         public ChapterCreatureStaticCardData(string name, string creatureType, string alignment, Color accentColor, string summary)
         {
+            Source = null;
             Name = name;
+            NameEn = string.Empty;
             CreatureType = creatureType;
             Alignment = alignment;
             AccentColor = accentColor;
             Summary = summary;
         }
 
+        // 用于从结构化数据构建的运行时卡片
+        public ChapterCreatureStaticCardData(ChapterCreatureData source)
+        {
+            Source = source;
+            Name = source.Name;
+            NameEn = source.NameEn;
+            CreatureType = source.GetCreatureTypeDisplay();
+            Alignment = source.Alignment;
+            AccentColor = source.AccentColor;
+            Summary = source.BuildSummary();
+        }
+
+        public ChapterCreatureData Source { get; }
+
         public string Name { get; }
+
+        public string NameEn { get; }
 
         public string CreatureType { get; }
 

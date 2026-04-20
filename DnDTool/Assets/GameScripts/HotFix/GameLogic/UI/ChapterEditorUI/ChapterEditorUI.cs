@@ -44,16 +44,6 @@ namespace GameLogic
         private const float GridEventMarkerSize = 18f;
         private const string ChapterEditorSaveFileName = "chapter_editor_state.json";
 
-        private static readonly ChapterCreatureStaticCardData[] StaticCreatureCards =
-        {
-            new ChapterCreatureStaticCardData("Goblin Scout", "Humanoid (Goblinoid)", "Neutral Evil", new Color(0.35f, 0.57f, 0.28f, 1f), "擅长伏击与游击的小型生物，适合用来填充低等级遭遇。首版静态版中用于展示基础卡片布局与详情区域排版。"),
-            new ChapterCreatureStaticCardData("Orc Raider", "Humanoid (Orc)", "Chaotic Evil", new Color(0.52f, 0.34f, 0.22f, 1f), "近战压迫感强，适合作为正面推进敌人。可用于测试卡片在较长名称与多行说明下的视觉稳定性。"),
-            new ChapterCreatureStaticCardData("Skeleton Archer", "Undead", "Lawful Evil", new Color(0.56f, 0.56f, 0.62f, 1f), "远程持续输出型生物，适合验证类型、阵营与详情摘要在窄宽度下的可读性。"),
-            new ChapterCreatureStaticCardData("Owlbear", "Monstrosity", "Unaligned", new Color(0.66f, 0.48f, 0.24f, 1f), "高辨识度中型威胁单位。这里使用较强的色块预览，方便后续替换成真实怪物立绘资源。"),
-            new ChapterCreatureStaticCardData("Young Red Dragon", "Dragon", "Chaotic Evil", new Color(0.7f, 0.24f, 0.18f, 1f), "高威胁首领型怪物，适合检验详情面板在标题较长时的排版与层次。"),
-            new ChapterCreatureStaticCardData("Gelatinous Cube", "Ooze", "Unaligned", new Color(0.24f, 0.56f, 0.54f, 1f), "特殊机制型怪物，用于验证怪物类型、阵营与摘要在静态原型中的通用展示效果。"),
-        };
-
         private readonly List<ChapterListItemData> m_chapterItems = new List<ChapterListItemData>();
         private readonly List<ChapterListItemView> m_chapterItemViews = new List<ChapterListItemView>();
         private TMP_Text m_textCreatureInfoBoard = null!;
@@ -420,7 +410,8 @@ namespace GameLogic
                 AddMapHint = string.Empty,
                 CreatureInfo = string.Empty,
                 MapGridState = new ChapterMapGridStateData(),
-                GridCells = new List<ChapterGridCellData>()
+                GridCells = new List<ChapterGridCellData>(),
+                Creatures = new List<ChapterCreatureData>(),
             };
         }
 
@@ -844,7 +835,10 @@ namespace GameLogic
                         LockedGridToMapZoomRatio = chapter.MapGridState?.LockedGridToMapZoomRatio ?? 1f,
                         LockedGridToMapPanDelta = chapter.MapGridState?.LockedGridToMapPanDelta ?? Vector2.zero,
                     },
-                    GridCells = ChapterGridCellCollectionUtility.Clone(chapter.GridCells)
+                    GridCells = ChapterGridCellCollectionUtility.Clone(chapter.GridCells),
+                    Creatures = chapter.Creatures != null
+                        ? new List<ChapterCreatureData>(chapter.Creatures)
+                        : new List<ChapterCreatureData>(),
                 });
             }
 
@@ -1005,7 +999,19 @@ namespace GameLogic
                     : m_defaultCreatureInfoText;
             }
 
-            RefreshCreatureBrowserPreview(StaticCreatureCards);
+            m_creatureRuntimeCards.Clear();
+            if (hasSelectedChapter && selectedChapter.Creatures != null)
+            {
+                for (int index = 0; index < selectedChapter.Creatures.Count; index++)
+                {
+                    if (selectedChapter.Creatures[index] != null)
+                    {
+                        m_creatureRuntimeCards.Add(new ChapterCreatureStaticCardData(selectedChapter.Creatures[index]));
+                    }
+                }
+            }
+
+            RefreshCreatureBrowserPreview(null);
 
             ApplyStoryAndCreatureBoardLayout();
 
@@ -1023,7 +1029,7 @@ namespace GameLogic
                     InitializeCreatureBrowserView();
                 }
 
-                RefreshCreatureBrowserPreview(StaticCreatureCards);
+                RefreshCreatureBrowserPreview(null);
                 if (m_textCreatureInfoBoard != null)
                 {
                     m_textCreatureInfoBoard.gameObject.SetActive(false);
@@ -1323,9 +1329,9 @@ namespace GameLogic
             return false;
         }
 
-        private void AppendRuntimeCreature(ChapterCreatureStaticCardData creature)
+        private void AppendRuntimeCreature(ChapterCreatureData creatureData)
         {
-            m_creatureRuntimeCards.Add(creature);
+            m_creatureRuntimeCards.Add(new ChapterCreatureStaticCardData(creatureData));
             RebuildCreatureBrowserCards();
             SetCreatureSearchKeyword(string.Empty);
             m_selectedCreatureCardIndex = m_creatureAllCards.Count - 1;
@@ -1518,6 +1524,17 @@ namespace GameLogic
             selectedChapter.Goal = m_tmpInputChapterGoal != null ? m_tmpInputChapterGoal.text ?? string.Empty : string.Empty;
             selectedChapter.Content = m_tmpInputStoryContent.text ?? string.Empty;
             selectedChapter.DmNote = m_tmpInputDmNote != null ? m_tmpInputDmNote.text ?? string.Empty : string.Empty;
+
+            selectedChapter.Creatures.Clear();
+            for (int index = 0; index < m_creatureRuntimeCards.Count; index++)
+            {
+                ChapterCreatureData source = m_creatureRuntimeCards[index].Source;
+                if (source != null)
+                {
+                    selectedChapter.Creatures.Add(source);
+                }
+            }
+
             SyncChapterMapGridStateToData(selectedChapter);
         }
 
@@ -3622,19 +3639,24 @@ namespace GameLogic
     {
         private const string PopupPanelPathPrefix = "Panel/";
 
-        private enum ChapterEventType
+        private enum ChapterEventCategory
         {
-            Story,
-            Dialogue,
-            Check,
-            Choice,
-            Interaction,
-            Combat,
-            Exploration,
-            AreaEnter,
-            TimeAdvance,
-            Random,
-            Special,
+            Check = 0,
+            DmDirect = 1,
+        }
+
+        private enum ChapterDmEventSubType
+        {
+            Story = 0,
+            Dialogue = 1,
+            Choice = 2,
+            Interaction = 3,
+            Combat = 4,
+            Exploration = 5,
+            AreaEnter = 6,
+            TimeAdvance = 7,
+            Random = 8,
+            Special = 9,
         }
 
         private enum ChapterEventTriggerMode
@@ -3659,11 +3681,16 @@ namespace GameLogic
             DmDirect,
         }
 
-        private static readonly string[] EventTypeLabels =
+        private static readonly string[] EventCategoryLabels =
+        {
+            "检定类事件",
+            "DM 判断类事件",
+        };
+
+        private static readonly string[] DmEventSubTypeLabels =
         {
             "剧情事件",
             "对话事件",
-            "检定事件",
             "选择事件",
             "交互事件",
             "战斗事件",
@@ -3718,28 +3745,6 @@ namespace GameLogic
             "说服 Persuasion",
         };
 
-        private static readonly string[] SkillCheckLabelNodeNames =
-        {
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckAthleticsLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckAcrobaticsLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckSleightOfHandLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckStealthLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckArcanaLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckHistoryLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckInvestigationLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckNatureLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckReligionLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckAnimalHandlingLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckInsightLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckMedicineLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckPerceptionLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckSurvivalLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckDeceptionLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckIntimidationLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckPerformanceLabel",
-            "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/txtSkillCheckPersuasionLabel",
-        };
-
         private static readonly string[] SkillCheckInputNodeNames =
         {
             "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckAthletics",
@@ -3764,13 +3769,15 @@ namespace GameLogic
 
         private TextMeshProUGUI m_tmpTitle = null!;
         private Button m_btnClose = null!;
-        private TMP_Dropdown m_tmpDropdownEventType = null!;
+        private TMP_Dropdown m_tmpDropdownEventCategory = null!;
+        private TMP_Dropdown m_tmpDropdownDmEventSubType = null!;
         private TMP_Dropdown m_tmpDropdownTriggerMode = null!;
         private TMP_Dropdown m_tmpDropdownCheckTargetMode = null!;
         private TMP_Dropdown m_tmpDropdownCheckResolutionMode = null!;
         private Button m_btnConfirm = null!;
         private RectTransform m_rectAbilityCheckSection = null!;
         private RectTransform m_rectSkillCheckSection = null!;
+        private RectTransform m_rectDmDirectSection = null!;
         private TMP_InputField m_tmpInputAbilityStrength = null!;
         private TMP_InputField m_tmpInputAbilityDexterity = null!;
         private TMP_InputField m_tmpInputAbilityConstitution = null!;
@@ -3782,8 +3789,10 @@ namespace GameLogic
         private TMP_InputField m_tmpInputSuccessResult = null!;
         private TMP_InputField m_tmpInputFailureResult = null!;
         private TMP_InputField m_tmpInputDmNote = null!;
+        private TMP_InputField m_tmpInputDmPrompt = null!;
         private ChapterEventPopupRequest m_request = null!;
-        private ChapterEventType m_eventType = ChapterEventType.Check;
+        private ChapterEventCategory m_eventCategory = ChapterEventCategory.Check;
+        private ChapterDmEventSubType m_dmEventSubType = ChapterDmEventSubType.Story;
         private ChapterEventTriggerMode m_triggerMode = ChapterEventTriggerMode.Automatic;
         private ChapterCheckTargetMode m_checkTargetMode = ChapterCheckTargetMode.Ability;
         private ChapterCheckResolutionMode m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
@@ -3798,13 +3807,15 @@ namespace GameLogic
         {
             m_tmpTitle = BindRequiredComponent<TextMeshProUGUI>("m_tmpTitle");
             m_btnClose = BindRequiredComponent<Button>("m_btnClose");
-            m_tmpDropdownEventType = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownEventType");
+            m_tmpDropdownEventCategory = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownEventCategory");
+            m_tmpDropdownDmEventSubType = BindRequiredComponent<TMP_Dropdown>("m_rectDmDirectSection/m_tmpDropdownDmEventSubType");
             m_tmpDropdownTriggerMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownTriggerMode");
             m_tmpDropdownCheckTargetMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckTargetMode");
             m_tmpDropdownCheckResolutionMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckResolutionMode");
             m_btnConfirm = BindRequiredComponent<Button>("m_btnConfirm");
             m_rectAbilityCheckSection = BindRequiredComponent<RectTransform>("m_rectAbilityCheckSection");
             m_rectSkillCheckSection = BindRequiredComponent<RectTransform>("m_rectSkillCheckSection");
+            m_rectDmDirectSection = BindRequiredComponent<RectTransform>("m_rectDmDirectSection");
             m_tmpInputAbilityStrength = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityStrength");
             m_tmpInputAbilityDexterity = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityDexterity");
             m_tmpInputAbilityConstitution = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityConstitution");
@@ -3816,6 +3827,7 @@ namespace GameLogic
             m_tmpInputSuccessResult = BindRequiredComponent<TMP_InputField>("m_tmpInputSuccessResult");
             m_tmpInputFailureResult = BindRequiredComponent<TMP_InputField>("m_tmpInputFailureResult");
             m_tmpInputDmNote = BindRequiredComponent<TMP_InputField>("m_tmpInputDmNote");
+            m_tmpInputDmPrompt = BindRequiredComponent<TMP_InputField>("m_rectDmDirectSection/m_tmpInputDmPrompt");
             BindSkillCheckInputComponents();
 
             if (!HasRequiredBindings())
@@ -3825,7 +3837,8 @@ namespace GameLogic
 
             m_btnClose.onClick.RemoveAllListeners();
             m_btnClose.onClick.AddListener(OnClickCloseBtn);
-            SetupDropdown(m_tmpDropdownEventType, EventTypeLabels, OnEventTypeDropdownChanged);
+            SetupDropdown(m_tmpDropdownEventCategory, EventCategoryLabels, OnEventCategoryDropdownChanged);
+            SetupDropdown(m_tmpDropdownDmEventSubType, DmEventSubTypeLabels, OnDmEventSubTypeDropdownChanged);
             SetupDropdown(m_tmpDropdownTriggerMode, TriggerModeLabels, OnTriggerModeDropdownChanged);
             SetupDropdown(m_tmpDropdownCheckTargetMode, CheckTargetModeLabels, OnCheckTargetModeDropdownChanged);
             SetupDropdown(m_tmpDropdownCheckResolutionMode, CheckResolutionModeLabels, OnCheckResolutionModeDropdownChanged);
@@ -3836,7 +3849,8 @@ namespace GameLogic
         protected override void OnRefresh()
         {
             m_request = UserData as ChapterEventPopupRequest ?? new ChapterEventPopupRequest();
-            m_eventType = ChapterEventType.Check;
+            m_eventCategory = ChapterEventCategory.Check;
+            m_dmEventSubType = ChapterDmEventSubType.Story;
             m_triggerMode = ChapterEventTriggerMode.Automatic;
             m_checkTargetMode = ChapterCheckTargetMode.Ability;
             m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
@@ -3852,16 +3866,22 @@ namespace GameLogic
             ResetInputField(m_tmpInputSuccessResult, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputFailureResult, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputDmNote, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputDmPrompt, TMP_InputField.LineType.MultiLineNewline);
 
             ApplyExistingEventData(m_request.ExistingEventData);
 
             RefreshView();
         }
 
-        private void OnEventTypeDropdownChanged(int index)
+        private void OnEventCategoryDropdownChanged(int index)
         {
-            m_eventType = (ChapterEventType) Mathf.Clamp(index, 0, EventTypeLabels.Length - 1);
+            m_eventCategory = (ChapterEventCategory) Mathf.Clamp(index, 0, EventCategoryLabels.Length - 1);
             RefreshView();
+        }
+
+        private void OnDmEventSubTypeDropdownChanged(int index)
+        {
+            m_dmEventSubType = (ChapterDmEventSubType) Mathf.Clamp(index, 0, DmEventSubTypeLabels.Length - 1);
         }
 
         private void OnTriggerModeDropdownChanged(int index)
@@ -3890,14 +3910,15 @@ namespace GameLogic
                 ? m_request.GridCoordinates.Count
                 : 1;
             Log.Info(
-                $"[ChapterEventPopupUI] 已记录格子事件。章节={m_request.ChapterId}, 目标格数={affectedCellCount}, 首格坐标={m_request.GridCoordinate}, 事件类型={EventTypeLabels[(int) m_eventType]}, 标题={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
+                $"[ChapterEventPopupUI] 已记录格子事件。章节={m_request.ChapterId}, 目标格数={affectedCellCount}, 首格坐标={m_request.GridCoordinate}, 事件类别={EventCategoryLabels[(int) m_eventCategory]}, 标题={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
             m_request.OnConfirm?.Invoke(eventData);
             Close();
         }
 
         private void RefreshView()
         {
-            bool isCheckEvent = m_eventType == ChapterEventType.Check;
+            bool isCheckEvent = m_eventCategory == ChapterEventCategory.Check;
+            bool isDmDirectEvent = m_eventCategory == ChapterEventCategory.DmDirect;
             bool isAbilityCheck = isCheckEvent && m_checkTargetMode == ChapterCheckTargetMode.Ability;
             bool isSkillCheck = isCheckEvent && m_checkTargetMode == ChapterCheckTargetMode.Skill;
 
@@ -3909,11 +3930,17 @@ namespace GameLogic
                     : m_request.ExistingEventData != null ? "编辑事件" : "添加事件";
             }
 
-            SetDropdownValue(m_tmpDropdownEventType, (int) m_eventType);
+            SetDropdownValue(m_tmpDropdownEventCategory, (int) m_eventCategory);
+            SetDropdownValue(m_tmpDropdownDmEventSubType, (int) m_dmEventSubType);
             SetDropdownValue(m_tmpDropdownTriggerMode, (int) m_triggerMode);
             SetDropdownValue(m_tmpDropdownCheckTargetMode, (int) m_checkTargetMode);
             SetDropdownValue(m_tmpDropdownCheckResolutionMode, (int) m_checkResolutionMode);
             SetButtonLabel(m_btnConfirm, "确定");
+
+            if (m_rectDmDirectSection != null)
+            {
+                m_rectDmDirectSection.gameObject.SetActive(isDmDirectEvent);
+            }
 
             if (m_tmpDropdownCheckTargetMode != null)
             {
@@ -3934,11 +3961,21 @@ namespace GameLogic
             {
                 m_rectSkillCheckSection.gameObject.SetActive(isSkillCheck);
             }
+
+            if (m_tmpInputSuccessResult != null)
+            {
+                m_tmpInputSuccessResult.gameObject.SetActive(isCheckEvent);
+            }
+
+            if (m_tmpInputFailureResult != null)
+            {
+                m_tmpInputFailureResult.gameObject.SetActive(isCheckEvent);
+            }
         }
 
         private string BuildAbilityThresholdSummary()
         {
-            if (m_eventType != ChapterEventType.Check)
+            if (m_eventCategory != ChapterEventCategory.Check)
             {
                 return string.Empty;
             }
@@ -4062,13 +4099,15 @@ namespace GameLogic
         {
             return m_tmpTitle != null
                 && m_btnClose != null
-                && m_tmpDropdownEventType != null
+                && m_tmpDropdownEventCategory != null
+                && m_tmpDropdownDmEventSubType != null
                 && m_tmpDropdownTriggerMode != null
                 && m_tmpDropdownCheckTargetMode != null
                 && m_tmpDropdownCheckResolutionMode != null
                 && m_btnConfirm != null
                 && m_rectAbilityCheckSection != null
                 && m_rectSkillCheckSection != null
+                && m_rectDmDirectSection != null
                 && m_skillCheckInputs.Count == SkillCheckLabels.Length
                 && m_tmpInputAbilityStrength != null
                 && m_tmpInputAbilityDexterity != null
@@ -4080,7 +4119,8 @@ namespace GameLogic
                 && m_tmpInputTriggerDescription != null
                 && m_tmpInputSuccessResult != null
                 && m_tmpInputFailureResult != null
-                && m_tmpInputDmNote != null;
+                && m_tmpInputDmNote != null
+                && m_tmpInputDmPrompt != null;
         }
 
         private void ApplyExistingEventData(ChapterGridEventData eventData)
@@ -4090,7 +4130,8 @@ namespace GameLogic
                 return;
             }
 
-            m_eventType = (ChapterEventType) Mathf.Clamp(eventData.EventType, 0, EventTypeLabels.Length - 1);
+            m_eventCategory = (ChapterEventCategory) Mathf.Clamp(eventData.EventCategory, 0, EventCategoryLabels.Length - 1);
+            m_dmEventSubType = (ChapterDmEventSubType) Mathf.Clamp(eventData.EventSubType, 0, DmEventSubTypeLabels.Length - 1);
             m_triggerMode = (ChapterEventTriggerMode) Mathf.Clamp(eventData.TriggerMode, 0, TriggerModeLabels.Length - 1);
             m_checkTargetMode = (ChapterCheckTargetMode) Mathf.Clamp(eventData.CheckTargetMode, 0, CheckTargetModeLabels.Length - 1);
             m_checkResolutionMode = (ChapterCheckResolutionMode) Mathf.Clamp(eventData.CheckResolutionMode, 0, CheckResolutionModeLabels.Length - 1);
@@ -4099,6 +4140,7 @@ namespace GameLogic
             SetInputValue(m_tmpInputSuccessResult, eventData.SuccessResult);
             SetInputValue(m_tmpInputFailureResult, eventData.FailureResult);
             SetInputValue(m_tmpInputDmNote, eventData.DmNote);
+            SetInputValue(m_tmpInputDmPrompt, eventData.DmPrompt);
             ApplySkillCheckValues(eventData);
             SetInputValue(m_tmpInputAbilityStrength, eventData.AbilityStrengthThreshold);
             SetInputValue(m_tmpInputAbilityDexterity, eventData.AbilityDexterityThreshold);
@@ -4115,15 +4157,17 @@ namespace GameLogic
 
             return new ChapterGridEventData
             {
-                EventType = (int) m_eventType,
+                EventCategory = (int) m_eventCategory,
+                EventSubType = m_eventCategory == ChapterEventCategory.DmDirect ? (int) m_dmEventSubType : 0,
                 TriggerMode = (int) m_triggerMode,
                 CheckTargetMode = (int) m_checkTargetMode,
                 CheckResolutionMode = (int) m_checkResolutionMode,
                 EventTitle = GetInputValue(m_tmpInputEventTitle),
                 TriggerDescription = GetInputValue(m_tmpInputTriggerDescription),
-                SuccessResult = GetInputValue(m_tmpInputSuccessResult),
-                FailureResult = GetInputValue(m_tmpInputFailureResult),
+                SuccessResult = m_eventCategory == ChapterEventCategory.Check ? GetInputValue(m_tmpInputSuccessResult) : string.Empty,
+                FailureResult = m_eventCategory == ChapterEventCategory.Check ? GetInputValue(m_tmpInputFailureResult) : string.Empty,
                 DmNote = GetInputValue(m_tmpInputDmNote),
+                DmPrompt = m_eventCategory == ChapterEventCategory.DmDirect ? GetInputValue(m_tmpInputDmPrompt) : string.Empty,
                 SkillCheckEntries = skillCheckEntries,
                 SkillCheckName = primarySkillCheckEntry != null ? primarySkillCheckEntry.SkillName : string.Empty,
                 SkillCheckThreshold = primarySkillCheckEntry != null ? primarySkillCheckEntry.Threshold : string.Empty,
@@ -4145,20 +4189,8 @@ namespace GameLogic
 
             m_skillCheckInputs.Clear();
 
-            TextMeshProUGUI skillCheckHeader = ResolvePopupComponent<TextMeshProUGUI>("m_rectSkillCheckSection/m_tmpSkillCheckLabel");
-            if (skillCheckHeader != null)
-            {
-                skillCheckHeader.text = "技能通过值";
-            }
-
             for (int index = 0; index < SkillCheckLabels.Length; index++)
             {
-                TextMeshProUGUI skillLabel = ResolvePopupComponent<TextMeshProUGUI>(SkillCheckLabelNodeNames[index]);
-                if (skillLabel != null)
-                {
-                    skillLabel.text = SkillCheckLabels[index];
-                }
-
                 TMP_InputField skillInput = BindRequiredComponent<TMP_InputField>(SkillCheckInputNodeNames[index]);
                 if (skillInput != null)
                 {
