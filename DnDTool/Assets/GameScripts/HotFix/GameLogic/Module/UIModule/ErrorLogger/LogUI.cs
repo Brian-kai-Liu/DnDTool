@@ -19,7 +19,11 @@ namespace GameLogic
         {
             m_textError = FindChildComponent<Text>("m_textError");
             m_btnClose = FindChildComponent<Button>("m_btnClose");
-            m_btnClose.onClick.AddListener(OnClickCloseBtn);
+            if (m_btnClose != null)
+            {
+                m_btnClose.onClick.RemoveAllListeners();
+                m_btnClose.onClick.AddListener(OnClickCloseBtn);
+            }
         }
 
         #endregion
@@ -35,8 +39,12 @@ namespace GameLogic
 
         protected override void OnRefresh()
         {
-            _errorTextString.Push(UserData.ToString());
-            m_textError.text = UserData.ToString();
+            string errorText = UserData?.ToString() ?? "客户端报错，但未附带详细信息。";
+            _errorTextString.Push(errorText);
+            if (m_textError != null)
+            {
+                m_textError.text = errorText;
+            }
         }
 
         private async UniTaskVoid PopErrorLog()
@@ -49,7 +57,10 @@ namespace GameLogic
             }
 
             string error = _errorTextString.Pop();
-            m_textError.text = error;
+            if (m_textError != null)
+            {
+                m_textError.text = error;
+            }
         }
     }
 }

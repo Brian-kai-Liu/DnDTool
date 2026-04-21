@@ -105,8 +105,12 @@ namespace GameLogic
         private TMP_Text m_textClearTerrain = null!;
         private Texture2D m_mapPreviewTexture = null!;
         private Sprite m_mapPreviewSprite = null!;
+        private Texture2D m_creatureDetailPreviewTexture = null!;
+        private Sprite m_creatureDetailPreviewSprite = null!;
         private string m_loadedMapImagePath = string.Empty;
+        private string m_loadedCreaturePreviewPath = string.Empty;
         private int m_mapPreviewLoadVersion;
+        private int m_creatureDetailPreviewLoadVersion;
         private int m_saveFeedbackVersion;
         private bool m_isMapPreviewLoading;
         private float m_mapPreviewZoomScale = 1f;
@@ -249,6 +253,7 @@ namespace GameLogic
             }
 
             CleanupMapPreviewResources();
+            CleanupCreatureDetailPreviewResources();
         }
 
         protected override void OnUpdate()
@@ -1137,11 +1142,16 @@ namespace GameLogic
             if (m_rectCreatureCardContainer != null && m_rectCreatureCardTemplate != null)
             {
                 EnsureCreatureCardViews(m_creatureFilteredCardIndices.Count);
-                for (int index = 0; index < m_creatureCardWidgets.Count; index++)
+                for (int index = 0; index < m_creatureFilteredCardIndices.Count; index++)
                 {
                     int actualCardIndex = m_creatureFilteredCardIndices[index];
                     m_creatureCardWidgets[index].SetVisible(true);
-                    m_creatureCardWidgets[index].Bind(m_creatureAllCards[actualCardIndex], actualCardIndex == m_selectedCreatureCardIndex, () => SelectCreatureCard(actualCardIndex));
+                    int runtimeCreatureIndex = GetRuntimeCreatureIndex(actualCardIndex);
+                    m_creatureCardWidgets[index].Bind(
+                        m_creatureAllCards[actualCardIndex],
+                        actualCardIndex == m_selectedCreatureCardIndex,
+                        () => SelectCreatureCard(actualCardIndex),
+                        runtimeCreatureIndex >= 0 ? () => OpenCreatureEntryPopup(runtimeCreatureIndex) : null);
                 }
             }
 
@@ -1162,10 +1172,24 @@ namespace GameLogic
 
         private void OpenCreatureEntryPopup()
         {
-            Log.Info("打开生物信息录入弹窗。");
+            OpenCreatureEntryPopup(-1);
+        }
+
+        private void OpenCreatureEntryPopup(int runtimeCreatureIndex)
+        {
+            bool isEditMode = runtimeCreatureIndex >= 0 && runtimeCreatureIndex < m_creatureRuntimeCards.Count;
+            ChapterCreatureData initialData = isEditMode ? CloneCreatureData(m_creatureRuntimeCards[runtimeCreatureIndex].Source) : null;
+
+            Log.Info(isEditMode ? "打开生物信息编辑弹窗。" : "打开生物信息录入弹窗。");
             GameModule.UI.ShowUIAsync<ChapterCreatureEntryPopupUI>(new ChapterCreatureEntryPopupRequest
             {
-                OnConfirm = AppendRuntimeCreature
+                InitialData = initialData,
+                OnConfirm = isEditMode
+                    ? updatedData => UpdateRuntimeCreature(runtimeCreatureIndex, updatedData)
+                    : AppendRuntimeCreature,
+                OnDelete = isEditMode
+                    ? () => DeleteRuntimeCreature(runtimeCreatureIndex)
+                    : null,
             });
         }
 
@@ -1331,11 +1355,61 @@ namespace GameLogic
 
         private void AppendRuntimeCreature(ChapterCreatureData creatureData)
         {
+            if (creatureData == null)
+            {
+                return;
+            }
+
             m_creatureRuntimeCards.Add(new ChapterCreatureStaticCardData(creatureData));
             RebuildCreatureBrowserCards();
             SetCreatureSearchKeyword(string.Empty);
             m_selectedCreatureCardIndex = m_creatureAllCards.Count - 1;
             RedrawCreatureBrowserPreview();
+
+            bool saved = SaveChapterEditorState();
+            ShowSaveFeedbackAsync(saved ? "生物信息已保存" : "生物信息保存失败", saved).Forget();
+        }
+
+        private void UpdateRuntimeCreature(int runtimeCreatureIndex, ChapterCreatureData creatureData)
+        {
+            if (creatureData == null || runtimeCreatureIndex < 0 || runtimeCreatureIndex >= m_creatureRuntimeCards.Count)
+            {
+                return;
+            }
+
+            m_creatureRuntimeCards[runtimeCreatureIndex] = new ChapterCreatureStaticCardData(creatureData);
+            RebuildCreatureBrowserCards();
+            m_selectedCreatureCardIndex = m_creatureSeedCards.Count + runtimeCreatureIndex;
+            RedrawCreatureBrowserPreview();
+
+            bool saved = SaveChapterEditorState();
+            ShowSaveFeedbackAsync(saved ? "生物信息已更新" : "生物信息更新失败", saved).Forget();
+        }
+
+        private void DeleteRuntimeCreature(int runtimeCreatureIndex)
+        {
+            if (runtimeCreatureIndex < 0 || runtimeCreatureIndex >= m_creatureRuntimeCards.Count)
+            {
+                return;
+            }
+
+            m_creatureRuntimeCards.RemoveAt(runtimeCreatureIndex);
+            RebuildCreatureBrowserCards();
+
+            int nextSelectedIndex = m_creatureSeedCards.Count + runtimeCreatureIndex;
+            if (m_creatureAllCards.Count <= 0)
+            {
+                m_selectedCreatureCardIndex = -1;
+            }
+            else
+            {
+                m_selectedCreatureCardIndex = Mathf.Clamp(nextSelectedIndex, 0, m_creatureAllCards.Count - 1);
+            }
+
+            RedrawCreatureBrowserPreview();
+
+            bool saved = SaveChapterEditorState();
+            ShowSaveFeedbackAsync(saved ? "生物信息已删除" : "生物信息删除失败", saved).Forget();
         }
 
         private void RebuildCreatureBrowserCards()
@@ -1369,7 +1443,7 @@ namespace GameLogic
 
             if (m_selectedCreatureCardIndex < 0 || m_selectedCreatureCardIndex >= m_creatureAllCards.Count || !m_creatureFilteredCardIndices.Contains(m_selectedCreatureCardIndex))
             {
-                m_selectedCreatureCardIndex = m_creatureFilteredCardIndices[0];
+                m_selectedCreatureCardIndex = -1;
             }
         }
 
@@ -1391,7 +1465,12 @@ namespace GameLogic
             for (int index = 0; index < m_creatureCardWidgets.Count && index < m_creatureFilteredCardIndices.Count; index++)
             {
                 int actualCardIndex = m_creatureFilteredCardIndices[index];
-                m_creatureCardWidgets[index].Bind(m_creatureAllCards[actualCardIndex], actualCardIndex == m_selectedCreatureCardIndex, () => SelectCreatureCard(actualCardIndex));
+                int runtimeCreatureIndex = GetRuntimeCreatureIndex(actualCardIndex);
+                m_creatureCardWidgets[index].Bind(
+                    m_creatureAllCards[actualCardIndex],
+                    actualCardIndex == m_selectedCreatureCardIndex,
+                    () => SelectCreatureCard(actualCardIndex),
+                    runtimeCreatureIndex >= 0 ? () => OpenCreatureEntryPopup(runtimeCreatureIndex) : null);
             }
 
             RefreshCreatureDetailPanel();
@@ -1406,7 +1485,7 @@ namespace GameLogic
 
             GameObject detailObject = Object.Instantiate(m_rectCreatureDetailTemplate.gameObject, m_rectCreatureDetailTemplate.parent, false);
             detailObject.name = m_rectCreatureDetailTemplate.gameObject.name;
-            detailObject.SetActive(true);
+            detailObject.SetActive(false);
             m_creatureDetailWidget = new ChapterCreatureDetailWidget(detailObject);
         }
 
@@ -1417,12 +1496,17 @@ namespace GameLogic
                 return;
             }
 
-            bool hasCards = m_creatureAllCards.Count > 0 && m_selectedCreatureCardIndex >= 0 && m_selectedCreatureCardIndex < m_creatureAllCards.Count;
-            m_creatureDetailWidget.SetVisible(hasCards);
-            if (hasCards)
+            bool hasSelectedCard = m_selectedCreatureCardIndex >= 0 && m_selectedCreatureCardIndex < m_creatureAllCards.Count;
+            m_creatureDetailWidget.SetVisible(hasSelectedCard);
+            if (!hasSelectedCard)
             {
-                m_creatureDetailWidget.Bind(m_creatureAllCards[m_selectedCreatureCardIndex]);
+                CleanupCreatureDetailPreviewResources();
+                return;
             }
+
+            ChapterCreatureStaticCardData creature = m_creatureAllCards[m_selectedCreatureCardIndex];
+            m_creatureDetailWidget.Bind(creature);
+            RefreshCreatureDetailPreview(creature);
         }
 
         private void EnsureCreatureCardViews(int count)
@@ -1476,12 +1560,145 @@ namespace GameLogic
         {
             if (!selectedCard.HasValue)
             {
-                m_selectedCreatureCardIndex = m_creatureAllCards.Count > 0 ? 0 : -1;
+                m_selectedCreatureCardIndex = -1;
                 return;
             }
 
             int selectedIndex = m_creatureAllCards.FindIndex(card => card.Equals(selectedCard.Value));
-            m_selectedCreatureCardIndex = selectedIndex >= 0 ? selectedIndex : (m_creatureAllCards.Count > 0 ? 0 : -1);
+            m_selectedCreatureCardIndex = selectedIndex >= 0 ? selectedIndex : -1;
+        }
+
+        private int GetRuntimeCreatureIndex(int actualCardIndex)
+        {
+            int runtimeCreatureIndex = actualCardIndex - m_creatureSeedCards.Count;
+            return runtimeCreatureIndex >= 0 && runtimeCreatureIndex < m_creatureRuntimeCards.Count
+                ? runtimeCreatureIndex
+                : -1;
+        }
+
+        private static ChapterCreatureData CloneCreatureData(ChapterCreatureData source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            return new ChapterCreatureData
+            {
+                Name = source.Name,
+                NameEn = source.NameEn,
+                CreatureType = source.CreatureType,
+                CreatureSize = source.CreatureSize,
+                Alignment = source.Alignment,
+                ChallengeRating = source.ChallengeRating,
+                ExperiencePoints = source.ExperiencePoints,
+                ArmorClass = source.ArmorClass,
+                HitPoints = source.HitPoints,
+                Speed = source.Speed,
+                Strength = source.Strength,
+                Dexterity = source.Dexterity,
+                Constitution = source.Constitution,
+                Intelligence = source.Intelligence,
+                Wisdom = source.Wisdom,
+                Charisma = source.Charisma,
+                SavingThrows = source.SavingThrows,
+                Skills = source.Skills,
+                Senses = source.Senses,
+                Languages = source.Languages,
+                DamageResistances = source.DamageResistances,
+                DamageImmunities = source.DamageImmunities,
+                ConditionImmunities = source.ConditionImmunities,
+                Traits = source.Traits,
+                Actions = source.Actions,
+                BonusActions = source.BonusActions,
+                Reactions = source.Reactions,
+                LegendaryActions = source.LegendaryActions,
+                BattleNotes = source.BattleNotes,
+                PreviewImageFileName = source.PreviewImageFileName,
+                AccentColor = source.AccentColor,
+            };
+        }
+
+        private void RefreshCreatureDetailPreview(ChapterCreatureStaticCardData creature)
+        {
+            if (m_creatureDetailWidget == null)
+            {
+                return;
+            }
+
+            m_creatureDetailWidget.ResetPreview(creature);
+
+            string previewPath = ChapterEditorPersistenceService.ResolveCreaturePreviewPath(creature.PreviewImageFileName);
+            if (string.IsNullOrWhiteSpace(previewPath))
+            {
+                CleanupCreatureDetailPreviewResources();
+                return;
+            }
+
+            if (string.Equals(m_loadedCreaturePreviewPath, previewPath, StringComparison.OrdinalIgnoreCase) && m_creatureDetailPreviewSprite != null)
+            {
+                m_creatureDetailWidget.SetPreviewSprite(m_creatureDetailPreviewSprite);
+                return;
+            }
+
+            CleanupCreatureDetailPreviewResources();
+            int loadVersion = ++m_creatureDetailPreviewLoadVersion;
+            LoadCreatureDetailPreviewAsync(previewPath, loadVersion).Forget();
+        }
+
+        private async UniTaskVoid LoadCreatureDetailPreviewAsync(string previewPath, int loadVersion)
+        {
+            byte[] imageBytes;
+            try
+            {
+                imageBytes = await UniTask.RunOnThreadPool(() => File.ReadAllBytes(previewPath));
+            }
+            catch (Exception exception)
+            {
+                Log.Warning($"读取生物详情预览图失败: {exception.Message}");
+                return;
+            }
+
+            if (loadVersion != m_creatureDetailPreviewLoadVersion || m_creatureDetailWidget == null)
+            {
+                return;
+            }
+
+            Texture2D previewTexture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            if (!previewTexture.LoadImage(imageBytes))
+            {
+                Object.Destroy(previewTexture);
+                Log.Warning("生物详情预览图加载失败，文件不是有效图片。");
+                return;
+            }
+
+            Sprite previewSprite = Sprite.Create(
+                previewTexture,
+                new Rect(0, 0, previewTexture.width, previewTexture.height),
+                new Vector2(0.5f, 0.5f));
+
+            CleanupCreatureDetailPreviewResources();
+            m_creatureDetailPreviewTexture = previewTexture;
+            m_creatureDetailPreviewSprite = previewSprite;
+            m_loadedCreaturePreviewPath = previewPath;
+            m_creatureDetailWidget.SetPreviewSprite(previewSprite);
+        }
+
+        private void CleanupCreatureDetailPreviewResources()
+        {
+            m_loadedCreaturePreviewPath = string.Empty;
+
+            if (m_creatureDetailPreviewSprite != null)
+            {
+                Object.Destroy(m_creatureDetailPreviewSprite);
+                m_creatureDetailPreviewSprite = null!;
+            }
+
+            if (m_creatureDetailPreviewTexture != null)
+            {
+                Object.Destroy(m_creatureDetailPreviewTexture);
+                m_creatureDetailPreviewTexture = null!;
+            }
         }
 
         private void SetCreatureSearchKeyword(string keyword)

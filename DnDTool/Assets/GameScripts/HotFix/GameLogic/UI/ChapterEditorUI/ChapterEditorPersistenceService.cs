@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System;
 using TEngine;
 using UnityEngine;
 
@@ -10,6 +11,51 @@ namespace GameLogic
         public static string GetSaveFilePath(string fileName)
         {
             return Path.Combine(UnityEngine.Application.persistentDataPath, "ChapterEditor", fileName);
+        }
+
+        public static string GetCreaturePreviewDirectoryPath()
+        {
+            return Path.Combine(UnityEngine.Application.persistentDataPath, "ChapterCreaturePreviews");
+        }
+
+        public static string ResolveCreaturePreviewPath(string previewImageFileName)
+        {
+            if (string.IsNullOrWhiteSpace(previewImageFileName))
+            {
+                return string.Empty;
+            }
+
+            if (Path.IsPathRooted(previewImageFileName))
+            {
+                return File.Exists(previewImageFileName) ? previewImageFileName : string.Empty;
+            }
+
+            string resolvedPath = Path.Combine(GetCreaturePreviewDirectoryPath(), previewImageFileName);
+            return File.Exists(resolvedPath) ? resolvedPath : string.Empty;
+        }
+
+        public static string StoreCreaturePreviewImage(string sourceFilePath)
+        {
+            if (string.IsNullOrWhiteSpace(sourceFilePath) || !File.Exists(sourceFilePath))
+            {
+                return string.Empty;
+            }
+
+            string sourceFullPath = Path.GetFullPath(sourceFilePath);
+            string targetDirectoryPath = GetCreaturePreviewDirectoryPath();
+            Directory.CreateDirectory(targetDirectoryPath);
+
+            string targetDirectoryFullPath = Path.GetFullPath(targetDirectoryPath);
+            if (sourceFullPath.StartsWith(targetDirectoryFullPath, StringComparison.OrdinalIgnoreCase))
+            {
+                return Path.GetFileName(sourceFullPath);
+            }
+
+            string extension = Path.GetExtension(sourceFullPath);
+            string targetFileName = $"creature_{DateTime.Now:yyyyMMddHHmmssfff}{extension}";
+            string targetFilePath = Path.Combine(targetDirectoryPath, targetFileName);
+            File.Copy(sourceFullPath, targetFilePath, true);
+            return targetFileName;
         }
 
         public static ChapterEditorSaveData Load(string filePath)
