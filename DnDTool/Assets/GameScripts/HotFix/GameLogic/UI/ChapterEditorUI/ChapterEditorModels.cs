@@ -83,6 +83,12 @@ namespace GameLogic
 
     internal sealed class ChapterGridEventData
     {
+        public string EventId { get; set; } = string.Empty;
+
+        public bool IsEnabled { get; set; } = true;
+
+        public bool IsOneShot { get; set; }
+
         public int EventCategory { get; set; }
 
         public int EventSubType { get; set; }
@@ -140,6 +146,15 @@ namespace GameLogic
         public ChapterGridEventData EventData { get; set; }
     }
 
+    internal sealed class ChapterEventBindingData
+    {
+        public string BindingId { get; set; } = string.Empty;
+
+        public string EventId { get; set; } = string.Empty;
+
+        public List<ChapterGridCoordinate> GridCoordinates { get; set; } = new List<ChapterGridCoordinate>();
+    }
+
     internal sealed class ChapterListItemData
     {
         public int Id { get; set; }
@@ -165,6 +180,10 @@ namespace GameLogic
         public ChapterMapGridStateData MapGridState { get; set; } = new ChapterMapGridStateData();
 
         public List<ChapterGridCellData> GridCells { get; set; } = new List<ChapterGridCellData>();
+
+        public List<ChapterGridEventData> Events { get; set; } = new List<ChapterGridEventData>();
+
+        public List<ChapterEventBindingData> EventBindings { get; set; } = new List<ChapterEventBindingData>();
 
         public List<ChapterCreatureData> Creatures { get; set; } = new List<ChapterCreatureData>();
     }
@@ -201,6 +220,8 @@ namespace GameLogic
         public float LockedGridToMapZoomRatio = 1f;
         public Vector2 LockedGridToMapPanDelta = Vector2.zero;
         public List<ChapterGridCellSaveData> GridCells = new List<ChapterGridCellSaveData>();
+        public List<ChapterGridEventSaveData> Events = new List<ChapterGridEventSaveData>();
+        public List<ChapterEventBindingSaveData> EventBindings = new List<ChapterEventBindingSaveData>();
         public List<string> SelectedGridCellKeys = new List<string>();
         public List<ChapterCreatureDataSaveData> Creatures = new List<ChapterCreatureDataSaveData>();
     }
@@ -217,6 +238,9 @@ namespace GameLogic
     [Serializable]
     internal sealed class ChapterGridEventSaveData
     {
+        public string EventId = string.Empty;
+        public bool IsEnabled = true;
+        public bool IsOneShot;
         public int EventType = 2;
         public int EventCategory;
         public int EventSubType;
@@ -238,6 +262,21 @@ namespace GameLogic
         public string AbilityIntelligenceThreshold = string.Empty;
         public string AbilityWisdomThreshold = string.Empty;
         public string AbilityCharismaThreshold = string.Empty;
+    }
+
+    [Serializable]
+    internal sealed class ChapterEventBindingSaveData
+    {
+        public string BindingId = string.Empty;
+        public string EventId = string.Empty;
+        public List<ChapterGridCoordinateSaveData> GridCoordinates = new List<ChapterGridCoordinateSaveData>();
+    }
+
+    [Serializable]
+    internal sealed class ChapterGridCoordinateSaveData
+    {
+        public int CellX;
+        public int CellY;
     }
 
     [Serializable]

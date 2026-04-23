@@ -552,15 +552,30 @@ namespace GameLogic
 
         private sealed class DetailFieldSectionCard : IDetailSectionCard
         {
+            private sealed class FieldRowLayout
+            {
+                public FieldRowLayout(int[] fieldIndices, float topGap)
+                {
+                    FieldIndices = fieldIndices;
+                    TopGap = topGap;
+                }
+
+                public int[] FieldIndices { get; }
+
+                public float TopGap { get; }
+            }
+
             private readonly GameObject m_root;
             private readonly RectTransform m_rootRect;
             private readonly LayoutElement m_layoutElement;
             private readonly TMP_Text m_title;
             private readonly RectTransform m_titleRect;
             private readonly float m_titleMinHeight;
+            private readonly float m_titleTopOffset;
             private readonly TMP_Text[] m_fields;
             private readonly RectTransform[] m_fieldRects;
             private readonly float[] m_fieldMinHeights;
+            private readonly FieldRowLayout[] m_rows;
             private readonly float m_bottomPadding;
 
             public DetailFieldSectionCard(Transform owner, string rootName, params string[] fieldNames)
@@ -571,6 +586,7 @@ namespace GameLogic
                     m_fields = Array.Empty<TMP_Text>();
                     m_fieldRects = Array.Empty<RectTransform>();
                     m_fieldMinHeights = Array.Empty<float>();
+                    m_rows = Array.Empty<FieldRowLayout>();
                     return;
                 }
 
@@ -580,6 +596,7 @@ namespace GameLogic
                 m_title = FindChildComponent<TMP_Text>(root, "m_tmpSectionTitle");
                 m_titleRect = m_title != null ? m_title.rectTransform : null;
                 m_titleMinHeight = m_titleRect != null ? GetCurrentHeight(m_titleRect) : 0f;
+                m_titleTopOffset = GetTop(m_titleRect);
                 m_fields = new TMP_Text[fieldNames.Length];
                 m_fieldRects = new RectTransform[fieldNames.Length];
                 m_fieldMinHeights = new float[fieldNames.Length];
@@ -590,6 +607,7 @@ namespace GameLogic
                     m_fieldMinHeights[index] = m_fieldRects[index] != null ? GetCurrentHeight(m_fieldRects[index]) : 0f;
                 }
 
+                m_rows = BuildRows(m_fieldRects, m_titleRect, m_fieldMinHeights);
                 m_bottomPadding = CalculateBottomPadding(m_rootRect, CombineRects(m_titleRect, m_fieldRects));
             }
 
@@ -651,20 +669,50 @@ namespace GameLogic
                     return;
                 }
 
+                SetRectTop(m_titleRect, m_titleTopOffset);
                 UpdateTextHeight(m_title, m_titleRect, m_titleMinHeight);
 
                 float maxBottom = GetBottom(m_titleRect);
-                for (int index = 0; index < m_fields.Length; index++)
+                for (int rowIndex = 0; rowIndex < m_rows.Length; rowIndex++)
                 {
-                    TMP_Text field = m_fields[index];
-                    RectTransform fieldRect = m_fieldRects[index];
-                    if (field == null || fieldRect == null || !field.gameObject.activeSelf)
+                    FieldRowLayout row = m_rows[rowIndex];
+                    bool rowVisible = false;
+                    float rowHeight = 0f;
+                    for (int fieldIndexIndex = 0; fieldIndexIndex < row.FieldIndices.Length; fieldIndexIndex++)
+                    {
+                        int fieldIndex = row.FieldIndices[fieldIndexIndex];
+                        TMP_Text field = m_fields[fieldIndex];
+                        RectTransform fieldRect = m_fieldRects[fieldIndex];
+                        if (field == null || fieldRect == null || !field.gameObject.activeSelf)
+                        {
+                            continue;
+                        }
+
+                        UpdateTextHeight(field, fieldRect, m_fieldMinHeights[fieldIndex]);
+                        rowHeight = Mathf.Max(rowHeight, GetCurrentHeight(fieldRect));
+                        rowVisible = true;
+                    }
+
+                    if (!rowVisible)
                     {
                         continue;
                     }
 
-                    UpdateTextHeight(field, fieldRect, m_fieldMinHeights[index]);
-                    maxBottom = Mathf.Max(maxBottom, GetBottom(fieldRect));
+                    float rowTop = maxBottom + row.TopGap;
+                    for (int fieldIndexIndex = 0; fieldIndexIndex < row.FieldIndices.Length; fieldIndexIndex++)
+                    {
+                        int fieldIndex = row.FieldIndices[fieldIndexIndex];
+                        TMP_Text field = m_fields[fieldIndex];
+                        RectTransform fieldRect = m_fieldRects[fieldIndex];
+                        if (field == null || fieldRect == null || !field.gameObject.activeSelf)
+                        {
+                            continue;
+                        }
+
+                        SetRectTop(fieldRect, rowTop);
+                    }
+
+                    maxBottom = rowTop + rowHeight;
                 }
 
                 float targetHeight = maxBottom + m_bottomPadding;
@@ -674,6 +722,69 @@ namespace GameLogic
                     m_layoutElement.minHeight = targetHeight;
                     m_layoutElement.preferredHeight = targetHeight;
                 }
+            }
+
+            private static FieldRowLayout[] BuildRows(RectTransform[] fieldRects, RectTransform titleRect, float[] fieldMinHeights)
+            {
+                List<(float top, List<int> indices)> groupedRows = new List<(float top, List<int> indices)>();
+                for (int index = 0; index < fieldRects.Length; index++)
+                {
+                    RectTransform fieldRect = fieldRects[index];
+                    if (fieldRect == null)
+                    {
+                        continue;
+                    }
+
+                    float top = GetTop(fieldRect);
+                    bool grouped = false;
+                    for (int rowIndex = 0; rowIndex < groupedRows.Count; rowIndex++)
+                    {
+                        if (Mathf.Abs(groupedRows[rowIndex].top - top) > 0.5f)
+                        {
+                            continue;
+                        }
+
+                        groupedRows[rowIndex].indices.Add(index);
+                        grouped = true;
+                        break;
+                    }
+
+                    if (!grouped)
+                    {
+                        groupedRows.Add((top, new List<int> {index}));
+                    }
+                }
+
+                groupedRows.Sort((left, right) => left.top.CompareTo(right.top));
+
+                List<FieldRowLayout> rows = new List<FieldRowLayout>(groupedRows.Count);
+                float previousBottom = GetBottom(titleRect);
+                for (int rowIndex = 0; rowIndex < groupedRows.Count; rowIndex++)
+                {
+                    List<int> indices = groupedRows[rowIndex].indices;
+                    indices.Sort((left, right) =>
+                    {
+                        RectTransform leftRect = fieldRects[left];
+                        RectTransform rightRect = fieldRects[right];
+                        float leftX = leftRect != null ? leftRect.anchoredPosition.x : 0f;
+                        float rightX = rightRect != null ? rightRect.anchoredPosition.x : 0f;
+                        return leftX.CompareTo(rightX);
+                    });
+
+                    float rowTop = groupedRows[rowIndex].top;
+                    float rowBottom = rowTop;
+                    for (int index = 0; index < indices.Count; index++)
+                    {
+                        int fieldIndex = indices[index];
+                        rowBottom = Mathf.Max(rowBottom, rowTop + fieldMinHeights[fieldIndex]);
+                    }
+
+                    float topGap = Mathf.Max(0f, rowTop - previousBottom);
+                    rows.Add(new FieldRowLayout(indices.ToArray(), topGap));
+                    previousBottom = rowBottom;
+                }
+
+                return rows.ToArray();
             }
         }
 
@@ -685,9 +796,11 @@ namespace GameLogic
             private readonly TMP_Text m_title;
             private readonly RectTransform m_titleRect;
             private readonly float m_titleMinHeight;
+            private readonly float m_titleTopOffset;
             private readonly TMP_Text m_content;
             private readonly RectTransform m_contentRect;
             private readonly float m_contentMinHeight;
+            private readonly float m_contentTopGap;
             private readonly float m_bottomPadding;
 
             public DetailBlockSectionCard(Transform owner, string rootName, string contentName)
@@ -704,10 +817,12 @@ namespace GameLogic
                 m_title = FindChildComponent<TMP_Text>(root, "m_tmpSectionTitle");
                 m_titleRect = m_title != null ? m_title.rectTransform : null;
                 m_titleMinHeight = m_titleRect != null ? GetCurrentHeight(m_titleRect) : 0f;
+                m_titleTopOffset = GetTop(m_titleRect);
                 m_content = FindChildComponent<TMP_Text>(root, contentName)
                     ?? FindChildComponent<TMP_Text>(root, "m_tmpSectionContent");
                 m_contentRect = m_content != null ? m_content.rectTransform : null;
                 m_contentMinHeight = m_contentRect != null ? GetCurrentHeight(m_contentRect) : 0f;
+                m_contentTopGap = Mathf.Max(0f, GetTop(m_contentRect) - GetBottom(m_titleRect));
                 m_bottomPadding = CalculateBottomPadding(m_rootRect, m_titleRect, m_contentRect);
             }
 
@@ -747,7 +862,9 @@ namespace GameLogic
                     return;
                 }
 
+                SetRectTop(m_titleRect, m_titleTopOffset);
                 UpdateTextHeight(m_title, m_titleRect, m_titleMinHeight);
+                SetRectTop(m_contentRect, GetBottom(m_titleRect) + m_contentTopGap);
                 UpdateTextHeight(m_content, m_contentRect, m_contentMinHeight);
 
                 float targetHeight = Mathf.Max(GetBottom(m_titleRect), GetBottom(m_contentRect)) + m_bottomPadding;
@@ -775,6 +892,16 @@ namespace GameLogic
             }
 
             return Mathf.Max(0f, rootHeight - maxBottom);
+        }
+
+        private static float GetTop(RectTransform rectTransform)
+        {
+            if (rectTransform == null)
+            {
+                return 0f;
+            }
+
+            return -rectTransform.anchoredPosition.y;
         }
 
         private static RectTransform[] CombineRects(RectTransform first, RectTransform[] others)
@@ -855,6 +982,18 @@ namespace GameLogic
             Vector2 sizeDelta = rectTransform.sizeDelta;
             sizeDelta.y = height;
             rectTransform.sizeDelta = sizeDelta;
+        }
+
+        private static void SetRectTop(RectTransform rectTransform, float top)
+        {
+            if (rectTransform == null)
+            {
+                return;
+            }
+
+            Vector2 anchoredPosition = rectTransform.anchoredPosition;
+            anchoredPosition.y = -top;
+            rectTransform.anchoredPosition = anchoredPosition;
         }
 
         private static T FindChildComponent<T>(Transform root, string path) where T : Component

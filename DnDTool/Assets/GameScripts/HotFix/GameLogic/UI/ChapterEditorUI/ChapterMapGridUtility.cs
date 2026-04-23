@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -499,6 +500,9 @@ namespace GameLogic
 
             return new ChapterGridEventData
             {
+                EventId = source.EventId ?? string.Empty,
+                IsEnabled = source.IsEnabled,
+                IsOneShot = source.IsOneShot,
                 EventCategory = source.EventCategory,
                 EventSubType = source.EventSubType,
                 TriggerMode = source.TriggerMode,
@@ -509,6 +513,7 @@ namespace GameLogic
                 SuccessResult = source.SuccessResult ?? string.Empty,
                 FailureResult = source.FailureResult ?? string.Empty,
                 DmNote = source.DmNote ?? string.Empty,
+                DmPrompt = source.DmPrompt ?? string.Empty,
                 SkillCheckEntries = skillCheckEntries,
                 SkillCheckName = source.SkillCheckName ?? string.Empty,
                 SkillCheckThreshold = source.SkillCheckThreshold ?? string.Empty,
@@ -556,6 +561,339 @@ namespace GameLogic
         {
             return markType == ChapterGridCellMarkType.DifficultTerrain
                 || markType == ChapterGridCellMarkType.ImpassableTerrain;
+        }
+    }
+
+    internal static class ChapterEventCollectionUtility
+    {
+        public static List<ChapterGridEventData> CloneEvents(List<ChapterGridEventData> source)
+        {
+            List<ChapterGridEventData> result = new List<ChapterGridEventData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                ChapterGridEventData eventData = ChapterGridCellCollectionUtility.CloneEventData(source[index]);
+                if (eventData != null)
+                {
+                    result.Add(eventData);
+                }
+            }
+
+            return result;
+        }
+
+        public static List<ChapterEventBindingData> CloneBindings(List<ChapterEventBindingData> source)
+        {
+            List<ChapterEventBindingData> result = new List<ChapterEventBindingData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                ChapterEventBindingData binding = source[index];
+                if (binding == null)
+                {
+                    continue;
+                }
+
+                result.Add(new ChapterEventBindingData
+                {
+                    BindingId = binding.BindingId ?? string.Empty,
+                    EventId = binding.EventId ?? string.Empty,
+                    GridCoordinates = CloneCoordinates(binding.GridCoordinates),
+                });
+            }
+
+            return result;
+        }
+
+        public static void UpsertEventDefinition(List<ChapterGridEventData> events, ChapterGridEventData eventData)
+        {
+            if (events == null || eventData == null)
+            {
+                return;
+            }
+
+            ChapterGridEventData normalizedEvent = ChapterGridCellCollectionUtility.CloneEventData(eventData);
+            normalizedEvent.EventId = EnsureEventId(normalizedEvent.EventId);
+
+            int existingIndex = FindEventIndex(events, normalizedEvent.EventId);
+            if (existingIndex >= 0)
+            {
+                events[existingIndex] = normalizedEvent;
+                return;
+            }
+
+            events.Add(normalizedEvent);
+        }
+
+        public static int AssignEventToCoordinates(List<ChapterGridEventData> events, List<ChapterEventBindingData> bindings, IEnumerable<ChapterGridCoordinate> coordinates, ChapterGridEventData eventData)
+        {
+            if (events == null || bindings == null || eventData == null)
+            {
+                return 0;
+            }
+
+            List<ChapterGridCoordinate> uniqueCoordinates = BuildUniqueCoordinateList(coordinates);
+            if (uniqueCoordinates.Count <= 0)
+            {
+                return 0;
+            }
+
+            ChapterGridEventData normalizedEvent = ChapterGridCellCollectionUtility.CloneEventData(eventData);
+            normalizedEvent.EventId = EnsureEventId(normalizedEvent.EventId);
+            UpsertEventDefinition(events, normalizedEvent);
+
+            RemoveCoordinatesFromBindings(bindings, uniqueCoordinates);
+            bindings.Add(new ChapterEventBindingData
+            {
+                BindingId = CreateBindingId(),
+                EventId = normalizedEvent.EventId,
+                GridCoordinates = uniqueCoordinates,
+            });
+
+            RemoveOrphanEvents(events, bindings);
+            return uniqueCoordinates.Count;
+        }
+
+        public static int RemoveEventsAtCoordinates(List<ChapterGridEventData> events, List<ChapterEventBindingData> bindings, IEnumerable<ChapterGridCoordinate> coordinates)
+        {
+            if (bindings == null)
+            {
+                return 0;
+            }
+
+            List<ChapterGridCoordinate> uniqueCoordinates = BuildUniqueCoordinateList(coordinates);
+            if (uniqueCoordinates.Count <= 0)
+            {
+                return 0;
+            }
+
+            int removedCount = RemoveCoordinatesFromBindings(bindings, uniqueCoordinates);
+            RemoveOrphanEvents(events, bindings);
+            return removedCount;
+        }
+
+        public static bool TryGetEventData(List<ChapterGridEventData> events, List<ChapterEventBindingData> bindings, ChapterGridCoordinate coordinate, out ChapterGridEventData eventData)
+        {
+            eventData = null;
+            if (!TryGetBinding(bindings, coordinate, out ChapterEventBindingData binding))
+            {
+                return false;
+            }
+
+            int eventIndex = FindEventIndex(events, binding.EventId);
+            if (eventIndex < 0)
+            {
+                return false;
+            }
+
+            eventData = ChapterGridCellCollectionUtility.CloneEventData(events[eventIndex]);
+            return eventData != null;
+        }
+
+        public static bool HasEventAtCoordinate(List<ChapterEventBindingData> bindings, ChapterGridCoordinate coordinate)
+        {
+            return TryGetBinding(bindings, coordinate, out _);
+        }
+
+        public static List<ChapterGridCoordinate> CollectBoundCoordinates(List<ChapterEventBindingData> bindings)
+        {
+            List<ChapterGridCoordinate> result = new List<ChapterGridCoordinate>();
+            if (bindings == null)
+            {
+                return result;
+            }
+
+            HashSet<ChapterGridCoordinate> coordinateSet = new HashSet<ChapterGridCoordinate>();
+            for (int bindingIndex = 0; bindingIndex < bindings.Count; bindingIndex++)
+            {
+                ChapterEventBindingData binding = bindings[bindingIndex];
+                if (binding?.GridCoordinates == null)
+                {
+                    continue;
+                }
+
+                for (int coordinateIndex = 0; coordinateIndex < binding.GridCoordinates.Count; coordinateIndex++)
+                {
+                    ChapterGridCoordinate coordinate = binding.GridCoordinates[coordinateIndex];
+                    if (coordinateSet.Add(coordinate))
+                    {
+                        result.Add(coordinate);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static bool TryGetBinding(List<ChapterEventBindingData> bindings, ChapterGridCoordinate coordinate, out ChapterEventBindingData binding)
+        {
+            binding = null;
+            if (bindings == null)
+            {
+                return false;
+            }
+
+            for (int bindingIndex = 0; bindingIndex < bindings.Count; bindingIndex++)
+            {
+                ChapterEventBindingData candidate = bindings[bindingIndex];
+                if (candidate?.GridCoordinates == null)
+                {
+                    continue;
+                }
+
+                for (int coordinateIndex = 0; coordinateIndex < candidate.GridCoordinates.Count; coordinateIndex++)
+                {
+                    if (!candidate.GridCoordinates[coordinateIndex].Equals(coordinate))
+                    {
+                        continue;
+                    }
+
+                    binding = candidate;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static int FindEventIndex(List<ChapterGridEventData> events, string eventId)
+        {
+            if (events == null || string.IsNullOrWhiteSpace(eventId))
+            {
+                return -1;
+            }
+
+            for (int index = 0; index < events.Count; index++)
+            {
+                if (events[index] != null && string.Equals(events[index].EventId, eventId, StringComparison.Ordinal))
+                {
+                    return index;
+                }
+            }
+
+            return -1;
+        }
+
+        private static int RemoveCoordinatesFromBindings(List<ChapterEventBindingData> bindings, List<ChapterGridCoordinate> coordinates)
+        {
+            if (bindings == null || coordinates == null || coordinates.Count <= 0)
+            {
+                return 0;
+            }
+
+            HashSet<ChapterGridCoordinate> coordinateSet = new HashSet<ChapterGridCoordinate>(coordinates);
+            int removedCount = 0;
+            for (int bindingIndex = bindings.Count - 1; bindingIndex >= 0; bindingIndex--)
+            {
+                ChapterEventBindingData binding = bindings[bindingIndex];
+                if (binding?.GridCoordinates == null)
+                {
+                    bindings.RemoveAt(bindingIndex);
+                    continue;
+                }
+
+                for (int coordinateIndex = binding.GridCoordinates.Count - 1; coordinateIndex >= 0; coordinateIndex--)
+                {
+                    if (!coordinateSet.Contains(binding.GridCoordinates[coordinateIndex]))
+                    {
+                        continue;
+                    }
+
+                    binding.GridCoordinates.RemoveAt(coordinateIndex);
+                    removedCount++;
+                }
+
+                if (binding.GridCoordinates.Count <= 0)
+                {
+                    bindings.RemoveAt(bindingIndex);
+                }
+            }
+
+            return removedCount;
+        }
+
+        private static void RemoveOrphanEvents(List<ChapterGridEventData> events, List<ChapterEventBindingData> bindings)
+        {
+            if (events == null)
+            {
+                return;
+            }
+
+            HashSet<string> referencedEventIds = new HashSet<string>(StringComparer.Ordinal);
+            if (bindings != null)
+            {
+                for (int index = 0; index < bindings.Count; index++)
+                {
+                    string eventId = bindings[index]?.EventId;
+                    if (!string.IsNullOrWhiteSpace(eventId))
+                    {
+                        referencedEventIds.Add(eventId);
+                    }
+                }
+            }
+
+            for (int index = events.Count - 1; index >= 0; index--)
+            {
+                ChapterGridEventData eventData = events[index];
+                if (eventData == null || !referencedEventIds.Contains(eventData.EventId))
+                {
+                    events.RemoveAt(index);
+                }
+            }
+        }
+
+        private static string EnsureEventId(string eventId)
+        {
+            return string.IsNullOrWhiteSpace(eventId) ? $"evt_{Guid.NewGuid():N}" : eventId;
+        }
+
+        private static string CreateBindingId()
+        {
+            return $"bind_{Guid.NewGuid():N}";
+        }
+
+        private static List<ChapterGridCoordinate> BuildUniqueCoordinateList(IEnumerable<ChapterGridCoordinate> coordinates)
+        {
+            List<ChapterGridCoordinate> result = new List<ChapterGridCoordinate>();
+            if (coordinates == null)
+            {
+                return result;
+            }
+
+            HashSet<ChapterGridCoordinate> coordinateSet = new HashSet<ChapterGridCoordinate>();
+            foreach (ChapterGridCoordinate coordinate in coordinates)
+            {
+                if (coordinateSet.Add(coordinate))
+                {
+                    result.Add(coordinate);
+                }
+            }
+
+            return result;
+        }
+
+        private static List<ChapterGridCoordinate> CloneCoordinates(List<ChapterGridCoordinate> source)
+        {
+            List<ChapterGridCoordinate> result = new List<ChapterGridCoordinate>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                result.Add(source[index]);
+            }
+
+            return result;
         }
     }
 }

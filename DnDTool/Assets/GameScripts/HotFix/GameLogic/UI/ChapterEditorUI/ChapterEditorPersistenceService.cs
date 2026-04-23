@@ -156,7 +156,9 @@ namespace GameLogic
                 for (int index = 0; index < gridCells.Count; index++)
                 {
                     ChapterGridCellData gridCell = gridCells[index];
-                    if (gridCell == null || gridCell.MarkType == ChapterGridCellMarkType.Selected)
+                    if (gridCell == null
+                        || gridCell.MarkType == ChapterGridCellMarkType.Selected
+                        || gridCell.MarkType == ChapterGridCellMarkType.Event)
                     {
                         continue;
                     }
@@ -170,6 +172,32 @@ namespace GameLogic
                             ? ToSaveData(gridCell.EventData)
                             : null,
                     });
+                }
+            }
+
+            List<ChapterGridEventData> events = chapter?.Events;
+            if (events != null)
+            {
+                for (int index = 0; index < events.Count; index++)
+                {
+                    ChapterGridEventSaveData savedEvent = ToSaveData(events[index]);
+                    if (savedEvent != null)
+                    {
+                        saveData.Events.Add(savedEvent);
+                    }
+                }
+            }
+
+            List<ChapterEventBindingData> eventBindings = chapter?.EventBindings;
+            if (eventBindings != null)
+            {
+                for (int index = 0; index < eventBindings.Count; index++)
+                {
+                    ChapterEventBindingSaveData savedBinding = ToSaveData(eventBindings[index]);
+                    if (savedBinding != null)
+                    {
+                        saveData.EventBindings.Add(savedBinding);
+                    }
                 }
             }
 
@@ -191,6 +219,8 @@ namespace GameLogic
         private static ChapterListItemData ToRuntimeData(ChapterItemSaveData chapter)
         {
             List<ChapterGridCellData> gridCells = new List<ChapterGridCellData>();
+            List<ChapterGridEventData> events = new List<ChapterGridEventData>();
+            List<ChapterEventBindingData> eventBindings = new List<ChapterEventBindingData>();
             if (chapter.GridCells != null && chapter.GridCells.Count > 0)
             {
                 for (int index = 0; index < chapter.GridCells.Count; index++)
@@ -201,17 +231,76 @@ namespace GameLogic
                         continue;
                     }
 
+                    if (gridCell.MarkType == (int) ChapterGridCellMarkType.Event)
+                    {
+                        ChapterGridEventData legacyEvent = ToRuntimeData(gridCell.EventData);
+                        if (legacyEvent != null)
+                        {
+                            if (string.IsNullOrWhiteSpace(legacyEvent.EventId))
+                            {
+                                legacyEvent.EventId = $"evt_{Guid.NewGuid():N}";
+                            }
+
+                            events.Add(legacyEvent);
+                            eventBindings.Add(new ChapterEventBindingData
+                            {
+                                BindingId = $"bind_{Guid.NewGuid():N}",
+                                EventId = legacyEvent.EventId,
+                                GridCoordinates = new List<ChapterGridCoordinate>
+                                {
+                                    new ChapterGridCoordinate(gridCell.CellX, gridCell.CellY),
+                                },
+                            });
+                        }
+
+                        continue;
+                    }
+
                     gridCells.Add(new ChapterGridCellData
                     {
                         Coordinate = new ChapterGridCoordinate(gridCell.CellX, gridCell.CellY),
                         MarkType = System.Enum.IsDefined(typeof(ChapterGridCellMarkType), gridCell.MarkType)
                             ? (ChapterGridCellMarkType) gridCell.MarkType
                             : ChapterGridCellMarkType.Selected,
-                        EventData = ToRuntimeData(gridCell.EventData),
+                        EventData = null,
                     });
                 }
 
                 ChapterGridCellCollectionUtility.NormalizeExclusiveTerrainMarks(gridCells);
+            }
+
+            if (chapter.Events != null && chapter.Events.Count > 0)
+            {
+                for (int index = 0; index < chapter.Events.Count; index++)
+                {
+                    ChapterGridEventData eventData = ToRuntimeData(chapter.Events[index]);
+                    if (eventData != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(eventData.EventId))
+                        {
+                            eventData.EventId = $"evt_{Guid.NewGuid():N}";
+                        }
+
+                        events.Add(eventData);
+                    }
+                }
+            }
+
+            if (chapter.EventBindings != null && chapter.EventBindings.Count > 0)
+            {
+                for (int index = 0; index < chapter.EventBindings.Count; index++)
+                {
+                    ChapterEventBindingData binding = ToRuntimeData(chapter.EventBindings[index]);
+                    if (binding != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(binding.BindingId))
+                        {
+                            binding.BindingId = $"bind_{Guid.NewGuid():N}";
+                        }
+
+                        eventBindings.Add(binding);
+                    }
+                }
             }
 
             ChapterListItemData result = new ChapterListItemData
@@ -240,6 +329,8 @@ namespace GameLogic
                     LockedGridToMapPanDelta = chapter.LockedGridToMapPanDelta,
                 },
                 GridCells = gridCells,
+                Events = events,
+                EventBindings = eventBindings,
             };
 
             if (chapter.Creatures != null && chapter.Creatures.Count > 0)
@@ -367,6 +458,9 @@ namespace GameLogic
 
             return new ChapterGridEventSaveData
             {
+                EventId = eventData.EventId ?? string.Empty,
+                IsEnabled = eventData.IsEnabled,
+                IsOneShot = eventData.IsOneShot,
                 EventType = MigrateEventCategoryToOldType(eventData.EventCategory, eventData.EventSubType),
                 EventCategory = eventData.EventCategory,
                 EventSubType = eventData.EventSubType,
@@ -428,6 +522,9 @@ namespace GameLogic
 
             return new ChapterGridEventData
             {
+                EventId = eventData.EventId ?? string.Empty,
+                IsEnabled = eventData.IsEnabled,
+                IsOneShot = eventData.IsOneShot,
                 EventCategory = ResolveEventCategory(eventData.EventCategory, eventData.EventType),
                 EventSubType = ResolveEventSubType(eventData.EventCategory, eventData.EventSubType, eventData.EventType),
                 TriggerMode = eventData.TriggerMode,
@@ -449,6 +546,62 @@ namespace GameLogic
                 AbilityWisdomThreshold = eventData.AbilityWisdomThreshold ?? string.Empty,
                 AbilityCharismaThreshold = eventData.AbilityCharismaThreshold ?? string.Empty,
             };
+        }
+
+        private static ChapterEventBindingSaveData ToSaveData(ChapterEventBindingData binding)
+        {
+            if (binding == null || string.IsNullOrWhiteSpace(binding.EventId) || binding.GridCoordinates == null || binding.GridCoordinates.Count <= 0)
+            {
+                return null;
+            }
+
+            ChapterEventBindingSaveData saveData = new ChapterEventBindingSaveData
+            {
+                BindingId = binding.BindingId ?? string.Empty,
+                EventId = binding.EventId ?? string.Empty,
+            };
+
+            for (int index = 0; index < binding.GridCoordinates.Count; index++)
+            {
+                ChapterGridCoordinate coordinate = binding.GridCoordinates[index];
+                saveData.GridCoordinates.Add(new ChapterGridCoordinateSaveData
+                {
+                    CellX = coordinate.CellX,
+                    CellY = coordinate.CellY,
+                });
+            }
+
+            return saveData;
+        }
+
+        private static ChapterEventBindingData ToRuntimeData(ChapterEventBindingSaveData binding)
+        {
+            if (binding == null || string.IsNullOrWhiteSpace(binding.EventId))
+            {
+                return null;
+            }
+
+            ChapterEventBindingData result = new ChapterEventBindingData
+            {
+                BindingId = binding.BindingId ?? string.Empty,
+                EventId = binding.EventId ?? string.Empty,
+            };
+
+            if (binding.GridCoordinates != null)
+            {
+                for (int index = 0; index < binding.GridCoordinates.Count; index++)
+                {
+                    ChapterGridCoordinateSaveData coordinate = binding.GridCoordinates[index];
+                    if (coordinate == null)
+                    {
+                        continue;
+                    }
+
+                    result.GridCoordinates.Add(new ChapterGridCoordinate(coordinate.CellX, coordinate.CellY));
+                }
+            }
+
+            return result.GridCoordinates.Count > 0 ? result : null;
         }
         private static int ResolveEventCategory(int savedCategory, int oldEventType)
         {

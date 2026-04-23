@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -159,7 +159,7 @@ namespace GameLogic
             SetupChapterList();
         }
 
-        #region 事件
+        #region 浜嬩欢
 
         private partial void OnClickAddChapterBtn()
         {
@@ -351,7 +351,7 @@ namespace GameLogic
 
             if (EventSystem.current == null)
             {
-                Log.Warning("生物区域点击探针: 当前场景不存在 EventSystem。");
+                Log.Warning("Creature board pointer probe: current scene has no EventSystem.");
                 return;
             }
 
@@ -364,7 +364,7 @@ namespace GameLogic
             EventSystem.current.RaycastAll(pointerEventData, m_creatureBoardPointerHits);
             if (m_creatureBoardPointerHits.Count <= 0)
             {
-                Log.Warning($"生物区域点击探针: 未命中任何 UI。鼠标位置 {Input.mousePosition}");
+                Log.Warning($"鐢熺墿鍖哄煙鐐瑰嚮鎺㈤拡: 鏈懡涓换浣?UI銆傞紶鏍囦綅缃?{Input.mousePosition}");
                 return;
             }
 
@@ -416,6 +416,8 @@ namespace GameLogic
                 CreatureInfo = string.Empty,
                 MapGridState = new ChapterMapGridStateData(),
                 GridCells = new List<ChapterGridCellData>(),
+                Events = new List<ChapterGridEventData>(),
+                EventBindings = new List<ChapterEventBindingData>(),
                 Creatures = new List<ChapterCreatureData>(),
             };
         }
@@ -841,6 +843,8 @@ namespace GameLogic
                         LockedGridToMapPanDelta = chapter.MapGridState?.LockedGridToMapPanDelta ?? Vector2.zero,
                     },
                     GridCells = ChapterGridCellCollectionUtility.Clone(chapter.GridCells),
+                    Events = ChapterEventCollectionUtility.CloneEvents(chapter.Events),
+                    EventBindings = ChapterEventCollectionUtility.CloneBindings(chapter.EventBindings),
                     Creatures = chapter.Creatures != null
                         ? new List<ChapterCreatureData>(chapter.Creatures)
                         : new List<ChapterCreatureData>(),
@@ -928,9 +932,9 @@ namespace GameLogic
                 return;
             }
 
-            ConfigureChapterTextInput(m_tmpInputChapterGoal, "请输入章节目标", 400);
-            ConfigureChapterTextInput(m_tmpInputStoryContent, "请输入章节内容", 0);
-            ConfigureChapterTextInput(m_tmpInputDmNote, "请输入 DM 备注", 1200);
+            ConfigureChapterTextInput(m_tmpInputChapterGoal, "Please enter the chapter goal", 400);
+            ConfigureChapterTextInput(m_tmpInputStoryContent, "Please enter the chapter content", 0);
+            ConfigureChapterTextInput(m_tmpInputDmNote, "璇疯緭鍏?DM 澶囨敞", 1200);
 
             RefreshChapterMapPreview(null!);
         }
@@ -1126,14 +1130,14 @@ namespace GameLogic
 
             if (m_tmpCreatureBrowserTitle != null)
             {
-                m_tmpCreatureBrowserTitle.text = "怪物卡片";
+                m_tmpCreatureBrowserTitle.text = "鎬墿鍗＄墖";
             }
 
             if (m_textCreatureBrowserSubtitle != null)
             {
                 m_textCreatureBrowserSubtitle.text = string.IsNullOrWhiteSpace(m_creatureSearchKeyword)
-                    ? "可按名称快速筛选，也可以录入新的生物卡片。"
-                    : $"名称筛选: {m_creatureSearchKeyword}";
+                    ? "Search by name or add a new creature card."
+                    : $"鍚嶇О绛涢€? {m_creatureSearchKeyword}";
             }
 
             RefreshCreatureFilteredCardIndices();
@@ -1180,7 +1184,7 @@ namespace GameLogic
             bool isEditMode = runtimeCreatureIndex >= 0 && runtimeCreatureIndex < m_creatureRuntimeCards.Count;
             ChapterCreatureData initialData = isEditMode ? CloneCreatureData(m_creatureRuntimeCards[runtimeCreatureIndex].Source) : null;
 
-            Log.Info(isEditMode ? "打开生物信息编辑弹窗。" : "打开生物信息录入弹窗。");
+            Log.Info(isEditMode ? "Open creature edit popup." : "Open creature entry popup.");
             GameModule.UI.ShowUIAsync<ChapterCreatureEntryPopupUI>(new ChapterCreatureEntryPopupRequest
             {
                 InitialData = initialData,
@@ -1208,14 +1212,14 @@ namespace GameLogic
 
             if (!TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
             {
-                ShowSaveFeedbackAsync("请先选中至少一个网格后再添加事件", false).Forget();
+                ShowSaveFeedbackAsync("Select at least one grid cell before adding an event.", false).Forget();
                 return;
             }
 
             ChapterGridEventData existingEventData = null;
             if (coordinates.Count == 1)
             {
-                ChapterGridCellCollectionUtility.TryGetEventData(selectedChapter.GridCells, coordinates[0], out existingEventData);
+                ChapterEventCollectionUtility.TryGetEventData(selectedChapter.Events, selectedChapter.EventBindings, coordinates[0], out existingEventData);
             }
 
             OpenChapterEventPopup(selectedChapter, coordinates, existingEventData);
@@ -1254,7 +1258,7 @@ namespace GameLogic
 
             if (!TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
             {
-                ShowSaveFeedbackAsync("请先选中至少一个网格后再删除事件", false).Forget();
+                ShowSaveFeedbackAsync("Select at least one grid cell before deleting an event.", false).Forget();
                 return;
             }
 
@@ -1276,10 +1280,22 @@ namespace GameLogic
 
             ChapterListItemData chapter = m_chapterItems[chapterIndex];
             chapter.GridCells ??= new List<ChapterGridCellData>();
+            chapter.Events ??= new List<ChapterGridEventData>();
+            chapter.EventBindings ??= new List<ChapterEventBindingData>();
 
-            for (int index = 0; index < coordinates.Count; index++)
+            bool updatedExistingSingleEvent = false;
+            if (coordinates.Count == 1
+                && ChapterEventCollectionUtility.TryGetEventData(chapter.Events, chapter.EventBindings, coordinates[0], out ChapterGridEventData existingEventData)
+                && !string.IsNullOrWhiteSpace(existingEventData?.EventId)
+                && string.Equals(existingEventData.EventId, eventData.EventId, StringComparison.Ordinal))
             {
-                ChapterGridCellCollectionUtility.UpsertEventData(chapter.GridCells, coordinates[index], eventData);
+                ChapterEventCollectionUtility.UpsertEventDefinition(chapter.Events, eventData);
+                updatedExistingSingleEvent = true;
+            }
+
+            if (!updatedExistingSingleEvent)
+            {
+                ChapterEventCollectionUtility.AssignEventToCoordinates(chapter.Events, chapter.EventBindings, coordinates, eventData);
             }
 
             ChapterGridCellCollectionUtility.ClearSelectedMarks(chapter.GridCells, coordinates);
@@ -1290,7 +1306,7 @@ namespace GameLogic
             }
 
             SaveChapterEditorState();
-            ShowSaveFeedbackAsync(coordinates.Count > 1 ? $"已为 {coordinates.Count} 个网格记录事件" : "事件已记录", true).Forget();
+            ShowSaveFeedbackAsync(coordinates.Count > 1 ? $"Recorded events for {coordinates.Count} grid cells." : "Event recorded.", true).Forget();
         }
 
         private void OnChapterGridEventDeleted(int chapterId, List<ChapterGridCoordinate> coordinates)
@@ -1308,19 +1324,14 @@ namespace GameLogic
 
             ChapterListItemData chapter = m_chapterItems[chapterIndex];
             chapter.GridCells ??= new List<ChapterGridCellData>();
+            chapter.Events ??= new List<ChapterGridEventData>();
+            chapter.EventBindings ??= new List<ChapterEventBindingData>();
 
-            int removedCount = 0;
-            for (int index = 0; index < coordinates.Count; index++)
-            {
-                if (ChapterGridCellCollectionUtility.RemoveEventData(chapter.GridCells, coordinates[index]))
-                {
-                    removedCount++;
-                }
-            }
+            int removedCount = ChapterEventCollectionUtility.RemoveEventsAtCoordinates(chapter.Events, chapter.EventBindings, coordinates);
 
             if (removedCount <= 0)
             {
-                ShowSaveFeedbackAsync("目标网格没有事件可删除", false).Forget();
+                ShowSaveFeedbackAsync("No event was found on the selected grid cells.", false).Forget();
                 return;
             }
 
@@ -1332,19 +1343,19 @@ namespace GameLogic
             }
 
             SaveChapterEditorState();
-            ShowSaveFeedbackAsync(removedCount > 1 ? $"已移除 {removedCount} 个网格的事件" : "事件已移除", true).Forget();
+            ShowSaveFeedbackAsync(removedCount > 1 ? $"Removed events from {removedCount} grid cells." : "Event removed.", true).Forget();
         }
 
-        private static bool HasGridEventAtAnyCoordinate(List<ChapterGridCellData> gridCells, List<ChapterGridCoordinate> coordinates)
+        private static bool HasGridEventAtAnyCoordinate(List<ChapterEventBindingData> eventBindings, List<ChapterGridCoordinate> coordinates)
         {
-            if (gridCells == null || coordinates == null)
+            if (eventBindings == null || coordinates == null)
             {
                 return false;
             }
 
             for (int index = 0; index < coordinates.Count; index++)
             {
-                if (ChapterGridCellCollectionUtility.HasEventAtCoordinate(gridCells, coordinates[index]))
+                if (ChapterEventCollectionUtility.HasEventAtCoordinate(eventBindings, coordinates[index]))
                 {
                     return true;
                 }
@@ -1367,7 +1378,7 @@ namespace GameLogic
             RedrawCreatureBrowserPreview();
 
             bool saved = SaveChapterEditorState();
-            ShowSaveFeedbackAsync(saved ? "生物信息已保存" : "生物信息保存失败", saved).Forget();
+            ShowSaveFeedbackAsync(saved ? "Creature saved." : "Failed to save creature.", saved).Forget();
         }
 
         private void UpdateRuntimeCreature(int runtimeCreatureIndex, ChapterCreatureData creatureData)
@@ -1383,7 +1394,7 @@ namespace GameLogic
             RedrawCreatureBrowserPreview();
 
             bool saved = SaveChapterEditorState();
-            ShowSaveFeedbackAsync(saved ? "生物信息已更新" : "生物信息更新失败", saved).Forget();
+            ShowSaveFeedbackAsync(saved ? "Creature updated." : "Failed to update creature.", saved).Forget();
         }
 
         private void DeleteRuntimeCreature(int runtimeCreatureIndex)
@@ -1409,7 +1420,7 @@ namespace GameLogic
             RedrawCreatureBrowserPreview();
 
             bool saved = SaveChapterEditorState();
-            ShowSaveFeedbackAsync(saved ? "生物信息已删除" : "生物信息删除失败", saved).Forget();
+            ShowSaveFeedbackAsync(saved ? "Creature deleted." : "Failed to delete creature.", saved).Forget();
         }
 
         private void RebuildCreatureBrowserCards()
@@ -1655,7 +1666,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Warning($"读取生物详情预览图失败: {exception.Message}");
+                Log.Warning($"璇诲彇鐢熺墿璇︽儏棰勮鍥惧け璐? {exception.Message}");
                 return;
             }
 
@@ -1668,7 +1679,7 @@ namespace GameLogic
             if (!previewTexture.LoadImage(imageBytes))
             {
                 Object.Destroy(previewTexture);
-                Log.Warning("生物详情预览图加载失败，文件不是有效图片。");
+                Log.Warning("Creature preview loading failed because the file is not a valid image.");
                 return;
             }
 
@@ -1840,7 +1851,7 @@ namespace GameLogic
             }
 
             bool saved = SaveChapterEditorState();
-            ShowSaveFeedbackAsync(saved ? "已保存" : "保存失败", saved).Forget();
+            ShowSaveFeedbackAsync(saved ? "Saved." : "Save failed.", saved).Forget();
         }
 
         private void OnClickDifficultTerrain()
@@ -1923,7 +1934,7 @@ namespace GameLogic
 
         private async UniTaskVoid UploadChapterMapAsync(ChapterListItemData chapter)
         {
-            string sourceFilePath = RuntimeImageFileDialog.OpenImageFile("选择章节地图");
+            string sourceFilePath = RuntimeImageFileDialog.OpenImageFile("閫夋嫨绔犺妭鍦板浘");
             if (string.IsNullOrEmpty(sourceFilePath))
             {
                 return;
@@ -1931,7 +1942,7 @@ namespace GameLogic
 
             if (!File.Exists(sourceFilePath))
             {
-                Log.Error($"章节地图文件不存在: {sourceFilePath}");
+                Log.Error($"绔犺妭鍦板浘鏂囦欢涓嶅瓨鍦? {sourceFilePath}");
                 return;
             }
 
@@ -1951,7 +1962,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Error($"复制章节地图失败: {exception.Message}");
+                Log.Error($"澶嶅埗绔犺妭鍦板浘澶辫触: {exception.Message}");
                 return;
             }
 
@@ -2023,7 +2034,7 @@ namespace GameLogic
 
             if (m_textUploadMapButton != null)
             {
-                m_textUploadMapButton.text = hasMap ? "重新上传地图" : "上传章节地图";
+                m_textUploadMapButton.text = hasMap ? "閲嶆柊涓婁紶鍦板浘" : "涓婁紶绔犺妭鍦板浘";
             }
 
             if (m_textAddMapHint != null)
@@ -2084,7 +2095,7 @@ namespace GameLogic
                     m_isMapPreviewLoading = false;
                     CleanupMapPreviewResources();
                     ApplyEmptyMapPreviewVisual();
-                    Log.Error($"读取章节地图失败: {exception.Message}");
+                    Log.Error($"璇诲彇绔犺妭鍦板浘澶辫触: {exception.Message}");
                 }
 
                 return;
@@ -2104,7 +2115,7 @@ namespace GameLogic
                     m_isMapPreviewLoading = false;
                     CleanupMapPreviewResources();
                     ApplyEmptyMapPreviewVisual();
-                    Log.Error("章节地图加载失败，文件不是有效图片。");
+                    Log.Error("Chapter map loading failed because the file is not a valid image.");
                 }
 
                 return;
@@ -2513,7 +2524,7 @@ namespace GameLogic
             UpdateTerrainToolButtonState();
 
             ChapterListItemData selectedChapter = GetSelectedChapterData();
-            if (selectedChapter == null || selectedChapter.GridCells == null || selectedChapter.GridCells.Count == 0)
+            if (selectedChapter == null)
             {
                 SetGridSelectionHighlightCount(0);
                 SetGridEventMarkerCount(0);
@@ -2536,7 +2547,7 @@ namespace GameLogic
             AppendVisibleGridCellsByMarkType(visibleGridCells, selectedChapter.GridCells, ChapterGridCellMarkType.DifficultTerrain, metrics, minX, maxX, minY, maxY);
             AppendVisibleGridCellsByMarkType(visibleGridCells, selectedChapter.GridCells, ChapterGridCellMarkType.ImpassableTerrain, metrics, minX, maxX, minY, maxY);
             AppendVisibleGridCellsByMarkType(visibleGridCells, selectedChapter.GridCells, ChapterGridCellMarkType.Selected, metrics, minX, maxX, minY, maxY);
-            List<ChapterGridCellData> visibleEventCells = GetVisibleGridCellsByMarkType(selectedChapter.GridCells, ChapterGridCellMarkType.Event, metrics, minX, maxX, minY, maxY);
+            List<ChapterGridCoordinate> visibleEventCoordinates = GetVisibleEventCoordinates(selectedChapter.EventBindings, metrics, minX, maxX, minY, maxY);
 
             SetGridSelectionHighlightCount(visibleGridCells.Count);
             for (int index = 0; index < visibleGridCells.Count; index++)
@@ -2557,7 +2568,7 @@ namespace GameLogic
                 highlight.gameObject.SetActive(true);
             }
 
-            RefreshGridEventMarkers(visibleEventCells, metrics);
+            RefreshGridEventMarkers(visibleEventCoordinates, metrics);
         }
 
         private void AppendVisibleGridCellsByMarkType(List<ChapterGridCellData> visibleGridCells, List<ChapterGridCellData> sourceGridCells, ChapterGridCellMarkType markType, ChapterMapGridMetrics metrics, float minX, float maxX, float minY, float maxY)
@@ -2621,18 +2632,36 @@ namespace GameLogic
             }
         }
 
-        private void RefreshGridEventMarkers(List<ChapterGridCellData> visibleEventCells, ChapterMapGridMetrics metrics)
+        private List<ChapterGridCoordinate> GetVisibleEventCoordinates(List<ChapterEventBindingData> sourceBindings, ChapterMapGridMetrics metrics, float minX, float maxX, float minY, float maxY)
         {
-            SetGridEventMarkerCount(visibleEventCells?.Count ?? 0);
-            if (visibleEventCells == null)
+            List<ChapterGridCoordinate> visibleCoordinates = new List<ChapterGridCoordinate>();
+            List<ChapterGridCoordinate> boundCoordinates = ChapterEventCollectionUtility.CollectBoundCoordinates(sourceBindings);
+            for (int index = 0; index < boundCoordinates.Count; index++)
+            {
+                ChapterGridCoordinate coordinate = boundCoordinates[index];
+                Rect cellRect = ChapterMapGridUtility.GetLogicalCellRect(metrics, coordinate);
+                if (cellRect.xMax <= minX || cellRect.xMin >= maxX || cellRect.yMax <= minY || cellRect.yMin >= maxY)
+                {
+                    continue;
+                }
+
+                visibleCoordinates.Add(coordinate);
+            }
+
+            return visibleCoordinates;
+        }
+
+        private void RefreshGridEventMarkers(List<ChapterGridCoordinate> visibleEventCoordinates, ChapterMapGridMetrics metrics)
+        {
+            SetGridEventMarkerCount(visibleEventCoordinates?.Count ?? 0);
+            if (visibleEventCoordinates == null)
             {
                 return;
             }
 
-            for (int index = 0; index < visibleEventCells.Count; index++)
+            for (int index = 0; index < visibleEventCoordinates.Count; index++)
             {
-                ChapterGridCellData gridCell = visibleEventCells[index];
-                Rect cellRect = ChapterMapGridUtility.GetLogicalCellRect(metrics, gridCell.Coordinate);
+                Rect cellRect = ChapterMapGridUtility.GetLogicalCellRect(metrics, visibleEventCoordinates[index]);
                 Image marker = m_gridEventMarkers[index];
                 RectTransform rectTransform = marker.rectTransform;
                 rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -2889,7 +2918,7 @@ namespace GameLogic
         {
             if (m_textMapZoomToggle != null)
             {
-                m_textMapZoomToggle.text = m_isMapZoomEnabled ? "地图编辑: 开" : "地图编辑: 关";
+                m_textMapZoomToggle.text = m_isMapZoomEnabled ? "Map Edit: On" : "Map Edit: Off";
             }
 
             if (m_imgMapZoomToggle != null)
@@ -2910,7 +2939,7 @@ namespace GameLogic
         {
             if (m_textGridZoomToggle != null)
             {
-                m_textGridZoomToggle.text = m_isGridZoomEnabled ? "网格编辑: 开" : "网格编辑: 关";
+                m_textGridZoomToggle.text = m_isGridZoomEnabled ? "Grid Edit: On" : "Grid Edit: Off";
             }
 
             if (m_imgGridZoomToggle != null)
@@ -2931,7 +2960,7 @@ namespace GameLogic
         {
             if (m_textSaveChapterState != null)
             {
-                m_textSaveChapterState.text = "手动保存";
+                m_textSaveChapterState.text = "鎵嬪姩淇濆瓨";
             }
 
             if (m_imgSaveChapterState != null)
@@ -3375,7 +3404,7 @@ namespace GameLogic
             }
 
             selectedChapter.GridCells ??= new List<ChapterGridCellData>();
-            ChapterGridCellCollectionUtility.TryGetEventData(selectedChapter.GridCells, m_gridCellEventPopupMouseDownCoordinate, out ChapterGridEventData existingEventData);
+            ChapterEventCollectionUtility.TryGetEventData(selectedChapter.Events, selectedChapter.EventBindings, m_gridCellEventPopupMouseDownCoordinate, out ChapterGridEventData existingEventData);
             OpenChapterEventPopup(selectedChapter, new List<ChapterGridCoordinate> { m_gridCellEventPopupMouseDownCoordinate }, existingEventData);
         }
 
@@ -3437,7 +3466,7 @@ namespace GameLogic
             bool hasSelectedEventCells = false;
             if (hasSelectedChapter && TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
             {
-                hasSelectedEventCells = HasGridEventAtAnyCoordinate(selectedChapter.GridCells, coordinates);
+                hasSelectedEventCells = HasGridEventAtAnyCoordinate(selectedChapter.EventBindings, coordinates);
             }
 
             if (m_btnOpenCheckPopup != null)
@@ -3562,11 +3591,11 @@ namespace GameLogic
             switch (buttonType)
             {
                 case TerrainToolButtonType.DifficultTerrain:
-                    return hasSelectedCells ? "标记为困难地形" : "困难地形";
+                    return hasSelectedCells ? "Mark As Difficult Terrain" : "Difficult Terrain";
                 case TerrainToolButtonType.ImpassableTerrain:
-                    return hasSelectedCells ? "标记为不可通过" : "不可通过地形";
+                    return hasSelectedCells ? "鏍囪涓轰笉鍙€氳繃" : "涓嶅彲閫氳繃鍦板舰";
                 case TerrainToolButtonType.ClearTerrain:
-                    return hasSelectedCells ? "清除已选地形" : "清除地形";
+                    return hasSelectedCells ? "Clear Selected Terrain" : "Clear Terrain";
                 default:
                     return string.Empty;
             }
@@ -3746,7 +3775,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Error($"保存章节编辑数据失败: {exception.Message}");
+                Log.Error($"淇濆瓨绔犺妭缂栬緫鏁版嵁澶辫触: {exception.Message}");
                 return false;
             }
         }
@@ -3788,7 +3817,7 @@ namespace GameLogic
                 m_chapterItems.Clear();
                 m_selectedChapterId = -1;
                 m_nextChapterId = 1;
-                Log.Error($"加载章节编辑数据失败: {exception.Message}");
+                Log.Error($"鍔犺浇绔犺妭缂栬緫鏁版嵁澶辫触: {exception.Message}");
             }
         }
 
@@ -3819,7 +3848,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Warning($"删除旧章节地图失败: {exception.Message}");
+                Log.Warning($"鍒犻櫎鏃х珷鑺傚湴鍥惧け璐? {exception.Message}");
             }
         }
 
@@ -3900,66 +3929,66 @@ namespace GameLogic
 
         private static readonly string[] EventCategoryLabels =
         {
-            "检定类事件",
-            "DM 判断类事件",
+            "妫€瀹氱被浜嬩欢",
+            "DM Direct Event",
         };
 
         private static readonly string[] DmEventSubTypeLabels =
         {
-            "剧情事件",
-            "对话事件",
-            "选择事件",
-            "交互事件",
-            "战斗事件",
-            "探索事件",
-            "区域进入事件",
-            "时间推进事件",
-            "随机事件",
-            "特殊事件",
+            "鍓ф儏浜嬩欢",
+            "瀵硅瘽浜嬩欢",
+            "閫夋嫨浜嬩欢",
+            "浜や簰浜嬩欢",
+            "鎴樻枟浜嬩欢",
+            "鎺㈢储浜嬩欢",
+            "鍖哄煙杩涘叆浜嬩欢",
+            "鏃堕棿鎺ㄨ繘浜嬩欢",
+            "闅忔満浜嬩欢",
+            "鐗规畩浜嬩欢",
         };
 
         private static readonly string[] TriggerModeLabels =
         {
-            "自动触发",
-            "DM 判断",
+            "鑷姩瑙﹀彂",
+            "DM 鍒ゆ柇",
         };
 
         private static readonly string[] CheckTargetModeLabels =
         {
-            "属性检定",
-            "技能检定",
-            "工具检定",
-            "对抗检定",
-            "被动检定",
-            "豁免检定",
+            "Ability Check",
+            "Skill Check",
+            "Tool Check",
+            "Contested Check",
+            "Passive Check",
+            "Saving Throw",
         };
 
         private static readonly string[] CheckResolutionModeLabels =
         {
-            "掷骰判定",
-            "DM 直接判定",
+            "鎺烽鍒ゅ畾",
+            "DM 鐩存帴鍒ゅ畾",
         };
 
         private static readonly string[] SkillCheckLabels =
         {
-            "运动 Athletics",
-            "体操 Acrobatics",
-            "巧手 Sleight of Hand",
-            "隐匿 Stealth",
-            "奥秘 Arcana",
-            "历史 History",
-            "调查 Investigation",
-            "自然 Nature",
-            "宗教 Religion",
-            "驯兽 Animal Handling",
-            "洞悉 Insight",
-            "医药 Medicine",
-            "察觉 Perception",
-            "求生 Survival",
-            "欺瞒 Deception",
-            "威吓 Intimidation",
-            "表演 Performance",
-            "说服 Persuasion",
+            "杩愬姩 Athletics",
+            "浣撴搷 Acrobatics",
+            "宸ф墜 Sleight of Hand",
+            "闅愬尶 Stealth",
+            "濂ョ Arcana",
+            "鍘嗗彶 History",
+            "璋冩煡 Investigation",
+            "鑷劧 Nature",
+            "瀹楁暀 Religion",
+            "椹吔 Animal Handling",
+            "娲炴倝 Insight",
+            "鍖昏嵂 Medicine",
+            "瀵熻 Perception",
+            "姹傜敓 Survival",
+            "娆虹瀿 Deception",
+            "濞佸悡 Intimidation",
+            "琛ㄦ紨 Performance",
+            "璇存湇 Persuasion",
         };
 
         private static readonly string[] SkillCheckInputNodeNames =
@@ -3992,6 +4021,9 @@ namespace GameLogic
         private TMP_Dropdown m_tmpDropdownCheckTargetMode = null!;
         private TMP_Dropdown m_tmpDropdownCheckResolutionMode = null!;
         private Button m_btnConfirm = null!;
+        private TMP_Text m_tmpBindingSummary = null!;
+        private Toggle m_toggleEventEnabled = null!;
+        private Toggle m_toggleEventOneShot = null!;
         private RectTransform m_rectAbilityCheckSection = null!;
         private RectTransform m_rectSkillCheckSection = null!;
         private RectTransform m_rectDmDirectSection = null!;
@@ -4008,6 +4040,7 @@ namespace GameLogic
         private TMP_InputField m_tmpInputDmNote = null!;
         private TMP_InputField m_tmpInputDmPrompt = null!;
         private ChapterEventPopupRequest m_request = null!;
+        private string m_existingEventId = string.Empty;
         private ChapterEventCategory m_eventCategory = ChapterEventCategory.Check;
         private ChapterDmEventSubType m_dmEventSubType = ChapterDmEventSubType.Story;
         private ChapterEventTriggerMode m_triggerMode = ChapterEventTriggerMode.Automatic;
@@ -4030,6 +4063,9 @@ namespace GameLogic
             m_tmpDropdownCheckTargetMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckTargetMode");
             m_tmpDropdownCheckResolutionMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckResolutionMode");
             m_btnConfirm = BindRequiredComponent<Button>("m_btnConfirm");
+            m_tmpBindingSummary = BindRequiredComponent<TMP_Text>("m_tmpBindingSummary");
+            m_toggleEventEnabled = BindRequiredComponent<Toggle>("m_toggleEventEnabled");
+            m_toggleEventOneShot = BindRequiredComponent<Toggle>("m_toggleEventOneShot");
             m_rectAbilityCheckSection = BindRequiredComponent<RectTransform>("m_rectAbilityCheckSection");
             m_rectSkillCheckSection = BindRequiredComponent<RectTransform>("m_rectSkillCheckSection");
             m_rectDmDirectSection = BindRequiredComponent<RectTransform>("m_rectDmDirectSection");
@@ -4071,6 +4107,7 @@ namespace GameLogic
             m_triggerMode = ChapterEventTriggerMode.Automatic;
             m_checkTargetMode = ChapterCheckTargetMode.Ability;
             m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
+            m_existingEventId = string.Empty;
             ResetSkillCheckInputFields();
             ResetInputField(m_tmpInputAbilityStrength, TMP_InputField.LineType.SingleLine);
             ResetInputField(m_tmpInputAbilityDexterity, TMP_InputField.LineType.SingleLine);
@@ -4084,6 +4121,8 @@ namespace GameLogic
             ResetInputField(m_tmpInputFailureResult, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputDmNote, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputDmPrompt, TMP_InputField.LineType.MultiLineNewline);
+            SetToggleValue(m_toggleEventEnabled, true);
+            SetToggleValue(m_toggleEventOneShot, false);
 
             ApplyExistingEventData(m_request.ExistingEventData);
 
@@ -4127,7 +4166,7 @@ namespace GameLogic
                 ? m_request.GridCoordinates.Count
                 : 1;
             Log.Info(
-                $"[ChapterEventPopupUI] 已记录格子事件。章节={m_request.ChapterId}, 目标格数={affectedCellCount}, 首格坐标={m_request.GridCoordinate}, 事件类别={EventCategoryLabels[(int) m_eventCategory]}, 标题={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
+                $"[ChapterEventPopupUI] 宸茶褰曟牸瀛愪簨浠躲€傜珷鑺?{m_request.ChapterId}, 鐩爣鏍兼暟={affectedCellCount}, 棣栨牸鍧愭爣={m_request.GridCoordinate}, 浜嬩欢绫诲埆={EventCategoryLabels[(int) m_eventCategory]}, 鏍囬={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
             m_request.OnConfirm?.Invoke(eventData);
             Close();
         }
@@ -4143,8 +4182,8 @@ namespace GameLogic
             {
                 bool isBatchEdit = m_request.GridCoordinates != null && m_request.GridCoordinates.Count > 1;
                 m_tmpTitle.text = isBatchEdit
-                    ? $"批量标记事件 ({m_request.GridCoordinates.Count})"
-                    : m_request.ExistingEventData != null ? "编辑事件" : "添加事件";
+                    ? $"鎵归噺鏍囪浜嬩欢 ({m_request.GridCoordinates.Count})"
+                    : m_request.ExistingEventData != null ? "缂栬緫浜嬩欢" : "娣诲姞浜嬩欢";
             }
 
             SetDropdownValue(m_tmpDropdownEventCategory, (int) m_eventCategory);
@@ -4152,7 +4191,9 @@ namespace GameLogic
             SetDropdownValue(m_tmpDropdownTriggerMode, (int) m_triggerMode);
             SetDropdownValue(m_tmpDropdownCheckTargetMode, (int) m_checkTargetMode);
             SetDropdownValue(m_tmpDropdownCheckResolutionMode, (int) m_checkResolutionMode);
-            SetButtonLabel(m_btnConfirm, "确定");
+            SetButtonLabel(m_btnConfirm, "纭畾");
+
+            RefreshBindingSummary();
 
             if (m_rectDmDirectSection != null)
             {
@@ -4212,7 +4253,7 @@ namespace GameLogic
                     summarySegments.Add($"{entry.SkillName}:{entry.Threshold}");
                 }
 
-                return $", 技能检定=[{string.Join(", ", summarySegments)}]";
+                return $", 鎶€鑳芥瀹?[{string.Join(", ", summarySegments)}]";
             }
 
             if (m_checkTargetMode != ChapterCheckTargetMode.Ability)
@@ -4220,7 +4261,7 @@ namespace GameLogic
                 return string.Empty;
             }
 
-            return $", 属性通过值=[STR:{GetInputValue(m_tmpInputAbilityStrength)}, DEX:{GetInputValue(m_tmpInputAbilityDexterity)}, CON:{GetInputValue(m_tmpInputAbilityConstitution)}, INT:{GetInputValue(m_tmpInputAbilityIntelligence)}, WIS:{GetInputValue(m_tmpInputAbilityWisdom)}, CHA:{GetInputValue(m_tmpInputAbilityCharisma)}]";
+            return $", 灞炴€ч€氳繃鍊?[STR:{GetInputValue(m_tmpInputAbilityStrength)}, DEX:{GetInputValue(m_tmpInputAbilityDexterity)}, CON:{GetInputValue(m_tmpInputAbilityConstitution)}, INT:{GetInputValue(m_tmpInputAbilityIntelligence)}, WIS:{GetInputValue(m_tmpInputAbilityWisdom)}, CHA:{GetInputValue(m_tmpInputAbilityCharisma)}]";
         }
 
         private void OnClickCloseBtn()
@@ -4269,6 +4310,21 @@ namespace GameLogic
             dropdown.RefreshShownValue();
         }
 
+        private static void SetToggleValue(Toggle toggle, bool value)
+        {
+            if (toggle == null)
+            {
+                return;
+            }
+
+            toggle.SetIsOnWithoutNotify(value);
+        }
+
+        private static bool GetToggleValue(Toggle toggle)
+        {
+            return toggle != null && toggle.isOn;
+        }
+
         private static void ResetInputField(TMP_InputField inputField, TMP_InputField.LineType lineType)
         {
             if (inputField == null)
@@ -4285,7 +4341,7 @@ namespace GameLogic
             T component = ResolvePopupComponent<T>(path);
             if (component == null)
             {
-                Log.Error($"[ChapterEventPopupUI] 找不到节点: {path}");
+                Log.Error($"[ChapterEventPopupUI] 鎵句笉鍒拌妭鐐? {path}");
             }
 
             return component;
@@ -4322,6 +4378,9 @@ namespace GameLogic
                 && m_tmpDropdownCheckTargetMode != null
                 && m_tmpDropdownCheckResolutionMode != null
                 && m_btnConfirm != null
+                && m_tmpBindingSummary != null
+                && m_toggleEventEnabled != null
+                && m_toggleEventOneShot != null
                 && m_rectAbilityCheckSection != null
                 && m_rectSkillCheckSection != null
                 && m_rectDmDirectSection != null
@@ -4347,11 +4406,14 @@ namespace GameLogic
                 return;
             }
 
+            m_existingEventId = eventData.EventId ?? string.Empty;
             m_eventCategory = (ChapterEventCategory) Mathf.Clamp(eventData.EventCategory, 0, EventCategoryLabels.Length - 1);
             m_dmEventSubType = (ChapterDmEventSubType) Mathf.Clamp(eventData.EventSubType, 0, DmEventSubTypeLabels.Length - 1);
             m_triggerMode = (ChapterEventTriggerMode) Mathf.Clamp(eventData.TriggerMode, 0, TriggerModeLabels.Length - 1);
             m_checkTargetMode = (ChapterCheckTargetMode) Mathf.Clamp(eventData.CheckTargetMode, 0, CheckTargetModeLabels.Length - 1);
             m_checkResolutionMode = (ChapterCheckResolutionMode) Mathf.Clamp(eventData.CheckResolutionMode, 0, CheckResolutionModeLabels.Length - 1);
+            SetToggleValue(m_toggleEventEnabled, eventData.IsEnabled);
+            SetToggleValue(m_toggleEventOneShot, eventData.IsOneShot);
             SetInputValue(m_tmpInputEventTitle, eventData.EventTitle);
             SetInputValue(m_tmpInputTriggerDescription, eventData.TriggerDescription);
             SetInputValue(m_tmpInputSuccessResult, eventData.SuccessResult);
@@ -4374,6 +4436,9 @@ namespace GameLogic
 
             return new ChapterGridEventData
             {
+                EventId = m_existingEventId,
+                IsEnabled = GetToggleValue(m_toggleEventEnabled),
+                IsOneShot = GetToggleValue(m_toggleEventOneShot),
                 EventCategory = (int) m_eventCategory,
                 EventSubType = m_eventCategory == ChapterEventCategory.DmDirect ? (int) m_dmEventSubType : 0,
                 TriggerMode = (int) m_triggerMode,
@@ -4395,6 +4460,26 @@ namespace GameLogic
                 AbilityWisdomThreshold = GetInputValue(m_tmpInputAbilityWisdom),
                 AbilityCharismaThreshold = GetInputValue(m_tmpInputAbilityCharisma),
             };
+        }
+
+        private void RefreshBindingSummary()
+        {
+            if (m_tmpBindingSummary == null)
+            {
+                return;
+            }
+
+            List<ChapterGridCoordinate> coordinates = m_request.GridCoordinates;
+            if (coordinates != null && coordinates.Count > 1)
+            {
+                m_tmpBindingSummary.text = $"\u7ED1\u5B9A\u8303\u56F4\uFF1A\u5DF2\u9009\u4E2D {coordinates.Count} \u4E2A\u7F51\u683C";
+                return;
+            }
+
+            ChapterGridCoordinate coordinate = coordinates != null && coordinates.Count == 1
+                ? coordinates[0]
+                : m_request.GridCoordinate;
+            m_tmpBindingSummary.text = $"\u7ED1\u5B9A\u8303\u56F4\uFF1A\u5F53\u524D\u7F51\u683C ({coordinate.CellX}, {coordinate.CellY})";
         }
 
         private void BindSkillCheckInputComponents()
@@ -4641,7 +4726,7 @@ namespace GameLogic
         }
 #endif
 
-        public static string OpenImageFile(string dialogTitle = "选择图片文件")
+        public static string OpenImageFile(string dialogTitle = "閫夋嫨鍥剧墖鏂囦欢")
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             IFileOpenDialog dialog = null!;
@@ -4654,9 +4739,9 @@ namespace GameLogic
                 dialog = (IFileOpenDialog)dialogObject;
                 ComdlgFilterSpec[] filters =
                 {
-                    new ComdlgFilterSpec { pszName = "图片文件", pszSpec = "*.png;*.jpg;*.jpeg" },
-                    new ComdlgFilterSpec { pszName = "PNG 文件", pszSpec = "*.png" },
-                    new ComdlgFilterSpec { pszName = "JPEG 文件", pszSpec = "*.jpg;*.jpeg" }
+                    new ComdlgFilterSpec { pszName = "鍥剧墖鏂囦欢", pszSpec = "*.png;*.jpg;*.jpeg" },
+                    new ComdlgFilterSpec { pszName = "PNG 鏂囦欢", pszSpec = "*.png" },
+                    new ComdlgFilterSpec { pszName = "JPEG 鏂囦欢", pszSpec = "*.jpg;*.jpeg" }
                 };
 
                 dialog.SetFileTypes((uint)filters.Length, filters);
@@ -4679,7 +4764,7 @@ namespace GameLogic
             }
             catch (COMException exception)
             {
-                Log.Error($"打开图片文件选择器失败: {exception.Message}");
+                Log.Error($"鎵撳紑鍥剧墖鏂囦欢閫夋嫨鍣ㄥけ璐? {exception.Message}");
                 return string.Empty;
             }
             finally
@@ -4700,7 +4785,7 @@ namespace GameLogic
                 }
             }
 #else
-        Log.Warning("图片上传当前仅支持 Windows 编辑器或 Windows 打包程序。");
+        Log.Warning("Image upload is currently supported only in the Windows editor or Windows player.");
             return string.Empty;
 #endif
         }
