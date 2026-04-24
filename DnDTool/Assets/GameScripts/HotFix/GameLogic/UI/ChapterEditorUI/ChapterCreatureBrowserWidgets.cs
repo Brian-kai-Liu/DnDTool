@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using TEngine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -56,6 +57,47 @@ namespace GameLogic
         public string PreviewImageFileName { get; }
     }
 
+    internal sealed class ChapterCreatureCardDragProxy : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    {
+        public bool IsDragEnabled { get; set; }
+
+        public Action<Vector2> OnBeginDragAction { get; set; }
+
+        public Action<Vector2> OnDragAction { get; set; }
+
+        public Action<Vector2> OnEndDragAction { get; set; }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (!IsDragEnabled)
+            {
+                return;
+            }
+
+            OnBeginDragAction?.Invoke(eventData.position);
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (!IsDragEnabled)
+            {
+                return;
+            }
+
+            OnDragAction?.Invoke(eventData.position);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if (!IsDragEnabled)
+            {
+                return;
+            }
+
+            OnEndDragAction?.Invoke(eventData.position);
+        }
+    }
+
     internal sealed class ChapterCreatureCardWidget
     {
         private static readonly Color DefaultCardColor = new Color(0.18f, 0.21f, 0.25f, 0.94f);
@@ -71,6 +113,7 @@ namespace GameLogic
         private readonly TMP_Text m_textAlignment;
         private readonly TMP_Text m_textSelectedBadge;
         private readonly Button m_btnEdit;
+        private readonly ChapterCreatureCardDragProxy m_dragProxy;
         private Texture2D m_previewTexture;
         private Sprite m_previewSprite;
         private string m_loadedPreviewPath = string.Empty;
@@ -88,6 +131,7 @@ namespace GameLogic
             m_textAlignment = FindChildComponent<TMP_Text>(gameObject.transform, "m_tmpAlignment");
             m_textSelectedBadge = FindChildComponent<TMP_Text>(gameObject.transform, "m_tmpSelectedBadge");
             m_btnEdit = FindChildComponent<Button>(gameObject.transform, "m_btnEditCreature");
+            m_dragProxy = gameObject.GetComponent<ChapterCreatureCardDragProxy>() ?? gameObject.AddComponent<ChapterCreatureCardDragProxy>();
         }
 
         public void SetVisible(bool visible)
@@ -95,7 +139,7 @@ namespace GameLogic
             m_gameObject.SetActive(visible);
         }
 
-        public void Bind(ChapterCreatureStaticCardData creature, bool selected, Action onClick, Action onEdit)
+        public void Bind(ChapterCreatureStaticCardData creature, bool selected, Action onClick, Action onEdit, Action<Vector2> onBeginDrag, Action<Vector2> onDrag, Action<Vector2> onEndDrag)
         {
             if (m_button != null)
             {
@@ -112,6 +156,15 @@ namespace GameLogic
                 {
                     m_btnEdit.onClick.AddListener(() => onEdit.Invoke());
                 }
+            }
+
+            if (m_dragProxy != null)
+            {
+                bool canDrag = creature.Source != null && onBeginDrag != null && onEndDrag != null;
+                m_dragProxy.IsDragEnabled = canDrag;
+                m_dragProxy.OnBeginDragAction = canDrag ? onBeginDrag : null;
+                m_dragProxy.OnDragAction = canDrag ? onDrag : null;
+                m_dragProxy.OnEndDragAction = canDrag ? onEndDrag : null;
             }
 
             if (m_imgBackground != null)
@@ -269,6 +322,270 @@ namespace GameLogic
         {
             Transform child = root.Find(path);
             return child != null ? child.GetComponent<T>() : null;
+        }
+    }
+
+    internal sealed class ChapterCreatureMapTokenWidget
+    {
+        private readonly GameObject m_gameObject;
+        private readonly RectTransform m_rectTransform;
+        private readonly Image m_imgFrame;
+        private readonly Image m_imgPreview;
+        private readonly TMP_Text m_textLabel;
+        private Texture2D m_previewTexture;
+        private Sprite m_previewSprite;
+        private string m_loadedPreviewPath = string.Empty;
+        private int m_previewLoadVersion;
+
+        public ChapterCreatureMapTokenWidget(GameObject gameObject, TMP_Text styleSource = null)
+        {
+            m_gameObject = gameObject;
+            m_rectTransform = gameObject.GetComponent<RectTransform>() ?? gameObject.AddComponent<RectTransform>();
+            m_imgFrame = gameObject.GetComponent<Image>() ?? gameObject.AddComponent<Image>();
+            m_imgPreview = EnsurePreviewImage(gameObject.transform);
+            m_textLabel = EnsureLabel(gameObject.transform, styleSource);
+            m_imgFrame.raycastTarget = false;
+        }
+
+        public void SetVisible(bool visible)
+        {
+            m_gameObject.SetActive(visible);
+        }
+
+        public void Dispose()
+        {
+            ++m_previewLoadVersion;
+            CleanupPreviewResources();
+
+            if (m_gameObject != null)
+            {
+                Object.Destroy(m_gameObject);
+            }
+        }
+
+        public void Bind(ChapterCreatureData creature, Vector2 anchoredPosition, Vector2 size, bool ghosted, bool selected)
+        {
+            creature = ChapterCreatureDataStructureUtility.NormalizeCreatureTemplateData(creature);
+            if (creature == null)
+            {
+                SetVisible(false);
+                return;
+            }
+
+            Color accentColor = creature.AccentColor;
+            float alpha = ghosted ? 0.36f : 0.92f;
+            float selectedBoost = selected ? 0.12f : 0f;
+            m_rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            m_rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            m_rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            m_rectTransform.anchoredPosition = anchoredPosition;
+            m_rectTransform.sizeDelta = size + new Vector2(selected ? 6f : 0f, selected ? 6f : 0f);
+            m_rectTransform.localScale = Vector3.one;
+
+            float inset = Mathf.Clamp(Mathf.Min(size.x, size.y) * 0.06f, 2f, 6f);
+            if (m_imgPreview != null)
+            {
+                RectTransform previewRect = m_imgPreview.rectTransform;
+                previewRect.anchorMin = Vector2.zero;
+                previewRect.anchorMax = Vector2.one;
+                previewRect.offsetMin = new Vector2(inset, inset);
+                previewRect.offsetMax = new Vector2(-inset, -inset);
+            }
+
+            m_imgFrame.color = new Color(
+                Mathf.Clamp01(accentColor.r * 0.82f + 0.08f + selectedBoost),
+                Mathf.Clamp01(accentColor.g * 0.82f + 0.08f + selectedBoost),
+                Mathf.Clamp01(accentColor.b * 0.82f + 0.08f + selectedBoost),
+                alpha);
+
+            RefreshPreview(creature, ghosted);
+            m_textLabel.text = ChapterCreatureWidgetUtility.GetCreatureInitials(creature.Name);
+            m_textLabel.color = new Color(1f, 1f, 1f, ghosted ? 0.78f : 0.96f);
+            m_textLabel.fontSize = Mathf.Clamp(Mathf.Min(size.x, size.y) * (selected ? 0.28f : 0.24f), 14f, 30f);
+            SetVisible(true);
+        }
+
+        private void RefreshPreview(ChapterCreatureData creature, bool ghosted)
+        {
+            string previewPath = ChapterEditorPersistenceService.ResolveCreaturePreviewPath(creature.PreviewImageFileName);
+            if (!string.IsNullOrWhiteSpace(previewPath)
+                && string.Equals(m_loadedPreviewPath, previewPath, StringComparison.OrdinalIgnoreCase)
+                && m_previewSprite != null)
+            {
+                SetPreviewSprite(m_previewSprite, ghosted);
+                return;
+            }
+
+            ResetPreview(creature, ghosted);
+            if (string.IsNullOrWhiteSpace(previewPath))
+            {
+                return;
+            }
+
+            int loadVersion = ++m_previewLoadVersion;
+            LoadPreviewFromPathAsync(previewPath, loadVersion, ghosted).Forget();
+        }
+
+        private void ResetPreview(ChapterCreatureData creature, bool ghosted)
+        {
+            ++m_previewLoadVersion;
+            CleanupPreviewResources();
+
+            if (m_imgPreview != null)
+            {
+                Color accentColor = creature.AccentColor;
+                m_imgPreview.sprite = null;
+                m_imgPreview.preserveAspect = true;
+                m_imgPreview.color = new Color(
+                    Mathf.Clamp01(accentColor.r * 0.86f + 0.06f),
+                    Mathf.Clamp01(accentColor.g * 0.86f + 0.06f),
+                    Mathf.Clamp01(accentColor.b * 0.86f + 0.06f),
+                    ghosted ? 0.32f : 0.76f);
+            }
+
+            if (m_textLabel != null)
+            {
+                m_textLabel.gameObject.SetActive(true);
+            }
+        }
+
+        private void SetPreviewSprite(Sprite sprite, bool ghosted)
+        {
+            if (m_imgPreview != null)
+            {
+                m_imgPreview.sprite = sprite;
+                m_imgPreview.preserveAspect = true;
+                m_imgPreview.color = new Color(1f, 1f, 1f, ghosted ? 0.46f : 0.98f);
+            }
+
+            if (m_textLabel != null)
+            {
+                m_textLabel.gameObject.SetActive(sprite == null);
+            }
+        }
+
+        private async UniTaskVoid LoadPreviewFromPathAsync(string previewPath, int loadVersion, bool ghosted)
+        {
+            byte[] imageBytes;
+            try
+            {
+                imageBytes = await UniTask.RunOnThreadPool(() => File.ReadAllBytes(previewPath));
+            }
+            catch (Exception exception)
+            {
+                Log.Warning($"Failed to read creature token preview: {exception.Message}");
+                return;
+            }
+
+            if (loadVersion != m_previewLoadVersion)
+            {
+                return;
+            }
+
+            Texture2D previewTexture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            if (!previewTexture.LoadImage(imageBytes))
+            {
+                Object.Destroy(previewTexture);
+                Log.Warning("Failed to decode creature token preview image.");
+                return;
+            }
+
+            Sprite previewSprite = Sprite.Create(
+                previewTexture,
+                new Rect(0, 0, previewTexture.width, previewTexture.height),
+                new Vector2(0.5f, 0.5f));
+
+            if (loadVersion != m_previewLoadVersion)
+            {
+                Object.Destroy(previewSprite);
+                Object.Destroy(previewTexture);
+                return;
+            }
+
+            CleanupPreviewResources();
+            m_previewTexture = previewTexture;
+            m_previewSprite = previewSprite;
+            m_loadedPreviewPath = previewPath;
+            SetPreviewSprite(previewSprite, ghosted);
+        }
+
+        private void CleanupPreviewResources()
+        {
+            m_loadedPreviewPath = string.Empty;
+
+            if (m_previewSprite != null)
+            {
+                Object.Destroy(m_previewSprite);
+                m_previewSprite = null;
+            }
+
+            if (m_previewTexture != null)
+            {
+                Object.Destroy(m_previewTexture);
+                m_previewTexture = null;
+            }
+        }
+
+        private static Image EnsurePreviewImage(Transform root)
+        {
+            Transform existing = root.Find("m_imgTokenPreview");
+            if (existing != null)
+            {
+                Image image = existing.GetComponent<Image>();
+                if (image != null)
+                {
+                    image.raycastTarget = false;
+                    return image;
+                }
+            }
+
+            GameObject previewObject = new GameObject("m_imgTokenPreview", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            previewObject.transform.SetParent(root, false);
+            Image previewImage = previewObject.GetComponent<Image>();
+            previewImage.raycastTarget = false;
+            previewImage.preserveAspect = true;
+            return previewImage;
+        }
+
+        private static TMP_Text EnsureLabel(Transform root, TMP_Text styleSource)
+        {
+            Transform existing = root.Find("m_tmpTokenLabel");
+            if (existing != null)
+            {
+                TMP_Text text = existing.GetComponent<TMP_Text>();
+                if (text != null)
+                {
+                    return text;
+                }
+            }
+
+            GameObject labelObject = new GameObject("m_tmpTokenLabel", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            labelObject.transform.SetParent(root, false);
+            RectTransform rectTransform = labelObject.GetComponent<RectTransform>();
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.one;
+            rectTransform.offsetMin = Vector2.zero;
+            rectTransform.offsetMax = Vector2.zero;
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+            TextMeshProUGUI textComponent = labelObject.GetComponent<TextMeshProUGUI>();
+            if (styleSource != null)
+            {
+                textComponent.font = styleSource.font;
+                textComponent.fontSharedMaterial = styleSource.fontSharedMaterial;
+            }
+            else if (TMP_Settings.defaultFontAsset != null)
+            {
+                textComponent.font = TMP_Settings.defaultFontAsset;
+            }
+
+            textComponent.text = string.Empty;
+            textComponent.fontSize = 18f;
+            textComponent.fontStyle = FontStyles.Bold;
+            textComponent.enableWordWrapping = false;
+            textComponent.alignment = TextAlignmentOptions.Center;
+            textComponent.raycastTarget = false;
+            return textComponent;
         }
     }
 

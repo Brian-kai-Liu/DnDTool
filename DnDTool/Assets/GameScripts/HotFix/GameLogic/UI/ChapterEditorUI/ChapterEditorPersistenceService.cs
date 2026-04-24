@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System;
 using TEngine;
@@ -65,7 +65,9 @@ namespace GameLogic
                 return null;
             }
 
-            return Utility.Json.ToObject<ChapterEditorSaveData>(File.ReadAllText(filePath));
+            string json = File.ReadAllText(filePath);
+            ChapterEditorLegacySaveData legacySaveData = Utility.Json.ToObject<ChapterEditorLegacySaveData>(json);
+            return ToCurrentSaveData(legacySaveData);
         }
 
         public static void Save(string filePath, ChapterEditorSaveData saveData)
@@ -77,6 +79,178 @@ namespace GameLogic
             }
 
             File.WriteAllText(filePath, Utility.Json.ToJson(saveData));
+        }
+
+        private static ChapterEditorSaveData ToCurrentSaveData(ChapterEditorLegacySaveData saveData)
+        {
+            if (saveData == null)
+            {
+                return null;
+            }
+
+            ChapterEditorSaveData currentSaveData = new ChapterEditorSaveData
+            {
+                SelectedChapterId = saveData.SelectedChapterId,
+                NextChapterId = saveData.NextChapterId,
+            };
+
+            if (saveData.Chapters == null)
+            {
+                return currentSaveData;
+            }
+
+            for (int index = 0; index < saveData.Chapters.Count; index++)
+            {
+                ChapterItemSaveData chapter = ToCurrentSaveData(saveData.Chapters[index]);
+                if (chapter != null)
+                {
+                    currentSaveData.Chapters.Add(chapter);
+                }
+            }
+
+            return currentSaveData;
+        }
+
+        private static ChapterItemSaveData ToCurrentSaveData(ChapterItemLegacySaveData chapter)
+        {
+            if (chapter == null)
+            {
+                return null;
+            }
+
+            ChapterItemSaveData currentChapter = new ChapterItemSaveData
+            {
+                Id = chapter.Id,
+                Name = chapter.Name ?? string.Empty,
+                Goal = chapter.Goal ?? string.Empty,
+                Content = chapter.Content ?? string.Empty,
+                DmNote = chapter.DmNote ?? string.Empty,
+                TerrainTag = chapter.TerrainTag ?? string.Empty,
+                TerrainSubTag = chapter.TerrainSubTag ?? string.Empty,
+                AddMapHint = chapter.AddMapHint ?? string.Empty,
+                CreatureInfo = chapter.CreatureInfo ?? string.Empty,
+                MapImagePath = chapter.MapImagePath ?? string.Empty,
+                IsMapZoomEnabled = chapter.IsMapZoomEnabled,
+                IsGridZoomEnabled = chapter.IsGridZoomEnabled,
+                MapZoomScale = chapter.MapZoomScale,
+                MapPanOffset = chapter.MapPanOffset,
+                GridZoomScale = chapter.GridZoomScale,
+                GridPanOffset = chapter.GridPanOffset,
+                IsMapGridLocked = chapter.IsMapGridLocked,
+                LockedMapZoomReference = chapter.LockedMapZoomReference,
+                LockedGridToMapZoomRatio = chapter.LockedGridToMapZoomRatio,
+                LockedGridToMapPanDelta = chapter.LockedGridToMapPanDelta,
+                SelectedGridCellKeys = CloneSelectedGridCellKeys(chapter.SelectedGridCellKeys),
+                Creatures = ChapterCreatureDataStructureUtility.CloneCreatureSaveDataList(chapter.Creatures),
+                CreatureInstances = ChapterCreatureDataStructureUtility.CloneCreatureInstanceSaveDataList(chapter.CreatureInstances),
+                EventBindings = CloneEventBindingSaveDataList(chapter.EventBindings),
+            };
+
+            if (chapter.GridCells != null)
+            {
+                for (int index = 0; index < chapter.GridCells.Count; index++)
+                {
+                    ChapterGridCellLegacySaveData gridCell = chapter.GridCells[index];
+                    if (gridCell == null)
+                    {
+                        continue;
+                    }
+
+                    currentChapter.GridCells.Add(new ChapterGridCellSaveData
+                    {
+                        CellX = gridCell.CellX,
+                        CellY = gridCell.CellY,
+                        MarkType = gridCell.MarkType,
+                        EventData = gridCell.EventData != null
+                            ? ChapterEventDataStructureUtility.NormalizeLegacySaveEventData(gridCell.EventData)
+                            : null,
+                    });
+                }
+            }
+
+            if (chapter.Events != null)
+            {
+                for (int index = 0; index < chapter.Events.Count; index++)
+                {
+                    ChapterGridEventSaveData eventData = ChapterEventDataStructureUtility.NormalizeLegacySaveEventData(chapter.Events[index]);
+                    if (eventData != null)
+                    {
+                        currentChapter.Events.Add(eventData);
+                    }
+                }
+            }
+
+            return currentChapter;
+        }
+
+        private static List<string> CloneSelectedGridCellKeys(List<string> keys)
+        {
+            List<string> result = new List<string>();
+            if (keys == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < keys.Count; index++)
+            {
+                result.Add(keys[index] ?? string.Empty);
+            }
+
+            return result;
+        }
+
+        private static List<ChapterEventBindingSaveData> CloneEventBindingSaveDataList(List<ChapterEventBindingSaveData> bindings)
+        {
+            List<ChapterEventBindingSaveData> result = new List<ChapterEventBindingSaveData>();
+            if (bindings == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < bindings.Count; index++)
+            {
+                ChapterEventBindingSaveData binding = CloneEventBindingSaveData(bindings[index]);
+                if (binding != null)
+                {
+                    result.Add(binding);
+                }
+            }
+
+            return result;
+        }
+
+        private static ChapterEventBindingSaveData CloneEventBindingSaveData(ChapterEventBindingSaveData binding)
+        {
+            if (binding == null)
+            {
+                return null;
+            }
+
+            ChapterEventBindingSaveData result = new ChapterEventBindingSaveData
+            {
+                BindingId = binding.BindingId ?? string.Empty,
+                EventId = binding.EventId ?? string.Empty,
+            };
+
+            if (binding.GridCoordinates != null)
+            {
+                for (int index = 0; index < binding.GridCoordinates.Count; index++)
+                {
+                    ChapterGridCoordinateSaveData coordinate = binding.GridCoordinates[index];
+                    if (coordinate == null)
+                    {
+                        continue;
+                    }
+
+                    result.GridCoordinates.Add(new ChapterGridCoordinateSaveData
+                    {
+                        CellX = coordinate.CellX,
+                        CellY = coordinate.CellY,
+                    });
+                }
+            }
+
+            return result;
         }
 
         public static ChapterEditorSaveData BuildSaveData(List<ChapterListItemData> chapters, int selectedChapterId, int nextChapterId)
@@ -209,6 +383,19 @@ namespace GameLogic
                     if (creatures[index] != null)
                     {
                         saveData.Creatures.Add(ToSaveData(creatures[index]));
+                    }
+                }
+            }
+
+            List<ChapterCreatureInstanceData> creatureInstances = chapter?.CreatureInstances;
+            if (creatureInstances != null)
+            {
+                for (int index = 0; index < creatureInstances.Count; index++)
+                {
+                    ChapterCreatureInstanceSaveData savedInstance = ToSaveData(creatureInstances[index]);
+                    if (savedInstance != null)
+                    {
+                        saveData.CreatureInstances.Add(savedInstance);
                     }
                 }
             }
@@ -347,14 +534,36 @@ namespace GameLogic
                 result.Creatures = runtimeCreatures;
             }
 
+            if (chapter.CreatureInstances != null && chapter.CreatureInstances.Count > 0)
+            {
+                List<ChapterCreatureInstanceData> runtimeCreatureInstances = new List<ChapterCreatureInstanceData>(chapter.CreatureInstances.Count);
+                for (int index = 0; index < chapter.CreatureInstances.Count; index++)
+                {
+                    ChapterCreatureInstanceSaveData creatureInstance = chapter.CreatureInstances[index];
+                    if (creatureInstance != null)
+                    {
+                        runtimeCreatureInstances.Add(ToRuntimeData(creatureInstance));
+                    }
+                }
+
+                result.CreatureInstances = runtimeCreatureInstances;
+            }
+
             return result;
         }
 
         private static ChapterCreatureDataSaveData ToSaveData(ChapterCreatureData creature)
         {
+            creature = ChapterCreatureDataStructureUtility.NormalizeCreatureTemplateData(creature);
+            if (creature == null)
+            {
+                return null;
+            }
+
             Color c = creature.AccentColor;
             return new ChapterCreatureDataSaveData
             {
+                CreatureId = creature.CreatureId ?? string.Empty,
                 Name = creature.Name ?? string.Empty,
                 NameEn = creature.NameEn ?? string.Empty,
                 CreatureType = creature.CreatureType ?? string.Empty,
@@ -394,8 +603,14 @@ namespace GameLogic
 
         private static ChapterCreatureData ToRuntimeData(ChapterCreatureDataSaveData saved)
         {
-            return new ChapterCreatureData
+            if (saved == null)
             {
+                return null;
+            }
+
+            return ChapterCreatureDataStructureUtility.NormalizeCreatureTemplateData(new ChapterCreatureData
+            {
+                CreatureId = saved.CreatureId ?? string.Empty,
                 Name = saved.Name ?? string.Empty,
                 NameEn = saved.NameEn ?? string.Empty,
                 CreatureType = saved.CreatureType ?? string.Empty,
@@ -427,22 +642,84 @@ namespace GameLogic
                 BattleNotes = saved.BattleNotes ?? string.Empty,
                 PreviewImageFileName = saved.PreviewImageFileName ?? string.Empty,
                 AccentColor = new UnityEngine.Color(saved.AccentColorR, saved.AccentColorG, saved.AccentColorB, saved.AccentColorA),
+            });
+        }
+
+        private static ChapterCreatureInstanceSaveData ToSaveData(ChapterCreatureInstanceData creature)
+        {
+            creature = ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(creature);
+            if (creature == null)
+            {
+                return null;
+            }
+
+            ChapterCreatureInstancePlacementData placement = creature.Placement ?? new ChapterCreatureInstancePlacementData();
+            return new ChapterCreatureInstanceSaveData
+            {
+                InstanceId = creature.InstanceId ?? string.Empty,
+                SourceCreatureId = creature.SourceCreatureId ?? string.Empty,
+                IsActive = creature.IsActive,
+                Placement = new ChapterCreatureInstancePlacementSaveData
+                {
+                    AnchorCellX = placement.AnchorCell.CellX,
+                    AnchorCellY = placement.AnchorCell.CellY,
+                    PreviewScale = placement.PreviewScale,
+                    SnapToGrid = placement.SnapToGrid,
+                },
+                RuntimeSheet = ToSaveData(creature.RuntimeSheet),
+                DmNote = creature.DmNote ?? string.Empty,
             };
+        }
+
+        private static ChapterCreatureInstanceData ToRuntimeData(ChapterCreatureInstanceSaveData saved)
+        {
+            saved = ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceSaveData(saved);
+            if (saved == null)
+            {
+                return null;
+            }
+
+            ChapterCreatureInstancePlacementSaveData placement = saved.Placement ?? new ChapterCreatureInstancePlacementSaveData();
+            return ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(new ChapterCreatureInstanceData
+            {
+                InstanceId = saved.InstanceId ?? string.Empty,
+                SourceCreatureId = saved.SourceCreatureId ?? string.Empty,
+                IsActive = saved.IsActive,
+                Placement = new ChapterCreatureInstancePlacementData
+                {
+                    AnchorCell = new ChapterGridCoordinate(placement.AnchorCellX, placement.AnchorCellY),
+                    PreviewScale = placement.PreviewScale,
+                    SnapToGrid = placement.SnapToGrid,
+                },
+                RuntimeSheet = ToRuntimeData(saved.RuntimeSheet),
+                DmNote = saved.DmNote ?? string.Empty,
+            });
         }
 
         private static ChapterGridEventSaveData ToSaveData(ChapterGridEventData eventData)
         {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
             if (eventData == null)
             {
                 return null;
             }
 
+            ChapterEventTriggerData triggerData = eventData.Trigger ?? new ChapterEventTriggerData();
+            ChapterEventEffectData effectData = eventData.Effect ?? new ChapterEventEffectData();
+            ChapterEventAreaTriggerParamData areaTriggerParam = triggerData.Area ?? new ChapterEventAreaTriggerParamData();
+            ChapterEventInteractionTriggerParamData interactionTriggerParam = triggerData.Interaction ?? new ChapterEventInteractionTriggerParamData();
+            ChapterEventPrerequisiteTriggerParamData prerequisiteTriggerParam = triggerData.Prerequisite ?? new ChapterEventPrerequisiteTriggerParamData();
+            ChapterEventCheckEffectParamData checkEffectParam = effectData.Check ?? new ChapterEventCheckEffectParamData();
+            ChapterEventNarrativeEffectParamData narrativeEffectParam = effectData.Narrative ?? new ChapterEventNarrativeEffectParamData();
+            ChapterEventDialogueEffectParamData dialogueEffectParam = effectData.Dialogue ?? new ChapterEventDialogueEffectParamData();
+            ChapterEventCreatureEffectParamData creatureEffectParam = effectData.Creature ?? new ChapterEventCreatureEffectParamData();
+            ChapterEventBattleEffectParamData battleEffectParam = effectData.Battle ?? new ChapterEventBattleEffectParamData();
             List<ChapterSkillCheckThresholdSaveData> skillCheckEntries = new List<ChapterSkillCheckThresholdSaveData>();
-            if (eventData.SkillCheckEntries != null)
+            if (checkEffectParam.SkillCheckEntries != null)
             {
-                for (int index = 0; index < eventData.SkillCheckEntries.Count; index++)
+                for (int index = 0; index < checkEffectParam.SkillCheckEntries.Count; index++)
                 {
-                    ChapterSkillCheckThresholdData entry = eventData.SkillCheckEntries[index];
+                    ChapterSkillCheckThresholdData entry = checkEffectParam.SkillCheckEntries[index];
                     if (entry == null)
                     {
                         continue;
@@ -461,43 +738,130 @@ namespace GameLogic
                 EventId = eventData.EventId ?? string.Empty,
                 IsEnabled = eventData.IsEnabled,
                 IsOneShot = eventData.IsOneShot,
-                EventType = MigrateEventCategoryToOldType(eventData.EventCategory, eventData.EventSubType),
-                EventCategory = eventData.EventCategory,
-                EventSubType = eventData.EventSubType,
-                TriggerMode = eventData.TriggerMode,
-                CheckTargetMode = eventData.CheckTargetMode,
-                CheckResolutionMode = eventData.CheckResolutionMode,
+                Trigger = ChapterEventDataStructureUtility.CloneSaveTrigger(new ChapterEventTriggerSaveData
+                {
+                    TriggerMode = triggerData.TriggerMode,
+                    TriggerType = triggerData.TriggerType,
+                    Area = ChapterEventDataStructureUtility.CloneSaveAreaTriggerParam(new ChapterEventAreaTriggerParamSaveData
+                    {
+                        FirstEnterOnly = areaTriggerParam.FirstEnterOnly,
+                        ShareBinding = areaTriggerParam.ShareBinding,
+                    }),
+                    Interaction = ChapterEventDataStructureUtility.CloneSaveInteractionTriggerParam(new ChapterEventInteractionTriggerParamSaveData
+                    {
+                        Target = interactionTriggerParam.Target ?? string.Empty,
+                        RequireConfirm = interactionTriggerParam.RequireConfirm,
+                    }),
+                    Prerequisite = ChapterEventDataStructureUtility.CloneSavePrerequisiteTriggerParam(new ChapterEventPrerequisiteTriggerParamSaveData
+                    {
+                        EventId = prerequisiteTriggerParam.EventId ?? string.Empty,
+                        DelayDescription = prerequisiteTriggerParam.DelayDescription ?? string.Empty,
+                    }),
+                    AreaFirstEnterOnly = triggerData.AreaFirstEnterOnly,
+                    AreaShareBinding = triggerData.AreaShareBinding,
+                    InteractionTarget = triggerData.InteractionTarget ?? string.Empty,
+                    InteractionRequireConfirm = triggerData.InteractionRequireConfirm,
+                    PrerequisiteEventId = triggerData.PrerequisiteEventId ?? string.Empty,
+                    DelayDescription = triggerData.DelayDescription ?? string.Empty,
+                }),
+                Effect = ChapterEventDataStructureUtility.CloneSaveEffect(new ChapterEventEffectSaveData
+                {
+                    EffectType = effectData.EffectType,
+                    Check = ChapterEventDataStructureUtility.CloneSaveCheckEffectParam(new ChapterEventCheckEffectParamSaveData
+                    {
+                        TargetMode = checkEffectParam.TargetMode,
+                        ResolutionMode = checkEffectParam.ResolutionMode,
+                        SuccessResult = checkEffectParam.SuccessResult ?? string.Empty,
+                        FailureResult = checkEffectParam.FailureResult ?? string.Empty,
+                        SkillCheckEntries = skillCheckEntries,
+                        SkillCheckName = checkEffectParam.SkillCheckName ?? string.Empty,
+                        SkillCheckThreshold = checkEffectParam.SkillCheckThreshold ?? string.Empty,
+                        AbilityStrengthThreshold = checkEffectParam.AbilityStrengthThreshold ?? string.Empty,
+                        AbilityDexterityThreshold = checkEffectParam.AbilityDexterityThreshold ?? string.Empty,
+                        AbilityConstitutionThreshold = checkEffectParam.AbilityConstitutionThreshold ?? string.Empty,
+                        AbilityIntelligenceThreshold = checkEffectParam.AbilityIntelligenceThreshold ?? string.Empty,
+                        AbilityWisdomThreshold = checkEffectParam.AbilityWisdomThreshold ?? string.Empty,
+                        AbilityCharismaThreshold = checkEffectParam.AbilityCharismaThreshold ?? string.Empty,
+                    }),
+                    Narrative = ChapterEventDataStructureUtility.CloneSaveNarrativeEffectParam(new ChapterEventNarrativeEffectParamSaveData
+                    {
+                        Text = narrativeEffectParam.Text ?? string.Empty,
+                        DmOnly = narrativeEffectParam.DmOnly,
+                    }),
+                    Dialogue = ChapterEventDataStructureUtility.CloneSaveDialogueEffectParam(new ChapterEventDialogueEffectParamSaveData
+                    {
+                        Target = dialogueEffectParam.Target ?? string.Empty,
+                        Summary = dialogueEffectParam.Summary ?? string.Empty,
+                        Prompt = dialogueEffectParam.Prompt ?? string.Empty,
+                    }),
+                    Creature = ChapterEventDataStructureUtility.CloneSaveCreatureEffectParam(new ChapterEventCreatureEffectParamSaveData
+                    {
+                        InstanceId = creatureEffectParam.InstanceId ?? string.Empty,
+                        Activate = creatureEffectParam.Activate,
+                        PlacementMode = creatureEffectParam.PlacementMode,
+                    }),
+                    Battle = ChapterEventDataStructureUtility.CloneSaveBattleEffectParam(new ChapterEventBattleEffectParamSaveData
+                    {
+                        Reference = battleEffectParam.Reference ?? string.Empty,
+                        IncludeActiveCreatures = battleEffectParam.IncludeActiveCreatures,
+                        Description = battleEffectParam.Description ?? string.Empty,
+                    }),
+                    CheckTargetMode = effectData.CheckTargetMode,
+                    CheckResolutionMode = effectData.CheckResolutionMode,
+                    SuccessResult = effectData.SuccessResult ?? string.Empty,
+                    FailureResult = effectData.FailureResult ?? string.Empty,
+                    LegacyDmPrompt = effectData.LegacyDmPrompt ?? string.Empty,
+                    NarrativeText = effectData.NarrativeText ?? string.Empty,
+                    NarrativeDmOnly = effectData.NarrativeDmOnly,
+                    DialogueTarget = effectData.DialogueTarget ?? string.Empty,
+                    DialogueSummary = effectData.DialogueSummary ?? string.Empty,
+                    DialoguePrompt = effectData.DialoguePrompt ?? string.Empty,
+                    CreatureInstanceId = effectData.CreatureInstanceId ?? string.Empty,
+                    CreatureActivate = effectData.CreatureActivate,
+                    CreaturePlacementMode = effectData.CreaturePlacementMode,
+                    BattleReference = effectData.BattleReference ?? string.Empty,
+                    BattleIncludeActiveCreatures = effectData.BattleIncludeActiveCreatures,
+                    BattleDescription = effectData.BattleDescription ?? string.Empty,
+                    SkillCheckEntries = skillCheckEntries,
+                    SkillCheckName = effectData.SkillCheckName ?? string.Empty,
+                    SkillCheckThreshold = effectData.SkillCheckThreshold ?? string.Empty,
+                    AbilityStrengthThreshold = effectData.AbilityStrengthThreshold ?? string.Empty,
+                    AbilityDexterityThreshold = effectData.AbilityDexterityThreshold ?? string.Empty,
+                    AbilityConstitutionThreshold = effectData.AbilityConstitutionThreshold ?? string.Empty,
+                    AbilityIntelligenceThreshold = effectData.AbilityIntelligenceThreshold ?? string.Empty,
+                    AbilityWisdomThreshold = effectData.AbilityWisdomThreshold ?? string.Empty,
+                    AbilityCharismaThreshold = effectData.AbilityCharismaThreshold ?? string.Empty,
+                }),
                 EventTitle = eventData.EventTitle ?? string.Empty,
                 TriggerDescription = eventData.TriggerDescription ?? string.Empty,
-                SuccessResult = eventData.SuccessResult ?? string.Empty,
-                FailureResult = eventData.FailureResult ?? string.Empty,
                 DmNote = eventData.DmNote ?? string.Empty,
-                DmPrompt = eventData.DmPrompt ?? string.Empty,
-                SkillCheckEntries = skillCheckEntries,
-                SkillCheckName = eventData.SkillCheckName ?? string.Empty,
-                SkillCheckThreshold = eventData.SkillCheckThreshold ?? string.Empty,
-                AbilityStrengthThreshold = eventData.AbilityStrengthThreshold ?? string.Empty,
-                AbilityDexterityThreshold = eventData.AbilityDexterityThreshold ?? string.Empty,
-                AbilityConstitutionThreshold = eventData.AbilityConstitutionThreshold ?? string.Empty,
-                AbilityIntelligenceThreshold = eventData.AbilityIntelligenceThreshold ?? string.Empty,
-                AbilityWisdomThreshold = eventData.AbilityWisdomThreshold ?? string.Empty,
-                AbilityCharismaThreshold = eventData.AbilityCharismaThreshold ?? string.Empty,
             };
         }
 
         private static ChapterGridEventData ToRuntimeData(ChapterGridEventSaveData eventData)
         {
+            eventData = ChapterEventDataStructureUtility.NormalizeSaveEventData(eventData);
             if (eventData == null)
             {
                 return null;
             }
 
+            ChapterEventTriggerSaveData triggerData = eventData.Trigger ?? new ChapterEventTriggerSaveData();
+            ChapterEventEffectSaveData effectData = eventData.Effect ?? new ChapterEventEffectSaveData();
+            ChapterEventAreaTriggerParamSaveData areaTriggerParam = triggerData.Area ?? new ChapterEventAreaTriggerParamSaveData();
+            ChapterEventInteractionTriggerParamSaveData interactionTriggerParam = triggerData.Interaction ?? new ChapterEventInteractionTriggerParamSaveData();
+            ChapterEventPrerequisiteTriggerParamSaveData prerequisiteTriggerParam = triggerData.Prerequisite ?? new ChapterEventPrerequisiteTriggerParamSaveData();
+            ChapterEventCheckEffectParamSaveData checkEffectParam = effectData.Check ?? new ChapterEventCheckEffectParamSaveData();
+            ChapterEventNarrativeEffectParamSaveData narrativeEffectParam = effectData.Narrative ?? new ChapterEventNarrativeEffectParamSaveData();
+            ChapterEventDialogueEffectParamSaveData dialogueEffectParam = effectData.Dialogue ?? new ChapterEventDialogueEffectParamSaveData();
+            ChapterEventCreatureEffectParamSaveData creatureEffectParam = effectData.Creature ?? new ChapterEventCreatureEffectParamSaveData();
+            ChapterEventBattleEffectParamSaveData battleEffectParam = effectData.Battle ?? new ChapterEventBattleEffectParamSaveData();
             List<ChapterSkillCheckThresholdData> skillCheckEntries = new List<ChapterSkillCheckThresholdData>();
-            if (eventData.SkillCheckEntries != null && eventData.SkillCheckEntries.Count > 0)
+            if (checkEffectParam.SkillCheckEntries != null && checkEffectParam.SkillCheckEntries.Count > 0)
             {
-                for (int index = 0; index < eventData.SkillCheckEntries.Count; index++)
+                for (int index = 0; index < checkEffectParam.SkillCheckEntries.Count; index++)
                 {
-                    ChapterSkillCheckThresholdSaveData entry = eventData.SkillCheckEntries[index];
+                    ChapterSkillCheckThresholdSaveData entry = checkEffectParam.SkillCheckEntries[index];
                     if (entry == null)
                     {
                         continue;
@@ -510,42 +874,121 @@ namespace GameLogic
                     });
                 }
             }
-            else if (!string.IsNullOrWhiteSpace(eventData.SkillCheckName)
-                || !string.IsNullOrWhiteSpace(eventData.SkillCheckThreshold))
+            else if (!string.IsNullOrWhiteSpace(checkEffectParam.SkillCheckName)
+                || !string.IsNullOrWhiteSpace(checkEffectParam.SkillCheckThreshold))
             {
                 skillCheckEntries.Add(new ChapterSkillCheckThresholdData
                 {
-                    SkillName = eventData.SkillCheckName ?? string.Empty,
-                    Threshold = eventData.SkillCheckThreshold ?? string.Empty,
+                    SkillName = checkEffectParam.SkillCheckName ?? string.Empty,
+                    Threshold = checkEffectParam.SkillCheckThreshold ?? string.Empty,
                 });
             }
 
-            return new ChapterGridEventData
+            ChapterGridEventData runtimeEventData = new ChapterGridEventData
             {
                 EventId = eventData.EventId ?? string.Empty,
                 IsEnabled = eventData.IsEnabled,
                 IsOneShot = eventData.IsOneShot,
-                EventCategory = ResolveEventCategory(eventData.EventCategory, eventData.EventType),
-                EventSubType = ResolveEventSubType(eventData.EventCategory, eventData.EventSubType, eventData.EventType),
-                TriggerMode = eventData.TriggerMode,
-                CheckTargetMode = eventData.CheckTargetMode,
-                CheckResolutionMode = eventData.CheckResolutionMode,
+                Trigger = ChapterEventDataStructureUtility.CloneRuntimeTrigger(new ChapterEventTriggerData
+                {
+                    TriggerMode = triggerData.TriggerMode,
+                    TriggerType = triggerData.TriggerType,
+                    Area = ChapterEventDataStructureUtility.CloneRuntimeAreaTriggerParam(new ChapterEventAreaTriggerParamData
+                    {
+                        FirstEnterOnly = areaTriggerParam.FirstEnterOnly,
+                        ShareBinding = areaTriggerParam.ShareBinding,
+                    }),
+                    Interaction = ChapterEventDataStructureUtility.CloneRuntimeInteractionTriggerParam(new ChapterEventInteractionTriggerParamData
+                    {
+                        Target = interactionTriggerParam.Target ?? string.Empty,
+                        RequireConfirm = interactionTriggerParam.RequireConfirm,
+                    }),
+                    Prerequisite = ChapterEventDataStructureUtility.CloneRuntimePrerequisiteTriggerParam(new ChapterEventPrerequisiteTriggerParamData
+                    {
+                        EventId = prerequisiteTriggerParam.EventId ?? string.Empty,
+                        DelayDescription = prerequisiteTriggerParam.DelayDescription ?? string.Empty,
+                    }),
+                    AreaFirstEnterOnly = triggerData.AreaFirstEnterOnly,
+                    AreaShareBinding = triggerData.AreaShareBinding,
+                    InteractionTarget = triggerData.InteractionTarget ?? string.Empty,
+                    InteractionRequireConfirm = triggerData.InteractionRequireConfirm,
+                    PrerequisiteEventId = triggerData.PrerequisiteEventId ?? string.Empty,
+                    DelayDescription = triggerData.DelayDescription ?? string.Empty,
+                }),
+                Effect = ChapterEventDataStructureUtility.CloneRuntimeEffect(new ChapterEventEffectData
+                {
+                    EffectType = effectData.EffectType,
+                    Check = ChapterEventDataStructureUtility.CloneRuntimeCheckEffectParam(new ChapterEventCheckEffectParamData
+                    {
+                        TargetMode = checkEffectParam.TargetMode,
+                        ResolutionMode = checkEffectParam.ResolutionMode,
+                        SuccessResult = checkEffectParam.SuccessResult ?? string.Empty,
+                        FailureResult = checkEffectParam.FailureResult ?? string.Empty,
+                        SkillCheckEntries = skillCheckEntries,
+                        SkillCheckName = checkEffectParam.SkillCheckName ?? string.Empty,
+                        SkillCheckThreshold = checkEffectParam.SkillCheckThreshold ?? string.Empty,
+                        AbilityStrengthThreshold = checkEffectParam.AbilityStrengthThreshold ?? string.Empty,
+                        AbilityDexterityThreshold = checkEffectParam.AbilityDexterityThreshold ?? string.Empty,
+                        AbilityConstitutionThreshold = checkEffectParam.AbilityConstitutionThreshold ?? string.Empty,
+                        AbilityIntelligenceThreshold = checkEffectParam.AbilityIntelligenceThreshold ?? string.Empty,
+                        AbilityWisdomThreshold = checkEffectParam.AbilityWisdomThreshold ?? string.Empty,
+                        AbilityCharismaThreshold = checkEffectParam.AbilityCharismaThreshold ?? string.Empty,
+                    }),
+                    Narrative = ChapterEventDataStructureUtility.CloneRuntimeNarrativeEffectParam(new ChapterEventNarrativeEffectParamData
+                    {
+                        Text = narrativeEffectParam.Text ?? string.Empty,
+                        DmOnly = narrativeEffectParam.DmOnly,
+                    }),
+                    Dialogue = ChapterEventDataStructureUtility.CloneRuntimeDialogueEffectParam(new ChapterEventDialogueEffectParamData
+                    {
+                        Target = dialogueEffectParam.Target ?? string.Empty,
+                        Summary = dialogueEffectParam.Summary ?? string.Empty,
+                        Prompt = dialogueEffectParam.Prompt ?? string.Empty,
+                    }),
+                    Creature = ChapterEventDataStructureUtility.CloneRuntimeCreatureEffectParam(new ChapterEventCreatureEffectParamData
+                    {
+                        InstanceId = creatureEffectParam.InstanceId ?? string.Empty,
+                        Activate = creatureEffectParam.Activate,
+                        PlacementMode = creatureEffectParam.PlacementMode,
+                    }),
+                    Battle = ChapterEventDataStructureUtility.CloneRuntimeBattleEffectParam(new ChapterEventBattleEffectParamData
+                    {
+                        Reference = battleEffectParam.Reference ?? string.Empty,
+                        IncludeActiveCreatures = battleEffectParam.IncludeActiveCreatures,
+                        Description = battleEffectParam.Description ?? string.Empty,
+                    }),
+                    CheckTargetMode = effectData.CheckTargetMode,
+                    CheckResolutionMode = effectData.CheckResolutionMode,
+                    SuccessResult = effectData.SuccessResult ?? string.Empty,
+                    FailureResult = effectData.FailureResult ?? string.Empty,
+                    LegacyDmPrompt = effectData.LegacyDmPrompt ?? string.Empty,
+                    NarrativeText = effectData.NarrativeText ?? string.Empty,
+                    NarrativeDmOnly = effectData.NarrativeDmOnly,
+                    DialogueTarget = effectData.DialogueTarget ?? string.Empty,
+                    DialogueSummary = effectData.DialogueSummary ?? string.Empty,
+                    DialoguePrompt = effectData.DialoguePrompt ?? string.Empty,
+                    CreatureInstanceId = effectData.CreatureInstanceId ?? string.Empty,
+                    CreatureActivate = effectData.CreatureActivate,
+                    CreaturePlacementMode = effectData.CreaturePlacementMode,
+                    BattleReference = effectData.BattleReference ?? string.Empty,
+                    BattleIncludeActiveCreatures = effectData.BattleIncludeActiveCreatures,
+                    BattleDescription = effectData.BattleDescription ?? string.Empty,
+                    SkillCheckEntries = skillCheckEntries,
+                    SkillCheckName = effectData.SkillCheckName ?? string.Empty,
+                    SkillCheckThreshold = effectData.SkillCheckThreshold ?? string.Empty,
+                    AbilityStrengthThreshold = effectData.AbilityStrengthThreshold ?? string.Empty,
+                    AbilityDexterityThreshold = effectData.AbilityDexterityThreshold ?? string.Empty,
+                    AbilityConstitutionThreshold = effectData.AbilityConstitutionThreshold ?? string.Empty,
+                    AbilityIntelligenceThreshold = effectData.AbilityIntelligenceThreshold ?? string.Empty,
+                    AbilityWisdomThreshold = effectData.AbilityWisdomThreshold ?? string.Empty,
+                    AbilityCharismaThreshold = effectData.AbilityCharismaThreshold ?? string.Empty,
+                }),
                 EventTitle = eventData.EventTitle ?? string.Empty,
                 TriggerDescription = eventData.TriggerDescription ?? string.Empty,
-                SuccessResult = eventData.SuccessResult ?? string.Empty,
-                FailureResult = eventData.FailureResult ?? string.Empty,
                 DmNote = eventData.DmNote ?? string.Empty,
-                DmPrompt = eventData.DmPrompt ?? string.Empty,
-                SkillCheckEntries = skillCheckEntries,
-                SkillCheckName = eventData.SkillCheckName ?? string.Empty,
-                SkillCheckThreshold = eventData.SkillCheckThreshold ?? string.Empty,
-                AbilityStrengthThreshold = eventData.AbilityStrengthThreshold ?? string.Empty,
-                AbilityDexterityThreshold = eventData.AbilityDexterityThreshold ?? string.Empty,
-                AbilityConstitutionThreshold = eventData.AbilityConstitutionThreshold ?? string.Empty,
-                AbilityIntelligenceThreshold = eventData.AbilityIntelligenceThreshold ?? string.Empty,
-                AbilityWisdomThreshold = eventData.AbilityWisdomThreshold ?? string.Empty,
-                AbilityCharismaThreshold = eventData.AbilityCharismaThreshold ?? string.Empty,
             };
+
+            return ChapterEventDataStructureUtility.NormalizeRuntimeEventData(runtimeEventData);
         }
 
         private static ChapterEventBindingSaveData ToSaveData(ChapterEventBindingData binding)
@@ -602,53 +1045,6 @@ namespace GameLogic
             }
 
             return result.GridCoordinates.Count > 0 ? result : null;
-        }
-        private static int ResolveEventCategory(int savedCategory, int oldEventType)
-        {
-            if (savedCategory == 1)
-            {
-                return 1;
-            }
-
-            // Migrate from old format: EventType != 2 (Check) means it was a DM-direct event
-            if (savedCategory == 0 && oldEventType != 2)
-            {
-                return 1;
-            }
-
-            return 0;
-        }
-
-        private static int ResolveEventSubType(int savedCategory, int savedSubType, int oldEventType)
-        {
-            if (savedCategory == 1)
-            {
-                return savedSubType;
-            }
-
-            // Migrate from old format: map old EventType to new DM subtype index
-            // Old: Story=0, Dialogue=1, [Check=2 skipped], Choice=3, Interaction=4,
-            //      Combat=5, Exploration=6, AreaEnter=7, TimeAdvance=8, Random=9, Special=10
-            // New DM subtypes: Story=0, Dialogue=1, Choice=2, Interaction=3,
-            //                  Combat=4, Exploration=5, AreaEnter=6, TimeAdvance=7, Random=8, Special=9
-            if (savedCategory == 0 && oldEventType != 2 && oldEventType >= 0 && oldEventType <= 10)
-            {
-                return oldEventType < 2 ? oldEventType : oldEventType - 1;
-            }
-
-            return 0;
-        }
-
-        private static int MigrateEventCategoryToOldType(int eventCategory, int eventSubType)
-        {
-            if (eventCategory == 0)
-            {
-                return 2; // Check
-            }
-
-            // DM subtype → old EventType: Story=0, Dialogue=1, Choice=2→3, Interaction=3→4,
-            // Combat=4→5, Exploration=5→6, AreaEnter=6→7, TimeAdvance=7→8, Random=8→9, Special=9→10
-            return eventSubType < 2 ? eventSubType : eventSubType + 1;
         }
     }
 }

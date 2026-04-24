@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -465,65 +465,23 @@ namespace GameLogic
 
         public static ChapterGridEventData CloneEventData(ChapterGridEventData source)
         {
+            source = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(source);
             if (source == null)
             {
                 return null;
             }
 
-            List<ChapterSkillCheckThresholdData> skillCheckEntries = new List<ChapterSkillCheckThresholdData>();
-            if (source.SkillCheckEntries != null)
-            {
-                for (int index = 0; index < source.SkillCheckEntries.Count; index++)
-                {
-                    ChapterSkillCheckThresholdData entry = source.SkillCheckEntries[index];
-                    if (entry == null)
-                    {
-                        continue;
-                    }
-
-                    skillCheckEntries.Add(new ChapterSkillCheckThresholdData
-                    {
-                        SkillName = entry.SkillName ?? string.Empty,
-                        Threshold = entry.Threshold ?? string.Empty,
-                    });
-                }
-            }
-            else if (!string.IsNullOrWhiteSpace(source.SkillCheckName)
-                || !string.IsNullOrWhiteSpace(source.SkillCheckThreshold))
-            {
-                skillCheckEntries.Add(new ChapterSkillCheckThresholdData
-                {
-                    SkillName = source.SkillCheckName ?? string.Empty,
-                    Threshold = source.SkillCheckThreshold ?? string.Empty,
-                });
-            }
-
-            return new ChapterGridEventData
+            return ChapterEventDataStructureUtility.NormalizeRuntimeEventData(new ChapterGridEventData
             {
                 EventId = source.EventId ?? string.Empty,
                 IsEnabled = source.IsEnabled,
                 IsOneShot = source.IsOneShot,
-                EventCategory = source.EventCategory,
-                EventSubType = source.EventSubType,
-                TriggerMode = source.TriggerMode,
-                CheckTargetMode = source.CheckTargetMode,
-                CheckResolutionMode = source.CheckResolutionMode,
+                Trigger = ChapterEventDataStructureUtility.CloneRuntimeTrigger(source.Trigger),
+                Effect = ChapterEventDataStructureUtility.CloneRuntimeEffect(source.Effect),
                 EventTitle = source.EventTitle ?? string.Empty,
                 TriggerDescription = source.TriggerDescription ?? string.Empty,
-                SuccessResult = source.SuccessResult ?? string.Empty,
-                FailureResult = source.FailureResult ?? string.Empty,
                 DmNote = source.DmNote ?? string.Empty,
-                DmPrompt = source.DmPrompt ?? string.Empty,
-                SkillCheckEntries = skillCheckEntries,
-                SkillCheckName = source.SkillCheckName ?? string.Empty,
-                SkillCheckThreshold = source.SkillCheckThreshold ?? string.Empty,
-                AbilityStrengthThreshold = source.AbilityStrengthThreshold ?? string.Empty,
-                AbilityDexterityThreshold = source.AbilityDexterityThreshold ?? string.Empty,
-                AbilityConstitutionThreshold = source.AbilityConstitutionThreshold ?? string.Empty,
-                AbilityIntelligenceThreshold = source.AbilityIntelligenceThreshold ?? string.Empty,
-                AbilityWisdomThreshold = source.AbilityWisdomThreshold ?? string.Empty,
-                AbilityCharismaThreshold = source.AbilityCharismaThreshold ?? string.Empty,
-            };
+            });
         }
 
         private static int FindIndex(List<ChapterGridCellData> gridCells, ChapterGridCoordinate coordinate, ChapterGridCellMarkType markType)

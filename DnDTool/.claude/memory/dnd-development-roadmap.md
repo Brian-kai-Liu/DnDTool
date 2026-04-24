@@ -57,6 +57,8 @@
 
 先落地 P0：数据结构和职责边界先定死，再开始拖拽部署。
 
+补充：生物主线的第一版结构与执行顺序，已单独整理到 `.claude/memory/creature-deployment-mainline.md`，后续优先按该文档推进。
+
 ## P0 已确认原则
 
 1. 战场实例不写入 GridCells。

@@ -121,6 +121,7 @@ namespace GameLogic
         private readonly List<RectTransform> m_horizontalGridLines = new List<RectTransform>();
         private readonly List<Image> m_gridSelectionHighlights = new List<Image>();
         private readonly List<Image> m_gridEventMarkers = new List<Image>();
+        private readonly List<ChapterCreatureMapTokenWidget> m_creatureInstanceTokenWidgets = new List<ChapterCreatureMapTokenWidget>();
         private readonly List<RaycastResult> m_creatureBoardPointerHits = new List<RaycastResult>();
         private RectTransform m_verticalGridLineTemplate = null!;
         private RectTransform m_horizontalGridLineTemplate = null!;
@@ -147,6 +148,21 @@ namespace GameLogic
         private Vector2 m_gridCellEventPopupMouseDownLocalPoint;
         private ChapterGridCoordinate m_gridCellSelectionMouseDownCoordinate = ChapterGridCoordinate.Zero;
         private ChapterGridCoordinate m_gridCellEventPopupMouseDownCoordinate = ChapterGridCoordinate.Zero;
+        private bool m_isDraggingCreatureDeployment;
+        private ChapterCreatureData m_draggingCreatureTemplate = null!;
+        private ChapterCreatureMapTokenWidget m_creatureDragPreviewWidget;
+        private string m_selectedCreatureInstanceId = string.Empty;
+        private bool m_isPendingCreatureInstanceSelection;
+        private bool m_isDraggingCreatureInstance;
+        private string m_pendingCreatureInstanceId = string.Empty;
+        private string m_draggingCreatureInstanceId = string.Empty;
+        private Vector2 m_creatureInstanceMouseDownLocalPoint;
+        private RectTransform m_rectCreatureInstanceActionPanel = null!;
+        private RectTransform m_btnCreatureInstanceToggleActiveRect = null!;
+        private RectTransform m_btnCreatureInstanceDeleteRect = null!;
+        private Button m_btnCreatureInstanceToggleActive = null!;
+        private Button m_btnCreatureInstanceDelete = null!;
+        private TMP_Text m_textCreatureInstanceToggleActive = null!;
 
         protected override void OnCreate()
         {
@@ -246,6 +262,7 @@ namespace GameLogic
 
             m_chapterItemViews.Clear();
             DisposeCreatureBrowserViews();
+            DisposeCreatureTokenViews();
 
             if (m_dragPlaceholder != null)
             {
@@ -287,6 +304,7 @@ namespace GameLogic
                 HandleGridDragging();
             }
 
+            HandleCreatureInstanceInteraction();
             HandleGridCellSelection();
 
             if (!IsMouseOverMapPreview())
@@ -364,7 +382,7 @@ namespace GameLogic
             EventSystem.current.RaycastAll(pointerEventData, m_creatureBoardPointerHits);
             if (m_creatureBoardPointerHits.Count <= 0)
             {
-                Log.Warning($"鐢熺墿鍖哄煙鐐瑰嚮鎺㈤拡: 鏈懡涓换浣?UI銆傞紶鏍囦綅缃?{Input.mousePosition}");
+                Log.Warning($"生物区域点击探针: 未命中任何 UI。鼠标位置 {Input.mousePosition}");
                 return;
             }
 
@@ -419,6 +437,7 @@ namespace GameLogic
                 Events = new List<ChapterGridEventData>(),
                 EventBindings = new List<ChapterEventBindingData>(),
                 Creatures = new List<ChapterCreatureData>(),
+                CreatureInstances = new List<ChapterCreatureInstanceData>(),
             };
         }
 
@@ -845,9 +864,8 @@ namespace GameLogic
                     GridCells = ChapterGridCellCollectionUtility.Clone(chapter.GridCells),
                     Events = ChapterEventCollectionUtility.CloneEvents(chapter.Events),
                     EventBindings = ChapterEventCollectionUtility.CloneBindings(chapter.EventBindings),
-                    Creatures = chapter.Creatures != null
-                        ? new List<ChapterCreatureData>(chapter.Creatures)
-                        : new List<ChapterCreatureData>(),
+                    Creatures = ChapterCreatureDataStructureUtility.CloneCreatureDataList(chapter.Creatures),
+                    CreatureInstances = ChapterCreatureDataStructureUtility.CloneCreatureInstanceDataList(chapter.CreatureInstances),
                 });
             }
 
@@ -934,7 +952,7 @@ namespace GameLogic
 
             ConfigureChapterTextInput(m_tmpInputChapterGoal, "Please enter the chapter goal", 400);
             ConfigureChapterTextInput(m_tmpInputStoryContent, "Please enter the chapter content", 0);
-            ConfigureChapterTextInput(m_tmpInputDmNote, "璇疯緭鍏?DM 澶囨敞", 1200);
+            ConfigureChapterTextInput(m_tmpInputDmNote, "请输入 DM 备注", 1200);
 
             RefreshChapterMapPreview(null!);
         }
@@ -1130,14 +1148,14 @@ namespace GameLogic
 
             if (m_tmpCreatureBrowserTitle != null)
             {
-                m_tmpCreatureBrowserTitle.text = "鎬墿鍗＄墖";
+                m_tmpCreatureBrowserTitle.text = "怪物卡片";
             }
 
             if (m_textCreatureBrowserSubtitle != null)
             {
                 m_textCreatureBrowserSubtitle.text = string.IsNullOrWhiteSpace(m_creatureSearchKeyword)
                     ? "Search by name or add a new creature card."
-                    : $"鍚嶇О绛涢€? {m_creatureSearchKeyword}";
+                    : $"名称筛选: {m_creatureSearchKeyword}";
             }
 
             RefreshCreatureFilteredCardIndices();
@@ -1155,7 +1173,10 @@ namespace GameLogic
                         m_creatureAllCards[actualCardIndex],
                         actualCardIndex == m_selectedCreatureCardIndex,
                         () => SelectCreatureCard(actualCardIndex),
-                        runtimeCreatureIndex >= 0 ? () => OpenCreatureEntryPopup(runtimeCreatureIndex) : null);
+                        runtimeCreatureIndex >= 0 ? () => OpenCreatureEntryPopup(runtimeCreatureIndex) : null,
+                        screenPoint => BeginCreatureDeploymentDrag(actualCardIndex, screenPoint),
+                        UpdateCreatureDeploymentDrag,
+                        EndCreatureDeploymentDrag);
                 }
             }
 
@@ -1371,6 +1392,7 @@ namespace GameLogic
                 return;
             }
 
+            creatureData = ChapterCreatureDataStructureUtility.CloneCreatureData(creatureData);
             m_creatureRuntimeCards.Add(new ChapterCreatureStaticCardData(creatureData));
             RebuildCreatureBrowserCards();
             SetCreatureSearchKeyword(string.Empty);
@@ -1388,6 +1410,13 @@ namespace GameLogic
                 return;
             }
 
+            string existingCreatureId = m_creatureRuntimeCards[runtimeCreatureIndex].Source?.CreatureId ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(creatureData.CreatureId))
+            {
+                creatureData.CreatureId = existingCreatureId;
+            }
+
+            creatureData = ChapterCreatureDataStructureUtility.CloneCreatureData(creatureData);
             m_creatureRuntimeCards[runtimeCreatureIndex] = new ChapterCreatureStaticCardData(creatureData);
             RebuildCreatureBrowserCards();
             m_selectedCreatureCardIndex = m_creatureSeedCards.Count + runtimeCreatureIndex;
@@ -1481,7 +1510,10 @@ namespace GameLogic
                     m_creatureAllCards[actualCardIndex],
                     actualCardIndex == m_selectedCreatureCardIndex,
                     () => SelectCreatureCard(actualCardIndex),
-                    runtimeCreatureIndex >= 0 ? () => OpenCreatureEntryPopup(runtimeCreatureIndex) : null);
+                    runtimeCreatureIndex >= 0 ? () => OpenCreatureEntryPopup(runtimeCreatureIndex) : null,
+                    screenPoint => BeginCreatureDeploymentDrag(actualCardIndex, screenPoint),
+                    UpdateCreatureDeploymentDrag,
+                    EndCreatureDeploymentDrag);
             }
 
             RefreshCreatureDetailPanel();
@@ -1589,45 +1621,7 @@ namespace GameLogic
 
         private static ChapterCreatureData CloneCreatureData(ChapterCreatureData source)
         {
-            if (source == null)
-            {
-                return null;
-            }
-
-            return new ChapterCreatureData
-            {
-                Name = source.Name,
-                NameEn = source.NameEn,
-                CreatureType = source.CreatureType,
-                CreatureSize = source.CreatureSize,
-                Alignment = source.Alignment,
-                ChallengeRating = source.ChallengeRating,
-                ExperiencePoints = source.ExperiencePoints,
-                ArmorClass = source.ArmorClass,
-                HitPoints = source.HitPoints,
-                Speed = source.Speed,
-                Strength = source.Strength,
-                Dexterity = source.Dexterity,
-                Constitution = source.Constitution,
-                Intelligence = source.Intelligence,
-                Wisdom = source.Wisdom,
-                Charisma = source.Charisma,
-                SavingThrows = source.SavingThrows,
-                Skills = source.Skills,
-                Senses = source.Senses,
-                Languages = source.Languages,
-                DamageResistances = source.DamageResistances,
-                DamageImmunities = source.DamageImmunities,
-                ConditionImmunities = source.ConditionImmunities,
-                Traits = source.Traits,
-                Actions = source.Actions,
-                BonusActions = source.BonusActions,
-                Reactions = source.Reactions,
-                LegendaryActions = source.LegendaryActions,
-                BattleNotes = source.BattleNotes,
-                PreviewImageFileName = source.PreviewImageFileName,
-                AccentColor = source.AccentColor,
-            };
+            return ChapterCreatureDataStructureUtility.CloneCreatureData(source);
         }
 
         private void RefreshCreatureDetailPreview(ChapterCreatureStaticCardData creature)
@@ -1666,7 +1660,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Warning($"璇诲彇鐢熺墿璇︽儏棰勮鍥惧け璐? {exception.Message}");
+                Log.Warning($"读取生物详情预览图失败: {exception.Message}");
                 return;
             }
 
@@ -1934,7 +1928,7 @@ namespace GameLogic
 
         private async UniTaskVoid UploadChapterMapAsync(ChapterListItemData chapter)
         {
-            string sourceFilePath = RuntimeImageFileDialog.OpenImageFile("閫夋嫨绔犺妭鍦板浘");
+            string sourceFilePath = RuntimeImageFileDialog.OpenImageFile("选择章节地图");
             if (string.IsNullOrEmpty(sourceFilePath))
             {
                 return;
@@ -1942,7 +1936,7 @@ namespace GameLogic
 
             if (!File.Exists(sourceFilePath))
             {
-                Log.Error($"绔犺妭鍦板浘鏂囦欢涓嶅瓨鍦? {sourceFilePath}");
+                Log.Error($"章节地图文件不存在: {sourceFilePath}");
                 return;
             }
 
@@ -1962,7 +1956,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Error($"澶嶅埗绔犺妭鍦板浘澶辫触: {exception.Message}");
+                Log.Error($"复制章节地图失败: {exception.Message}");
                 return;
             }
 
@@ -2034,7 +2028,7 @@ namespace GameLogic
 
             if (m_textUploadMapButton != null)
             {
-                m_textUploadMapButton.text = hasMap ? "閲嶆柊涓婁紶鍦板浘" : "涓婁紶绔犺妭鍦板浘";
+                m_textUploadMapButton.text = hasMap ? "重新上传地图" : "上传章节地图";
             }
 
             if (m_textAddMapHint != null)
@@ -2095,7 +2089,7 @@ namespace GameLogic
                     m_isMapPreviewLoading = false;
                     CleanupMapPreviewResources();
                     ApplyEmptyMapPreviewVisual();
-                    Log.Error($"璇诲彇绔犺妭鍦板浘澶辫触: {exception.Message}");
+                    Log.Error($"读取章节地图失败: {exception.Message}");
                 }
 
                 return;
@@ -2517,6 +2511,7 @@ namespace GameLogic
         {
             if (m_rectMapGridSelectionOverlay == null)
             {
+                HideCreatureInstanceActionPanel();
                 return;
             }
 
@@ -2528,6 +2523,7 @@ namespace GameLogic
             {
                 SetGridSelectionHighlightCount(0);
                 SetGridEventMarkerCount(0);
+                HideCreatureInstanceActionPanel();
                 return;
             }
 
@@ -2535,6 +2531,7 @@ namespace GameLogic
             {
                 SetGridSelectionHighlightCount(0);
                 SetGridEventMarkerCount(0);
+                HideCreatureInstanceActionPanel();
                 return;
             }
 
@@ -2568,7 +2565,9 @@ namespace GameLogic
                 highlight.gameObject.SetActive(true);
             }
 
+            RefreshCreatureInstanceTokens(selectedChapter.CreatureInstances, metrics, minX, maxX, minY, maxY);
             RefreshGridEventMarkers(visibleEventCoordinates, metrics);
+            BringGridEventMarkersToFront();
         }
 
         private void AppendVisibleGridCellsByMarkType(List<ChapterGridCellData> visibleGridCells, List<ChapterGridCellData> sourceGridCells, ChapterGridCellMarkType markType, ChapterMapGridMetrics metrics, float minX, float maxX, float minY, float maxY)
@@ -2694,6 +2693,310 @@ namespace GameLogic
             for (int index = 0; index < m_gridEventMarkers.Count; index++)
             {
                 m_gridEventMarkers[index].gameObject.SetActive(index < visibleCount);
+            }
+        }
+
+        private void RefreshCreatureInstanceTokens(List<ChapterCreatureInstanceData> sourceInstances, ChapterMapGridMetrics metrics, float minX, float maxX, float minY, float maxY)
+        {
+            if (m_rectMapGridSelectionOverlay == null)
+            {
+                HideCreatureInstanceActionPanel();
+                return;
+            }
+
+            if (sourceInstances == null || sourceInstances.Count <= 0)
+            {
+                SetCreatureInstanceTokenCount(0);
+                HideCreatureInstanceActionPanel();
+                return;
+            }
+
+            List<ChapterCreatureInstanceData> visibleInstances = new List<ChapterCreatureInstanceData>();
+            for (int index = 0; index < sourceInstances.Count; index++)
+            {
+                ChapterCreatureInstanceData creatureInstance = ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(sourceInstances[index]);
+                if (creatureInstance == null)
+                {
+                    continue;
+                }
+
+                Rect tokenRect = GetCreatureTokenRect(metrics, creatureInstance);
+                if (tokenRect.xMax <= minX || tokenRect.xMin >= maxX || tokenRect.yMax <= minY || tokenRect.yMin >= maxY)
+                {
+                    continue;
+                }
+
+                visibleInstances.Add(creatureInstance);
+            }
+
+            SetCreatureInstanceTokenCount(visibleInstances.Count);
+            for (int index = 0; index < visibleInstances.Count; index++)
+            {
+                ChapterCreatureInstanceData creatureInstance = visibleInstances[index];
+                Rect tokenRect = GetCreatureTokenRect(metrics, creatureInstance);
+                m_creatureInstanceTokenWidgets[index].Bind(
+                    creatureInstance.RuntimeSheet,
+                    tokenRect.center,
+                    tokenRect.size,
+                    !creatureInstance.IsActive,
+                    string.Equals(creatureInstance.InstanceId, m_selectedCreatureInstanceId, StringComparison.Ordinal));
+            }
+
+            RefreshCreatureInstanceActionPanel(selectedChapter: GetSelectedChapterData(), metrics);
+        }
+
+        private void HideCreatureInstanceActionPanel()
+        {
+            if (m_rectCreatureInstanceActionPanel != null)
+            {
+                m_rectCreatureInstanceActionPanel.gameObject.SetActive(false);
+            }
+        }
+
+        private void SetCreatureInstanceTokenCount(int visibleCount)
+        {
+            if (m_rectMapGridSelectionOverlay == null)
+            {
+                return;
+            }
+
+            while (m_creatureInstanceTokenWidgets.Count < visibleCount)
+            {
+                GameObject tokenObject = new GameObject($"CreatureInstanceToken_{m_creatureInstanceTokenWidgets.Count}", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                tokenObject.transform.SetParent(m_rectMapGridSelectionOverlay, false);
+                ChapterCreatureMapTokenWidget widget = new ChapterCreatureMapTokenWidget(tokenObject, m_tmpCreatureBrowserTitle);
+                widget.SetVisible(false);
+                m_creatureInstanceTokenWidgets.Add(widget);
+            }
+
+            for (int index = 0; index < m_creatureInstanceTokenWidgets.Count; index++)
+            {
+                m_creatureInstanceTokenWidgets[index].SetVisible(index < visibleCount);
+            }
+        }
+
+        private void DisposeCreatureTokenViews()
+        {
+            for (int index = 0; index < m_creatureInstanceTokenWidgets.Count; index++)
+            {
+                m_creatureInstanceTokenWidgets[index].Dispose();
+            }
+
+            m_creatureInstanceTokenWidgets.Clear();
+
+            if (m_creatureDragPreviewWidget != null)
+            {
+                m_creatureDragPreviewWidget.Dispose();
+                m_creatureDragPreviewWidget = null;
+            }
+        }
+
+        private void RefreshCreatureInstanceActionPanel(ChapterListItemData selectedChapter, ChapterMapGridMetrics metrics)
+        {
+            EnsureCreatureInstanceActionPanel();
+            if (m_rectCreatureInstanceActionPanel == null)
+            {
+                return;
+            }
+
+            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
+            if (creatureInstance == null)
+            {
+                HideCreatureInstanceActionPanel();
+                return;
+            }
+
+            Rect cellRect = GetCreatureTokenRect(metrics, creatureInstance);
+            m_rectCreatureInstanceActionPanel.anchorMin = new Vector2(0.5f, 0.5f);
+            m_rectCreatureInstanceActionPanel.anchorMax = new Vector2(0.5f, 0.5f);
+            m_rectCreatureInstanceActionPanel.pivot = new Vector2(0.5f, 0f);
+            m_rectCreatureInstanceActionPanel.anchoredPosition = new Vector2(cellRect.center.x, cellRect.yMax + 8f);
+            m_rectCreatureInstanceActionPanel.gameObject.SetActive(true);
+            m_rectCreatureInstanceActionPanel.SetAsLastSibling();
+
+            if (m_textCreatureInstanceToggleActive != null)
+            {
+                m_textCreatureInstanceToggleActive.text = creatureInstance.IsActive ? "隐藏" : "显示";
+            }
+        }
+
+        private void EnsureCreatureInstanceActionPanel()
+        {
+            if (m_rectCreatureInstanceActionPanel != null || m_rectMapGridSelectionOverlay == null)
+            {
+                return;
+            }
+
+            GameObject panelObject = new GameObject("CreatureInstanceActionPanel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(HorizontalLayoutGroup), typeof(ContentSizeFitter));
+            panelObject.transform.SetParent(m_rectMapGridSelectionOverlay, false);
+            m_rectCreatureInstanceActionPanel = panelObject.GetComponent<RectTransform>();
+            Image panelImage = panelObject.GetComponent<Image>();
+            panelImage.color = new Color(0.12f, 0.14f, 0.17f, 0.9f);
+            HorizontalLayoutGroup layoutGroup = panelObject.GetComponent<HorizontalLayoutGroup>();
+            layoutGroup.spacing = 6f;
+            layoutGroup.padding = new RectOffset(8, 8, 6, 6);
+            layoutGroup.childAlignment = TextAnchor.MiddleCenter;
+            layoutGroup.childForceExpandHeight = false;
+            layoutGroup.childForceExpandWidth = false;
+            ContentSizeFitter fitter = panelObject.GetComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            (m_btnCreatureInstanceToggleActive, m_btnCreatureInstanceToggleActiveRect, m_textCreatureInstanceToggleActive) =
+                CreateCreatureInstanceActionButton("CreatureInstanceToggleActiveBtn", "隐藏", OnClickToggleSelectedCreatureInstanceActive);
+            (m_btnCreatureInstanceDelete, m_btnCreatureInstanceDeleteRect, _) =
+                CreateCreatureInstanceActionButton("CreatureInstanceDeleteBtn", "移除", OnClickDeleteSelectedCreatureInstance);
+
+            if (m_btnCreatureInstanceToggleActiveRect != null)
+            {
+                m_btnCreatureInstanceToggleActiveRect.SetParent(m_rectCreatureInstanceActionPanel, false);
+            }
+
+            if (m_btnCreatureInstanceDeleteRect != null)
+            {
+                m_btnCreatureInstanceDeleteRect.SetParent(m_rectCreatureInstanceActionPanel, false);
+            }
+
+            m_rectCreatureInstanceActionPanel.gameObject.SetActive(false);
+        }
+
+        private (Button button, RectTransform rect, TMP_Text label) CreateCreatureInstanceActionButton(string objectName, string labelText, UnityAction onClick)
+        {
+            GameObject buttonObject = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button), typeof(LayoutElement));
+            RectTransform rectTransform = buttonObject.GetComponent<RectTransform>();
+            Image image = buttonObject.GetComponent<Image>();
+            image.color = new Color(0.27f, 0.31f, 0.36f, 0.96f);
+            Button button = buttonObject.GetComponent<Button>();
+            button.targetGraphic = image;
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(onClick);
+            LayoutElement layoutElement = buttonObject.GetComponent<LayoutElement>();
+            layoutElement.minWidth = 56f;
+            layoutElement.minHeight = 28f;
+
+            GameObject labelObject = new GameObject("Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            labelObject.transform.SetParent(buttonObject.transform, false);
+            RectTransform labelRect = labelObject.GetComponent<RectTransform>();
+            labelRect.anchorMin = Vector2.zero;
+            labelRect.anchorMax = Vector2.one;
+            labelRect.offsetMin = new Vector2(6f, 3f);
+            labelRect.offsetMax = new Vector2(-6f, -3f);
+
+            TextMeshProUGUI label = labelObject.GetComponent<TextMeshProUGUI>();
+            if (m_tmpCreatureBrowserTitle != null)
+            {
+                label.font = m_tmpCreatureBrowserTitle.font;
+                label.fontSharedMaterial = m_tmpCreatureBrowserTitle.fontSharedMaterial;
+            }
+
+            label.text = labelText;
+            label.fontSize = 15f;
+            label.alignment = TextAlignmentOptions.Center;
+            label.enableWordWrapping = false;
+            label.raycastTarget = false;
+            label.color = new Color(0.95f, 0.96f, 0.98f, 0.96f);
+            return (button, rectTransform, label);
+        }
+
+        private void OnClickToggleSelectedCreatureInstanceActive()
+        {
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
+            if (creatureInstance == null)
+            {
+                return;
+            }
+
+            creatureInstance.IsActive = !creatureInstance.IsActive;
+            RefreshGridSelectionHighlights();
+            bool saved = SaveChapterEditorState();
+            ShowSaveFeedbackAsync(saved
+                ? (creatureInstance.IsActive ? "Creature shown." : "Creature hidden.")
+                : "Failed to save creature visibility.", saved).Forget();
+        }
+
+        private void OnClickDeleteSelectedCreatureInstance()
+        {
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            if (selectedChapter?.CreatureInstances == null)
+            {
+                return;
+            }
+
+            for (int index = selectedChapter.CreatureInstances.Count - 1; index >= 0; index--)
+            {
+                ChapterCreatureInstanceData creatureInstance = selectedChapter.CreatureInstances[index];
+                if (creatureInstance == null || !string.Equals(creatureInstance.InstanceId, m_selectedCreatureInstanceId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                selectedChapter.CreatureInstances.RemoveAt(index);
+                m_selectedCreatureInstanceId = string.Empty;
+                RefreshGridSelectionHighlights();
+                bool saved = SaveChapterEditorState();
+                ShowSaveFeedbackAsync(saved ? "Creature removed." : "Failed to remove creature.", saved).Forget();
+                return;
+            }
+        }
+
+        private bool TryGetCreatureInstanceAtLocalPoint(Vector2 localPoint, bool includeInactive, out ChapterCreatureInstanceData creatureInstance)
+        {
+            creatureInstance = null;
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            if (selectedChapter?.CreatureInstances == null || !TryGetCurrentGridMetrics(out ChapterMapGridMetrics metrics))
+            {
+                return false;
+            }
+
+            for (int index = selectedChapter.CreatureInstances.Count - 1; index >= 0; index--)
+            {
+                ChapterCreatureInstanceData candidate = ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(selectedChapter.CreatureInstances[index]);
+                if (candidate == null || (!includeInactive && !candidate.IsActive))
+                {
+                    continue;
+                }
+
+                Rect tokenRect = GetCreatureTokenRect(metrics, candidate);
+                if (!tokenRect.Contains(localPoint))
+                {
+                    continue;
+                }
+
+                creatureInstance = candidate;
+                return true;
+            }
+
+            return false;
+        }
+
+        private ChapterCreatureInstanceData FindCreatureInstanceById(List<ChapterCreatureInstanceData> sourceInstances, string instanceId)
+        {
+            if (sourceInstances == null || string.IsNullOrWhiteSpace(instanceId))
+            {
+                return null;
+            }
+
+            for (int index = 0; index < sourceInstances.Count; index++)
+            {
+                ChapterCreatureInstanceData creatureInstance = sourceInstances[index];
+                if (creatureInstance != null && string.Equals(creatureInstance.InstanceId, instanceId, StringComparison.Ordinal))
+                {
+                    return creatureInstance;
+                }
+            }
+
+            return null;
+        }
+
+        private void BringGridEventMarkersToFront()
+        {
+            for (int index = 0; index < m_gridEventMarkers.Count; index++)
+            {
+                if (m_gridEventMarkers[index] != null && m_gridEventMarkers[index].gameObject.activeInHierarchy)
+                {
+                    m_gridEventMarkers[index].transform.SetAsLastSibling();
+                }
             }
         }
 
@@ -2960,7 +3263,7 @@ namespace GameLogic
         {
             if (m_textSaveChapterState != null)
             {
-                m_textSaveChapterState.text = "鎵嬪姩淇濆瓨";
+                m_textSaveChapterState.text = "手动保存";
             }
 
             if (m_imgSaveChapterState != null)
@@ -3117,7 +3420,7 @@ namespace GameLogic
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+                if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton() || IsMouseOverCreatureInstanceToken())
                 {
                     return;
                 }
@@ -3172,7 +3475,7 @@ namespace GameLogic
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+                if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton() || IsMouseOverCreatureInstanceToken())
                 {
                     return;
                 }
@@ -3234,7 +3537,7 @@ namespace GameLogic
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+                if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton() || IsMouseOverCreatureInstanceToken())
                 {
                     return;
                 }
@@ -3272,6 +3575,143 @@ namespace GameLogic
             ApplyMapGridLayout();
         }
 
+        private void HandleCreatureInstanceInteraction()
+        {
+            if (!m_isMapGridLocked)
+            {
+                CancelPendingCreatureInstanceSelection();
+                if (!m_isDraggingCreatureInstance)
+                {
+                    return;
+                }
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                TryBeginCreatureInstanceSelection();
+            }
+
+            if (m_isPendingCreatureInstanceSelection && Input.GetMouseButton(0))
+            {
+                TryBeginCreatureInstanceDragging();
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                TryCommitCreatureInstanceInteraction();
+            }
+        }
+
+        private void TryBeginCreatureInstanceSelection()
+        {
+            CancelPendingCreatureInstanceSelection();
+            if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+            {
+                return;
+            }
+
+            if (!TryGetMouseLocalPointInMapPreview(out Vector2 localPoint))
+            {
+                return;
+            }
+
+            if (!TryGetCreatureInstanceAtLocalPoint(localPoint, includeInactive: true, out ChapterCreatureInstanceData creatureInstance))
+            {
+                if (!string.IsNullOrWhiteSpace(m_selectedCreatureInstanceId))
+                {
+                    m_selectedCreatureInstanceId = string.Empty;
+                    RefreshGridSelectionHighlights();
+                }
+
+                return;
+            }
+
+            CancelPendingGridCellSelection();
+            m_isPendingCreatureInstanceSelection = true;
+            m_pendingCreatureInstanceId = creatureInstance.InstanceId ?? string.Empty;
+            m_creatureInstanceMouseDownLocalPoint = localPoint;
+        }
+
+        private void TryBeginCreatureInstanceDragging()
+        {
+            if (!m_isPendingCreatureInstanceSelection || string.IsNullOrWhiteSpace(m_pendingCreatureInstanceId))
+            {
+                return;
+            }
+
+            if (!TryGetMouseLocalPointInMapPreview(out Vector2 currentLocalPoint))
+            {
+                return;
+            }
+
+            if ((currentLocalPoint - m_creatureInstanceMouseDownLocalPoint).sqrMagnitude <= GridSelectionClickThreshold * GridSelectionClickThreshold)
+            {
+                return;
+            }
+
+            m_selectedCreatureInstanceId = m_pendingCreatureInstanceId;
+            m_draggingCreatureInstanceId = m_pendingCreatureInstanceId;
+            m_isDraggingCreatureInstance = true;
+            m_isPendingCreatureInstanceSelection = false;
+            m_pendingCreatureInstanceId = string.Empty;
+            RefreshGridSelectionHighlights();
+        }
+
+        private void TryCommitCreatureInstanceInteraction()
+        {
+            if (m_isDraggingCreatureInstance)
+            {
+                TryCommitCreatureInstanceDragging();
+                return;
+            }
+
+            if (!m_isPendingCreatureInstanceSelection)
+            {
+                return;
+            }
+
+            m_selectedCreatureInstanceId = m_pendingCreatureInstanceId ?? string.Empty;
+            CancelPendingCreatureInstanceSelection();
+            RefreshGridSelectionHighlights();
+        }
+
+        private void TryCommitCreatureInstanceDragging()
+        {
+            string draggingInstanceId = m_draggingCreatureInstanceId;
+            m_isDraggingCreatureInstance = false;
+            m_draggingCreatureInstanceId = string.Empty;
+            if (string.IsNullOrWhiteSpace(draggingInstanceId))
+            {
+                return;
+            }
+
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            if (selectedChapter == null)
+            {
+                RefreshGridSelectionHighlights();
+                return;
+            }
+
+            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter.CreatureInstances, draggingInstanceId);
+            if (creatureInstance != null
+                && TryGetMouseLocalPointInMapPreview(out Vector2 localPoint)
+                && TryGetGridCellCoordinateFromLocalPoint(localPoint, out ChapterGridCoordinate gridCoordinate))
+            {
+                creatureInstance.Placement ??= new ChapterCreatureInstancePlacementData();
+                creatureInstance.Placement.AnchorCell = gridCoordinate;
+                bool saved = SaveChapterEditorState();
+                ShowSaveFeedbackAsync(saved ? "Creature repositioned." : "Creature moved, but save failed.", saved).Forget();
+            }
+
+            RefreshGridSelectionHighlights();
+        }
+
+        private void CancelPendingCreatureInstanceSelection()
+        {
+            m_isPendingCreatureInstanceSelection = false;
+            m_pendingCreatureInstanceId = string.Empty;
+        }
+
         private void HandleGridCellSelection()
         {
             if (!CanHandleGridCellSelection())
@@ -3304,7 +3744,7 @@ namespace GameLogic
         private void TryBeginGridCellSelection()
         {
             m_isPendingGridCellSelection = false;
-            if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+            if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton() || IsMouseOverCreatureInstanceToken())
             {
                 return;
             }
@@ -3327,7 +3767,7 @@ namespace GameLogic
         private void TryBeginGridCellEventPopup()
         {
             m_isPendingGridCellEventPopup = false;
-            if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton())
+            if (!IsMouseOverMapPreview() || IsMouseOverMapControlButton() || IsMouseOverCreatureInstanceToken())
             {
                 return;
             }
@@ -3456,7 +3896,8 @@ namespace GameLogic
                 || IsMouseOverRectTransform(m_btnMapZoomToggleRect)
                 || IsMouseOverRectTransform(m_btnGridZoomToggleRect)
                 || IsMouseOverRectTransform(m_btnSaveChapterStateRect)
-                || IsMouseOverTerrainToolButtons();
+                || IsMouseOverTerrainToolButtons()
+                || IsMouseOverCreatureInstanceActionButtons();
         }
 
         private void UpdateGridEventActionButtons()
@@ -3501,6 +3942,18 @@ namespace GameLogic
             return IsMouseOverRectTransform(m_btnDifficultTerrainRect)
                 || IsMouseOverRectTransform(m_btnImpassableTerrainRect)
                 || IsMouseOverRectTransform(m_btnClearTerrainRect);
+        }
+
+        private bool IsMouseOverCreatureInstanceActionButtons()
+        {
+            return IsMouseOverRectTransform(m_btnCreatureInstanceToggleActiveRect)
+                || IsMouseOverRectTransform(m_btnCreatureInstanceDeleteRect);
+        }
+
+        private bool IsMouseOverCreatureInstanceToken()
+        {
+            return TryGetMouseLocalPointInMapPreview(out Vector2 localPoint)
+                && TryGetCreatureInstanceAtLocalPoint(localPoint, includeInactive: true, out _);
         }
 
         private void UpdateTerrainToolButtonState()
@@ -3593,7 +4046,7 @@ namespace GameLogic
                 case TerrainToolButtonType.DifficultTerrain:
                     return hasSelectedCells ? "Mark As Difficult Terrain" : "Difficult Terrain";
                 case TerrainToolButtonType.ImpassableTerrain:
-                    return hasSelectedCells ? "鏍囪涓轰笉鍙€氳繃" : "涓嶅彲閫氳繃鍦板舰";
+                    return hasSelectedCells ? "标记为不可通过" : "不可通过地形";
                 case TerrainToolButtonType.ClearTerrain:
                     return hasSelectedCells ? "Clear Selected Terrain" : "Clear Terrain";
                 default:
@@ -3643,13 +4096,227 @@ namespace GameLogic
 
         private bool TryGetMouseLocalPointInMapPreview(out Vector2 localPoint)
         {
+            return TryGetLocalPointInMapPreview(Input.mousePosition, out localPoint);
+        }
+
+        private bool TryGetLocalPointInMapPreview(Vector2 screenPoint, out Vector2 localPoint)
+        {
             if (m_rectMapPreview == null)
             {
                 localPoint = Vector2.zero;
                 return false;
             }
 
-            return RectTransformUtility.ScreenPointToLocalPointInRectangle(m_rectMapPreview, Input.mousePosition, GetMapPreviewEventCamera(), out localPoint);
+            return RectTransformUtility.ScreenPointToLocalPointInRectangle(m_rectMapPreview, screenPoint, GetMapPreviewEventCamera(), out localPoint);
+        }
+
+        private bool TryGetLocalPointInCanvas(Vector2 screenPoint, out Vector2 localPoint)
+        {
+            RectTransform canvasRect = m_canvas != null ? m_canvas.transform as RectTransform : null;
+            if (canvasRect == null)
+            {
+                localPoint = Vector2.zero;
+                return false;
+            }
+
+            Camera eventCamera = m_canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : m_canvas.worldCamera;
+            return RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, eventCamera, out localPoint);
+        }
+
+        private void BeginCreatureDeploymentDrag(int actualCardIndex, Vector2 screenPoint)
+        {
+            if (actualCardIndex < 0 || actualCardIndex >= m_creatureAllCards.Count)
+            {
+                return;
+            }
+
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            ChapterCreatureData creatureTemplate = m_creatureAllCards[actualCardIndex].Source;
+            if (selectedChapter == null || creatureTemplate == null)
+            {
+                return;
+            }
+
+            m_isDraggingCreatureDeployment = true;
+            m_draggingCreatureTemplate = ChapterCreatureDataStructureUtility.CloneCreatureData(creatureTemplate);
+            CancelPendingGridCellSelection();
+            EnsureCreatureDragPreviewWidget();
+            UpdateCreatureDeploymentDrag(screenPoint);
+        }
+
+        private void UpdateCreatureDeploymentDrag(Vector2 screenPoint)
+        {
+            if (!m_isDraggingCreatureDeployment || m_draggingCreatureTemplate == null)
+            {
+                return;
+            }
+
+            EnsureCreatureDragPreviewWidget();
+            if (m_creatureDragPreviewWidget == null || !TryGetLocalPointInCanvas(screenPoint, out Vector2 localPoint))
+            {
+                return;
+            }
+
+            Vector2 previewSize = GetCreatureDragPreviewSize(screenPoint);
+            m_creatureDragPreviewWidget.Bind(m_draggingCreatureTemplate, localPoint, previewSize, true, false);
+        }
+
+        private void EndCreatureDeploymentDrag(Vector2 screenPoint)
+        {
+            if (!m_isDraggingCreatureDeployment)
+            {
+                return;
+            }
+
+            bool deployed = TryDeployDraggedCreatureToMap(screenPoint);
+            CancelCreatureDeploymentDrag();
+            if (deployed)
+            {
+                bool saved = SaveChapterEditorState();
+                ShowSaveFeedbackAsync(saved ? "Creature deployed." : "Creature deployed, but save failed.", saved).Forget();
+            }
+        }
+
+        private bool TryDeployDraggedCreatureToMap(Vector2 screenPoint)
+        {
+            ChapterListItemData selectedChapter = GetSelectedChapterData();
+            if (selectedChapter == null || m_draggingCreatureTemplate == null)
+            {
+                return false;
+            }
+
+            if (IsScreenPointOverMapControlButton(screenPoint))
+            {
+                return false;
+            }
+
+            if (!TryGetLocalPointInMapPreview(screenPoint, out Vector2 localPoint))
+            {
+                return false;
+            }
+
+            if (!TryGetGridCellCoordinateFromLocalPoint(localPoint, out ChapterGridCoordinate gridCoordinate))
+            {
+                return false;
+            }
+
+            selectedChapter.CreatureInstances ??= new List<ChapterCreatureInstanceData>();
+            selectedChapter.CreatureInstances.Add(CreateCreatureInstanceFromTemplate(m_draggingCreatureTemplate, gridCoordinate));
+            RefreshGridSelectionHighlights();
+            return true;
+        }
+
+        private void CancelCreatureDeploymentDrag()
+        {
+            m_isDraggingCreatureDeployment = false;
+            m_draggingCreatureTemplate = null;
+            if (m_creatureDragPreviewWidget != null)
+            {
+                m_creatureDragPreviewWidget.SetVisible(false);
+            }
+        }
+
+        private void EnsureCreatureDragPreviewWidget()
+        {
+            if (m_creatureDragPreviewWidget != null || m_canvas == null)
+            {
+                return;
+            }
+
+            GameObject previewObject = new GameObject("CreatureDeploymentDragPreview", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            previewObject.transform.SetParent(m_canvas.transform, false);
+            m_creatureDragPreviewWidget = new ChapterCreatureMapTokenWidget(previewObject, m_tmpCreatureBrowserTitle);
+            m_creatureDragPreviewWidget.SetVisible(false);
+        }
+
+        private bool IsScreenPointOverMapControlButton(Vector2 screenPoint)
+        {
+            return IsScreenPointOverRectTransform(m_btnOpenCheckPopupRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnDeleteGridEventRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnUploadMapRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnMapZoomToggleRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnGridZoomToggleRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnSaveChapterStateRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnDifficultTerrainRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnImpassableTerrainRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnClearTerrainRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnCreatureInstanceToggleActiveRect, screenPoint)
+                || IsScreenPointOverRectTransform(m_btnCreatureInstanceDeleteRect, screenPoint)
+                || IsScreenPointOverCreatureInstanceToken(screenPoint);
+        }
+
+        private bool IsScreenPointOverRectTransform(RectTransform rectTransform, Vector2 screenPoint)
+        {
+            if (rectTransform == null || !rectTransform.gameObject.activeInHierarchy)
+            {
+                return false;
+            }
+
+            return RectTransformUtility.RectangleContainsScreenPoint(rectTransform, screenPoint, GetMapPreviewEventCamera());
+        }
+
+        private bool IsScreenPointOverCreatureInstanceToken(Vector2 screenPoint)
+        {
+            return TryGetLocalPointInMapPreview(screenPoint, out Vector2 localPoint)
+                && TryGetCreatureInstanceAtLocalPoint(localPoint, includeInactive: true, out _);
+        }
+
+        private static ChapterCreatureInstanceData CreateCreatureInstanceFromTemplate(ChapterCreatureData creatureTemplate, ChapterGridCoordinate gridCoordinate)
+        {
+            ChapterCreatureData normalizedTemplate = ChapterCreatureDataStructureUtility.CloneCreatureData(creatureTemplate);
+            return ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(new ChapterCreatureInstanceData
+            {
+                SourceCreatureId = normalizedTemplate?.CreatureId ?? string.Empty,
+                IsActive = true,
+                Placement = new ChapterCreatureInstancePlacementData
+                {
+                    AnchorCell = gridCoordinate,
+                    PreviewScale = 1f,
+                    SnapToGrid = true,
+                },
+                RuntimeSheet = normalizedTemplate,
+                DmNote = string.Empty,
+            });
+        }
+
+        private static Rect GetCreatureTokenRect(ChapterMapGridMetrics metrics, ChapterCreatureInstanceData creatureInstance)
+        {
+            if (creatureInstance == null)
+            {
+                return Rect.zero;
+            }
+
+            ChapterCreatureInstancePlacementData placement = creatureInstance.Placement ?? new ChapterCreatureInstancePlacementData();
+            return GetCreatureTokenRect(metrics, placement.AnchorCell, creatureInstance.RuntimeSheet, placement.PreviewScale);
+        }
+
+        private static Rect GetCreatureTokenRect(ChapterMapGridMetrics metrics, ChapterGridCoordinate anchorCell, ChapterCreatureData creature, float previewScale)
+        {
+            Rect anchorCellRect = ChapterMapGridUtility.GetLogicalCellRect(metrics, anchorCell);
+            Vector2 tokenSize = GetCreatureTokenSize(metrics, creature, previewScale);
+            return new Rect(anchorCellRect.xMin, anchorCellRect.yMin, tokenSize.x, tokenSize.y);
+        }
+
+        private static Vector2 GetCreatureTokenSize(ChapterMapGridMetrics metrics, ChapterCreatureData creature, float previewScale)
+        {
+            int cellSpan = Mathf.Max(1, ChapterCreatureDataStructureUtility.GetCreatureFootprintCellSpan(creature));
+            float scale = Mathf.Max(0.4f, previewScale);
+            return new Vector2(
+                Mathf.Max(18f, metrics.CellWidth * cellSpan * scale),
+                Mathf.Max(18f, metrics.CellHeight * cellSpan * scale));
+        }
+
+        private Vector2 GetCreatureDragPreviewSize(Vector2 screenPoint)
+        {
+            if (TryGetLocalPointInMapPreview(screenPoint, out _)
+                && TryGetCurrentGridMetrics(out ChapterMapGridMetrics metrics))
+            {
+                return GetCreatureTokenSize(metrics, m_draggingCreatureTemplate, 1f);
+            }
+
+            int cellSpan = Mathf.Max(1, ChapterCreatureDataStructureUtility.GetCreatureFootprintCellSpan(m_draggingCreatureTemplate));
+            float baseSize = 56f * Mathf.Clamp(cellSpan, 1, 4);
+            return new Vector2(baseSize, baseSize);
         }
 
         private static float GetZoomScrollStep(float normalStep)
@@ -3775,7 +4442,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Error($"淇濆瓨绔犺妭缂栬緫鏁版嵁澶辫触: {exception.Message}");
+                Log.Error($"保存章节编辑数据失败: {exception.Message}");
                 return false;
             }
         }
@@ -3817,7 +4484,7 @@ namespace GameLogic
                 m_chapterItems.Clear();
                 m_selectedChapterId = -1;
                 m_nextChapterId = 1;
-                Log.Error($"鍔犺浇绔犺妭缂栬緫鏁版嵁澶辫触: {exception.Message}");
+                Log.Error($"加载章节编辑数据失败: {exception.Message}");
             }
         }
 
@@ -3848,7 +4515,7 @@ namespace GameLogic
             }
             catch (Exception exception)
             {
-                Log.Warning($"鍒犻櫎鏃х珷鑺傚湴鍥惧け璐? {exception.Message}");
+                Log.Warning($"删除旧章节地图失败: {exception.Message}");
             }
         }
 
@@ -3885,30 +4552,34 @@ namespace GameLogic
     {
         private const string PopupPanelPathPrefix = "Panel/";
 
-        private enum ChapterEventCategory
-        {
-            Check = 0,
-            DmDirect = 1,
-        }
-
-        private enum ChapterDmEventSubType
-        {
-            Story = 0,
-            Dialogue = 1,
-            Choice = 2,
-            Interaction = 3,
-            Combat = 4,
-            Exploration = 5,
-            AreaEnter = 6,
-            TimeAdvance = 7,
-            Random = 8,
-            Special = 9,
-        }
-
         private enum ChapterEventTriggerMode
         {
             Automatic,
             DmManual,
+        }
+
+        private enum ChapterEventTriggerType
+        {
+            DmManual = 0,
+            EnterBindingArea = 1,
+            InteractWithSceneObject = 2,
+            AfterPrerequisiteEvent = 3,
+        }
+
+        private enum ChapterEventEffectType
+        {
+            Check = 0,
+            NarrativePrompt = 1,
+            DialogueInteractionPrompt = 2,
+            ActivateCreatureInstance = 3,
+            StartBattle = 4,
+        }
+
+        private enum ChapterEffectCreaturePlacementMode
+        {
+            UseSavedInstancePosition = 0,
+            UseBindingCoordinate = 1,
+            ManualOverride = 2,
         }
 
         private enum ChapterCheckTargetMode
@@ -3927,68 +4598,66 @@ namespace GameLogic
             DmDirect,
         }
 
-        private static readonly string[] EventCategoryLabels =
+        private static readonly string[] TriggerTypeLabels =
         {
-            "妫€瀹氱被浜嬩欢",
-            "DM Direct Event",
+            "\u7531 DM \u624B\u52A8\u89E6\u53D1",
+            "\u8FDB\u5165\u7ED1\u5B9A\u533A\u57DF\u89E6\u53D1",
+            "\u4E0E\u573A\u666F\u5BF9\u8C61\u4EA4\u4E92\u89E6\u53D1",
+            "\u524D\u7F6E\u4E8B\u4EF6\u5B8C\u6210\u540E\u89E6\u53D1",
         };
 
-        private static readonly string[] DmEventSubTypeLabels =
+        private static readonly string[] EffectTypeLabels =
         {
-            "鍓ф儏浜嬩欢",
-            "瀵硅瘽浜嬩欢",
-            "閫夋嫨浜嬩欢",
-            "浜や簰浜嬩欢",
-            "鎴樻枟浜嬩欢",
-            "鎺㈢储浜嬩欢",
-            "鍖哄煙杩涘叆浜嬩欢",
-            "鏃堕棿鎺ㄨ繘浜嬩欢",
-            "闅忔満浜嬩欢",
-            "鐗规畩浜嬩欢",
+            "\u68C0\u5B9A",
+            "\u5267\u60C5\u63D0\u793A",
+            "\u5BF9\u8BDD/\u4EA4\u4E92\u63D0\u793A",
+            "\u6FC0\u6D3B\u751F\u7269\u5B9E\u4F8B",
+            "\u5F00\u59CB\u6218\u6597",
         };
 
-        private static readonly string[] TriggerModeLabels =
+        private static readonly string[] EffectCreaturePlacementModeLabels =
         {
-            "鑷姩瑙﹀彂",
-            "DM 鍒ゆ柇",
+            "\u4F7F\u7528\u5B9E\u4F8B\u5DF2\u4FDD\u5B58\u4F4D\u7F6E",
+            "\u4F7F\u7528\u5F53\u524D\u7ED1\u5B9A\u683C\u5B50",
+            "\u624B\u52A8\u6307\u5B9A",
         };
 
         private static readonly string[] CheckTargetModeLabels =
         {
-            "Ability Check",
-            "Skill Check",
-            "Tool Check",
-            "Contested Check",
-            "Passive Check",
-            "Saving Throw",
+            "属性检定",
+            "技能检定",
+            "工具检定",
+            "对抗检定",
+            "被动检定",
+            "豁免检定",
         };
 
         private static readonly string[] CheckResolutionModeLabels =
         {
-            "鎺烽鍒ゅ畾",
-            "DM 鐩存帴鍒ゅ畾",
+            "掷骰判定",
+            "DM 直接判定",
         };
 
         private static readonly string[] SkillCheckLabels =
         {
-            "杩愬姩 Athletics",
-            "浣撴搷 Acrobatics",
-            "宸ф墜 Sleight of Hand",
-            "闅愬尶 Stealth",
-            "濂ョ Arcana",
-            "鍘嗗彶 History",
-            "璋冩煡 Investigation",
-            "鑷劧 Nature",
-            "瀹楁暀 Religion",
-            "椹吔 Animal Handling",
-            "娲炴倝 Insight",
-            "鍖昏嵂 Medicine",
-            "瀵熻 Perception",
-            "姹傜敓 Survival",
-            "娆虹瀿 Deception",
-            "濞佸悡 Intimidation",
-            "琛ㄦ紨 Performance",
-            "璇存湇 Persuasion",
+            "运动",
+            "体操",
+            "巧手",
+            "隐匿",
+            "奥秘",
+            "历史",
+            "调查",
+            "自然",
+            "宗教",
+            "驯兽",
+            "洞悉",
+            "医药",
+            "察觉",
+            "求生",
+            "欺瞒",
+            "威吓",
+            "表演",
+            "说服",
         };
 
         private static readonly string[] SkillCheckInputNodeNames =
@@ -4013,20 +4682,52 @@ namespace GameLogic
             "m_rectSkillCheckSection/m_rectSkillCheckScrollView/Viewport/Content/m_tmpInputSkillCheckPersuasion",
         };
 
+        private const float EventPopupConfirmSpacing = 24f;
+        private const float EventPopupEventIdLayoutShift = 70f;
+        private const float EventPopupEventIdLabelTop = 186f;
+        private const float EventPopupEventIdInputTop = 210f;
+        private const float EventPopupEventIdInputHeight = 38f;
+
         private TextMeshProUGUI m_tmpTitle = null!;
         private Button m_btnClose = null!;
-        private TMP_Dropdown m_tmpDropdownEventCategory = null!;
-        private TMP_Dropdown m_tmpDropdownDmEventSubType = null!;
-        private TMP_Dropdown m_tmpDropdownTriggerMode = null!;
+        private TMP_Dropdown m_tmpDropdownEffectType = null!;
+        private TMP_Dropdown m_tmpDropdownTriggerType = null!;
+        private TMP_Dropdown m_tmpDropdownEffectCreaturePlacementMode = null!;
         private TMP_Dropdown m_tmpDropdownCheckTargetMode = null!;
         private TMP_Dropdown m_tmpDropdownCheckResolutionMode = null!;
         private Button m_btnConfirm = null!;
+        private RectTransform m_rectPanel = null!;
         private TMP_Text m_tmpBindingSummary = null!;
+        private TMP_Text m_tmpEventIdLabel = null!;
+        private TMP_InputField m_tmpInputEventId = null!;
         private Toggle m_toggleEventEnabled = null!;
         private Toggle m_toggleEventOneShot = null!;
+        private RectTransform m_rectTriggerManualSection = null!;
+        private RectTransform m_rectTriggerAreaSection = null!;
+        private RectTransform m_rectTriggerInteractionSection = null!;
+        private RectTransform m_rectTriggerPrerequisiteSection = null!;
+        private RectTransform m_rectEffectNarrativeSection = null!;
+        private RectTransform m_rectEffectDialogueSection = null!;
+        private RectTransform m_rectEffectCombatantActivationSection = null!;
+        private RectTransform m_rectEffectBattleSection = null!;
         private RectTransform m_rectAbilityCheckSection = null!;
         private RectTransform m_rectSkillCheckSection = null!;
-        private RectTransform m_rectDmDirectSection = null!;
+        private Toggle m_toggleTriggerAreaFirstEnterOnly = null!;
+        private Toggle m_toggleTriggerAreaShareBinding = null!;
+        private TMP_InputField m_tmpInputTriggerInteractionTarget = null!;
+        private Toggle m_toggleTriggerInteractionRequireConfirm = null!;
+        private TMP_InputField m_tmpInputTriggerPrerequisiteEventId = null!;
+        private TMP_InputField m_tmpInputTriggerDelayDescription = null!;
+        private Toggle m_toggleEffectNarrativeDmOnly = null!;
+        private TMP_InputField m_tmpInputEffectNarrativeText = null!;
+        private TMP_InputField m_tmpInputEffectDialogueTarget = null!;
+        private TMP_InputField m_tmpInputEffectDialogueSummary = null!;
+        private TMP_InputField m_tmpInputEffectDialoguePrompt = null!;
+        private TMP_InputField m_tmpInputEffectCreatureInstanceId = null!;
+        private Toggle m_toggleEffectCreatureActivate = null!;
+        private TMP_InputField m_tmpInputEffectBattleReference = null!;
+        private Toggle m_toggleEffectBattleIncludeActiveCreatures = null!;
+        private TMP_InputField m_tmpInputEffectBattleDescription = null!;
         private TMP_InputField m_tmpInputAbilityStrength = null!;
         private TMP_InputField m_tmpInputAbilityDexterity = null!;
         private TMP_InputField m_tmpInputAbilityConstitution = null!;
@@ -4038,15 +4739,25 @@ namespace GameLogic
         private TMP_InputField m_tmpInputSuccessResult = null!;
         private TMP_InputField m_tmpInputFailureResult = null!;
         private TMP_InputField m_tmpInputDmNote = null!;
-        private TMP_InputField m_tmpInputDmPrompt = null!;
         private ChapterEventPopupRequest m_request = null!;
         private string m_existingEventId = string.Empty;
-        private ChapterEventCategory m_eventCategory = ChapterEventCategory.Check;
-        private ChapterDmEventSubType m_dmEventSubType = ChapterDmEventSubType.Story;
-        private ChapterEventTriggerMode m_triggerMode = ChapterEventTriggerMode.Automatic;
+        private ChapterEventTriggerType m_triggerType = ChapterEventTriggerType.DmManual;
+        private ChapterEventEffectType m_effectType = ChapterEventEffectType.Check;
+        private ChapterEffectCreaturePlacementMode m_effectCreaturePlacementMode = ChapterEffectCreaturePlacementMode.UseSavedInstancePosition;
         private ChapterCheckTargetMode m_checkTargetMode = ChapterCheckTargetMode.Ability;
         private ChapterCheckResolutionMode m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
         private readonly Dictionary<string, TMP_InputField> m_skillCheckInputs = new Dictionary<string, TMP_InputField>(StringComparer.Ordinal);
+        private bool m_isEventPopupLayoutInitialized;
+        private float m_eventPopupSectionTop;
+        private float m_eventPopupGapAfterTriggerSection;
+        private float m_eventPopupGapAfterCheckControls;
+        private float m_eventPopupGapAfterEffectSection;
+        private float m_eventPopupGapBetweenInputFields;
+        private float m_eventPopupConfirmTopInset;
+        private float m_eventPopupMinimumPanelHeight;
+        private float m_triggerDelayDescriptionMinimumHeight;
+        private float m_triggerPrerequisiteSectionMinimumHeight;
+        private float m_triggerPrerequisiteSectionBottomPadding;
 
         protected override void OnCreate()
         {
@@ -4057,18 +4768,42 @@ namespace GameLogic
         {
             m_tmpTitle = BindRequiredComponent<TextMeshProUGUI>("m_tmpTitle");
             m_btnClose = BindRequiredComponent<Button>("m_btnClose");
-            m_tmpDropdownEventCategory = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownEventCategory");
-            m_tmpDropdownDmEventSubType = BindRequiredComponent<TMP_Dropdown>("m_rectDmDirectSection/m_tmpDropdownDmEventSubType");
-            m_tmpDropdownTriggerMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownTriggerMode");
+            m_tmpDropdownEffectType = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownEffectType");
+            m_tmpDropdownTriggerType = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownTriggerType");
+            m_tmpDropdownEffectCreaturePlacementMode = BindRequiredComponent<TMP_Dropdown>("m_rectEffectCombatantActivationSection/m_tmpDropdownEffectCreaturePlacementMode");
             m_tmpDropdownCheckTargetMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckTargetMode");
             m_tmpDropdownCheckResolutionMode = BindRequiredComponent<TMP_Dropdown>("m_tmpDropdownCheckResolutionMode");
             m_btnConfirm = BindRequiredComponent<Button>("m_btnConfirm");
+            m_rectPanel = BindRequiredComponent<RectTransform>("Panel");
             m_tmpBindingSummary = BindRequiredComponent<TMP_Text>("m_tmpBindingSummary");
             m_toggleEventEnabled = BindRequiredComponent<Toggle>("m_toggleEventEnabled");
             m_toggleEventOneShot = BindRequiredComponent<Toggle>("m_toggleEventOneShot");
+            m_rectTriggerManualSection = BindRequiredComponent<RectTransform>("m_rectTriggerManualSection");
+            m_rectTriggerAreaSection = BindRequiredComponent<RectTransform>("m_rectTriggerAreaSection");
+            m_rectTriggerInteractionSection = BindRequiredComponent<RectTransform>("m_rectTriggerInteractionSection");
+            m_rectTriggerPrerequisiteSection = BindRequiredComponent<RectTransform>("m_rectTriggerPrerequisiteSection");
+            m_rectEffectNarrativeSection = BindRequiredComponent<RectTransform>("m_rectEffectNarrativeSection");
+            m_rectEffectDialogueSection = BindRequiredComponent<RectTransform>("m_rectEffectDialogueSection");
+            m_rectEffectCombatantActivationSection = BindRequiredComponent<RectTransform>("m_rectEffectCombatantActivationSection");
+            m_rectEffectBattleSection = BindRequiredComponent<RectTransform>("m_rectEffectBattleSection");
             m_rectAbilityCheckSection = BindRequiredComponent<RectTransform>("m_rectAbilityCheckSection");
             m_rectSkillCheckSection = BindRequiredComponent<RectTransform>("m_rectSkillCheckSection");
-            m_rectDmDirectSection = BindRequiredComponent<RectTransform>("m_rectDmDirectSection");
+            m_toggleTriggerAreaFirstEnterOnly = BindRequiredComponent<Toggle>("m_rectTriggerAreaSection/m_toggleTriggerAreaFirstEnterOnly");
+            m_toggleTriggerAreaShareBinding = BindRequiredComponent<Toggle>("m_rectTriggerAreaSection/m_toggleTriggerAreaShareBinding");
+            m_tmpInputTriggerInteractionTarget = BindRequiredComponent<TMP_InputField>("m_rectTriggerInteractionSection/m_tmpInputTriggerInteractionTarget");
+            m_toggleTriggerInteractionRequireConfirm = BindRequiredComponent<Toggle>("m_rectTriggerInteractionSection/m_toggleTriggerInteractionRequireConfirm");
+            m_tmpInputTriggerPrerequisiteEventId = BindRequiredComponent<TMP_InputField>("m_rectTriggerPrerequisiteSection/m_tmpInputTriggerPrerequisiteEventId");
+            m_tmpInputTriggerDelayDescription = BindRequiredComponent<TMP_InputField>("m_rectTriggerPrerequisiteSection/m_tmpInputTriggerDelayDescription");
+            m_toggleEffectNarrativeDmOnly = BindRequiredComponent<Toggle>("m_rectEffectNarrativeSection/m_toggleEffectNarrativeDmOnly");
+            m_tmpInputEffectNarrativeText = BindRequiredComponent<TMP_InputField>("m_rectEffectNarrativeSection/m_tmpInputEffectNarrativeText");
+            m_tmpInputEffectDialogueTarget = BindRequiredComponent<TMP_InputField>("m_rectEffectDialogueSection/m_tmpInputEffectDialogueTarget");
+            m_tmpInputEffectDialogueSummary = BindRequiredComponent<TMP_InputField>("m_rectEffectDialogueSection/m_tmpInputEffectDialogueSummary");
+            m_tmpInputEffectDialoguePrompt = BindRequiredComponent<TMP_InputField>("m_rectEffectDialogueSection/m_tmpInputEffectDialoguePrompt");
+            m_tmpInputEffectCreatureInstanceId = BindRequiredComponent<TMP_InputField>("m_rectEffectCombatantActivationSection/m_tmpInputEffectCreatureInstanceId");
+            m_toggleEffectCreatureActivate = BindRequiredComponent<Toggle>("m_rectEffectCombatantActivationSection/m_toggleEffectCreatureActivate");
+            m_tmpInputEffectBattleReference = BindRequiredComponent<TMP_InputField>("m_rectEffectBattleSection/m_tmpInputEffectBattleReference");
+            m_toggleEffectBattleIncludeActiveCreatures = BindRequiredComponent<Toggle>("m_rectEffectBattleSection/m_toggleEffectBattleIncludeActiveCreatures");
+            m_tmpInputEffectBattleDescription = BindRequiredComponent<TMP_InputField>("m_rectEffectBattleSection/m_tmpInputEffectBattleDescription");
             m_tmpInputAbilityStrength = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityStrength");
             m_tmpInputAbilityDexterity = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityDexterity");
             m_tmpInputAbilityConstitution = BindRequiredComponent<TMP_InputField>("m_rectAbilityCheckSection/m_tmpInputAbilityConstitution");
@@ -4080,7 +4815,6 @@ namespace GameLogic
             m_tmpInputSuccessResult = BindRequiredComponent<TMP_InputField>("m_tmpInputSuccessResult");
             m_tmpInputFailureResult = BindRequiredComponent<TMP_InputField>("m_tmpInputFailureResult");
             m_tmpInputDmNote = BindRequiredComponent<TMP_InputField>("m_tmpInputDmNote");
-            m_tmpInputDmPrompt = BindRequiredComponent<TMP_InputField>("m_rectDmDirectSection/m_tmpInputDmPrompt");
             BindSkillCheckInputComponents();
 
             if (!HasRequiredBindings())
@@ -4088,27 +4822,45 @@ namespace GameLogic
                 return;
             }
 
+            EnsureEventIdFieldCreated();
             m_btnClose.onClick.RemoveAllListeners();
             m_btnClose.onClick.AddListener(OnClickCloseBtn);
-            SetupDropdown(m_tmpDropdownEventCategory, EventCategoryLabels, OnEventCategoryDropdownChanged);
-            SetupDropdown(m_tmpDropdownDmEventSubType, DmEventSubTypeLabels, OnDmEventSubTypeDropdownChanged);
-            SetupDropdown(m_tmpDropdownTriggerMode, TriggerModeLabels, OnTriggerModeDropdownChanged);
+            SetupDropdown(m_tmpDropdownEffectType, EffectTypeLabels, OnEffectTypeDropdownChanged);
+            SetupDropdown(m_tmpDropdownTriggerType, TriggerTypeLabels, OnTriggerTypeDropdownChanged);
+            SetupDropdown(m_tmpDropdownEffectCreaturePlacementMode, EffectCreaturePlacementModeLabels, OnEffectCreaturePlacementModeDropdownChanged);
             SetupDropdown(m_tmpDropdownCheckTargetMode, CheckTargetModeLabels, OnCheckTargetModeDropdownChanged);
             SetupDropdown(m_tmpDropdownCheckResolutionMode, CheckResolutionModeLabels, OnCheckResolutionModeDropdownChanged);
             m_btnConfirm.onClick.RemoveAllListeners();
             m_btnConfirm.onClick.AddListener(OnClickConfirmBtn);
+            m_tmpInputTriggerDelayDescription.onValueChanged.AddListener(OnTriggerLayoutInputChanged);
         }
 
         protected override void OnRefresh()
         {
             m_request = UserData as ChapterEventPopupRequest ?? new ChapterEventPopupRequest();
-            m_eventCategory = ChapterEventCategory.Check;
-            m_dmEventSubType = ChapterDmEventSubType.Story;
-            m_triggerMode = ChapterEventTriggerMode.Automatic;
+            m_triggerType = ChapterEventTriggerType.DmManual;
+            m_effectType = ChapterEventEffectType.Check;
+            m_effectCreaturePlacementMode = ChapterEffectCreaturePlacementMode.UseSavedInstancePosition;
             m_checkTargetMode = ChapterCheckTargetMode.Ability;
             m_checkResolutionMode = ChapterCheckResolutionMode.RollDice;
             m_existingEventId = string.Empty;
             ResetSkillCheckInputFields();
+            SetToggleValue(m_toggleTriggerAreaFirstEnterOnly, false);
+            SetToggleValue(m_toggleTriggerAreaShareBinding, false);
+            SetToggleValue(m_toggleTriggerInteractionRequireConfirm, false);
+            SetToggleValue(m_toggleEffectNarrativeDmOnly, false);
+            SetToggleValue(m_toggleEffectCreatureActivate, true);
+            SetToggleValue(m_toggleEffectBattleIncludeActiveCreatures, true);
+            ResetInputField(m_tmpInputTriggerInteractionTarget, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputTriggerPrerequisiteEventId, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputTriggerDelayDescription, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputEffectNarrativeText, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputEffectDialogueTarget, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputEffectDialogueSummary, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputEffectDialoguePrompt, TMP_InputField.LineType.MultiLineNewline);
+            ResetInputField(m_tmpInputEffectCreatureInstanceId, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputEffectBattleReference, TMP_InputField.LineType.SingleLine);
+            ResetInputField(m_tmpInputEffectBattleDescription, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputAbilityStrength, TMP_InputField.LineType.SingleLine);
             ResetInputField(m_tmpInputAbilityDexterity, TMP_InputField.LineType.SingleLine);
             ResetInputField(m_tmpInputAbilityConstitution, TMP_InputField.LineType.SingleLine);
@@ -4120,7 +4872,6 @@ namespace GameLogic
             ResetInputField(m_tmpInputSuccessResult, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputFailureResult, TMP_InputField.LineType.MultiLineNewline);
             ResetInputField(m_tmpInputDmNote, TMP_InputField.LineType.MultiLineNewline);
-            ResetInputField(m_tmpInputDmPrompt, TMP_InputField.LineType.MultiLineNewline);
             SetToggleValue(m_toggleEventEnabled, true);
             SetToggleValue(m_toggleEventOneShot, false);
 
@@ -4129,21 +4880,21 @@ namespace GameLogic
             RefreshView();
         }
 
-        private void OnEventCategoryDropdownChanged(int index)
+        private void OnEffectTypeDropdownChanged(int index)
         {
-            m_eventCategory = (ChapterEventCategory) Mathf.Clamp(index, 0, EventCategoryLabels.Length - 1);
+            m_effectType = (ChapterEventEffectType) Mathf.Clamp(index, 0, EffectTypeLabels.Length - 1);
             RefreshView();
         }
 
-        private void OnDmEventSubTypeDropdownChanged(int index)
+        private void OnTriggerTypeDropdownChanged(int index)
         {
-            m_dmEventSubType = (ChapterDmEventSubType) Mathf.Clamp(index, 0, DmEventSubTypeLabels.Length - 1);
+            m_triggerType = (ChapterEventTriggerType) Mathf.Clamp(index, 0, TriggerTypeLabels.Length - 1);
+            RefreshView();
         }
 
-        private void OnTriggerModeDropdownChanged(int index)
+        private void OnEffectCreaturePlacementModeDropdownChanged(int index)
         {
-            m_triggerMode = (ChapterEventTriggerMode) Mathf.Clamp(index, 0, TriggerModeLabels.Length - 1);
-            RefreshView();
+            m_effectCreaturePlacementMode = (ChapterEffectCreaturePlacementMode) Mathf.Clamp(index, 0, EffectCreaturePlacementModeLabels.Length - 1);
         }
 
         private void OnCheckTargetModeDropdownChanged(int index)
@@ -4158,6 +4909,21 @@ namespace GameLogic
             RefreshView();
         }
 
+        private void OnTriggerLayoutInputChanged(string _)
+        {
+            RefreshDynamicLayout(m_effectType == ChapterEventEffectType.Check);
+        }
+
+        private void RefreshEventIdDisplay()
+        {
+            if (m_tmpInputEventId == null)
+            {
+                return;
+            }
+
+            SetInputValue(m_tmpInputEventId, m_existingEventId);
+        }
+
         private void OnClickConfirmBtn()
         {
             ChapterGridEventData eventData = BuildEventData();
@@ -4166,48 +4932,87 @@ namespace GameLogic
                 ? m_request.GridCoordinates.Count
                 : 1;
             Log.Info(
-                $"[ChapterEventPopupUI] 宸茶褰曟牸瀛愪簨浠躲€傜珷鑺?{m_request.ChapterId}, 鐩爣鏍兼暟={affectedCellCount}, 棣栨牸鍧愭爣={m_request.GridCoordinate}, 浜嬩欢绫诲埆={EventCategoryLabels[(int) m_eventCategory]}, 鏍囬={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
+                $"[ChapterEventPopupUI] 已记录格子事件。章节={m_request.ChapterId}, 目标格数={affectedCellCount}, 首格坐标={m_request.GridCoordinate}, 效果类型={EffectTypeLabels[(int) m_effectType]}, 标题={GetInputValue(m_tmpInputEventTitle)}{abilityThresholdSummary}");
             m_request.OnConfirm?.Invoke(eventData);
             Close();
         }
 
         private void RefreshView()
         {
-            bool isCheckEvent = m_eventCategory == ChapterEventCategory.Check;
-            bool isDmDirectEvent = m_eventCategory == ChapterEventCategory.DmDirect;
-            bool isAbilityCheck = isCheckEvent && m_checkTargetMode == ChapterCheckTargetMode.Ability;
-            bool isSkillCheck = isCheckEvent && m_checkTargetMode == ChapterCheckTargetMode.Skill;
+            bool isCheckEffect = m_effectType == ChapterEventEffectType.Check;
+            bool isNarrativeEffect = m_effectType == ChapterEventEffectType.NarrativePrompt;
+            bool isDialogueEffect = m_effectType == ChapterEventEffectType.DialogueInteractionPrompt;
+            bool isCombatantActivationEffect = m_effectType == ChapterEventEffectType.ActivateCreatureInstance;
+            bool isBattleEffect = m_effectType == ChapterEventEffectType.StartBattle;
+            bool isAbilityCheck = isCheckEffect && m_checkTargetMode == ChapterCheckTargetMode.Ability;
+            bool isSkillCheck = isCheckEffect && m_checkTargetMode == ChapterCheckTargetMode.Skill;
 
             if (m_tmpTitle != null)
             {
                 bool isBatchEdit = m_request.GridCoordinates != null && m_request.GridCoordinates.Count > 1;
                 m_tmpTitle.text = isBatchEdit
-                    ? $"鎵归噺鏍囪浜嬩欢 ({m_request.GridCoordinates.Count})"
-                    : m_request.ExistingEventData != null ? "缂栬緫浜嬩欢" : "娣诲姞浜嬩欢";
+                    ? $"批量标记事件 ({m_request.GridCoordinates.Count})"
+                    : m_request.ExistingEventData != null ? "编辑事件" : "添加事件";
             }
 
-            SetDropdownValue(m_tmpDropdownEventCategory, (int) m_eventCategory);
-            SetDropdownValue(m_tmpDropdownDmEventSubType, (int) m_dmEventSubType);
-            SetDropdownValue(m_tmpDropdownTriggerMode, (int) m_triggerMode);
+            SetDropdownValue(m_tmpDropdownEffectType, (int) m_effectType);
+            SetDropdownValue(m_tmpDropdownTriggerType, (int) m_triggerType);
+            SetDropdownValue(m_tmpDropdownEffectCreaturePlacementMode, (int) m_effectCreaturePlacementMode);
             SetDropdownValue(m_tmpDropdownCheckTargetMode, (int) m_checkTargetMode);
             SetDropdownValue(m_tmpDropdownCheckResolutionMode, (int) m_checkResolutionMode);
-            SetButtonLabel(m_btnConfirm, "纭畾");
+            SetButtonLabel(m_btnConfirm, "确定");
+            RefreshEventIdDisplay();
 
             RefreshBindingSummary();
 
-            if (m_rectDmDirectSection != null)
+            if (m_rectTriggerManualSection != null)
             {
-                m_rectDmDirectSection.gameObject.SetActive(isDmDirectEvent);
+                m_rectTriggerManualSection.gameObject.SetActive(m_triggerType == ChapterEventTriggerType.DmManual);
+            }
+
+            if (m_rectTriggerAreaSection != null)
+            {
+                m_rectTriggerAreaSection.gameObject.SetActive(m_triggerType == ChapterEventTriggerType.EnterBindingArea);
+            }
+
+            if (m_rectTriggerInteractionSection != null)
+            {
+                m_rectTriggerInteractionSection.gameObject.SetActive(m_triggerType == ChapterEventTriggerType.InteractWithSceneObject);
+            }
+
+            if (m_rectTriggerPrerequisiteSection != null)
+            {
+                m_rectTriggerPrerequisiteSection.gameObject.SetActive(m_triggerType == ChapterEventTriggerType.AfterPrerequisiteEvent);
+            }
+
+            if (m_rectEffectNarrativeSection != null)
+            {
+                m_rectEffectNarrativeSection.gameObject.SetActive(isNarrativeEffect);
+            }
+
+            if (m_rectEffectDialogueSection != null)
+            {
+                m_rectEffectDialogueSection.gameObject.SetActive(isDialogueEffect);
+            }
+
+            if (m_rectEffectCombatantActivationSection != null)
+            {
+                m_rectEffectCombatantActivationSection.gameObject.SetActive(isCombatantActivationEffect);
+            }
+
+            if (m_rectEffectBattleSection != null)
+            {
+                m_rectEffectBattleSection.gameObject.SetActive(isBattleEffect);
             }
 
             if (m_tmpDropdownCheckTargetMode != null)
             {
-                m_tmpDropdownCheckTargetMode.gameObject.SetActive(isCheckEvent);
+                m_tmpDropdownCheckTargetMode.gameObject.SetActive(isCheckEffect);
             }
 
             if (m_tmpDropdownCheckResolutionMode != null)
             {
-                m_tmpDropdownCheckResolutionMode.gameObject.SetActive(isCheckEvent);
+                m_tmpDropdownCheckResolutionMode.gameObject.SetActive(isCheckEffect);
             }
 
             if (m_rectAbilityCheckSection != null)
@@ -4222,18 +5027,303 @@ namespace GameLogic
 
             if (m_tmpInputSuccessResult != null)
             {
-                m_tmpInputSuccessResult.gameObject.SetActive(isCheckEvent);
+                m_tmpInputSuccessResult.gameObject.SetActive(isCheckEffect);
             }
 
             if (m_tmpInputFailureResult != null)
             {
-                m_tmpInputFailureResult.gameObject.SetActive(isCheckEvent);
+                m_tmpInputFailureResult.gameObject.SetActive(isCheckEffect);
             }
+
+            RefreshDynamicLayout(isCheckEffect);
+        }
+
+        private void RefreshDynamicLayout(bool isCheckEffect)
+        {
+            if (!HasRequiredBindings())
+            {
+                return;
+            }
+
+            InitializeEventPopupLayout();
+            Canvas.ForceUpdateCanvases();
+
+            float currentTop = m_eventPopupSectionTop;
+            RectTransform triggerSection = GetActiveTriggerSectionRect();
+            RectTransform effectSection = GetActiveEffectSectionRect(isCheckEffect);
+            RectTransform checkTargetRect = GetRectTransform(m_tmpDropdownCheckTargetMode);
+            RectTransform checkResolutionRect = GetRectTransform(m_tmpDropdownCheckResolutionMode);
+            RectTransform triggerDescriptionRect = GetRectTransform(m_tmpInputTriggerDescription);
+            RectTransform successResultRect = GetRectTransform(m_tmpInputSuccessResult);
+            RectTransform failureResultRect = GetRectTransform(m_tmpInputFailureResult);
+            RectTransform dmNoteRect = GetRectTransform(m_tmpInputDmNote);
+
+            RefreshTriggerSectionLayout(triggerSection);
+
+            if (triggerSection != null && triggerSection.gameObject.activeSelf)
+            {
+                SetRectTop(triggerSection, currentTop);
+                currentTop = GetBottom(triggerSection) + m_eventPopupGapAfterTriggerSection;
+            }
+
+            if (isCheckEffect)
+            {
+                SetRectTop(checkTargetRect, currentTop);
+                SetRectTop(checkResolutionRect, currentTop);
+                currentTop = Mathf.Max(GetBottom(checkTargetRect), GetBottom(checkResolutionRect)) + m_eventPopupGapAfterCheckControls;
+            }
+
+            if (effectSection != null && effectSection.gameObject.activeSelf)
+            {
+                SetRectTop(effectSection, currentTop);
+                currentTop = GetBottom(effectSection) + m_eventPopupGapAfterEffectSection;
+            }
+
+            SetRectTop(triggerDescriptionRect, currentTop);
+            currentTop = GetBottom(triggerDescriptionRect) + m_eventPopupGapBetweenInputFields;
+
+            if (isCheckEffect)
+            {
+                SetRectTop(successResultRect, currentTop);
+                currentTop = GetBottom(successResultRect) + m_eventPopupGapBetweenInputFields;
+
+                SetRectTop(failureResultRect, currentTop);
+                currentTop = GetBottom(failureResultRect) + m_eventPopupGapBetweenInputFields;
+            }
+
+            SetRectTop(dmNoteRect, currentTop);
+            float contentBottom = GetBottom(dmNoteRect);
+            float targetPanelHeight = Mathf.Max(
+                m_eventPopupMinimumPanelHeight,
+                contentBottom + EventPopupConfirmSpacing + m_eventPopupConfirmTopInset);
+            SetRectHeight(m_rectPanel, targetPanelHeight);
+            Canvas.ForceUpdateCanvases();
+        }
+
+        private void InitializeEventPopupLayout()
+        {
+            if (m_isEventPopupLayoutInitialized)
+            {
+                return;
+            }
+
+            RectTransform checkTargetRect = GetRectTransform(m_tmpDropdownCheckTargetMode);
+            RectTransform triggerDescriptionRect = GetRectTransform(m_tmpInputTriggerDescription);
+            RectTransform successResultRect = GetRectTransform(m_tmpInputSuccessResult);
+            RectTransform dmNoteRect = GetRectTransform(m_tmpInputDmNote);
+            RectTransform confirmRect = GetRectTransform(m_btnConfirm);
+
+            m_eventPopupSectionTop = GetRectTop(m_rectTriggerManualSection);
+            m_eventPopupGapAfterTriggerSection = Mathf.Max(8f, GetRectTop(checkTargetRect) - GetBottom(m_rectTriggerManualSection));
+            m_eventPopupGapAfterCheckControls = Mathf.Max(8f, GetRectTop(m_rectAbilityCheckSection) - GetBottom(checkTargetRect));
+            m_eventPopupGapAfterEffectSection = Mathf.Max(8f, GetRectTop(triggerDescriptionRect) - GetBottom(m_rectAbilityCheckSection));
+            m_eventPopupGapBetweenInputFields = Mathf.Max(8f, GetRectTop(successResultRect) - GetBottom(triggerDescriptionRect));
+            m_eventPopupConfirmTopInset = GetBottomAnchoredTopInset(confirmRect);
+            m_triggerDelayDescriptionMinimumHeight = GetCurrentHeight(GetRectTransform(m_tmpInputTriggerDelayDescription));
+            m_triggerPrerequisiteSectionMinimumHeight = GetCurrentHeight(m_rectTriggerPrerequisiteSection);
+            m_triggerPrerequisiteSectionBottomPadding = Mathf.Max(
+                0f,
+                m_triggerPrerequisiteSectionMinimumHeight - GetBottom(GetRectTransform(m_tmpInputTriggerDelayDescription)));
+            m_eventPopupMinimumPanelHeight = m_eventPopupSectionTop
+                + GetMinimumRectHeight(m_rectTriggerManualSection, m_rectTriggerAreaSection, m_rectTriggerInteractionSection, m_rectTriggerPrerequisiteSection)
+                + m_eventPopupGapAfterTriggerSection
+                + GetMinimumRectHeight(
+                    m_rectEffectNarrativeSection,
+                    m_rectEffectDialogueSection,
+                    m_rectEffectCombatantActivationSection,
+                    m_rectEffectBattleSection,
+                    m_rectAbilityCheckSection,
+                    m_rectSkillCheckSection)
+                + m_eventPopupGapAfterEffectSection
+                + GetCurrentHeight(triggerDescriptionRect)
+                + m_eventPopupGapBetweenInputFields
+                + GetCurrentHeight(dmNoteRect)
+                + EventPopupConfirmSpacing
+                + m_eventPopupConfirmTopInset;
+            m_isEventPopupLayoutInitialized = true;
+        }
+
+        private void EnsureEventIdFieldCreated()
+        {
+            if (m_tmpEventIdLabel != null && m_tmpInputEventId != null)
+            {
+                return;
+            }
+
+            m_tmpEventIdLabel = Object.Instantiate(m_tmpBindingSummary, m_rectPanel);
+            m_tmpEventIdLabel.name = "m_tmpEventIdLabel";
+            m_tmpEventIdLabel.text = "事件 ID";
+            m_tmpEventIdLabel.raycastTarget = false;
+            if (m_tmpEventIdLabel is TextMeshProUGUI eventIdLabel)
+            {
+                eventIdLabel.alignment = TextAlignmentOptions.Left;
+            }
+
+            RectTransform labelRect = GetRectTransform(m_tmpEventIdLabel);
+            if (labelRect != null)
+            {
+                SetRectTop(labelRect, EventPopupEventIdLabelTop);
+            }
+
+            m_tmpInputEventId = Object.Instantiate(m_tmpInputEventTitle, m_rectPanel);
+            m_tmpInputEventId.name = "m_tmpInputEventId";
+            m_tmpInputEventId.readOnly = true;
+            m_tmpInputEventId.lineType = TMP_InputField.LineType.SingleLine;
+            m_tmpInputEventId.onValueChanged.RemoveAllListeners();
+            m_tmpInputEventId.onEndEdit.RemoveAllListeners();
+            m_tmpInputEventId.onSubmit.RemoveAllListeners();
+            m_tmpInputEventId.onSelect.RemoveAllListeners();
+            m_tmpInputEventId.onDeselect.RemoveAllListeners();
+            m_tmpInputEventId.onTextSelection.RemoveAllListeners();
+            m_tmpInputEventId.onEndTextSelection.RemoveAllListeners();
+            m_tmpInputEventId.onTouchScreenKeyboardStatusChanged.RemoveAllListeners();
+            if (m_tmpInputEventId.textComponent != null)
+            {
+                m_tmpInputEventId.textComponent.enableWordWrapping = false;
+            }
+
+            if (m_tmpInputEventId.placeholder is TMP_Text placeholder)
+            {
+                placeholder.text = "保存后自动生成，可复制";
+            }
+
+            RectTransform inputRect = GetRectTransform(m_tmpInputEventId);
+            if (inputRect != null)
+            {
+                SetRectTop(inputRect, EventPopupEventIdInputTop);
+                SetRectHeight(inputRect, EventPopupEventIdInputHeight);
+            }
+
+            SetSiblingIndexAfter(m_tmpEventIdLabel.transform, m_tmpBindingSummary.transform);
+            SetSiblingIndexAfter(m_tmpInputEventId.transform, m_tmpEventIdLabel.transform);
+
+            ShiftEventPopupContentForEventId();
+        }
+
+        private void ShiftEventPopupContentForEventId()
+        {
+            ShiftRectDown(GetRectTransform(m_toggleEventEnabled), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_toggleEventOneShot), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpDropdownEffectType), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpDropdownTriggerType), EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectTriggerManualSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectTriggerAreaSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectTriggerInteractionSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectTriggerPrerequisiteSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpDropdownCheckTargetMode), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpDropdownCheckResolutionMode), EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectEffectNarrativeSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectEffectDialogueSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectEffectCombatantActivationSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectEffectBattleSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectAbilityCheckSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(m_rectSkillCheckSection, EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpInputTriggerDescription), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpInputSuccessResult), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpInputFailureResult), EventPopupEventIdLayoutShift);
+            ShiftRectDown(GetRectTransform(m_tmpInputDmNote), EventPopupEventIdLayoutShift);
+        }
+
+        private void RefreshTriggerSectionLayout(RectTransform triggerSection)
+        {
+            if (triggerSection == null)
+            {
+                return;
+            }
+
+            if (triggerSection == m_rectTriggerPrerequisiteSection)
+            {
+                RectTransform delayDescriptionRect = GetRectTransform(m_tmpInputTriggerDelayDescription);
+                RefreshInputFieldHeight(m_tmpInputTriggerDelayDescription, m_triggerDelayDescriptionMinimumHeight);
+
+                float targetSectionHeight = Mathf.Max(
+                    m_triggerPrerequisiteSectionMinimumHeight,
+                    GetBottom(delayDescriptionRect) + m_triggerPrerequisiteSectionBottomPadding);
+                SetRectHeight(m_rectTriggerPrerequisiteSection, targetSectionHeight);
+                return;
+            }
+
+            if (triggerSection == m_rectTriggerManualSection)
+            {
+                SetRectHeight(m_rectTriggerManualSection, GetMinimumRectHeight(m_rectTriggerManualSection));
+                return;
+            }
+
+            if (triggerSection == m_rectTriggerAreaSection)
+            {
+                SetRectHeight(m_rectTriggerAreaSection, GetMinimumRectHeight(m_rectTriggerAreaSection));
+                return;
+            }
+
+            if (triggerSection == m_rectTriggerInteractionSection)
+            {
+                SetRectHeight(m_rectTriggerInteractionSection, GetMinimumRectHeight(m_rectTriggerInteractionSection));
+            }
+        }
+
+        private RectTransform GetActiveTriggerSectionRect()
+        {
+            if (m_rectTriggerManualSection.gameObject.activeSelf)
+            {
+                return m_rectTriggerManualSection;
+            }
+
+            if (m_rectTriggerAreaSection.gameObject.activeSelf)
+            {
+                return m_rectTriggerAreaSection;
+            }
+
+            if (m_rectTriggerInteractionSection.gameObject.activeSelf)
+            {
+                return m_rectTriggerInteractionSection;
+            }
+
+            if (m_rectTriggerPrerequisiteSection.gameObject.activeSelf)
+            {
+                return m_rectTriggerPrerequisiteSection;
+            }
+
+            return m_rectTriggerManualSection;
+        }
+
+        private RectTransform GetActiveEffectSectionRect(bool isCheckEffect)
+        {
+            if (isCheckEffect)
+            {
+                if (m_rectSkillCheckSection.gameObject.activeSelf)
+                {
+                    return m_rectSkillCheckSection;
+                }
+
+                return m_rectAbilityCheckSection;
+            }
+
+            if (m_rectEffectNarrativeSection.gameObject.activeSelf)
+            {
+                return m_rectEffectNarrativeSection;
+            }
+
+            if (m_rectEffectDialogueSection.gameObject.activeSelf)
+            {
+                return m_rectEffectDialogueSection;
+            }
+
+            if (m_rectEffectCombatantActivationSection.gameObject.activeSelf)
+            {
+                return m_rectEffectCombatantActivationSection;
+            }
+
+            if (m_rectEffectBattleSection.gameObject.activeSelf)
+            {
+                return m_rectEffectBattleSection;
+            }
+
+            return null;
         }
 
         private string BuildAbilityThresholdSummary()
         {
-            if (m_eventCategory != ChapterEventCategory.Check)
+            if (m_effectType != ChapterEventEffectType.Check)
             {
                 return string.Empty;
             }
@@ -4253,7 +5343,7 @@ namespace GameLogic
                     summarySegments.Add($"{entry.SkillName}:{entry.Threshold}");
                 }
 
-                return $", 鎶€鑳芥瀹?[{string.Join(", ", summarySegments)}]";
+                return $", 技能检定[{string.Join(", ", summarySegments)}]";
             }
 
             if (m_checkTargetMode != ChapterCheckTargetMode.Ability)
@@ -4261,7 +5351,7 @@ namespace GameLogic
                 return string.Empty;
             }
 
-            return $", 灞炴€ч€氳繃鍊?[STR:{GetInputValue(m_tmpInputAbilityStrength)}, DEX:{GetInputValue(m_tmpInputAbilityDexterity)}, CON:{GetInputValue(m_tmpInputAbilityConstitution)}, INT:{GetInputValue(m_tmpInputAbilityIntelligence)}, WIS:{GetInputValue(m_tmpInputAbilityWisdom)}, CHA:{GetInputValue(m_tmpInputAbilityCharisma)}]";
+            return $", 属性通过值[力量:{GetInputValue(m_tmpInputAbilityStrength)}, 敏捷:{GetInputValue(m_tmpInputAbilityDexterity)}, 体质:{GetInputValue(m_tmpInputAbilityConstitution)}, 智力:{GetInputValue(m_tmpInputAbilityIntelligence)}, 感知:{GetInputValue(m_tmpInputAbilityWisdom)}, 魅力:{GetInputValue(m_tmpInputAbilityCharisma)}]";
         }
 
         private void OnClickCloseBtn()
@@ -4341,7 +5431,7 @@ namespace GameLogic
             T component = ResolvePopupComponent<T>(path);
             if (component == null)
             {
-                Log.Error($"[ChapterEventPopupUI] 鎵句笉鍒拌妭鐐? {path}");
+                Log.Error($"[ChapterEventPopupUI] 找不到节点: {path}");
             }
 
             return component;
@@ -4372,18 +5462,42 @@ namespace GameLogic
         {
             return m_tmpTitle != null
                 && m_btnClose != null
-                && m_tmpDropdownEventCategory != null
-                && m_tmpDropdownDmEventSubType != null
-                && m_tmpDropdownTriggerMode != null
+                && m_tmpDropdownEffectType != null
+                && m_tmpDropdownTriggerType != null
+                && m_tmpDropdownEffectCreaturePlacementMode != null
                 && m_tmpDropdownCheckTargetMode != null
                 && m_tmpDropdownCheckResolutionMode != null
                 && m_btnConfirm != null
+                && m_rectPanel != null
                 && m_tmpBindingSummary != null
                 && m_toggleEventEnabled != null
                 && m_toggleEventOneShot != null
+                && m_rectTriggerManualSection != null
+                && m_rectTriggerAreaSection != null
+                && m_rectTriggerInteractionSection != null
+                && m_rectTriggerPrerequisiteSection != null
+                && m_rectEffectNarrativeSection != null
+                && m_rectEffectDialogueSection != null
+                && m_rectEffectCombatantActivationSection != null
+                && m_rectEffectBattleSection != null
                 && m_rectAbilityCheckSection != null
                 && m_rectSkillCheckSection != null
-                && m_rectDmDirectSection != null
+                && m_toggleTriggerAreaFirstEnterOnly != null
+                && m_toggleTriggerAreaShareBinding != null
+                && m_tmpInputTriggerInteractionTarget != null
+                && m_toggleTriggerInteractionRequireConfirm != null
+                && m_tmpInputTriggerPrerequisiteEventId != null
+                && m_tmpInputTriggerDelayDescription != null
+                && m_toggleEffectNarrativeDmOnly != null
+                && m_tmpInputEffectNarrativeText != null
+                && m_tmpInputEffectDialogueTarget != null
+                && m_tmpInputEffectDialogueSummary != null
+                && m_tmpInputEffectDialoguePrompt != null
+                && m_tmpInputEffectCreatureInstanceId != null
+                && m_toggleEffectCreatureActivate != null
+                && m_tmpInputEffectBattleReference != null
+                && m_toggleEffectBattleIncludeActiveCreatures != null
+                && m_tmpInputEffectBattleDescription != null
                 && m_skillCheckInputs.Count == SkillCheckLabels.Length
                 && m_tmpInputAbilityStrength != null
                 && m_tmpInputAbilityDexterity != null
@@ -4395,71 +5509,244 @@ namespace GameLogic
                 && m_tmpInputTriggerDescription != null
                 && m_tmpInputSuccessResult != null
                 && m_tmpInputFailureResult != null
-                && m_tmpInputDmNote != null
-                && m_tmpInputDmPrompt != null;
+                && m_tmpInputDmNote != null;
         }
 
         private void ApplyExistingEventData(ChapterGridEventData eventData)
         {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
             if (eventData == null)
             {
                 return;
             }
 
+            ChapterEventTriggerData triggerData = eventData.Trigger ?? new ChapterEventTriggerData();
+            ChapterEventEffectData effectData = eventData.Effect ?? new ChapterEventEffectData();
+            ChapterEventAreaTriggerParamData areaTriggerParam = triggerData.Area ?? new ChapterEventAreaTriggerParamData();
+            ChapterEventInteractionTriggerParamData interactionTriggerParam = triggerData.Interaction ?? new ChapterEventInteractionTriggerParamData();
+            ChapterEventPrerequisiteTriggerParamData prerequisiteTriggerParam = triggerData.Prerequisite ?? new ChapterEventPrerequisiteTriggerParamData();
+            ChapterEventCheckEffectParamData checkEffectParam = effectData.Check ?? new ChapterEventCheckEffectParamData();
+            ChapterEventNarrativeEffectParamData narrativeEffectParam = effectData.Narrative ?? new ChapterEventNarrativeEffectParamData();
+            ChapterEventDialogueEffectParamData dialogueEffectParam = effectData.Dialogue ?? new ChapterEventDialogueEffectParamData();
+            ChapterEventCreatureEffectParamData creatureEffectParam = effectData.Creature ?? new ChapterEventCreatureEffectParamData();
+            ChapterEventBattleEffectParamData battleEffectParam = effectData.Battle ?? new ChapterEventBattleEffectParamData();
+
             m_existingEventId = eventData.EventId ?? string.Empty;
-            m_eventCategory = (ChapterEventCategory) Mathf.Clamp(eventData.EventCategory, 0, EventCategoryLabels.Length - 1);
-            m_dmEventSubType = (ChapterDmEventSubType) Mathf.Clamp(eventData.EventSubType, 0, DmEventSubTypeLabels.Length - 1);
-            m_triggerMode = (ChapterEventTriggerMode) Mathf.Clamp(eventData.TriggerMode, 0, TriggerModeLabels.Length - 1);
-            m_checkTargetMode = (ChapterCheckTargetMode) Mathf.Clamp(eventData.CheckTargetMode, 0, CheckTargetModeLabels.Length - 1);
-            m_checkResolutionMode = (ChapterCheckResolutionMode) Mathf.Clamp(eventData.CheckResolutionMode, 0, CheckResolutionModeLabels.Length - 1);
+            m_triggerType = ResolveTriggerType(eventData);
+            m_effectType = ResolveEffectType(eventData);
+            m_effectCreaturePlacementMode = ResolveEffectCreaturePlacementMode(eventData);
+            m_checkTargetMode = (ChapterCheckTargetMode) Mathf.Clamp(checkEffectParam.TargetMode, 0, CheckTargetModeLabels.Length - 1);
+            m_checkResolutionMode = (ChapterCheckResolutionMode) Mathf.Clamp(checkEffectParam.ResolutionMode, 0, CheckResolutionModeLabels.Length - 1);
             SetToggleValue(m_toggleEventEnabled, eventData.IsEnabled);
             SetToggleValue(m_toggleEventOneShot, eventData.IsOneShot);
+            SetToggleValue(m_toggleTriggerAreaFirstEnterOnly, areaTriggerParam.FirstEnterOnly);
+            SetToggleValue(m_toggleTriggerAreaShareBinding, areaTriggerParam.ShareBinding);
+            SetToggleValue(m_toggleTriggerInteractionRequireConfirm, interactionTriggerParam.RequireConfirm);
+            SetToggleValue(m_toggleEffectNarrativeDmOnly, narrativeEffectParam.DmOnly);
+            SetToggleValue(m_toggleEffectCreatureActivate, creatureEffectParam.Activate);
+            SetToggleValue(m_toggleEffectBattleIncludeActiveCreatures, battleEffectParam.IncludeActiveCreatures);
             SetInputValue(m_tmpInputEventTitle, eventData.EventTitle);
             SetInputValue(m_tmpInputTriggerDescription, eventData.TriggerDescription);
-            SetInputValue(m_tmpInputSuccessResult, eventData.SuccessResult);
-            SetInputValue(m_tmpInputFailureResult, eventData.FailureResult);
+            SetInputValue(m_tmpInputTriggerInteractionTarget, interactionTriggerParam.Target);
+            SetInputValue(m_tmpInputTriggerPrerequisiteEventId, prerequisiteTriggerParam.EventId);
+            SetInputValue(m_tmpInputTriggerDelayDescription, prerequisiteTriggerParam.DelayDescription);
+            SetInputValue(m_tmpInputEffectNarrativeText, GetEffectiveNarrativeText(eventData));
+            SetInputValue(m_tmpInputEffectDialogueTarget, dialogueEffectParam.Target);
+            SetInputValue(m_tmpInputEffectDialogueSummary, dialogueEffectParam.Summary);
+            SetInputValue(m_tmpInputEffectDialoguePrompt, GetEffectiveDialoguePrompt(eventData));
+            SetInputValue(m_tmpInputEffectCreatureInstanceId, creatureEffectParam.InstanceId);
+            SetInputValue(m_tmpInputEffectBattleReference, battleEffectParam.Reference);
+            SetInputValue(m_tmpInputEffectBattleDescription, GetEffectiveBattleDescription(eventData));
+            SetInputValue(m_tmpInputSuccessResult, checkEffectParam.SuccessResult);
+            SetInputValue(m_tmpInputFailureResult, checkEffectParam.FailureResult);
             SetInputValue(m_tmpInputDmNote, eventData.DmNote);
-            SetInputValue(m_tmpInputDmPrompt, eventData.DmPrompt);
             ApplySkillCheckValues(eventData);
-            SetInputValue(m_tmpInputAbilityStrength, eventData.AbilityStrengthThreshold);
-            SetInputValue(m_tmpInputAbilityDexterity, eventData.AbilityDexterityThreshold);
-            SetInputValue(m_tmpInputAbilityConstitution, eventData.AbilityConstitutionThreshold);
-            SetInputValue(m_tmpInputAbilityIntelligence, eventData.AbilityIntelligenceThreshold);
-            SetInputValue(m_tmpInputAbilityWisdom, eventData.AbilityWisdomThreshold);
-            SetInputValue(m_tmpInputAbilityCharisma, eventData.AbilityCharismaThreshold);
+            SetInputValue(m_tmpInputAbilityStrength, checkEffectParam.AbilityStrengthThreshold);
+            SetInputValue(m_tmpInputAbilityDexterity, checkEffectParam.AbilityDexterityThreshold);
+            SetInputValue(m_tmpInputAbilityConstitution, checkEffectParam.AbilityConstitutionThreshold);
+            SetInputValue(m_tmpInputAbilityIntelligence, checkEffectParam.AbilityIntelligenceThreshold);
+            SetInputValue(m_tmpInputAbilityWisdom, checkEffectParam.AbilityWisdomThreshold);
+            SetInputValue(m_tmpInputAbilityCharisma, checkEffectParam.AbilityCharismaThreshold);
         }
 
         private ChapterGridEventData BuildEventData()
         {
             List<ChapterSkillCheckThresholdData> skillCheckEntries = BuildSkillCheckEntries();
             ChapterSkillCheckThresholdData primarySkillCheckEntry = skillCheckEntries.Count > 0 ? skillCheckEntries[0] : null;
-
-            return new ChapterGridEventData
+            ChapterEventTriggerData triggerData = new ChapterEventTriggerData
+            {
+                TriggerMode = m_triggerType == ChapterEventTriggerType.DmManual
+                    ? (int) ChapterEventTriggerMode.DmManual
+                    : (int) ChapterEventTriggerMode.Automatic,
+                TriggerType = (int) m_triggerType,
+                Area = new ChapterEventAreaTriggerParamData
+                {
+                    FirstEnterOnly = GetToggleValue(m_toggleTriggerAreaFirstEnterOnly),
+                    ShareBinding = GetToggleValue(m_toggleTriggerAreaShareBinding),
+                },
+                Interaction = new ChapterEventInteractionTriggerParamData
+                {
+                    Target = GetInputValue(m_tmpInputTriggerInteractionTarget),
+                    RequireConfirm = GetToggleValue(m_toggleTriggerInteractionRequireConfirm),
+                },
+                Prerequisite = new ChapterEventPrerequisiteTriggerParamData
+                {
+                    EventId = GetInputValue(m_tmpInputTriggerPrerequisiteEventId),
+                    DelayDescription = GetInputValue(m_tmpInputTriggerDelayDescription),
+                },
+            };
+            ChapterEventEffectData effectData = new ChapterEventEffectData
+            {
+                EffectType = (int) m_effectType,
+                Check = new ChapterEventCheckEffectParamData
+                {
+                    TargetMode = (int) m_checkTargetMode,
+                    ResolutionMode = (int) m_checkResolutionMode,
+                    SuccessResult = m_effectType == ChapterEventEffectType.Check ? GetInputValue(m_tmpInputSuccessResult) : string.Empty,
+                    FailureResult = m_effectType == ChapterEventEffectType.Check ? GetInputValue(m_tmpInputFailureResult) : string.Empty,
+                    SkillCheckEntries = skillCheckEntries,
+                    SkillCheckName = primarySkillCheckEntry != null ? primarySkillCheckEntry.SkillName : string.Empty,
+                    SkillCheckThreshold = primarySkillCheckEntry != null ? primarySkillCheckEntry.Threshold : string.Empty,
+                    AbilityStrengthThreshold = GetInputValue(m_tmpInputAbilityStrength),
+                    AbilityDexterityThreshold = GetInputValue(m_tmpInputAbilityDexterity),
+                    AbilityConstitutionThreshold = GetInputValue(m_tmpInputAbilityConstitution),
+                    AbilityIntelligenceThreshold = GetInputValue(m_tmpInputAbilityIntelligence),
+                    AbilityWisdomThreshold = GetInputValue(m_tmpInputAbilityWisdom),
+                    AbilityCharismaThreshold = GetInputValue(m_tmpInputAbilityCharisma),
+                },
+                LegacyDmPrompt = BuildLegacyDmPrompt(),
+                Narrative = new ChapterEventNarrativeEffectParamData
+                {
+                    Text = GetInputValue(m_tmpInputEffectNarrativeText),
+                    DmOnly = GetToggleValue(m_toggleEffectNarrativeDmOnly),
+                },
+                Dialogue = new ChapterEventDialogueEffectParamData
+                {
+                    Target = GetInputValue(m_tmpInputEffectDialogueTarget),
+                    Summary = GetInputValue(m_tmpInputEffectDialogueSummary),
+                    Prompt = GetInputValue(m_tmpInputEffectDialoguePrompt),
+                },
+                Creature = new ChapterEventCreatureEffectParamData
+                {
+                    InstanceId = GetInputValue(m_tmpInputEffectCreatureInstanceId),
+                    Activate = GetToggleValue(m_toggleEffectCreatureActivate),
+                    PlacementMode = (int) m_effectCreaturePlacementMode,
+                },
+                Battle = new ChapterEventBattleEffectParamData
+                {
+                    Reference = GetInputValue(m_tmpInputEffectBattleReference),
+                    IncludeActiveCreatures = GetToggleValue(m_toggleEffectBattleIncludeActiveCreatures),
+                    Description = GetInputValue(m_tmpInputEffectBattleDescription),
+                },
+            };
+            ChapterGridEventData eventData = new ChapterGridEventData
             {
                 EventId = m_existingEventId,
                 IsEnabled = GetToggleValue(m_toggleEventEnabled),
                 IsOneShot = GetToggleValue(m_toggleEventOneShot),
-                EventCategory = (int) m_eventCategory,
-                EventSubType = m_eventCategory == ChapterEventCategory.DmDirect ? (int) m_dmEventSubType : 0,
-                TriggerMode = (int) m_triggerMode,
-                CheckTargetMode = (int) m_checkTargetMode,
-                CheckResolutionMode = (int) m_checkResolutionMode,
+                Trigger = triggerData,
+                Effect = effectData,
                 EventTitle = GetInputValue(m_tmpInputEventTitle),
                 TriggerDescription = GetInputValue(m_tmpInputTriggerDescription),
-                SuccessResult = m_eventCategory == ChapterEventCategory.Check ? GetInputValue(m_tmpInputSuccessResult) : string.Empty,
-                FailureResult = m_eventCategory == ChapterEventCategory.Check ? GetInputValue(m_tmpInputFailureResult) : string.Empty,
                 DmNote = GetInputValue(m_tmpInputDmNote),
-                DmPrompt = m_eventCategory == ChapterEventCategory.DmDirect ? GetInputValue(m_tmpInputDmPrompt) : string.Empty,
-                SkillCheckEntries = skillCheckEntries,
-                SkillCheckName = primarySkillCheckEntry != null ? primarySkillCheckEntry.SkillName : string.Empty,
-                SkillCheckThreshold = primarySkillCheckEntry != null ? primarySkillCheckEntry.Threshold : string.Empty,
-                AbilityStrengthThreshold = GetInputValue(m_tmpInputAbilityStrength),
-                AbilityDexterityThreshold = GetInputValue(m_tmpInputAbilityDexterity),
-                AbilityConstitutionThreshold = GetInputValue(m_tmpInputAbilityConstitution),
-                AbilityIntelligenceThreshold = GetInputValue(m_tmpInputAbilityIntelligence),
-                AbilityWisdomThreshold = GetInputValue(m_tmpInputAbilityWisdom),
-                AbilityCharismaThreshold = GetInputValue(m_tmpInputAbilityCharisma),
             };
+
+            return ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+        }
+
+        private static ChapterEventTriggerType ResolveTriggerType(ChapterGridEventData eventData)
+        {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+            ChapterEventTriggerData triggerData = eventData?.Trigger;
+            if (triggerData != null && triggerData.TriggerType >= 0 && triggerData.TriggerType < TriggerTypeLabels.Length)
+            {
+                return (ChapterEventTriggerType) triggerData.TriggerType;
+            }
+
+            if (triggerData != null && triggerData.TriggerMode == (int) ChapterEventTriggerMode.DmManual)
+            {
+                return ChapterEventTriggerType.DmManual;
+            }
+
+            return ChapterEventTriggerType.EnterBindingArea;
+        }
+
+        private static ChapterEventEffectType ResolveEffectType(ChapterGridEventData eventData)
+        {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+            ChapterEventEffectData effectData = eventData?.Effect;
+            if (effectData != null && effectData.EffectType >= 0 && effectData.EffectType < EffectTypeLabels.Length)
+            {
+                return (ChapterEventEffectType) effectData.EffectType;
+            }
+
+            return ChapterEventEffectType.Check;
+        }
+
+        private static ChapterEffectCreaturePlacementMode ResolveEffectCreaturePlacementMode(ChapterGridEventData eventData)
+        {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+            ChapterEventCreatureEffectParamData creatureEffectParam = eventData?.Effect?.Creature;
+            if (creatureEffectParam != null && creatureEffectParam.PlacementMode >= 0 && creatureEffectParam.PlacementMode < EffectCreaturePlacementModeLabels.Length)
+            {
+                return (ChapterEffectCreaturePlacementMode) creatureEffectParam.PlacementMode;
+            }
+
+            return ChapterEffectCreaturePlacementMode.UseSavedInstancePosition;
+        }
+
+        private string BuildLegacyDmPrompt()
+        {
+            switch (m_effectType)
+            {
+                case ChapterEventEffectType.NarrativePrompt:
+                    return GetInputValue(m_tmpInputEffectNarrativeText);
+                case ChapterEventEffectType.DialogueInteractionPrompt:
+                    return GetInputValue(m_tmpInputEffectDialoguePrompt);
+                case ChapterEventEffectType.StartBattle:
+                    return GetInputValue(m_tmpInputEffectBattleDescription);
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private static string GetEffectiveNarrativeText(ChapterGridEventData eventData)
+        {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+            if (!string.IsNullOrWhiteSpace(eventData?.Effect?.Narrative?.Text))
+            {
+                return eventData.Effect.Narrative.Text;
+            }
+
+            return ResolveEffectType(eventData) == ChapterEventEffectType.NarrativePrompt
+                ? eventData?.Effect?.LegacyDmPrompt ?? string.Empty
+                : string.Empty;
+        }
+
+        private static string GetEffectiveDialoguePrompt(ChapterGridEventData eventData)
+        {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+            if (!string.IsNullOrWhiteSpace(eventData?.Effect?.Dialogue?.Prompt))
+            {
+                return eventData.Effect.Dialogue.Prompt;
+            }
+
+            return ResolveEffectType(eventData) == ChapterEventEffectType.DialogueInteractionPrompt
+                ? eventData?.Effect?.LegacyDmPrompt ?? string.Empty
+                : string.Empty;
+        }
+
+        private static string GetEffectiveBattleDescription(ChapterGridEventData eventData)
+        {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
+            if (!string.IsNullOrWhiteSpace(eventData?.Effect?.Battle?.Description))
+            {
+                return eventData.Effect.Battle.Description;
+            }
+
+            return ResolveEffectType(eventData) == ChapterEventEffectType.StartBattle
+                ? eventData?.Effect?.LegacyDmPrompt ?? string.Empty
+                : string.Empty;
         }
 
         private void RefreshBindingSummary()
@@ -4511,6 +5798,7 @@ namespace GameLogic
 
         private void ApplySkillCheckValues(ChapterGridEventData eventData)
         {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
             List<ChapterSkillCheckThresholdData> entries = GetEffectiveSkillCheckEntries(eventData);
             for (int index = 0; index < entries.Count; index++)
             {
@@ -4520,7 +5808,8 @@ namespace GameLogic
                     continue;
                 }
 
-                if (m_skillCheckInputs.TryGetValue(entry.SkillName, out TMP_InputField inputField))
+                string normalizedSkillName = NormalizeSkillCheckName(entry.SkillName);
+                if (m_skillCheckInputs.TryGetValue(normalizedSkillName, out TMP_InputField inputField))
                 {
                     SetInputValue(inputField, entry.Threshold);
                 }
@@ -4556,17 +5845,20 @@ namespace GameLogic
 
         private static List<ChapterSkillCheckThresholdData> GetEffectiveSkillCheckEntries(ChapterGridEventData eventData)
         {
+            eventData = ChapterEventDataStructureUtility.NormalizeRuntimeEventData(eventData);
             List<ChapterSkillCheckThresholdData> entries = new List<ChapterSkillCheckThresholdData>();
             if (eventData == null)
             {
                 return entries;
             }
 
-            if (eventData.SkillCheckEntries != null && eventData.SkillCheckEntries.Count > 0)
+            ChapterEventEffectData effectData = eventData.Effect ?? new ChapterEventEffectData();
+            ChapterEventCheckEffectParamData checkEffectParam = effectData.Check ?? new ChapterEventCheckEffectParamData();
+            if (checkEffectParam.SkillCheckEntries != null && checkEffectParam.SkillCheckEntries.Count > 0)
             {
-                for (int index = 0; index < eventData.SkillCheckEntries.Count; index++)
+                for (int index = 0; index < checkEffectParam.SkillCheckEntries.Count; index++)
                 {
-                    ChapterSkillCheckThresholdData entry = eventData.SkillCheckEntries[index];
+                    ChapterSkillCheckThresholdData entry = checkEffectParam.SkillCheckEntries[index];
                     if (entry == null)
                     {
                         continue;
@@ -4574,7 +5866,7 @@ namespace GameLogic
 
                     entries.Add(new ChapterSkillCheckThresholdData
                     {
-                        SkillName = entry.SkillName ?? string.Empty,
+                        SkillName = NormalizeSkillCheckName(entry.SkillName),
                         Threshold = entry.Threshold ?? string.Empty,
                     });
                 }
@@ -4582,16 +5874,228 @@ namespace GameLogic
                 return entries;
             }
 
-            if (!string.IsNullOrWhiteSpace(eventData.SkillCheckName) || !string.IsNullOrWhiteSpace(eventData.SkillCheckThreshold))
+            if (!string.IsNullOrWhiteSpace(checkEffectParam.SkillCheckName) || !string.IsNullOrWhiteSpace(checkEffectParam.SkillCheckThreshold))
             {
                 entries.Add(new ChapterSkillCheckThresholdData
                 {
-                    SkillName = eventData.SkillCheckName ?? string.Empty,
-                    Threshold = eventData.SkillCheckThreshold ?? string.Empty,
+                    SkillName = NormalizeSkillCheckName(checkEffectParam.SkillCheckName),
+                    Threshold = checkEffectParam.SkillCheckThreshold ?? string.Empty,
                 });
             }
 
             return entries;
+        }
+
+        private static string NormalizeSkillCheckName(string skillName)
+        {
+            switch ((skillName ?? string.Empty).Trim())
+            {
+                case "运动 Athletics":
+                case "Athletics":
+                case "运动":
+                    return "运动";
+                case "体操 Acrobatics":
+                case "Acrobatics":
+                case "体操":
+                    return "体操";
+                case "巧手 Sleight of Hand":
+                case "Sleight of Hand":
+                case "巧手":
+                    return "巧手";
+                case "隐匿 Stealth":
+                case "Stealth":
+                case "隐匿":
+                    return "隐匿";
+                case "奥秘 Arcana":
+                case "Arcana":
+                case "奥秘":
+                case "奥秘 Acrana":
+                case "Acrana":
+                    return "奥秘";
+                case "历史 History":
+                case "History":
+                case "历史":
+                    return "历史";
+                case "调查 Investigation":
+                case "Investigation":
+                case "调查":
+                    return "调查";
+                case "自然 Nature":
+                case "Nature":
+                case "自然":
+                    return "自然";
+                case "宗教 Religion":
+                case "Religion":
+                case "宗教":
+                    return "宗教";
+                case "驯兽 Animal Handling":
+                case "Animal Handling":
+                case "驯兽":
+                    return "驯兽";
+                case "洞悉 Insight":
+                case "Insight":
+                case "洞悉":
+                    return "洞悉";
+                case "医药 Medicine":
+                case "Medicine":
+                case "医药":
+                    return "医药";
+                case "察觉 Perception":
+                case "Perception":
+                case "察觉":
+                    return "察觉";
+                case "求生 Survival":
+                case "Survival":
+                case "求生":
+                    return "求生";
+                case "欺瞒 Deception":
+                case "Deception":
+                case "欺瞒":
+                case "期满 Deception":
+                case "期满":
+                    return "欺瞒";
+                case "威吓 Intimidation":
+                case "Intimidation":
+                case "威吓":
+                    return "威吓";
+                case "表演 Performance":
+                case "Performance":
+                case "表演":
+                    return "表演";
+                case "说服 Persuasion":
+                case "Persuasion":
+                case "说服":
+                    return "说服";
+                default:
+                    return (skillName ?? string.Empty).Trim();
+            }
+        }
+
+        private static RectTransform GetRectTransform(Component component)
+        {
+            return component != null ? component.transform as RectTransform : null;
+        }
+
+        private static float GetRectTop(RectTransform rectTransform)
+        {
+            return rectTransform != null ? -rectTransform.anchoredPosition.y : 0f;
+        }
+
+        private static float GetBottom(RectTransform rectTransform)
+        {
+            return GetRectTop(rectTransform) + GetCurrentHeight(rectTransform);
+        }
+
+        private static float GetCurrentHeight(RectTransform rectTransform)
+        {
+            if (rectTransform == null)
+            {
+                return 0f;
+            }
+
+            return rectTransform.rect.height > 0f ? rectTransform.rect.height : rectTransform.sizeDelta.y;
+        }
+
+        private static void SetRectHeight(RectTransform rectTransform, float height)
+        {
+            if (rectTransform == null)
+            {
+                return;
+            }
+
+            Vector2 sizeDelta = rectTransform.sizeDelta;
+            sizeDelta.y = height;
+            rectTransform.sizeDelta = sizeDelta;
+        }
+
+        private static void SetRectTop(RectTransform rectTransform, float top)
+        {
+            if (rectTransform == null)
+            {
+                return;
+            }
+
+            Vector2 anchoredPosition = rectTransform.anchoredPosition;
+            anchoredPosition.y = -top;
+            rectTransform.anchoredPosition = anchoredPosition;
+        }
+
+        private static void ShiftRectDown(RectTransform rectTransform, float offset)
+        {
+            if (rectTransform == null || Mathf.Approximately(offset, 0f))
+            {
+                return;
+            }
+
+            SetRectTop(rectTransform, GetRectTop(rectTransform) + offset);
+        }
+
+        private static void SetSiblingIndexAfter(Transform target, Transform sibling)
+        {
+            if (target == null || sibling == null || target.parent != sibling.parent)
+            {
+                return;
+            }
+
+            target.SetSiblingIndex(sibling.GetSiblingIndex() + 1);
+        }
+
+        private static float GetBottomAnchoredTopInset(RectTransform rectTransform)
+        {
+            if (rectTransform == null)
+            {
+                return 0f;
+            }
+
+            return rectTransform.anchoredPosition.y + (1f - rectTransform.pivot.y) * GetCurrentHeight(rectTransform);
+        }
+
+        private static void RefreshInputFieldHeight(TMP_InputField inputField, float minimumHeight)
+        {
+            if (inputField == null)
+            {
+                return;
+            }
+
+            RectTransform inputRect = inputField.transform as RectTransform;
+            TMP_Text textComponent = inputField.textComponent;
+            RectTransform textRect = textComponent != null ? textComponent.rectTransform : null;
+            if (inputRect == null || textComponent == null || textRect == null)
+            {
+                return;
+            }
+
+            float textWidth = textRect.rect.width;
+            if (textWidth <= 0f)
+            {
+                textWidth = Mathf.Max(0f, inputRect.rect.width > 0f ? inputRect.rect.width - 20f : inputRect.sizeDelta.x - 20f);
+            }
+
+            string displayText = string.IsNullOrEmpty(inputField.text)
+                ? "\u200B"
+                : inputField.text;
+            textComponent.ForceMeshUpdate();
+            Vector2 preferred = textComponent.GetPreferredValues(displayText, textWidth, 0f);
+            float verticalPadding = Mathf.Max(0f, GetCurrentHeight(inputRect) - GetCurrentHeight(textRect));
+            float targetHeight = Mathf.Max(minimumHeight, preferred.y + verticalPadding);
+            SetRectHeight(inputRect, targetHeight);
+        }
+
+        private static float GetMinimumRectHeight(params RectTransform[] rectTransforms)
+        {
+            float minimumHeight = float.MaxValue;
+            for (int index = 0; index < rectTransforms.Length; index++)
+            {
+                RectTransform rectTransform = rectTransforms[index];
+                if (rectTransform == null)
+                {
+                    continue;
+                }
+
+                minimumHeight = Mathf.Min(minimumHeight, GetCurrentHeight(rectTransform));
+            }
+
+            return minimumHeight < float.MaxValue ? minimumHeight : 0f;
         }
 
         private static void SetInputValue(TMP_InputField inputField, string value)
@@ -4726,7 +6230,7 @@ namespace GameLogic
         }
 #endif
 
-        public static string OpenImageFile(string dialogTitle = "閫夋嫨鍥剧墖鏂囦欢")
+        public static string OpenImageFile(string dialogTitle = "选择图片文件")
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             IFileOpenDialog dialog = null!;
@@ -4739,9 +6243,9 @@ namespace GameLogic
                 dialog = (IFileOpenDialog)dialogObject;
                 ComdlgFilterSpec[] filters =
                 {
-                    new ComdlgFilterSpec { pszName = "鍥剧墖鏂囦欢", pszSpec = "*.png;*.jpg;*.jpeg" },
-                    new ComdlgFilterSpec { pszName = "PNG 鏂囦欢", pszSpec = "*.png" },
-                    new ComdlgFilterSpec { pszName = "JPEG 鏂囦欢", pszSpec = "*.jpg;*.jpeg" }
+                    new ComdlgFilterSpec { pszName = "图片文件", pszSpec = "*.png;*.jpg;*.jpeg" },
+                    new ComdlgFilterSpec { pszName = "PNG 文件", pszSpec = "*.png" },
+                    new ComdlgFilterSpec { pszName = "JPEG 文件", pszSpec = "*.jpg;*.jpeg" }
                 };
 
                 dialog.SetFileTypes((uint)filters.Length, filters);
@@ -4764,7 +6268,7 @@ namespace GameLogic
             }
             catch (COMException exception)
             {
-                Log.Error($"鎵撳紑鍥剧墖鏂囦欢閫夋嫨鍣ㄥけ璐? {exception.Message}");
+                Log.Error($"打开图片文件选择器失败: {exception.Message}");
                 return string.Empty;
             }
             finally
