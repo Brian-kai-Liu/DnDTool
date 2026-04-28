@@ -1,0 +1,17 @@
+PrimaryAbilityModeFixed'固定主属性，通常只有一个。PrimaryAbilityModeAnyOne9从 primary_ability_ids 中任选一个作为主属性。PrimaryAbilityModeAll5primary_ability_ids 中所有属性都算主属性。PrimaryAbilityModeManual*主属性关系由用户/DM手动处理。AbilityStrength力量Ability	Dexterity敏捷AbilityConstitution体质AbilityIntelligence智力AbilityWisdom感知AbilityCharisma魅力
+EffectTypeAbilityScoreBonus属性加值。
+EffectTypeSkillProficiency技能熟练。
+EffectTypeSavingThrowProficiency豁免熟练。
+EffectTypeArmorProficiency护甲熟练。
+EffectTypeWeaponProficiency武器熟练。
+EffectTypeToolProficiency工具熟练。
+EffectTypeLanguage	语言。
+EffectType
+SpeedBonus速度加值。
+EffectType
+MaxHpBonus最大HP加值。
+EffectTypeAddResource增加资源。
+EffectType	AddAction增加动作。
+EffectTypeAddSpell增加法术。
+EffectTypeAdvantageOnCheck检定优势。
+EffectTypeManualResolve手动处理。

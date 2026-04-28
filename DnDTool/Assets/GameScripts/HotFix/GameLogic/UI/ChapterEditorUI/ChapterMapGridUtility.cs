@@ -691,6 +691,42 @@ namespace GameLogic
             return result;
         }
 
+        public static List<ChapterGridCoordinate> CollectPlayerInitialPositionCoordinates(List<ChapterGridEventData> events, List<ChapterEventBindingData> bindings)
+        {
+            List<ChapterGridCoordinate> result = new List<ChapterGridCoordinate>();
+            if (bindings == null || events == null)
+            {
+                return result;
+            }
+
+            HashSet<ChapterGridCoordinate> coordinateSet = new HashSet<ChapterGridCoordinate>();
+            for (int bindingIndex = 0; bindingIndex < bindings.Count; bindingIndex++)
+            {
+                ChapterEventBindingData binding = bindings[bindingIndex];
+                if (binding?.GridCoordinates == null || string.IsNullOrWhiteSpace(binding.EventId))
+                {
+                    continue;
+                }
+
+                int eventIndex = FindEventIndex(events, binding.EventId);
+                if (eventIndex < 0 || !ChapterEventDataStructureUtility.IsPlayerInitialPositionEvent(events[eventIndex]))
+                {
+                    continue;
+                }
+
+                for (int coordinateIndex = 0; coordinateIndex < binding.GridCoordinates.Count; coordinateIndex++)
+                {
+                    ChapterGridCoordinate coordinate = binding.GridCoordinates[coordinateIndex];
+                    if (coordinateSet.Add(coordinate))
+                    {
+                        result.Add(coordinate);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         private static bool TryGetBinding(List<ChapterEventBindingData> bindings, ChapterGridCoordinate coordinate, out ChapterEventBindingData binding)
         {
             binding = null;

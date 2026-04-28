@@ -264,7 +264,7 @@ namespace GameLogic
                 return;
             }
 
-            string previewImageFileName = string.Empty;
+            string previewImageFileName = m_request?.InitialData?.PreviewImageFileName ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(m_previewImageSourcePath))
             {
                 try
@@ -467,6 +467,7 @@ namespace GameLogic
 
             return new ChapterCreatureData
             {
+                CreatureId = source.CreatureId,
                 Name = source.Name,
                 NameEn = source.NameEn,
                 CreatureType = source.CreatureType,

@@ -26,7 +26,8 @@ namespace GameLogic
 
         private partial void OnClickCharacterCardBtn()
         {
-            Log.Info("主界面：角色卡管理功能暂未接入。");
+            GameModule.UI.CloseUI<HomeUI>();
+            GameModule.UI.ShowUIAsync<CharacterCardManagementUI>();
         }
 
         private partial void OnClickSettingsBtn()

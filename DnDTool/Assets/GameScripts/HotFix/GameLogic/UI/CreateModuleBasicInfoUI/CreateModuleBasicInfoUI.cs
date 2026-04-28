@@ -216,8 +216,8 @@ namespace GameLogic
 
         private static bool TryLoadRuleVersionOptionsFromConfig(out List<string> options)
         {
-            options = new List<string>();
-            return false;
+            options = DndRuleContentService.Instance.GetRulePackageOptionLabels();
+            return options.Count > 0;
         }
 
         private string GetSelectedRuleVersion()

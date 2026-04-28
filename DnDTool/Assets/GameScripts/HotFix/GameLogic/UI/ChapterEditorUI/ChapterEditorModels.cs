@@ -674,11 +674,13 @@ namespace GameLogic
         private const int RuntimeTriggerTypeEnterBindingArea = 1;
         private const int RuntimeTriggerTypeInteractWithSceneObject = 2;
         private const int RuntimeTriggerTypeAfterPrerequisiteEvent = 3;
+        public const int RuntimeTriggerTypeChapterEnter = 4;
         private const int RuntimeEffectTypeCheck = 0;
         private const int RuntimeEffectTypeNarrativePrompt = 1;
         private const int RuntimeEffectTypeDialogueInteractionPrompt = 2;
         private const int RuntimeEffectTypeActivateCreatureInstance = 3;
         private const int RuntimeEffectTypeStartBattle = 4;
+        public const int RuntimeEffectTypePlayerInitialPosition = 5;
 
         public static ChapterGridEventData NormalizeRuntimeEventData(ChapterGridEventData eventData)
         {
@@ -714,6 +716,18 @@ namespace GameLogic
             eventData.TriggerDescription ??= string.Empty;
             eventData.DmNote ??= string.Empty;
             return eventData;
+        }
+
+        public static bool IsPlayerInitialPositionEvent(ChapterGridEventData eventData)
+        {
+            eventData = NormalizeRuntimeEventData(eventData);
+            return eventData?.Effect?.EffectType == RuntimeEffectTypePlayerInitialPosition;
+        }
+
+        public static bool IsChapterEnterTrigger(ChapterGridEventData eventData)
+        {
+            eventData = NormalizeRuntimeEventData(eventData);
+            return eventData?.Trigger?.TriggerType == RuntimeTriggerTypeChapterEnter;
         }
 
         public static ChapterGridEventSaveData NormalizeLegacySaveEventData(ChapterGridEventLegacySaveData eventData)
@@ -1536,7 +1550,7 @@ namespace GameLogic
 
         private static int ResolveRuntimeTriggerType(int structuredTriggerType, int structuredTriggerMode, string interactionTarget, string prerequisiteEventId)
         {
-            if (structuredTriggerType >= RuntimeTriggerTypeDmManual && structuredTriggerType <= RuntimeTriggerTypeAfterPrerequisiteEvent)
+            if (structuredTriggerType >= RuntimeTriggerTypeDmManual && structuredTriggerType <= RuntimeTriggerTypeChapterEnter)
             {
                 return structuredTriggerType;
             }
@@ -1598,12 +1612,12 @@ namespace GameLogic
             string failureResult,
             string legacyDmPrompt)
         {
-            if (structuredEffectType >= RuntimeEffectTypeCheck && structuredEffectType <= RuntimeEffectTypeStartBattle)
+            if (structuredEffectType >= RuntimeEffectTypeCheck && structuredEffectType <= RuntimeEffectTypePlayerInitialPosition)
             {
                 return structuredEffectType;
             }
 
-            if (legacyEffectType >= RuntimeEffectTypeCheck && legacyEffectType <= RuntimeEffectTypeStartBattle)
+            if (legacyEffectType >= RuntimeEffectTypeCheck && legacyEffectType <= RuntimeEffectTypePlayerInitialPosition)
             {
                 return legacyEffectType;
             }
