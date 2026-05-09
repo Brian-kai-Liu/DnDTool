@@ -1,0 +1,6762 @@
+[
+  {
+    "class_id": "bard",
+    "spell_id": "spell_animal_friendship",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_bane",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_blade_ward",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_charm_person",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_comprehend_languages",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_cure_wounds",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dancing_lights",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_disguise_self",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dissonant_whispers",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_faerie_fire",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_feather_fall",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_friends",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_healing_word",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_heroism",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_identify",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_illusory_script",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_light",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_longstrider",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mage_hand",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mending",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_message",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_minor_illusion",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_prestidigitation",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_silent_image",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_sleep",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_speak_with_animal",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_tashas_hideous_laughter",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_thunderwave",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_true_strike",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_unseen_servant",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_vicious_mockery",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_animal_messenger",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_blindness_deafness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_calm_emotions",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_cloud_of_daggers",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_crown_of_madness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_detect_thoughts",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_enhance_ability",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_enthrall",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_heat_metal",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_hold_person",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_knock",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_lesser_restoration",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_locate_animals_or_plants",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_locate_object",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_magic_mouth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_phantasmal_force",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_see_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_shatter",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_silence",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_suggestion",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_zone_of_truth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_bestow_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_clairvoyance",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_fear",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_feign_death",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_glyph_of_warding",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_hypnotic_pattern",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_leomunds_tiny_hut",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_major_image",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_nondetection",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_plant_growth",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_sending",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_speak_with_dead",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_speak_with_plants",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_stinking_cloud",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_tongues",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_compulsion",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_confusion",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dimension_door",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_freedom_of_movement",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_greater_invisibility",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_hallucinatory_terrain",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_locate_creature",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_polymorph",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_animate_objects",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_awaken",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dominate_person",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dream",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_geas",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_greater_restoration",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_hold_monster",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_legend_lore",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mass_cure_wounds",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mislead",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_modify_memory",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_planar_binding",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_raise_dead",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_scrying",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_seeming",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_teleportation_circle",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_eyebite",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_find_the_path",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_guards_and_wards",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mass_suggestion",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_ottos_irresistible_dance",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_programmed_illusion",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_true_seeing",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_etherealness",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_forcecage",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mirage_arcane",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mordenkainens_magnificent_mansion",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mordenkainens_sword",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_project_image",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_regenerate",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_resurrection",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_symbol",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_teleport",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_dominate_monster",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_feeblemind",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_glibness",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_mind_blank",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_power_word_stun",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_foresight",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_power_word_heal",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_power_word_kill",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "bard",
+    "spell_id": "spell_true_polymorph",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_bane",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_bless",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_command",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_create_or_destroy_water",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_cure_wounds",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_detect_evil_and_good",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_detect_poison_and_disease",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_guidance",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_guiding_bolt",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_healing_word",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_inflict_wounds",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_light",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_mending",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_protection_from_evil_and_good",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_purify_food_and_drink",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_resistance",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_sacred_flame",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_sanctuary",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_shield_of_faith",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_spare_the_dying",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_thaumaturgy",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_aid",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_augury",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_blindness_deafness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_calm_emotions",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_continual_flame",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_enhance_ability",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_find_traps",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_gentle_repose",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_hold_person",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_lesser_restoration",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_locate_object",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_prayer_of_healing",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_protection_from_poison",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_silence",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_spiritual_weapon",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_warding_bond",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_zone_of_truth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_animate_dead",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_beacon_of_hope",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_bestow_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_clairvoyance",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_create_food_and_water",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_daylight",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_feign_death",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_glyph_of_warding",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_magic_circle",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_mass_healing_word",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_meld_into_stone",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_protection_from_energy",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_remove_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_revivify",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_sending",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_speak_with_dead",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_spirit_guardians",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_tongues",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_water_walk",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_banishment",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_control_water",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_death_ward",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_divination",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_freedom_of_movement",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_guardian_of_faith",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_locate_creature",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_stone_shape",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_commune",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_contagion",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_dispel_evil_and_good",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_flame_strike",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_geas",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_greater_restoration",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_hallow",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_insect_plague",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_legend_lore",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_mass_cure_wounds",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_planar_binding",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_raise_dead",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_scrying",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_blade_barrier",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_create_undead",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_find_the_path",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_forbiddance",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_harm",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_heal",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_heroes_feast",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_planar_ally",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_true_seeing",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_word_of_recall",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_conjure_celestial",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_divine_word",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_etherealness",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_fire_storm",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_plane_shift",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_regenerate",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_resurrection",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_symbol",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_antimagic_field",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_control_weather",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_earthquake",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_holy_aura",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_astral_projection",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_gate",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_mass_heal",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "cleric",
+    "spell_id": "spell_true_resurrection",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_animal_friendship",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_charm_person",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_create_or_destroy_water",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_cure_wounds",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_detect_poison_and_disease",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_druidcraft",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_entangle",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_faerie_fire",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_fog_cloud",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_goodberry",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_guidance",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_healing_word",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_jump",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_longstrider",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_mending",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_poison_spray",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_produce_flame",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_purify_food_and_drink",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_resistance",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_shillelagh",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_speak_with_animals",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_thorn_whip",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_thunderwave",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_animal_messenger",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_barkskin",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_beast_sense",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_darkvision",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_enhance_ability",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_find_traps",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_flame_blade",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_flaming_sphere",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_gust_of_wind",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_heat_metal",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_hold_person",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_lesser_restoration",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_locate_animals_or_plants",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_locate_object",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_moonbeam",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_pass_without_trace",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_protection_from_poison",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_spike_growth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_call_lightning",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_conjure_animals",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_daylight",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_feign_death",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_meld_into_stone",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_plant_growth",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_protection_from_energy",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_sleet_storm",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_speak_with_plants",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_water_breathing",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_water_walk",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_wind_wall",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_blight",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_confusion",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_conjure_minor_elementals",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_conjure_woodland_beings",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_control_water",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_dominate_beast",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_freedom_of_movement",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_giant_insect",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_grasping_vine",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_hallucinatory_terrain",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_ice_storm",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_locate_creature",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_polymorph",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_stone_shape",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_stoneskin",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_wall_of_fire",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_antilife_shell",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_awaken",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_commune_with_nature",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_conjure_elemental",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_contagion",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_geas",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_greater_restoration",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_insect_plague",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_mass_cure_wounds",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_planar_binding",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_reincarnate",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_scrying",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_tree_stride",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_wall_of_stone",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_conjure_fey",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_find_the_path",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_heal",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_heroes_feast",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_move_earth",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_sunbeam",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_transport_via_plants",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_wall_of_throns",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_wind_walk",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_fire_storm",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_mirage_arcane",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_plane_shift",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_regenerate",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_reverse_gravity",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_animal_shapes",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_antipathy_sympathy",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_control_weather",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_earthquake",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_feeblemind",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_sunburst",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_tsunami",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_foresight",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_shapechange",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_storm_of_vengeance",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "druid",
+    "spell_id": "spell_true_resurrection",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_bless",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_command",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_compelled_duel",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_cure_wounds",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_detect_evil_and_good",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_detect_poison_and_disease",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_divine_favor",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_heroism",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_protection_from_evil_and_good",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_purify_food_and_drink",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_searing_smite",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_shield_of_faith",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_thunderous_smite",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_wrathful_smite",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_aid",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_branding_smite",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_find_steed",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_lesser_restoration",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_locate_object",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_magic_weapon",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_protection_from_poison",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_zone_of_truth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_aura_of_vitality",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_blinding_smite",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_create_food_and_water",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_crusaders_mantle",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_daylight",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_elemental_weapon",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_magic_circle",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_remove_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_revivify",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_aura_of_life",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_aura_of_purity",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_banishment",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_death_ward",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_locate_creature",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_staggering_smite",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_banishing_smite",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_circle_of_power",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_destructive_wave",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_dispel_evil_and_good",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_geas",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "paladin",
+    "spell_id": "spell_raise_dead",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_alarm",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_animal_friendship",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_cure_wounds",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_detect_poison_and_disease",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_ensnaring_strike",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_fog_cloud",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_goodberry",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_hail_of_thorns",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_hunters_mark",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_jump",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_longstrider",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_speak_with_animals",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_animal_messenger",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_barkskin",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_beast_sense",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_cordon_of_arrows",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_darkvision",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_find_traps",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_lesser_restoration",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_locate_animals_or_plants",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_locate_object",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_pass_without_trace",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_protection_from_poison",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_silence",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_spike_growth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_conjure_animals",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_conjure_barrage",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_daylight",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_lightning_arrow",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_nondetection",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_plant_growth",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_protection_from_energy",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_speak_with_plants",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_water_breathing",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_water_walk",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_wind_wall",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_conjure_woodland_beings",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_freedom_of_movement",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_grasping_vine",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_locate_creature",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_stoneskin",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_commune_with_nature",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_conjure_volley",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_swift_quiver",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "ranger",
+    "spell_id": "spell_tree_stride",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_acid_splash",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_blade_ward",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_burning_hands",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_charm_person",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_chill_touch",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_chromatic_orb",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_color_spray",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_comprehend_languages",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_dancing_lights",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_disguise_self",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_expeditious_retreat",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_false_life",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_feather_fall",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_fire_bolt",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_fog_cloud",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_friends",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_jump",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_light",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_mage_armor",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_mage_hand",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_magic_missile",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_mending",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_message",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_minor_illusion",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_poison_spray",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_prestidigitation",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_ray_of_frost",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_ray_of_sickness",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_shield",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_shocking_grasp",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_silent_image",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_sleep",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_thunderwave",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_true_strike",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_witch_bolt",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_alter_self",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_blindness_deafness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_blur",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_cloud_of_daggers",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_crown_of_madness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_darkness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_darkvision",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_detect_thoughts",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_enhance_ability",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_enlarge_reduce",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_gust_of_wind",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_hold_person",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_knock",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_levitate",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_mirror_image",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_misty_step",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_phantasmal_force",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_scorching_ray",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_see_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_shatter",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_spider_climb",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_suggestion",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_web",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_blink",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_clairvoyance",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_counterspell",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_daylight",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_fear",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_fireball",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_fly",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_gaseous_form",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_haste",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_hypnotic_pattern",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_lightning_bolt",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_major_image",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_protection_from_energy",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_sleet_storm",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_slow",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_stinking_cloud",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_tongues",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_water_breathing",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_water_walk",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_banishment",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_blight",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_confusion",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_dimension_door",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_dominate_beast",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_greater_invisibility",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_ice_storm",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_polymorph",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_stoneskin",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_wall_of_fire",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_animate_objects",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_cloudkill",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_cone_of_cold",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_creation",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_dominate_person",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_hold_monster",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_insect_plague",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_seeming",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_telekinesis",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_teleportation_circle",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_wall_of_stone",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_arcane_gate",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_chain_lightning",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_circle_of_death",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_disintegrate",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_eyebite",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_globe_of_invulnerability",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_mass_suggestion",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_move_earth",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_sunbeam",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_true_seeing",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_delayed_blast_fireball",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_etherealness",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_finger_of_death",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_fire_storm",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_plane_shift",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_prismatic_spray",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_reverse_gravity",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_teleport",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_dominate_monster",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_earthquake",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_incendiary_cloud",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_power_word_stun",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_sunburst",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_gate",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_meteor_swarm",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_power_word_kill",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_time_stop",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "sorcerer",
+    "spell_id": "spell_wish",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_armor_of_agathys",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_arms_of_hadar",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_blade_ward",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_charm_person",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_chill_touch",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_comprehend_languages",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_eldritch_blast",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_expeditious_retreat",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_friends",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hellish_rebuke",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hex",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_illusory_script",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_mage_hand",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_minor_illusion",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_poison_spray",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_prestidigitation",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_protection_from_evil_and_good",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_true_strike",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_unseen_servant",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_witch_bolt",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_cloud_of_daggers",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_crown_of_madness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_darkness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_enthrall",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hold_person",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_mirror_image",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_misty_step",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_ray_of_enfeeblement",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_shatter",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_spider_climb",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_suggestion",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_counterspell",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_fear",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_fly",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_gaseous_form",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hunger_of_hadar",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hypnotic_pattern",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_magic_circle",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_major_image",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_remove_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_tongues",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_vampiric_touch",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_banishment",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_blight",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_dimension_door",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hallucinatory_terrain",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_contact_other_plane",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_dream",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_hold_monster",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_scrying",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_arcane_gate",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_circle_of_death",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_conjure_fey",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_create_undead",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_eyebite",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_flesh_to_stone",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_mass_suggestion",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_true_seeing",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_etherealness",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_finger_of_death",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_forcecage",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_plane_shift",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_demiplane",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_dominate_monster",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_feeblemind",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_glibness",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_power_word_stun",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_astral_projection",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_foresight",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_imprisonment",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_power_word_kill",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "warlock",
+    "spell_id": "spell_true_polymorph",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_acid_splash",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_alarm",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_blade_ward",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_burning_hands",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_charm_person",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_chill_touch",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_chromatic_orb",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_color_spray",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_comprehend_languages",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_dancing_lights",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_detect_magic",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_disguise_self",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_expeditious_retreat",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_false_life",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_feather_fall",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_find_familiar",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fire_bolt",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fog_cloud",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_friends",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_grease",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_identify",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_illusory_script",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_jump",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_light",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_longstrider",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mage_armor",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mage_hand",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_magic_missile",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mending",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_message",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_minor_illusion",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_poison_spray",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_prestidigitation",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_protection_from_evil_and_good",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_ray_of_frost",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_ray_of_sickness",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_shield",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_shocking_grasp",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_silent_image",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_sleep",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_tashas_hideous_laughter",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_tensers_floating_disk",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_thunderwave",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_true_strike",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "戏法"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_unseen_servant",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_witch_bolt",
+    "min_class_level": 1,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "1环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_alter_self",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_arcane_lock",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_blindness_deafness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_blur",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_cloud_of_daggers",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_continual_flame",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_crown_of_madness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_darkness",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_darkvision",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_detect_thoughts",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_enlarge_reduce",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_flaming_sphere",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_gentle_repose",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_gust_of_wind",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_hold_person",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_knock",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_levitate",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_locate_object",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_magic_mouth",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_magic_weapon",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_melfs_acid_arrow",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mirror_image",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_misty_step",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_nystuls_magic_aura",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_phantasmal_force",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_ray_of_enfeeblement",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_rope_trick",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_scorching_ray",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_see_invisibility",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_shatter",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_spider_climb",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_suggestion",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_web",
+    "min_class_level": 3,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "2环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_animate_dead",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_bestow_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_blink",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_clairvoyance",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_counterspell",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_dispel_magic",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fear",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_feign_death",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fireball",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fly",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_gaseous_form",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_glyph_of_warding",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_haste",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_hypnotic_pattern",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_leomunds_tiny_hut",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_lightning_bolt",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_magic_circle",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_major_image",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_nondetection",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_phantom_steed",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_protection_from_energy",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_remove_curse",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_sending",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_sleet_storm",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_slow",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_stinking_cloud",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_tongues",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_vampiric_touch",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_water_breathing",
+    "min_class_level": 5,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "3环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_arcane_eye",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_banishment",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_blight",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_confusion",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_conjure_minor_elementals",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_control_water",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_dimension_door",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_evards_black_tentacles",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fabricate",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_fire_shield",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_greater_invisibility",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_hallucinatory_terrain",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_ice_storm",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_leomunds_secret_chest",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_locate_creature",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mordenkainens_faithful_hound",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mordenkainens_private_sanctum",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_otilukes_resilient_sphere",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_phantasmal_killer",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_polymorph",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_stone_shape",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_stoneskin",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_wall_of_fire",
+    "min_class_level": 7,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "4环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_animate_objects",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_bigbys_hand",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_cloudkill",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_cone_of_cold",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_conjure_elemental",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_contact_other_plane",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_creation",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_dominate_person",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_dream",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_geas",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_hold_monster",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_legend_lore",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mislead",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_modify_memory",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_passwall",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_planar_binding",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_rarys_telepathic_bond",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_scrying",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_seeming",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_telekinesis",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_teleportation_circle",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_wall_of_force",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_wall_of_stone",
+    "min_class_level": 9,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "5环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_arcane_gate",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_chain_lightning",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_circle_of_death",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_contingency",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_create_undead",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_disintegrate",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_drawmijs_instant_summons",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_eyebite",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_flesh_to_stone",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_globe_of_invulnerability",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_guards_and_wards",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_magic_jar",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mass_suggestion",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_move_earth",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_otilukes_freezing_sphere",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_ottos_irresistible_dance",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_programmed_illusion",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_sunbeam",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_true_seeing",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_wall_of_ice",
+    "min_class_level": 11,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "6环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_delayed_blast_fireball",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_etherealness",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_finger_of_death",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_forcecage",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mirage_arcane",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mordenkainens_magnificent_mansion",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mordenkainens_sword",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_plane_shift",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_prismatic_spray",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_project_image",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_reverse_gravity",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_sequester",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_simulacrum",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_symbol",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_teleport",
+    "min_class_level": 13,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "7环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_antimagic_field",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_antipathy_sympathy",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_clone",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_control_weather",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_demiplane",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_dominate_monster",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_feeblemind",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_incendiary_cloud",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_maze",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_mind_blank",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_power_word_stun",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_sunburst",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_telepathy",
+    "min_class_level": 15,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "8环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_astral_projection",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_foresight",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_gate",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_imprisonment",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_meteor_swarm",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_power_word_kill",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_prismatic_wall",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_shapechange",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_time_stop",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_true_polymorph",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_weird",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  },
+  {
+    "class_id": "wizard",
+    "spell_id": "spell_wish",
+    "min_class_level": 17,
+    "always_prepared": false,
+    "source_feature_id": "",
+    "note": "9环"
+  }
+]

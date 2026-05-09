@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 结构化特性效果表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbFeatureEffect
     private readonly System.Collections.Generic.Dictionary<string, dnd.FeatureEffect> _dataMap;
     private readonly System.Collections.Generic.List<dnd.FeatureEffect> _dataList;
     
-    public TbFeatureEffect(ByteBuf _buf)
+    public TbFeatureEffect(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.FeatureEffect>(n);
-        _dataList = new System.Collections.Generic.List<dnd.FeatureEffect>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.FeatureEffect>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.FeatureEffect>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.FeatureEffect _v;
-            _v = global::GameConfig.dnd.FeatureEffect.DeserializeFeatureEffect(_buf);
+            _v = global::GameConfig.dnd.FeatureEffect.DeserializeFeatureEffect(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.EffectId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.FeatureEffect> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.FeatureEffect> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbFeatureEffect
     }
 
 }
-
 }
 

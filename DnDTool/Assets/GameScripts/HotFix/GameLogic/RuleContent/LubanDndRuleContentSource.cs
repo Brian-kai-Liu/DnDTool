@@ -31,12 +31,20 @@ namespace GameLogic
                 LoadRows(tables, "TbFeatureEffect", library.FeatureEffects, CreateFeatureEffect);
                 LoadRows(tables, "TbChoiceGroup", library.ChoiceGroups, CreateChoiceGroup);
                 LoadRows(tables, "TbChoiceOption", library.ChoiceOptions, CreateChoiceOption);
+                LoadRows(tables, "TbRaceMainDefine", library.RaceMains, CreateRaceMainDefine);
+                LoadRows(tables, "TbRaceSubDefine", library.RaceSubs, CreateRaceSubDefine);
                 LoadRows(tables, "TbRaceDefine", library.Races, CreateRaceDefine);
                 LoadRows(tables, "TbBackgroundDefine", library.Backgrounds, CreateBackgroundDefine);
                 LoadRows(tables, "TbFeatDefine", library.Feats, CreateFeatDefine);
                 LoadRows(tables, "TbSpellDefine", library.Spells, CreateSpellDefine);
                 LoadRows(tables, "TbClassSpellList", library.ClassSpellLists, CreateClassSpellList);
                 LoadRows(tables, "TbEnumList", library.EnumLists, CreateEnumList);
+                LoadRows(tables, "TbAlignment", library.Alignments, CreateAlignment);
+
+                if (library.RaceMains.Count > 0)
+                {
+                    NormalizeRaceData(library);
+                }
             }
             catch (Exception exception)
             {
@@ -478,6 +486,159 @@ namespace GameLogic
             return data;
         }
 
+        private static DndRaceMainDefineData CreateRaceMainDefine(object row)
+        {
+            DndRaceMainDefineData data = new DndRaceMainDefineData
+            {
+                MainRaceId = GetString(row, "MainRaceId", "main_race_id", "mainRaceId", "RaceId", "race_id", "raceId", "Id", "id"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                Name = GetString(row, "Name", "name", "DisplayName", "display_name", "displayName"),
+                Size = GetString(row, "Size", "size"),
+                Speed = GetInt(row, "Speed", "speed", "BaseSpeed", "base_speed", "baseSpeed"),
+                Description = GetString(row, "Description", "description", "Note", "note")
+            };
+            data.LanguageIds.AddRange(GetStringList(row, "LanguageIds", "language_ids", "languageIds", "Languages", "languages"));
+            data.MainFeatureIds.AddRange(GetStringList(row, "MainFeatureIds", "main_feature_ids", "mainFeatureIds", "FeatureIds", "feature_ids", "featureIds"));
+            data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
+            return data;
+        }
+
+        private static DndRaceSubDefineData CreateRaceSubDefine(object row)
+        {
+            DndRaceSubDefineData data = new DndRaceSubDefineData
+            {
+                SubRaceId = GetString(row, "SubRaceId", "sub_race_id", "subRaceId", "RaceId", "race_id", "raceId", "Id", "id"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                MainRaceId = GetString(row, "MainRaceId", "main_race_id", "mainRaceId", "ParentRaceId", "parent_race_id", "parentRaceId", "BelongMainRaceId", "belong_main_race_id", "belongMainRaceId"),
+                Name = GetString(row, "Name", "name", "DisplayName", "display_name", "displayName"),
+                Size = GetString(row, "Size", "size"),
+                Speed = GetInt(row, "Speed", "speed", "BaseSpeed", "base_speed", "baseSpeed"),
+                Description = GetString(row, "Description", "description", "Note", "note")
+            };
+            data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds", "SubFeatureIds", "sub_feature_ids", "subFeatureIds"));
+            data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
+            return data;
+        }
+
+        private static void NormalizeRaceData(DndRuleContentLibraryData library)
+        {
+            library.Races.Clear();
+
+            Dictionary<string, DndRaceMainDefineData> raceMainById = new Dictionary<string, DndRaceMainDefineData>(StringComparer.OrdinalIgnoreCase);
+            for (int index = 0; index < library.RaceMains.Count; index++)
+            {
+                DndRaceMainDefineData raceMain = library.RaceMains[index];
+                if (string.IsNullOrWhiteSpace(raceMain.MainRaceId))
+                {
+                    continue;
+                }
+
+                raceMainById[raceMain.MainRaceId] = raceMain;
+            }
+
+            Dictionary<string, List<DndRaceSubDefineData>> subRacesByMainId = new Dictionary<string, List<DndRaceSubDefineData>>(StringComparer.OrdinalIgnoreCase);
+            for (int index = 0; index < library.RaceSubs.Count; index++)
+            {
+                DndRaceSubDefineData raceSub = library.RaceSubs[index];
+                if (string.IsNullOrWhiteSpace(raceSub.MainRaceId))
+                {
+                    continue;
+                }
+
+                if (!subRacesByMainId.TryGetValue(raceSub.MainRaceId, out List<DndRaceSubDefineData> subRaces))
+                {
+                    subRaces = new List<DndRaceSubDefineData>();
+                    subRacesByMainId[raceSub.MainRaceId] = subRaces;
+                }
+
+                subRaces.Add(raceSub);
+            }
+
+            foreach (DndRaceMainDefineData raceMain in library.RaceMains)
+            {
+                if (string.IsNullOrWhiteSpace(raceMain.MainRaceId))
+                {
+                    continue;
+                }
+
+                if (!subRacesByMainId.TryGetValue(raceMain.MainRaceId, out List<DndRaceSubDefineData> subRaces) || subRaces.Count == 0)
+                {
+                    library.Races.Add(CreateRaceFromMain(raceMain));
+                    continue;
+                }
+
+                for (int index = 0; index < subRaces.Count; index++)
+                {
+                    library.Races.Add(CreateRaceFromMainAndSub(raceMain, subRaces[index]));
+                }
+            }
+
+            for (int index = 0; index < library.RaceSubs.Count; index++)
+            {
+                DndRaceSubDefineData raceSub = library.RaceSubs[index];
+                if (string.IsNullOrWhiteSpace(raceSub.SubRaceId)
+                    || string.IsNullOrWhiteSpace(raceSub.MainRaceId)
+                    || raceMainById.ContainsKey(raceSub.MainRaceId))
+                {
+                    continue;
+                }
+
+                library.Races.Add(CreateRaceFromSubOnly(raceSub));
+            }
+        }
+
+        private static DndRaceDefineData CreateRaceFromMain(DndRaceMainDefineData raceMain)
+        {
+            DndRaceDefineData data = new DndRaceDefineData
+            {
+                RaceId = raceMain.MainRaceId,
+                PackageId = raceMain.PackageId,
+                Name = raceMain.Name,
+                Size = raceMain.Size,
+                Speed = raceMain.Speed,
+                Description = raceMain.Description
+            };
+            data.LanguageIds.AddRange(raceMain.LanguageIds);
+            data.FeatureIds.AddRange(raceMain.MainFeatureIds);
+            data.ChoiceGroupIds.AddRange(raceMain.ChoiceGroupIds);
+            return data;
+        }
+
+        private static DndRaceDefineData CreateRaceFromMainAndSub(DndRaceMainDefineData raceMain, DndRaceSubDefineData raceSub)
+        {
+            DndRaceDefineData data = new DndRaceDefineData
+            {
+                RaceId = string.IsNullOrWhiteSpace(raceSub.SubRaceId) ? raceMain.MainRaceId : raceSub.SubRaceId,
+                PackageId = !string.IsNullOrWhiteSpace(raceSub.PackageId) ? raceSub.PackageId : raceMain.PackageId,
+                Name = string.IsNullOrWhiteSpace(raceSub.Name) ? raceMain.Name : raceSub.Name,
+                Size = string.IsNullOrWhiteSpace(raceSub.Size) ? raceMain.Size : raceSub.Size,
+                Speed = raceSub.Speed > 0 ? raceSub.Speed : raceMain.Speed,
+                Description = string.IsNullOrWhiteSpace(raceSub.Description) ? raceMain.Description : raceSub.Description
+            };
+            data.LanguageIds.AddRange(raceMain.LanguageIds);
+            data.FeatureIds.AddRange(raceMain.MainFeatureIds);
+            data.FeatureIds.AddRange(raceSub.FeatureIds);
+            data.ChoiceGroupIds.AddRange(raceMain.ChoiceGroupIds);
+            data.ChoiceGroupIds.AddRange(raceSub.ChoiceGroupIds);
+            return data;
+        }
+
+        private static DndRaceDefineData CreateRaceFromSubOnly(DndRaceSubDefineData raceSub)
+        {
+            DndRaceDefineData data = new DndRaceDefineData
+            {
+                RaceId = raceSub.SubRaceId,
+                PackageId = raceSub.PackageId,
+                Name = raceSub.Name,
+                Size = raceSub.Size,
+                Speed = raceSub.Speed,
+                Description = raceSub.Description
+            };
+            data.FeatureIds.AddRange(raceSub.FeatureIds);
+            data.ChoiceGroupIds.AddRange(raceSub.ChoiceGroupIds);
+            return data;
+        }
+
         private static DndBackgroundDefineData CreateBackgroundDefine(object row)
         {
             DndBackgroundDefineData data = new DndBackgroundDefineData
@@ -556,6 +717,16 @@ namespace GameLogic
             {
                 EnumType = GetString(row, "EnumType", "enum_type", "enumType"),
                 Value = GetString(row, "Value", "value"),
+                Description = GetString(row, "Description", "description")
+            };
+        }
+
+        private static DndAlignmentData CreateAlignment(object row)
+        {
+            return new DndAlignmentData
+            {
+                AlignmentId = GetString(row, "AlignmentId", "alignment_id", "alignmentId"),
+                Name = GetString(row, "Name", "name"),
                 Description = GetString(row, "Description", "description")
             };
         }

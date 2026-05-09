@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Luban;
+using Newtonsoft.Json.Linq;
 
 namespace GameConfig
 {
@@ -19,7 +19,7 @@ public partial class Tables
     /// TEngine 示例道具表
     /// </summary>
     private item.TbItem m_TbItem;
-    public item.TbItem TbItem 
+    public item.TbItem TbItem
     {
         get
         {
@@ -40,7 +40,7 @@ public partial class Tables
     /// 规则包定义表
     /// </summary>
     private dnd.TbRulePackage m_TbRulePackage;
-    public dnd.TbRulePackage TbRulePackage 
+    public dnd.TbRulePackage TbRulePackage
     {
         get
         {
@@ -61,7 +61,7 @@ public partial class Tables
     /// 职业定义表
     /// </summary>
     private dnd.TbClassDefine m_TbClassDefine;
-    public dnd.TbClassDefine TbClassDefine 
+    public dnd.TbClassDefine TbClassDefine
     {
         get
         {
@@ -82,7 +82,7 @@ public partial class Tables
     /// 职业1-20级成长表。业务层按 class_id + level 查询。
     /// </summary>
     private dnd.TbClassLevelProgression m_TbClassLevelProgression;
-    public dnd.TbClassLevelProgression TbClassLevelProgression 
+    public dnd.TbClassLevelProgression TbClassLevelProgression
     {
         get
         {
@@ -103,7 +103,7 @@ public partial class Tables
     /// 职业/种族/背景/专长/法术特性定义表
     /// </summary>
     private dnd.TbFeatureDefine m_TbFeatureDefine;
-    public dnd.TbFeatureDefine TbFeatureDefine 
+    public dnd.TbFeatureDefine TbFeatureDefine
     {
         get
         {
@@ -124,7 +124,7 @@ public partial class Tables
     /// 结构化特性效果表
     /// </summary>
     private dnd.TbFeatureEffect m_TbFeatureEffect;
-    public dnd.TbFeatureEffect TbFeatureEffect 
+    public dnd.TbFeatureEffect TbFeatureEffect
     {
         get
         {
@@ -145,7 +145,7 @@ public partial class Tables
     /// 角色创建与升级选择组表
     /// </summary>
     private dnd.TbChoiceGroup m_TbChoiceGroup;
-    public dnd.TbChoiceGroup TbChoiceGroup 
+    public dnd.TbChoiceGroup TbChoiceGroup
     {
         get
         {
@@ -166,7 +166,7 @@ public partial class Tables
     /// 选择组选项表。业务层按 choice_group_id + option_id 查询。
     /// </summary>
     private dnd.TbChoiceOption m_TbChoiceOption;
-    public dnd.TbChoiceOption TbChoiceOption 
+    public dnd.TbChoiceOption TbChoiceOption
     {
         get
         {
@@ -187,7 +187,7 @@ public partial class Tables
     /// 种族/血统定义表
     /// </summary>
     private dnd.TbRaceDefine m_TbRaceDefine;
-    public dnd.TbRaceDefine TbRaceDefine 
+    public dnd.TbRaceDefine TbRaceDefine
     {
         get
         {
@@ -208,7 +208,7 @@ public partial class Tables
     /// 背景定义表
     /// </summary>
     private dnd.TbBackgroundDefine m_TbBackgroundDefine;
-    public dnd.TbBackgroundDefine TbBackgroundDefine 
+    public dnd.TbBackgroundDefine TbBackgroundDefine
     {
         get
         {
@@ -229,7 +229,7 @@ public partial class Tables
     /// 专长定义表
     /// </summary>
     private dnd.TbFeatDefine m_TbFeatDefine;
-    public dnd.TbFeatDefine TbFeatDefine 
+    public dnd.TbFeatDefine TbFeatDefine
     {
         get
         {
@@ -250,7 +250,7 @@ public partial class Tables
     /// 法术定义表
     /// </summary>
     private dnd.TbSpellDefine m_TbSpellDefine;
-    public dnd.TbSpellDefine TbSpellDefine 
+    public dnd.TbSpellDefine TbSpellDefine
     {
         get
         {
@@ -271,7 +271,7 @@ public partial class Tables
     /// 职业法术列表关系表。业务层按 class_id + spell_id 查询。
     /// </summary>
     private dnd.TbClassSpellList m_TbClassSpellList;
-    public dnd.TbClassSpellList TbClassSpellList 
+    public dnd.TbClassSpellList TbClassSpellList
     {
         get
         {
@@ -292,7 +292,7 @@ public partial class Tables
     /// 外部枚举/字典值表。业务层按 enum_type + value 查询。
     /// </summary>
     private dnd.TbEnumList m_TbEnumList;
-    public dnd.TbEnumList TbEnumList 
+    public dnd.TbEnumList TbEnumList
     {
         get
         {
@@ -312,15 +312,15 @@ public partial class Tables
 
     #endregion
 
-    System.Func<string, ByteBuf> defaultLoader;
+    System.Func<string, JArray> defaultLoader;
 
-    public Tables(System.Func<string, ByteBuf> loader)
+    public Tables(System.Func<string, JArray> loader)
     {
         SetDefaultLoader(loader);
         Init();
     }
-    
-    public void SetDefaultLoader(System.Func<string, ByteBuf> loader)
+
+    public void SetDefaultLoader(System.Func<string, JArray> loader)
     {
         defaultLoader = null;
         defaultLoader = loader;
@@ -332,3 +332,4 @@ public partial class Tables
 }
 
 }
+

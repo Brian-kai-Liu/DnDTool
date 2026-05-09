@@ -1,5 +1,5 @@
-using Luban;
 using GameConfig;
+using Newtonsoft.Json.Linq;
 using TEngine;
 using UnityEngine;
 
@@ -36,23 +36,34 @@ public class ConfigSystem
     /// </summary>
     public void Load()
     {
-        _tables = new Tables(LoadByteBuf);
+        _tables = new Tables(LoadJsonArray);
         _init = true;
     }
 
     /// <summary>
-    /// 加载二进制配置。
+    /// 加载 JSON 配置。
     /// </summary>
     /// <param name="file">FileName</param>
-    /// <returns>ByteBuf</returns>
-    private ByteBuf LoadByteBuf(string file)
+    /// <returns>JArray</returns>
+    private JArray LoadJsonArray(string file)
     {
         if (_resourceModule == null)
         {
             _resourceModule = ModuleSystem.GetModule<IResourceModule>();
         }
+
         TextAsset textAsset = _resourceModule.LoadAsset<TextAsset>(file);
-        byte[] bytes = textAsset.bytes;
-        return new ByteBuf(bytes);
+        if (textAsset == null)
+        {
+            throw new System.InvalidOperationException($"Config asset '{file}' was not found.");
+        }
+
+        JToken token = JToken.Parse(textAsset.text);
+        if (token is JArray array)
+        {
+            return array;
+        }
+
+        throw new System.InvalidOperationException($"Config asset '{file}' root node is not a JSON array.");
     }
 }

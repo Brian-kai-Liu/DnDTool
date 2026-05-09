@@ -1,0 +1,3186 @@
+[
+  {
+    "feature_id": "feature_barbarian_level_01_rage",
+    "package_id": "phb_5e_zh_user",
+    "name": "狂暴",
+    "feature_type": "Class",
+    "source_ref": "barbarian:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_combat_resource"
+    ],
+    "description": "PHB 野蛮人1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_01_unarmored_defense",
+    "package_id": "phb_5e_zh_user",
+    "name": "无甲防御",
+    "feature_type": "Class",
+    "source_ref": "barbarian:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_ac_formula_manual"
+    ],
+    "description": "PHB 野蛮人1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_02_reckless_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "鲁莽攻击",
+    "feature_type": "Class",
+    "source_ref": "barbarian:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_02_danger_sense",
+    "package_id": "phb_5e_zh_user",
+    "name": "危险感知",
+    "feature_type": "Class",
+    "source_ref": "barbarian:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_03_primal_path",
+    "package_id": "phb_5e_zh_user",
+    "name": "原初道途",
+    "feature_type": "Class",
+    "source_ref": "barbarian:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_05_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Class",
+    "source_ref": "barbarian:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 野蛮人5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_05_fast_movement",
+    "package_id": "phb_5e_zh_user",
+    "name": "快速移动",
+    "feature_type": "Class",
+    "source_ref": "barbarian:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_07_feral_instinct",
+    "package_id": "phb_5e_zh_user",
+    "name": "野性直觉",
+    "feature_type": "Class",
+    "source_ref": "barbarian:7",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人7级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_09_brutal_critical",
+    "package_id": "phb_5e_zh_user",
+    "name": "残暴重击",
+    "feature_type": "Class",
+    "source_ref": "barbarian:9",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人9级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_11_relentless_rage",
+    "package_id": "phb_5e_zh_user",
+    "name": "坚韧狂暴",
+    "feature_type": "Class",
+    "source_ref": "barbarian:11",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_combat_resource"
+    ],
+    "description": "PHB 野蛮人11级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_15_persistent_rage",
+    "package_id": "phb_5e_zh_user",
+    "name": "持久狂暴",
+    "feature_type": "Class",
+    "source_ref": "barbarian:15",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_combat_resource"
+    ],
+    "description": "PHB 野蛮人15级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_18_indomitable_might",
+    "package_id": "phb_5e_zh_user",
+    "name": "不屈威能",
+    "feature_type": "Class",
+    "source_ref": "barbarian:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_barbarian_level_20_primal_champion",
+    "package_id": "phb_5e_zh_user",
+    "name": "原初勇士",
+    "feature_type": "Class",
+    "source_ref": "barbarian:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 野蛮人20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_01_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "bard:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 吟游诗人1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_01_bardic_inspiration",
+    "package_id": "phb_5e_zh_user",
+    "name": "诗人激励",
+    "feature_type": "Class",
+    "source_ref": "bard:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_02_jack_of_all_trades",
+    "package_id": "phb_5e_zh_user",
+    "name": "博闻强记",
+    "feature_type": "Class",
+    "source_ref": "bard:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_02_song_of_rest",
+    "package_id": "phb_5e_zh_user",
+    "name": "休憩曲",
+    "feature_type": "Class",
+    "source_ref": "bard:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_03_bard_college",
+    "package_id": "phb_5e_zh_user",
+    "name": "诗人学院",
+    "feature_type": "Class",
+    "source_ref": "bard:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_03_expertise",
+    "package_id": "phb_5e_zh_user",
+    "name": "专精",
+    "feature_type": "Class",
+    "source_ref": "bard:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_05_font_of_inspiration",
+    "package_id": "phb_5e_zh_user",
+    "name": "激励之源",
+    "feature_type": "Class",
+    "source_ref": "bard:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_06_countercharm",
+    "package_id": "phb_5e_zh_user",
+    "name": "反迷惑",
+    "feature_type": "Class",
+    "source_ref": "bard:6",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人6级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_10_magical_secrets",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔法奥秘",
+    "feature_type": "Class",
+    "source_ref": "bard:10",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人10级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_bard_level_20_superior_inspiration",
+    "package_id": "phb_5e_zh_user",
+    "name": "超凡激励",
+    "feature_type": "Class",
+    "source_ref": "bard:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 吟游诗人20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_cleric_level_01_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "cleric:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 牧师1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_cleric_level_01_divine_domain",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣领域",
+    "feature_type": "Class",
+    "source_ref": "cleric:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 牧师1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_cleric_level_02_channel_divinity",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力",
+    "feature_type": "Class",
+    "source_ref": "cleric:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 牧师2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_cleric_level_05_destroy_undead",
+    "package_id": "phb_5e_zh_user",
+    "name": "摧毁不死生物",
+    "feature_type": "Class",
+    "source_ref": "cleric:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 牧师5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_cleric_level_10_divine_intervention",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣干预",
+    "feature_type": "Class",
+    "source_ref": "cleric:10",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 牧师10级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_01_druidic",
+    "package_id": "phb_5e_zh_user",
+    "name": "德鲁伊语",
+    "feature_type": "Class",
+    "source_ref": "druid:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 德鲁伊1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_01_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "druid:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 德鲁伊1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_02_wild_shape",
+    "package_id": "phb_5e_zh_user",
+    "name": "荒野形态",
+    "feature_type": "Class",
+    "source_ref": "druid:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 德鲁伊2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_02_druid_circle",
+    "package_id": "phb_5e_zh_user",
+    "name": "德鲁伊结社",
+    "feature_type": "Class",
+    "source_ref": "druid:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 德鲁伊2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_18_timeless_body",
+    "package_id": "phb_5e_zh_user",
+    "name": "不老身躯",
+    "feature_type": "Class",
+    "source_ref": "druid:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 德鲁伊18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_18_beast_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "野兽施法",
+    "feature_type": "Class",
+    "source_ref": "druid:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 德鲁伊18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_druid_level_20_archdruid",
+    "package_id": "phb_5e_zh_user",
+    "name": "大德鲁伊",
+    "feature_type": "Class",
+    "source_ref": "druid:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 德鲁伊20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_01_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗风格",
+    "feature_type": "Class",
+    "source_ref": "fighter:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_01_second_wind",
+    "package_id": "phb_5e_zh_user",
+    "name": "回气",
+    "feature_type": "Class",
+    "source_ref": "fighter:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_02_action_surge",
+    "package_id": "phb_5e_zh_user",
+    "name": "动作如潮",
+    "feature_type": "Class",
+    "source_ref": "fighter:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_03_martial_archetype",
+    "package_id": "phb_5e_zh_user",
+    "name": "武术范型",
+    "feature_type": "Class",
+    "source_ref": "fighter:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_05_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Class",
+    "source_ref": "fighter:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 战士5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_09_indomitable",
+    "package_id": "phb_5e_zh_user",
+    "name": "不屈",
+    "feature_type": "Class",
+    "source_ref": "fighter:9",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士9级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_11_extra_attack_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击（2）",
+    "feature_type": "Class",
+    "source_ref": "fighter:11",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 战士11级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_17_action_surge_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "动作如潮（2）",
+    "feature_type": "Class",
+    "source_ref": "fighter:17",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士17级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_17_indomitable_3",
+    "package_id": "phb_5e_zh_user",
+    "name": "不屈（3）",
+    "feature_type": "Class",
+    "source_ref": "fighter:17",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 战士17级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_fighter_level_20_extra_attack_3",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击（3）",
+    "feature_type": "Class",
+    "source_ref": "fighter:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 战士20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_01_unarmored_defense",
+    "package_id": "phb_5e_zh_user",
+    "name": "无甲防御",
+    "feature_type": "Class",
+    "source_ref": "monk:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_ac_formula_manual"
+    ],
+    "description": "PHB 武僧1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_01_martial_arts",
+    "package_id": "phb_5e_zh_user",
+    "name": "武艺",
+    "feature_type": "Class",
+    "source_ref": "monk:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_02_ki",
+    "package_id": "phb_5e_zh_user",
+    "name": "气",
+    "feature_type": "Class",
+    "source_ref": "monk:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_02_unarmored_movement",
+    "package_id": "phb_5e_zh_user",
+    "name": "无甲移动",
+    "feature_type": "Class",
+    "source_ref": "monk:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_03_monastic_tradition",
+    "package_id": "phb_5e_zh_user",
+    "name": "武僧宗派",
+    "feature_type": "Class",
+    "source_ref": "monk:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_03_deflect_missiles",
+    "package_id": "phb_5e_zh_user",
+    "name": "拨挡飞弹",
+    "feature_type": "Class",
+    "source_ref": "monk:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_05_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Class",
+    "source_ref": "monk:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 武僧5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_05_stunning_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "震慑拳",
+    "feature_type": "Class",
+    "source_ref": "monk:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_06_ki_empowered_strikes",
+    "package_id": "phb_5e_zh_user",
+    "name": "真气打击",
+    "feature_type": "Class",
+    "source_ref": "monk:6",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧6级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_07_evasion",
+    "package_id": "phb_5e_zh_user",
+    "name": "反射闪避",
+    "feature_type": "Class",
+    "source_ref": "monk:7",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧7级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_07_stillness_of_mind",
+    "package_id": "phb_5e_zh_user",
+    "name": "心如止水",
+    "feature_type": "Class",
+    "source_ref": "monk:7",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧7级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_10_purity_of_body",
+    "package_id": "phb_5e_zh_user",
+    "name": "百病不侵",
+    "feature_type": "Class",
+    "source_ref": "monk:10",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧10级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_13_tongue_of_the_sun_and_moon",
+    "package_id": "phb_5e_zh_user",
+    "name": "日月语",
+    "feature_type": "Class",
+    "source_ref": "monk:13",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧13级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_14_diamond_soul",
+    "package_id": "phb_5e_zh_user",
+    "name": "金刚魂",
+    "feature_type": "Class",
+    "source_ref": "monk:14",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧14级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_15_timeless_body",
+    "package_id": "phb_5e_zh_user",
+    "name": "不老身躯",
+    "feature_type": "Class",
+    "source_ref": "monk:15",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧15级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_18_empty_body",
+    "package_id": "phb_5e_zh_user",
+    "name": "空灵体",
+    "feature_type": "Class",
+    "source_ref": "monk:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_monk_level_20_perfect_self",
+    "package_id": "phb_5e_zh_user",
+    "name": "完人体",
+    "feature_type": "Class",
+    "source_ref": "monk:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 武僧20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_01_divine_sense",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣感知",
+    "feature_type": "Class",
+    "source_ref": "paladin:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_01_lay_on_hands",
+    "package_id": "phb_5e_zh_user",
+    "name": "圣疗",
+    "feature_type": "Class",
+    "source_ref": "paladin:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_02_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗风格",
+    "feature_type": "Class",
+    "source_ref": "paladin:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_02_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "paladin:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 圣武士2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_02_divine_smite",
+    "package_id": "phb_5e_zh_user",
+    "name": "至圣斩",
+    "feature_type": "Class",
+    "source_ref": "paladin:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_03_sacred_oath",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣誓言",
+    "feature_type": "Class",
+    "source_ref": "paladin:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_03_divine_health",
+    "package_id": "phb_5e_zh_user",
+    "name": "神佑之躯",
+    "feature_type": "Class",
+    "source_ref": "paladin:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_05_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Class",
+    "source_ref": "paladin:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 圣武士5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_06_aura_of_protection",
+    "package_id": "phb_5e_zh_user",
+    "name": "守护灵光",
+    "feature_type": "Class",
+    "source_ref": "paladin:6",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士6级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_10_aura_of_courage",
+    "package_id": "phb_5e_zh_user",
+    "name": "勇气灵光",
+    "feature_type": "Class",
+    "source_ref": "paladin:10",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_combat_resource"
+    ],
+    "description": "PHB 圣武士10级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_11_improved_divine_smite",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通至圣斩",
+    "feature_type": "Class",
+    "source_ref": "paladin:11",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士11级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_paladin_level_14_cleansing_touch",
+    "package_id": "phb_5e_zh_user",
+    "name": "净化触碰",
+    "feature_type": "Class",
+    "source_ref": "paladin:14",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 圣武士14级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_01_favored_enemy",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌",
+    "feature_type": "Class",
+    "source_ref": "ranger:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_01_natural_explorer",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者",
+    "feature_type": "Class",
+    "source_ref": "ranger:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_02_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗风格",
+    "feature_type": "Class",
+    "source_ref": "ranger:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_02_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "ranger:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 游侠2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_03_ranger_archetype",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠范型",
+    "feature_type": "Class",
+    "source_ref": "ranger:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_03_primeval_awareness",
+    "package_id": "phb_5e_zh_user",
+    "name": "原始意识",
+    "feature_type": "Class",
+    "source_ref": "ranger:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_05_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Class",
+    "source_ref": "ranger:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_extra_attack"
+    ],
+    "description": "PHB 游侠5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_08_lands_stride",
+    "package_id": "phb_5e_zh_user",
+    "name": "大地行者",
+    "feature_type": "Class",
+    "source_ref": "ranger:8",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠8级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_10_hide_in_plain_sight",
+    "package_id": "phb_5e_zh_user",
+    "name": "融入荒野",
+    "feature_type": "Class",
+    "source_ref": "ranger:10",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠10级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_14_vanish",
+    "package_id": "phb_5e_zh_user",
+    "name": "遁术",
+    "feature_type": "Class",
+    "source_ref": "ranger:14",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠14级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_18_feral_senses",
+    "package_id": "phb_5e_zh_user",
+    "name": "野性感官",
+    "feature_type": "Class",
+    "source_ref": "ranger:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_ranger_level_20_foe_slayer",
+    "package_id": "phb_5e_zh_user",
+    "name": "灭敌者",
+    "feature_type": "Class",
+    "source_ref": "ranger:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游侠20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_01_expertise",
+    "package_id": "phb_5e_zh_user",
+    "name": "专精",
+    "feature_type": "Class",
+    "source_ref": "rogue:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_01_sneak_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "偷袭",
+    "feature_type": "Class",
+    "source_ref": "rogue:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_01_thieves_cant",
+    "package_id": "phb_5e_zh_user",
+    "name": "盗贼黑话",
+    "feature_type": "Class",
+    "source_ref": "rogue:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_02_cunning_action",
+    "package_id": "phb_5e_zh_user",
+    "name": "灵巧动作",
+    "feature_type": "Class",
+    "source_ref": "rogue:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_03_roguish_archetype",
+    "package_id": "phb_5e_zh_user",
+    "name": "游荡者范型",
+    "feature_type": "Class",
+    "source_ref": "rogue:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_05_uncanny_dodge",
+    "package_id": "phb_5e_zh_user",
+    "name": "直觉闪避",
+    "feature_type": "Class",
+    "source_ref": "rogue:5",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者5级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_07_evasion",
+    "package_id": "phb_5e_zh_user",
+    "name": "反射闪避",
+    "feature_type": "Class",
+    "source_ref": "rogue:7",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者7级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_11_reliable_talent",
+    "package_id": "phb_5e_zh_user",
+    "name": "可靠才能",
+    "feature_type": "Class",
+    "source_ref": "rogue:11",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者11级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_14_blindsense",
+    "package_id": "phb_5e_zh_user",
+    "name": "盲感",
+    "feature_type": "Class",
+    "source_ref": "rogue:14",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者14级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_15_slippery_mind",
+    "package_id": "phb_5e_zh_user",
+    "name": "心智灵活",
+    "feature_type": "Class",
+    "source_ref": "rogue:15",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者15级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_18_elusive",
+    "package_id": "phb_5e_zh_user",
+    "name": "飘忽不定",
+    "feature_type": "Class",
+    "source_ref": "rogue:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_rogue_level_20_stroke_of_luck",
+    "package_id": "phb_5e_zh_user",
+    "name": "幸运一击",
+    "feature_type": "Class",
+    "source_ref": "rogue:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 游荡者20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_sorcerer_level_01_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 术士1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_sorcerer_level_01_sorcerous_origin",
+    "package_id": "phb_5e_zh_user",
+    "name": "术法起源",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 术士1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_sorcerer_level_02_font_of_magic",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔力源泉",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 术士2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_sorcerer_level_03_metamagic",
+    "package_id": "phb_5e_zh_user",
+    "name": "超魔法",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 术士3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_sorcerer_level_20_sorcerous_restoration",
+    "package_id": "phb_5e_zh_user",
+    "name": "术法复苏",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 术士20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_01_otherworldly_patron",
+    "package_id": "phb_5e_zh_user",
+    "name": "异界宗主",
+    "feature_type": "Class",
+    "source_ref": "warlock:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_01_pact_magic",
+    "package_id": "phb_5e_zh_user",
+    "name": "契约魔法",
+    "feature_type": "Class",
+    "source_ref": "warlock:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_02_eldritch_invocations",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔能祈唤",
+    "feature_type": "Class",
+    "source_ref": "warlock:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_03_pact_boon",
+    "package_id": "phb_5e_zh_user",
+    "name": "契约恩泽",
+    "feature_type": "Class",
+    "source_ref": "warlock:3",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师3级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_11_mystic_arcanum_6",
+    "package_id": "phb_5e_zh_user",
+    "name": "玄奥秘法（6环）",
+    "feature_type": "Class",
+    "source_ref": "warlock:11",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师11级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_13_mystic_arcanum_7",
+    "package_id": "phb_5e_zh_user",
+    "name": "玄奥秘法（7环）",
+    "feature_type": "Class",
+    "source_ref": "warlock:13",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师13级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_15_mystic_arcanum_8",
+    "package_id": "phb_5e_zh_user",
+    "name": "玄奥秘法（8环）",
+    "feature_type": "Class",
+    "source_ref": "warlock:15",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师15级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_17_mystic_arcanum_9",
+    "package_id": "phb_5e_zh_user",
+    "name": "玄奥秘法（9环）",
+    "feature_type": "Class",
+    "source_ref": "warlock:17",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师17级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_warlock_level_20_eldritch_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔能大师",
+    "feature_type": "Class",
+    "source_ref": "warlock:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 邪术师20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_wizard_level_01_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "wizard:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting"
+    ],
+    "description": "PHB 法师1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_wizard_level_01_arcane_recovery",
+    "package_id": "phb_5e_zh_user",
+    "name": "奥术回想",
+    "feature_type": "Class",
+    "source_ref": "wizard:1",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 法师1级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_wizard_level_02_arcane_tradition",
+    "package_id": "phb_5e_zh_user",
+    "name": "奥术传承",
+    "feature_type": "Class",
+    "source_ref": "wizard:2",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 法师2级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_wizard_level_18_spell_mastery",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术精通",
+    "feature_type": "Class",
+    "source_ref": "wizard:18",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 法师18级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_wizard_level_20_signature_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "招牌法术",
+    "feature_type": "Class",
+    "source_ref": "wizard:20",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 法师20级职业特性；效果以结构化效果和人工说明维护。"
+  },
+  {
+    "feature_id": "feature_asi",
+    "package_id": "phb_5e_zh_user",
+    "name": "属性值提升",
+    "feature_type": "Class",
+    "source_ref": "class:any",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "达到指定等级时进行属性提升，若启用专长规则也可改选专长。"
+  },
+  {
+    "feature_id": "feature_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Class",
+    "source_ref": "class:martial",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "执行攻击动作时获得额外攻击次数；具体次数按职业等级。"
+  },
+  {
+    "feature_id": "feature_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "施法",
+    "feature_type": "Class",
+    "source_ref": "class:spellcaster",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "启用职业施法能力、法术豁免DC和法术攻击调整值。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_ability_constitution_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "体质+2",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dwarf_hill_ability"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dwarf_hill_darkvision"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_dwarven_resilience",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人体魄",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_dwarven_combat_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人战斗训练",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_tool_proficiency",
+    "package_id": "phb_5e_zh_user",
+    "name": "工具熟练",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_stonecunning",
+    "package_id": "phb_5e_zh_user",
+    "name": "石工巧匠",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_ability_wisdom_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "感知+1",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dwarf_hill_ability"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_hill_dwarven_toughness",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人坚韧",
+    "feature_type": "Race",
+    "source_ref": "dwarf_hill",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 丘陵矮人丘陵矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_ability_constitution_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "体质+2",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dwarf_mountain_ability"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dwarf_mountain_darkvision"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_dwarven_resilience",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人体魄",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_dwarven_combat_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人战斗训练",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_tool_proficiency",
+    "package_id": "phb_5e_zh_user",
+    "name": "工具熟练",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_stonecunning",
+    "package_id": "phb_5e_zh_user",
+    "name": "石工巧匠",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_ability_strength_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "力量+2",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dwarf_mountain_ability"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dwarf_mountain_dwarven_armor_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人护甲训练",
+    "feature_type": "Race",
+    "source_ref": "dwarf_mountain",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 山地矮人山地矮人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_ability_dexterity_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏捷+2",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_high_ability"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_high_darkvision"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_keen_senses",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏锐感官",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_fey_ancestry",
+    "package_id": "phb_5e_zh_user",
+    "name": "精类血统",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_trance",
+    "package_id": "phb_5e_zh_user",
+    "name": "出神",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_ability_intelligence_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "智力+1",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_high_ability"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_elf_weapon_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "精灵武器训练",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_cantrip",
+    "package_id": "phb_5e_zh_user",
+    "name": "戏法",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_high_extra_language",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外语言",
+    "feature_type": "Race",
+    "source_ref": "elf_high",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 高等精灵高等精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_ability_dexterity_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏捷+2",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_wood_ability"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_wood_darkvision"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_keen_senses",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏锐感官",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_fey_ancestry",
+    "package_id": "phb_5e_zh_user",
+    "name": "精类血统",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_trance",
+    "package_id": "phb_5e_zh_user",
+    "name": "出神",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_ability_wisdom_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "感知+1",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_wood_ability"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_elf_weapon_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "精灵武器训练",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_fleet_of_foot",
+    "package_id": "phb_5e_zh_user",
+    "name": "轻捷步伐",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_wood_mask_of_the_wild",
+    "package_id": "phb_5e_zh_user",
+    "name": "野性面具",
+    "feature_type": "Race",
+    "source_ref": "elf_wood",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 木精灵木精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_ability_dexterity_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏捷+2",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_drow_ability"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_superior_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "增强黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_drow_darkvision"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_keen_senses",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏锐感官",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_fey_ancestry",
+    "package_id": "phb_5e_zh_user",
+    "name": "精类血统",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_trance",
+    "package_id": "phb_5e_zh_user",
+    "name": "出神",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_ability_charisma_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "魅力+1",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_elf_drow_ability"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_sunlight_sensitivity",
+    "package_id": "phb_5e_zh_user",
+    "name": "阳光敏感",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_drow_magic",
+    "package_id": "phb_5e_zh_user",
+    "name": "卓尔魔法",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_elf_drow_drow_weapon_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "卓尔武器训练",
+    "feature_type": "Race",
+    "source_ref": "elf_drow",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 卓尔精灵卓尔精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_lightfoot_ability_dexterity_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏捷+2",
+    "feature_type": "Race",
+    "source_ref": "halfling_lightfoot",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_halfling_lightfoot_ability"
+    ],
+    "description": "PHB 轻足半身人轻足半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_lightfoot_lucky",
+    "package_id": "phb_5e_zh_user",
+    "name": "幸运",
+    "feature_type": "Race",
+    "source_ref": "halfling_lightfoot",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 轻足半身人轻足半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_lightfoot_brave",
+    "package_id": "phb_5e_zh_user",
+    "name": "勇敢",
+    "feature_type": "Race",
+    "source_ref": "halfling_lightfoot",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 轻足半身人轻足半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_lightfoot_halfling_nimbleness",
+    "package_id": "phb_5e_zh_user",
+    "name": "半身人灵巧",
+    "feature_type": "Race",
+    "source_ref": "halfling_lightfoot",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 轻足半身人轻足半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_lightfoot_ability_charisma_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "魅力+1",
+    "feature_type": "Race",
+    "source_ref": "halfling_lightfoot",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_halfling_lightfoot_ability"
+    ],
+    "description": "PHB 轻足半身人轻足半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_lightfoot_naturally_stealthy",
+    "package_id": "phb_5e_zh_user",
+    "name": "天生善匿",
+    "feature_type": "Race",
+    "source_ref": "halfling_lightfoot",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 轻足半身人轻足半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_stout_ability_dexterity_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏捷+2",
+    "feature_type": "Race",
+    "source_ref": "halfling_stout",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_halfling_stout_ability"
+    ],
+    "description": "PHB 敦实半身人敦实半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_stout_lucky",
+    "package_id": "phb_5e_zh_user",
+    "name": "幸运",
+    "feature_type": "Race",
+    "source_ref": "halfling_stout",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 敦实半身人敦实半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_stout_brave",
+    "package_id": "phb_5e_zh_user",
+    "name": "勇敢",
+    "feature_type": "Race",
+    "source_ref": "halfling_stout",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 敦实半身人敦实半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_stout_halfling_nimbleness",
+    "package_id": "phb_5e_zh_user",
+    "name": "半身人灵巧",
+    "feature_type": "Race",
+    "source_ref": "halfling_stout",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 敦实半身人敦实半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_stout_ability_constitution_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "体质+1",
+    "feature_type": "Race",
+    "source_ref": "halfling_stout",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_halfling_stout_ability"
+    ],
+    "description": "PHB 敦实半身人敦实半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_halfling_stout_stout_resilience",
+    "package_id": "phb_5e_zh_user",
+    "name": "敦实体魄",
+    "feature_type": "Race",
+    "source_ref": "halfling_stout",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 敦实半身人敦实半身人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_human_ability_all_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "所有属性+1",
+    "feature_type": "Race",
+    "source_ref": "human",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_human_ability"
+    ],
+    "description": "PHB 人类人类 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_human_extra_language",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外语言",
+    "feature_type": "Race",
+    "source_ref": "human",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 人类人类 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dragonborn_ability_strength_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "力量+2",
+    "feature_type": "Race",
+    "source_ref": "dragonborn",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ability"
+    ],
+    "description": "PHB 龙裔龙裔 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dragonborn_ability_charisma_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "魅力+1",
+    "feature_type": "Race",
+    "source_ref": "dragonborn",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ability"
+    ],
+    "description": "PHB 龙裔龙裔 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dragonborn_draconic_ancestry",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血统",
+    "feature_type": "Race",
+    "source_ref": "dragonborn",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 龙裔龙裔 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dragonborn_breath_weapon",
+    "package_id": "phb_5e_zh_user",
+    "name": "吐息武器",
+    "feature_type": "Race",
+    "source_ref": "dragonborn",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 龙裔龙裔 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_dragonborn_damage_resistance",
+    "package_id": "phb_5e_zh_user",
+    "name": "伤害抗性",
+    "feature_type": "Race",
+    "source_ref": "dragonborn",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 龙裔龙裔 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_forest_ability_intelligence_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "智力+2",
+    "feature_type": "Race",
+    "source_ref": "gnome_forest",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_gnome_forest_ability"
+    ],
+    "description": "PHB 森林侏儒森林侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_forest_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "gnome_forest",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_gnome_forest_darkvision"
+    ],
+    "description": "PHB 森林侏儒森林侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_forest_gnome_cunning",
+    "package_id": "phb_5e_zh_user",
+    "name": "侏儒狡黠",
+    "feature_type": "Race",
+    "source_ref": "gnome_forest",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 森林侏儒森林侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_forest_ability_dexterity_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏捷+1",
+    "feature_type": "Race",
+    "source_ref": "gnome_forest",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_gnome_forest_ability"
+    ],
+    "description": "PHB 森林侏儒森林侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_forest_natural_illusionist",
+    "package_id": "phb_5e_zh_user",
+    "name": "天生幻术师",
+    "feature_type": "Race",
+    "source_ref": "gnome_forest",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 森林侏儒森林侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_forest_speak_with_small_beasts",
+    "package_id": "phb_5e_zh_user",
+    "name": "小型野兽沟通",
+    "feature_type": "Race",
+    "source_ref": "gnome_forest",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 森林侏儒森林侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_rock_ability_intelligence_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "智力+2",
+    "feature_type": "Race",
+    "source_ref": "gnome_rock",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_gnome_rock_ability"
+    ],
+    "description": "PHB 岩侏儒岩侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_rock_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "gnome_rock",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_gnome_rock_darkvision"
+    ],
+    "description": "PHB 岩侏儒岩侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_rock_gnome_cunning",
+    "package_id": "phb_5e_zh_user",
+    "name": "侏儒狡黠",
+    "feature_type": "Race",
+    "source_ref": "gnome_rock",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 岩侏儒岩侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_rock_ability_constitution_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "体质+1",
+    "feature_type": "Race",
+    "source_ref": "gnome_rock",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_gnome_rock_ability"
+    ],
+    "description": "PHB 岩侏儒岩侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_rock_artificers_lore",
+    "package_id": "phb_5e_zh_user",
+    "name": "工匠学识",
+    "feature_type": "Race",
+    "source_ref": "gnome_rock",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 岩侏儒岩侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_gnome_rock_tinker",
+    "package_id": "phb_5e_zh_user",
+    "name": "修补匠",
+    "feature_type": "Race",
+    "source_ref": "gnome_rock",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 岩侏儒岩侏儒 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_elf_ability_charisma_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "魅力+2",
+    "feature_type": "Race",
+    "source_ref": "half_elf",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability"
+    ],
+    "description": "PHB 半精灵半精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_elf_ability_twoother_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "任选两项属性+1",
+    "feature_type": "Race",
+    "source_ref": "half_elf",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability"
+    ],
+    "description": "PHB 半精灵半精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_elf_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "half_elf",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_half_elf_darkvision"
+    ],
+    "description": "PHB 半精灵半精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_elf_fey_ancestry",
+    "package_id": "phb_5e_zh_user",
+    "name": "精类血统",
+    "feature_type": "Race",
+    "source_ref": "half_elf",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 半精灵半精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_elf_skill_versatility",
+    "package_id": "phb_5e_zh_user",
+    "name": "技能多面手",
+    "feature_type": "Race",
+    "source_ref": "half_elf",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 半精灵半精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_elf_extra_language",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外语言",
+    "feature_type": "Race",
+    "source_ref": "half_elf",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 半精灵半精灵 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_orc_ability_strength_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "力量+2",
+    "feature_type": "Race",
+    "source_ref": "half_orc",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_half_orc_ability"
+    ],
+    "description": "PHB 半兽人半兽人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_orc_ability_constitution_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "体质+1",
+    "feature_type": "Race",
+    "source_ref": "half_orc",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_half_orc_ability"
+    ],
+    "description": "PHB 半兽人半兽人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_orc_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "half_orc",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_half_orc_darkvision"
+    ],
+    "description": "PHB 半兽人半兽人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_orc_menacing",
+    "package_id": "phb_5e_zh_user",
+    "name": "威吓",
+    "feature_type": "Race",
+    "source_ref": "half_orc",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 半兽人半兽人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_orc_relentless_endurance",
+    "package_id": "phb_5e_zh_user",
+    "name": "坚韧不屈",
+    "feature_type": "Race",
+    "source_ref": "half_orc",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 半兽人半兽人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_half_orc_savage_attacks",
+    "package_id": "phb_5e_zh_user",
+    "name": "凶蛮攻击",
+    "feature_type": "Race",
+    "source_ref": "half_orc",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 半兽人半兽人 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_tiefling_ability_intelligence_1",
+    "package_id": "phb_5e_zh_user",
+    "name": "智力+1",
+    "feature_type": "Race",
+    "source_ref": "tiefling",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_tiefling_ability"
+    ],
+    "description": "PHB 提夫林提夫林 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_tiefling_ability_charisma_2",
+    "package_id": "phb_5e_zh_user",
+    "name": "魅力+2",
+    "feature_type": "Race",
+    "source_ref": "tiefling",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_tiefling_ability"
+    ],
+    "description": "PHB 提夫林提夫林 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_tiefling_darkvision",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗视觉",
+    "feature_type": "Race",
+    "source_ref": "tiefling",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_tiefling_darkvision"
+    ],
+    "description": "PHB 提夫林提夫林 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_tiefling_hellish_resistance",
+    "package_id": "phb_5e_zh_user",
+    "name": "炼狱抗性",
+    "feature_type": "Race",
+    "source_ref": "tiefling",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 提夫林提夫林 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_race_tiefling_infernal_legacy",
+    "package_id": "phb_5e_zh_user",
+    "name": "炼狱传承",
+    "feature_type": "Race",
+    "source_ref": "tiefling",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "PHB 提夫林提夫林 种族特性摘要；具体裁定由角色卡系统或DM处理。"
+  },
+  {
+    "feature_id": "feature_background_acolyte",
+    "package_id": "phb_5e_zh_user",
+    "name": "侍僧背景特性",
+    "feature_type": "Background",
+    "source_ref": "acolyte",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 侍僧侍僧 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_charlatan",
+    "package_id": "phb_5e_zh_user",
+    "name": "骗子背景特性",
+    "feature_type": "Background",
+    "source_ref": "charlatan",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 骗子骗子 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_criminal",
+    "package_id": "phb_5e_zh_user",
+    "name": "罪犯背景特性",
+    "feature_type": "Background",
+    "source_ref": "criminal",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 罪犯罪犯 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_entertainer",
+    "package_id": "phb_5e_zh_user",
+    "name": "艺人背景特性",
+    "feature_type": "Background",
+    "source_ref": "entertainer",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 艺人艺人 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_folk_hero",
+    "package_id": "phb_5e_zh_user",
+    "name": "平民英雄背景特性",
+    "feature_type": "Background",
+    "source_ref": "folk_hero",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 平民英雄平民英雄 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_guild_artisan",
+    "package_id": "phb_5e_zh_user",
+    "name": "公会工匠背景特性",
+    "feature_type": "Background",
+    "source_ref": "guild_artisan",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 公会工匠公会工匠 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_hermit",
+    "package_id": "phb_5e_zh_user",
+    "name": "隐士背景特性",
+    "feature_type": "Background",
+    "source_ref": "hermit",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 隐士隐士 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_noble",
+    "package_id": "phb_5e_zh_user",
+    "name": "贵族背景特性",
+    "feature_type": "Background",
+    "source_ref": "noble",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 贵族贵族 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_outlander",
+    "package_id": "phb_5e_zh_user",
+    "name": "化外之民背景特性",
+    "feature_type": "Background",
+    "source_ref": "outlander",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 化外之民化外之民 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_sage",
+    "package_id": "phb_5e_zh_user",
+    "name": "贤者背景特性",
+    "feature_type": "Background",
+    "source_ref": "sage",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 贤者贤者 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_sailor",
+    "package_id": "phb_5e_zh_user",
+    "name": "水手背景特性",
+    "feature_type": "Background",
+    "source_ref": "sailor",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 水手水手 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_soldier",
+    "package_id": "phb_5e_zh_user",
+    "name": "士兵背景特性",
+    "feature_type": "Background",
+    "source_ref": "soldier",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 士兵士兵 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_background_urchin",
+    "package_id": "phb_5e_zh_user",
+    "name": "流浪儿背景特性",
+    "feature_type": "Background",
+    "source_ref": "urchin",
+    "prerequisite_ids": [],
+    "effect_ids": [],
+    "description": "PHB 流浪儿流浪儿 的背景特性与叙事权限；第一版作为人工处理特性。"
+  },
+  {
+    "feature_id": "feature_feat_alert",
+    "package_id": "phb_5e_zh_user",
+    "name": "警觉",
+    "feature_type": "Feat",
+    "source_ref": "alert",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_alert"
+    ],
+    "description": "先攻加值、免疫突袭相关优势，隐藏攻击者不因未被看见获得优势。"
+  },
+  {
+    "feature_id": "feature_feat_athlete",
+    "package_id": "phb_5e_zh_user",
+    "name": "运动员",
+    "feature_type": "Feat",
+    "source_ref": "athlete",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_ability_choice"
+    ],
+    "description": "力量或敏捷提高1，并改善起立、攀爬与助跑跳跃。"
+  },
+  {
+    "feature_id": "feature_feat_actor",
+    "package_id": "phb_5e_zh_user",
+    "name": "演员",
+    "feature_type": "Feat",
+    "source_ref": "actor",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_ability_cha"
+    ],
+    "description": "魅力提高1，并强化伪装他人与声音模仿相关检定。"
+  },
+  {
+    "feature_id": "feature_feat_charger",
+    "package_id": "phb_5e_zh_user",
+    "name": "冲锋手",
+    "feature_type": "Feat",
+    "source_ref": "charger",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "疾走后可用附赠动作攻击或推撞，并获得额外效果。"
+  },
+  {
+    "feature_id": "feature_feat_crossbow_expert",
+    "package_id": "phb_5e_zh_user",
+    "name": "强弩专家",
+    "feature_type": "Feat",
+    "source_ref": "crossbow_expert",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "改善弩装填、近距离远程攻击与手弩附赠攻击。"
+  },
+  {
+    "feature_id": "feature_feat_defensive_duelist",
+    "package_id": "phb_5e_zh_user",
+    "name": "防御式决斗",
+    "feature_type": "Feat",
+    "source_ref": "defensive_duelist",
+    "prerequisite_ids": [
+      "prereq_dexterity_13"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "持灵巧武器时可用反应将熟练加值加入AC对抗一次近战攻击。"
+  },
+  {
+    "feature_id": "feature_feat_dual_wielder",
+    "package_id": "phb_5e_zh_user",
+    "name": "双持客",
+    "feature_type": "Feat",
+    "source_ref": "dual_wielder",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "双持时AC提高，并放宽双武器限制和拔取数量。"
+  },
+  {
+    "feature_id": "feature_feat_dungeon_delver",
+    "package_id": "phb_5e_zh_user",
+    "name": "地城探索者",
+    "feature_type": "Feat",
+    "source_ref": "dungeon_delver",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "改善发现陷阱/密门、抵抗陷阱和探索节奏。"
+  },
+  {
+    "feature_id": "feature_feat_durable",
+    "package_id": "phb_5e_zh_user",
+    "name": "坚韧",
+    "feature_type": "Feat",
+    "source_ref": "durable",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_ability_con"
+    ],
+    "description": "体质提高1，并提高花费生命骰恢复的最低值。"
+  },
+  {
+    "feature_id": "feature_feat_elemental_adept",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素专家",
+    "feature_type": "Feat",
+    "source_ref": "elemental_adept",
+    "prerequisite_ids": [
+      "prereq_spellcasting"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "选择一种元素伤害，相关法术忽略抗性并提高最低伤害表现。"
+  },
+  {
+    "feature_id": "feature_feat_grappler",
+    "package_id": "phb_5e_zh_user",
+    "name": "擒抱者",
+    "feature_type": "Feat",
+    "source_ref": "grappler",
+    "prerequisite_ids": [
+      "prereq_strength_13"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "改善擒抱目标时的攻击优势，并提供压制选项。"
+  },
+  {
+    "feature_id": "feature_feat_great_weapon_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "巨武器大师",
+    "feature_type": "Feat",
+    "source_ref": "great_weapon_master",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "重击/击倒后附赠攻击，并可牺牲命中换取重武器伤害。"
+  },
+  {
+    "feature_id": "feature_feat_healer",
+    "package_id": "phb_5e_zh_user",
+    "name": "医者",
+    "feature_type": "Feat",
+    "source_ref": "healer",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "使用医疗包稳定或恢复生物生命。"
+  },
+  {
+    "feature_id": "feature_feat_heavily_armored",
+    "package_id": "phb_5e_zh_user",
+    "name": "重甲训练",
+    "feature_type": "Feat",
+    "source_ref": "heavily_armored",
+    "prerequisite_ids": [
+      "prereq_mediumarmorproficiency"
+    ],
+    "effect_ids": [
+      "effect_feat_armor_heavy"
+    ],
+    "description": "力量提高1，并获得重甲熟练。"
+  },
+  {
+    "feature_id": "feature_feat_heavy_armor_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "重甲大师",
+    "feature_type": "Feat",
+    "source_ref": "heavy_armor_master",
+    "prerequisite_ids": [
+      "prereq_heavyarmorproficiency"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "力量提高1，穿重甲时降低非魔法武器伤害。"
+  },
+  {
+    "feature_id": "feature_feat_inspiring_leader",
+    "package_id": "phb_5e_zh_user",
+    "name": "激励领袖",
+    "feature_type": "Feat",
+    "source_ref": "inspiring_leader",
+    "prerequisite_ids": [
+      "prereq_charisma_13"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "短演说后为队友提供临时生命值。"
+  },
+  {
+    "feature_id": "feature_feat_keen_mind",
+    "package_id": "phb_5e_zh_user",
+    "name": "敏锐头脑",
+    "feature_type": "Feat",
+    "source_ref": "keen_mind",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_ability_int"
+    ],
+    "description": "智力提高1，并强化方向、时间和近期记忆。"
+  },
+  {
+    "feature_id": "feature_feat_lightly_armored",
+    "package_id": "phb_5e_zh_user",
+    "name": "轻甲训练",
+    "feature_type": "Feat",
+    "source_ref": "lightly_armored",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_armor_light"
+    ],
+    "description": "力量或敏捷提高1，并获得轻甲熟练。"
+  },
+  {
+    "feature_id": "feature_feat_linguist",
+    "package_id": "phb_5e_zh_user",
+    "name": "语言学家",
+    "feature_type": "Feat",
+    "source_ref": "linguist",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_language"
+    ],
+    "description": "智力提高1，获得语言并能创建密码。"
+  },
+  {
+    "feature_id": "feature_feat_lucky",
+    "package_id": "phb_5e_zh_user",
+    "name": "幸运",
+    "feature_type": "Feat",
+    "source_ref": "lucky",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "获得幸运点，用于重掷或干扰攻击检定。"
+  },
+  {
+    "feature_id": "feature_feat_mage_slayer",
+    "package_id": "phb_5e_zh_user",
+    "name": "法师杀手",
+    "feature_type": "Feat",
+    "source_ref": "mage_slayer",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强化近距离对抗施法者的反应攻击和豁免压制。"
+  },
+  {
+    "feature_id": "feature_feat_magic_initiate",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔法学徒",
+    "feature_type": "Feat",
+    "source_ref": "magic_initiate",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "选择一个施法职业，获得戏法和一个1环法术。"
+  },
+  {
+    "feature_id": "feature_feat_martial_adept",
+    "package_id": "phb_5e_zh_user",
+    "name": "武技专家",
+    "feature_type": "Feat",
+    "source_ref": "martial_adept",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "获得战技和优势骰。"
+  },
+  {
+    "feature_id": "feature_feat_medium_armor_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "中甲大师",
+    "feature_type": "Feat",
+    "source_ref": "medium_armor_master",
+    "prerequisite_ids": [
+      "prereq_mediumarmorproficiency"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "穿中甲时减少隐匿劣势并提高敏捷加值上限。"
+  },
+  {
+    "feature_id": "feature_feat_mobile",
+    "package_id": "phb_5e_zh_user",
+    "name": "机动",
+    "feature_type": "Feat",
+    "source_ref": "mobile",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_speed"
+    ],
+    "description": "速度提高，疾走穿越困难地形更好，攻击后避免借机攻击。"
+  },
+  {
+    "feature_id": "feature_feat_moderately_armored",
+    "package_id": "phb_5e_zh_user",
+    "name": "中甲训练",
+    "feature_type": "Feat",
+    "source_ref": "moderately_armored",
+    "prerequisite_ids": [
+      "prereq_lightarmorproficiency"
+    ],
+    "effect_ids": [
+      "effect_feat_armor_medium"
+    ],
+    "description": "力量或敏捷提高1，并获得中甲和盾牌熟练。"
+  },
+  {
+    "feature_id": "feature_feat_mounted_combatant",
+    "package_id": "phb_5e_zh_user",
+    "name": "骑乘战斗",
+    "feature_type": "Feat",
+    "source_ref": "mounted_combatant",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强化骑乘攻击、保护坐骑和坐骑豁免收益。"
+  },
+  {
+    "feature_id": "feature_feat_observant",
+    "package_id": "phb_5e_zh_user",
+    "name": "观察入微",
+    "feature_type": "Feat",
+    "source_ref": "observant",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "智力或感知提高1，并提高被动察觉/调查与读唇能力。"
+  },
+  {
+    "feature_id": "feature_feat_polearm_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "长柄武器大师",
+    "feature_type": "Feat",
+    "source_ref": "polearm_master",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "使用指定长柄武器获得附赠攻击和接近触发借机攻击。"
+  },
+  {
+    "feature_id": "feature_feat_resilient",
+    "package_id": "phb_5e_zh_user",
+    "name": "坚毅",
+    "feature_type": "Feat",
+    "source_ref": "resilient",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "选择一项属性提高1，并获得对应豁免熟练。"
+  },
+  {
+    "feature_id": "feature_feat_ritual_caster",
+    "package_id": "phb_5e_zh_user",
+    "name": "仪式施法者",
+    "feature_type": "Feat",
+    "source_ref": "ritual_caster",
+    "prerequisite_ids": [
+      "prereq_intelligenceorwisdom_13"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "获得仪式书并可学习所选职业的仪式法术。"
+  },
+  {
+    "feature_id": "feature_feat_savage_attacker",
+    "package_id": "phb_5e_zh_user",
+    "name": "凶蛮攻击者",
+    "feature_type": "Feat",
+    "source_ref": "savage_attacker",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "每回合一次重掷近战武器伤害骰并取较好结果。"
+  },
+  {
+    "feature_id": "feature_feat_sentinel",
+    "package_id": "phb_5e_zh_user",
+    "name": "哨兵",
+    "feature_type": "Feat",
+    "source_ref": "sentinel",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强化借机攻击、阻止移动并惩罚攻击队友的敌人。"
+  },
+  {
+    "feature_id": "feature_feat_sharpshooter",
+    "package_id": "phb_5e_zh_user",
+    "name": "神射手",
+    "feature_type": "Feat",
+    "source_ref": "sharpshooter",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "远程攻击忽略部分掩护和远距劣势，可牺牲命中换伤害。"
+  },
+  {
+    "feature_id": "feature_feat_shield_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "盾牌大师",
+    "feature_type": "Feat",
+    "source_ref": "shield_master",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "盾牌推撞、敏捷豁免加值和区域效应减伤相关收益。"
+  },
+  {
+    "feature_id": "feature_feat_skilled",
+    "package_id": "phb_5e_zh_user",
+    "name": "技能专家",
+    "feature_type": "Feat",
+    "source_ref": "skilled",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "获得任意三个技能或工具熟练。"
+  },
+  {
+    "feature_id": "feature_feat_skulker",
+    "package_id": "phb_5e_zh_user",
+    "name": "潜伏者",
+    "feature_type": "Feat",
+    "source_ref": "skulker",
+    "prerequisite_ids": [
+      "prereq_dexterity_13"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "改善隐匿、昏暗观察和远程未命中暴露。"
+  },
+  {
+    "feature_id": "feature_feat_spell_sniper",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术狙击",
+    "feature_type": "Feat",
+    "source_ref": "spell_sniper",
+    "prerequisite_ids": [
+      "prereq_spellcasting"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "提高攻击法术距离、忽略部分掩护并获得一个攻击戏法。"
+  },
+  {
+    "feature_id": "feature_feat_tavern_brawler",
+    "package_id": "phb_5e_zh_user",
+    "name": "酒馆斗殴者",
+    "feature_type": "Feat",
+    "source_ref": "tavern_brawler",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "力量或体质提高1，改善临时武器、徒手伤害和擒抱附赠动作。"
+  },
+  {
+    "feature_id": "feature_feat_tough",
+    "package_id": "phb_5e_zh_user",
+    "name": "健壮",
+    "feature_type": "Feat",
+    "source_ref": "tough",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_feat_hp"
+    ],
+    "description": "生命值上限随等级提高。"
+  },
+  {
+    "feature_id": "feature_feat_war_caster",
+    "package_id": "phb_5e_zh_user",
+    "name": "战地施法者",
+    "feature_type": "Feat",
+    "source_ref": "war_caster",
+    "prerequisite_ids": [
+      "prereq_spellcasting"
+    ],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强化专注豁免、持物施法和借机施法。"
+  },
+  {
+    "feature_id": "feature_feat_weapon_master",
+    "package_id": "phb_5e_zh_user",
+    "name": "武器大师",
+    "feature_type": "Feat",
+    "source_ref": "weapon_master",
+    "prerequisite_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "力量或敏捷提高1，并获得四种武器熟练。"
+  }
+]

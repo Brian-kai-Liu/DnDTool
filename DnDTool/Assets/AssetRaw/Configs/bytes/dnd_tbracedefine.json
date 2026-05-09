@@ -1,0 +1,308 @@
+[
+  {
+    "race_id": "dwarf_hill",
+    "package_id": "phb_5e_zh_user",
+    "name": "丘陵矮人",
+    "size": "中型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "矮人语"
+    ],
+    "feature_ids": [
+      "feature_race_dwarf_hill_ability_constitution_2",
+      "feature_race_dwarf_hill_darkvision",
+      "feature_race_dwarf_hill_dwarven_resilience",
+      "feature_race_dwarf_hill_dwarven_combat_training",
+      "feature_race_dwarf_hill_tool_proficiency",
+      "feature_race_dwarf_hill_stonecunning",
+      "feature_race_dwarf_hill_ability_wisdom_1",
+      "feature_race_dwarf_hill_dwarven_toughness"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "dwarf_mountain",
+    "package_id": "phb_5e_zh_user",
+    "name": "山地矮人",
+    "size": "中型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "矮人语"
+    ],
+    "feature_ids": [
+      "feature_race_dwarf_mountain_ability_constitution_2",
+      "feature_race_dwarf_mountain_darkvision",
+      "feature_race_dwarf_mountain_dwarven_resilience",
+      "feature_race_dwarf_mountain_dwarven_combat_training",
+      "feature_race_dwarf_mountain_tool_proficiency",
+      "feature_race_dwarf_mountain_stonecunning",
+      "feature_race_dwarf_mountain_ability_strength_2",
+      "feature_race_dwarf_mountain_dwarven_armor_training"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "elf_high",
+    "package_id": "phb_5e_zh_user",
+    "name": "高等精灵",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "精灵语"
+    ],
+    "feature_ids": [
+      "feature_race_elf_high_ability_dexterity_2",
+      "feature_race_elf_high_darkvision",
+      "feature_race_elf_high_keen_senses",
+      "feature_race_elf_high_fey_ancestry",
+      "feature_race_elf_high_trance",
+      "feature_race_elf_high_ability_intelligence_1",
+      "feature_race_elf_high_elf_weapon_training",
+      "feature_race_elf_high_cantrip",
+      "feature_race_elf_high_extra_language"
+    ],
+    "choice_group_ids": [
+      "choice_language_any"
+    ],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "elf_wood",
+    "package_id": "phb_5e_zh_user",
+    "name": "木精灵",
+    "size": "中型",
+    "speed": 35,
+    "language_ids": [
+      "通用语",
+      "精灵语"
+    ],
+    "feature_ids": [
+      "feature_race_elf_wood_ability_dexterity_2",
+      "feature_race_elf_wood_darkvision",
+      "feature_race_elf_wood_keen_senses",
+      "feature_race_elf_wood_fey_ancestry",
+      "feature_race_elf_wood_trance",
+      "feature_race_elf_wood_ability_wisdom_1",
+      "feature_race_elf_wood_elf_weapon_training",
+      "feature_race_elf_wood_fleet_of_foot",
+      "feature_race_elf_wood_mask_of_the_wild"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "elf_drow",
+    "package_id": "phb_5e_zh_user",
+    "name": "卓尔精灵",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "精灵语"
+    ],
+    "feature_ids": [
+      "feature_race_elf_drow_ability_dexterity_2",
+      "feature_race_elf_drow_superior_darkvision",
+      "feature_race_elf_drow_keen_senses",
+      "feature_race_elf_drow_fey_ancestry",
+      "feature_race_elf_drow_trance",
+      "feature_race_elf_drow_ability_charisma_1",
+      "feature_race_elf_drow_sunlight_sensitivity",
+      "feature_race_elf_drow_drow_magic",
+      "feature_race_elf_drow_drow_weapon_training"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "halfling_lightfoot",
+    "package_id": "phb_5e_zh_user",
+    "name": "轻足半身人",
+    "size": "小型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "半身人语"
+    ],
+    "feature_ids": [
+      "feature_race_halfling_lightfoot_ability_dexterity_2",
+      "feature_race_halfling_lightfoot_lucky",
+      "feature_race_halfling_lightfoot_brave",
+      "feature_race_halfling_lightfoot_halfling_nimbleness",
+      "feature_race_halfling_lightfoot_ability_charisma_1",
+      "feature_race_halfling_lightfoot_naturally_stealthy"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "halfling_stout",
+    "package_id": "phb_5e_zh_user",
+    "name": "敦实半身人",
+    "size": "小型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "半身人语"
+    ],
+    "feature_ids": [
+      "feature_race_halfling_stout_ability_dexterity_2",
+      "feature_race_halfling_stout_lucky",
+      "feature_race_halfling_stout_brave",
+      "feature_race_halfling_stout_halfling_nimbleness",
+      "feature_race_halfling_stout_ability_constitution_1",
+      "feature_race_halfling_stout_stout_resilience"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "human",
+    "package_id": "phb_5e_zh_user",
+    "name": "人类",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语"
+    ],
+    "feature_ids": [
+      "feature_race_human_ability_all_1",
+      "feature_race_human_extra_language"
+    ],
+    "choice_group_ids": [
+      "choice_language_any"
+    ],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "dragonborn",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙裔",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "龙语"
+    ],
+    "feature_ids": [
+      "feature_race_dragonborn_ability_strength_2",
+      "feature_race_dragonborn_ability_charisma_1",
+      "feature_race_dragonborn_draconic_ancestry",
+      "feature_race_dragonborn_breath_weapon",
+      "feature_race_dragonborn_damage_resistance"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "gnome_forest",
+    "package_id": "phb_5e_zh_user",
+    "name": "森林侏儒",
+    "size": "小型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "侏儒语"
+    ],
+    "feature_ids": [
+      "feature_race_gnome_forest_ability_intelligence_2",
+      "feature_race_gnome_forest_darkvision",
+      "feature_race_gnome_forest_gnome_cunning",
+      "feature_race_gnome_forest_ability_dexterity_1",
+      "feature_race_gnome_forest_natural_illusionist",
+      "feature_race_gnome_forest_speak_with_small_beasts"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "gnome_rock",
+    "package_id": "phb_5e_zh_user",
+    "name": "岩侏儒",
+    "size": "小型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "侏儒语"
+    ],
+    "feature_ids": [
+      "feature_race_gnome_rock_ability_intelligence_2",
+      "feature_race_gnome_rock_darkvision",
+      "feature_race_gnome_rock_gnome_cunning",
+      "feature_race_gnome_rock_ability_constitution_1",
+      "feature_race_gnome_rock_artificers_lore",
+      "feature_race_gnome_rock_tinker"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "half_elf",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "精灵语"
+    ],
+    "feature_ids": [
+      "feature_race_half_elf_ability_charisma_2",
+      "feature_race_half_elf_ability_twoother_1",
+      "feature_race_half_elf_darkvision",
+      "feature_race_half_elf_fey_ancestry",
+      "feature_race_half_elf_skill_versatility",
+      "feature_race_half_elf_extra_language"
+    ],
+    "choice_group_ids": [
+      "choice_language_any"
+    ],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "half_orc",
+    "package_id": "phb_5e_zh_user",
+    "name": "半兽人",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "兽人语"
+    ],
+    "feature_ids": [
+      "feature_race_half_orc_ability_strength_2",
+      "feature_race_half_orc_ability_constitution_1",
+      "feature_race_half_orc_darkvision",
+      "feature_race_half_orc_menacing",
+      "feature_race_half_orc_relentless_endurance",
+      "feature_race_half_orc_savage_attacks"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  },
+  {
+    "race_id": "tiefling",
+    "package_id": "phb_5e_zh_user",
+    "name": "提夫林",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "炼狱语"
+    ],
+    "feature_ids": [
+      "feature_race_tiefling_ability_intelligence_1",
+      "feature_race_tiefling_ability_charisma_2",
+      "feature_race_tiefling_darkvision",
+      "feature_race_tiefling_hellish_resistance",
+      "feature_race_tiefling_infernal_legacy"
+    ],
+    "choice_group_ids": [],
+    "description": "PHB 核心种族/亚种结构化条目；角色叙事文本不在表中长篇复刻。"
+  }
+]

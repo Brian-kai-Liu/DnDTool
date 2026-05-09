@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 职业定义表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbClassDefine
     private readonly System.Collections.Generic.Dictionary<string, dnd.ClassDefine> _dataMap;
     private readonly System.Collections.Generic.List<dnd.ClassDefine> _dataList;
     
-    public TbClassDefine(ByteBuf _buf)
+    public TbClassDefine(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.ClassDefine>(n);
-        _dataList = new System.Collections.Generic.List<dnd.ClassDefine>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.ClassDefine>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.ClassDefine>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.ClassDefine _v;
-            _v = global::GameConfig.dnd.ClassDefine.DeserializeClassDefine(_buf);
+            _v = global::GameConfig.dnd.ClassDefine.DeserializeClassDefine(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.ClassId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.ClassDefine> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.ClassDefine> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbClassDefine
     }
 
 }
-
 }
 

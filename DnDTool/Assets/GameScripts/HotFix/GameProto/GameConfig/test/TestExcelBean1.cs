@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.test
@@ -15,17 +17,19 @@ namespace GameConfig.test
 /// <summary>
 /// 这是个测试excel结构
 /// </summary>
+
 public sealed partial class TestExcelBean1 : Luban.BeanBase
 {
-    public TestExcelBean1(ByteBuf _buf) 
+    public TestExcelBean1(JToken _buf) 
     {
-        X1 = _buf.ReadInt();
-        X2 = _buf.ReadString();
-        X3 = _buf.ReadInt();
-        X4 = _buf.ReadFloat();
+        JObject _obj = _buf as JObject;
+        X1 = (int)_obj.GetValue("x1");
+        X2 = (string)_obj.GetValue("x2");
+        X3 = (int)_obj.GetValue("x3");
+        X4 = (float)_obj.GetValue("x4");
     }
 
-    public static TestExcelBean1 DeserializeTestExcelBean1(ByteBuf _buf)
+    public static TestExcelBean1 DeserializeTestExcelBean1(JToken _buf)
     {
         return new test.TestExcelBean1(_buf);
     }
@@ -46,7 +50,8 @@ public sealed partial class TestExcelBean1 : Luban.BeanBase
     /// 最差品质
     /// </summary>
     public readonly float X4;
-   
+
+
     public const int __ID__ = -1738345160;
     public override int GetTypeId() => __ID__;
 

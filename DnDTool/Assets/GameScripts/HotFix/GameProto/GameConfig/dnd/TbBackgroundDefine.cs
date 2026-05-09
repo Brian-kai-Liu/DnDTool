@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 背景定义表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbBackgroundDefine
     private readonly System.Collections.Generic.Dictionary<string, dnd.BackgroundDefine> _dataMap;
     private readonly System.Collections.Generic.List<dnd.BackgroundDefine> _dataList;
     
-    public TbBackgroundDefine(ByteBuf _buf)
+    public TbBackgroundDefine(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.BackgroundDefine>(n);
-        _dataList = new System.Collections.Generic.List<dnd.BackgroundDefine>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.BackgroundDefine>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.BackgroundDefine>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.BackgroundDefine _v;
-            _v = global::GameConfig.dnd.BackgroundDefine.DeserializeBackgroundDefine(_buf);
+            _v = global::GameConfig.dnd.BackgroundDefine.DeserializeBackgroundDefine(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.BackgroundId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.BackgroundDefine> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.BackgroundDefine> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbBackgroundDefine
     }
 
 }
-
 }
 

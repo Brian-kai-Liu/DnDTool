@@ -12,6 +12,8 @@ namespace GameLogic
         private readonly Dictionary<string, DndFeatureDefineData> m_featureById = new Dictionary<string, DndFeatureDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndFeatureEffectData> m_featureEffectById = new Dictionary<string, DndFeatureEffectData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndSpellDefineData> m_spellById = new Dictionary<string, DndSpellDefineData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndAlignmentData> m_alignmentById = new Dictionary<string, DndAlignmentData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndRaceMainDefineData> m_raceMainById = new Dictionary<string, DndRaceMainDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndClassLevelProgressionData>> m_classProgressionsByClassId = new Dictionary<string, List<DndClassLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndClassSpellListData>> m_classSpellListsByClassId = new Dictionary<string, List<DndClassSpellListData>>(StringComparer.OrdinalIgnoreCase);
 
@@ -39,11 +41,15 @@ namespace GameLogic
 
         public IReadOnlyList<DndRaceDefineData> Races => GetLibrary().Races;
 
+        public IReadOnlyList<DndRaceMainDefineData> RaceMains => GetLibrary().RaceMains;
+
         public IReadOnlyList<DndBackgroundDefineData> Backgrounds => GetLibrary().Backgrounds;
 
         public IReadOnlyList<DndFeatDefineData> Feats => GetLibrary().Feats;
 
         public IReadOnlyList<DndSpellDefineData> Spells => GetLibrary().Spells;
+
+        public IReadOnlyList<DndAlignmentData> Alignments => GetLibrary().Alignments;
 
         public bool HasLoadedContent()
         {
@@ -51,7 +57,9 @@ namespace GameLogic
             return library.RulePackages.Count > 0
                 || library.Classes.Count > 0
                 || library.Features.Count > 0
-                || library.Spells.Count > 0;
+                || library.Spells.Count > 0
+                || library.Alignments.Count > 0
+                || library.EnumLists.Count > 0;
         }
 
         public void Reload()
@@ -103,6 +111,12 @@ namespace GameLogic
             return m_spellById.TryGetValue(spellId ?? string.Empty, out spell);
         }
 
+        public bool TryGetRaceMain(string mainRaceId, out DndRaceMainDefineData raceMain)
+        {
+            GetLibrary();
+            return m_raceMainById.TryGetValue(mainRaceId ?? string.Empty, out raceMain);
+        }
+
         public bool TryGetClassLevelProgression(string classId, int level, out DndClassLevelProgressionData progression)
         {
             progression = null;
@@ -141,6 +155,43 @@ namespace GameLogic
                 : Array.Empty<DndClassSpellListData>();
         }
 
+        public List<string> GetAlignmentOptionLabels()
+        {
+            DndRuleContentLibraryData library = GetLibrary();
+            List<string> labels = new List<string>();
+
+            for (int index = 0; index < library.Alignments.Count; index++)
+            {
+                string name = library.Alignments[index].Name;
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    labels.Add(name.Trim());
+                }
+            }
+
+            if (labels.Count > 0)
+            {
+                return labels;
+            }
+
+            for (int index = 0; index < library.EnumLists.Count; index++)
+            {
+                DndEnumListData item = library.EnumLists[index];
+                if (!string.Equals(item.EnumType, "Alignment", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                string label = string.IsNullOrWhiteSpace(item.Description) ? item.Value : item.Description;
+                if (!string.IsNullOrWhiteSpace(label))
+                {
+                    labels.Add(label.Trim());
+                }
+            }
+
+            return labels;
+        }
+
         private DndRuleContentLibraryData GetLibrary()
         {
             LoadIfNeeded();
@@ -176,6 +227,8 @@ namespace GameLogic
             m_featureById.Clear();
             m_featureEffectById.Clear();
             m_spellById.Clear();
+            m_alignmentById.Clear();
+            m_raceMainById.Clear();
             m_classProgressionsByClassId.Clear();
             m_classSpellListsByClassId.Clear();
         }
@@ -217,6 +270,24 @@ namespace GameLogic
                 if (!string.IsNullOrWhiteSpace(spell.SpellId))
                 {
                     m_spellById[spell.SpellId] = spell;
+                }
+            }
+
+            for (int index = 0; index < m_library.Alignments.Count; index++)
+            {
+                DndAlignmentData alignment = m_library.Alignments[index];
+                if (!string.IsNullOrWhiteSpace(alignment.AlignmentId))
+                {
+                    m_alignmentById[alignment.AlignmentId] = alignment;
+                }
+            }
+
+            for (int index = 0; index < m_library.RaceMains.Count; index++)
+            {
+                DndRaceMainDefineData raceMain = m_library.RaceMains[index];
+                if (!string.IsNullOrWhiteSpace(raceMain.MainRaceId))
+                {
+                    m_raceMainById[raceMain.MainRaceId] = raceMain;
                 }
             }
 

@@ -1,0 +1,132 @@
+[
+  {
+    "enum_type": "PrimaryAbilityMode",
+    "value": "Fixed",
+    "description": "固定主属性。"
+  },
+  {
+    "enum_type": "PrimaryAbilityMode",
+    "value": "AnyOne",
+    "description": "从多个主属性中任选其一。"
+  },
+  {
+    "enum_type": "PrimaryAbilityMode",
+    "value": "All",
+    "description": "多个主属性都重要。"
+  },
+  {
+    "enum_type": "PrimaryAbilityMode",
+    "value": "Manual",
+    "description": "由玩家手动选择主属性。"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "lawful_good",
+    "description": "守序善良"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "neutral_good",
+    "description": "中立善良"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "chaotic_good",
+    "description": "混乱善良"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "lawful_neutral",
+    "description": "守序中立"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "true_neutral",
+    "description": "绝对中立"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "chaotic_neutral",
+    "description": "混乱中立"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "lawful_evil",
+    "description": "守序邪恶"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "neutral_evil",
+    "description": "中立邪恶"
+  },
+  {
+    "enum_type": "Alignment",
+    "value": "chaotic_evil",
+    "description": "混乱邪恶"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "ArmorProficiency",
+    "description": "护甲熟练。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "WeaponProficiency",
+    "description": "武器熟练。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "ToolProficiency",
+    "description": "工具熟练。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "Language",
+    "description": "语言。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "SpeedBonus",
+    "description": "速度加值。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "MaxHpBonus",
+    "description": "最大HP加值。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "Vision",
+    "description": "视觉能力。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "InitiativeBonus",
+    "description": "先攻加值。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "AddResource",
+    "description": "增加资源。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "AddAction",
+    "description": "增加动作。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "AddSpell",
+    "description": "增加法术。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "AdvantageOnCheck",
+    "description": "检定优势。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "ManualResolve",
+    "description": "手动处理。"
+  }
+]

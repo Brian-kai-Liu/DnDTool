@@ -8,23 +8,27 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class RulePackage : Luban.BeanBase
 {
-    public RulePackage(ByteBuf _buf) 
+    public RulePackage(JToken _buf) 
     {
-        PackageId = _buf.ReadString();
-        PackageName = _buf.ReadString();
-        Version = _buf.ReadString();
-        Author = _buf.ReadString();
-        License = _buf.ReadString();
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        PackageId = (string)_obj.GetValue("package_id");
+        PackageName = (string)_obj.GetValue("package_name");
+        Version = (string)_obj.GetValue("version");
+        Author = (string)_obj.GetValue("author");
+        License = (string)_obj.GetValue("license");
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static RulePackage DeserializeRulePackage(ByteBuf _buf)
+    public static RulePackage DeserializeRulePackage(JToken _buf)
     {
         return new dnd.RulePackage(_buf);
     }
@@ -53,7 +57,8 @@ public sealed partial class RulePackage : Luban.BeanBase
     /// 规则包说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -960385354;
     public override int GetTypeId() => __ID__;
 

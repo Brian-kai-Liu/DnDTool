@@ -8,31 +8,35 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class ClassLevelProgression : Luban.BeanBase
 {
-    public ClassLevelProgression(ByteBuf _buf) 
+    public ClassLevelProgression(JToken _buf) 
     {
-        ClassId = _buf.ReadString();
-        Level = _buf.ReadInt();
-        ProficiencyBonus = _buf.ReadInt();
-        FixedHpGain = _buf.ReadInt();
-        {int n0 = _buf.ReadSize(); FeatureIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); FeatureIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); ChoiceGroupIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ChoiceGroupIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); ResourceGrantIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ResourceGrantIds.Add(_e0);}}
-        if(_buf.ReadBool()){ SpellSlotProgressionLevel = _buf.ReadInt(); } else { SpellSlotProgressionLevel = null; }
-        if(_buf.ReadBool()){ CantripKnown = _buf.ReadInt(); } else { CantripKnown = null; }
-        if(_buf.ReadBool()){ SpellKnown = _buf.ReadInt(); } else { SpellKnown = null; }
-        PreparedSpellFormula = _buf.ReadString();
-        AsiAvailable = _buf.ReadBool();
-        SubclassFeature = _buf.ReadBool();
-        Note = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        ClassId = (string)_obj.GetValue("class_id");
+        Level = (int)_obj.GetValue("level");
+        ProficiencyBonus = (int)_obj.GetValue("proficiency_bonus");
+        FixedHpGain = (int)_obj.GetValue("fixed_hp_gain");
+        { var __json0 = _obj.GetValue("feature_ids"); FeatureIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  FeatureIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("choice_group_ids"); ChoiceGroupIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ChoiceGroupIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("resource_grant_ids"); ResourceGrantIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ResourceGrantIds.Add(__v0); }   }
+        {if (_obj.TryGetValue("spell_slot_progression_level", out var _j)) { SpellSlotProgressionLevel = (int)_j; } else { SpellSlotProgressionLevel = null; } }
+        {if (_obj.TryGetValue("cantrip_known", out var _j)) { CantripKnown = (int)_j; } else { CantripKnown = null; } }
+        {if (_obj.TryGetValue("spell_known", out var _j)) { SpellKnown = (int)_j; } else { SpellKnown = null; } }
+        PreparedSpellFormula = (string)_obj.GetValue("prepared_spell_formula");
+        AsiAvailable = (bool)_obj.GetValue("asi_available");
+        SubclassFeature = (bool)_obj.GetValue("subclass_feature");
+        Note = (string)_obj.GetValue("note");
     }
 
-    public static ClassLevelProgression DeserializeClassLevelProgression(ByteBuf _buf)
+    public static ClassLevelProgression DeserializeClassLevelProgression(JToken _buf)
     {
         return new dnd.ClassLevelProgression(_buf);
     }
@@ -93,7 +97,8 @@ public sealed partial class ClassLevelProgression : Luban.BeanBase
     /// 备注，仅用于编辑说明。
     /// </summary>
     public readonly string Note;
-   
+
+
     public const int __ID__ = 356427835;
     public override int GetTypeId() => __ID__;
 

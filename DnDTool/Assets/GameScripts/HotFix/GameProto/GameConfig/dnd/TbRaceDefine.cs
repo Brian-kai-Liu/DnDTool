@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 种族/血统定义表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbRaceDefine
     private readonly System.Collections.Generic.Dictionary<string, dnd.RaceDefine> _dataMap;
     private readonly System.Collections.Generic.List<dnd.RaceDefine> _dataList;
     
-    public TbRaceDefine(ByteBuf _buf)
+    public TbRaceDefine(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.RaceDefine>(n);
-        _dataList = new System.Collections.Generic.List<dnd.RaceDefine>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.RaceDefine>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.RaceDefine>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.RaceDefine _v;
-            _v = global::GameConfig.dnd.RaceDefine.DeserializeRaceDefine(_buf);
+            _v = global::GameConfig.dnd.RaceDefine.DeserializeRaceDefine(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.RaceId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.RaceDefine> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.RaceDefine> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbRaceDefine
     }
 
 }
-
 }
 

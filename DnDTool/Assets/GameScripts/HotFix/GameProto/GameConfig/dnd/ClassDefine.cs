@@ -8,29 +8,33 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class ClassDefine : Luban.BeanBase
 {
-    public ClassDefine(ByteBuf _buf) 
+    public ClassDefine(JToken _buf) 
     {
-        ClassId = _buf.ReadString();
-        PackageId = _buf.ReadString();
-        Name = _buf.ReadString();
-        HitDie = _buf.ReadInt();
-        {int n0 = _buf.ReadSize(); PrimaryAbilityIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); PrimaryAbilityIds.Add(_e0);}}
-        PrimaryAbilityMode = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); SavingThrowProficiencies = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SavingThrowProficiencies.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); ArmorProficiencies = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ArmorProficiencies.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); WeaponProficiencies = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); WeaponProficiencies.Add(_e0);}}
-        SpellcastingAbility = _buf.ReadString();
-        SpellSlotProgressionId = _buf.ReadString();
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        ClassId = (string)_obj.GetValue("class_id");
+        PackageId = (string)_obj.GetValue("package_id");
+        Name = (string)_obj.GetValue("name");
+        HitDie = (int)_obj.GetValue("hit_die");
+        { var __json0 = _obj.GetValue("primary_ability_ids"); PrimaryAbilityIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  PrimaryAbilityIds.Add(__v0); }   }
+        PrimaryAbilityMode = (string)_obj.GetValue("primary_ability_mode");
+        { var __json0 = _obj.GetValue("saving_throw_proficiencies"); SavingThrowProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  SavingThrowProficiencies.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("armor_proficiencies"); ArmorProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ArmorProficiencies.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("weapon_proficiencies"); WeaponProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  WeaponProficiencies.Add(__v0); }   }
+        SpellcastingAbility = (string)_obj.GetValue("spellcasting_ability");
+        SpellSlotProgressionId = (string)_obj.GetValue("spell_slot_progression_id");
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static ClassDefine DeserializeClassDefine(ByteBuf _buf)
+    public static ClassDefine DeserializeClassDefine(JToken _buf)
     {
         return new dnd.ClassDefine(_buf);
     }
@@ -83,7 +87,8 @@ public sealed partial class ClassDefine : Luban.BeanBase
     /// 用户录入的职业说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -801275297;
     public override int GetTypeId() => __ID__;
 

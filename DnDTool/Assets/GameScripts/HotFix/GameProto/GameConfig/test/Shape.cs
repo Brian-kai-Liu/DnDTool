@@ -8,27 +8,33 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.test
 {
+
 public abstract partial class Shape : Luban.BeanBase
 {
-    public Shape(ByteBuf _buf) 
+    public Shape(JToken _buf) 
     {
+        JObject _obj = _buf as JObject;
     }
 
-    public static Shape DeserializeShape(ByteBuf _buf)
+    public static Shape DeserializeShape(JToken _buf)
     {
-        switch (_buf.ReadInt())
+        var _obj=_buf as JObject;
+        switch (_obj.GetValue("$type").ToString())
         {
-            case test.Circle.__ID__: return new test.Circle(_buf);
-            case test.Rectangle.__ID__: return new test.Rectangle(_buf);
+            case "Circle": return new test.Circle(_buf);
+            case "Rectangle": return new test.Rectangle(_buf);
             default: throw new SerializationException();
         }
     }
 
-   
+
+
 
     public virtual void ResolveRef(Tables tables)
     {

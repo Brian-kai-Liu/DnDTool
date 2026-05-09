@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.item
 {
+
 /// <summary>
 /// TEngine 示例道具表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbItem
     private readonly System.Collections.Generic.Dictionary<int, item.Item> _dataMap;
     private readonly System.Collections.Generic.List<item.Item> _dataList;
     
-    public TbItem(ByteBuf _buf)
+    public TbItem(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<int, item.Item>(n);
-        _dataList = new System.Collections.Generic.List<item.Item>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<int, item.Item>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<item.Item>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             item.Item _v;
-            _v = global::GameConfig.item.Item.DeserializeItem(_buf);
+            _v = global::GameConfig.item.Item.DeserializeItem(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.Id, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<int, item.Item> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<item.Item> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbItem
     }
 
 }
-
 }
 

@@ -1,0 +1,362 @@
+[
+  {
+    "effect_id": "effect_manual_resolve",
+    "effect_type": "ManualResolve",
+    "target": "",
+    "value": "",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "复杂特性保留为人工结算；后续可继续拆成更细结构化效果。"
+  },
+  {
+    "effect_id": "effect_enable_spellcasting",
+    "effect_type": "AddResource",
+    "target": "Spellcasting",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "启用职业施法字段；法术位和准备/已知数量由职业成长表处理。"
+  },
+  {
+    "effect_id": "effect_extra_attack",
+    "effect_type": "AddAction",
+    "target": "AttackAction",
+    "value": "ExtraAttack",
+    "condition": "class level threshold",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_ac_formula_manual",
+    "effect_type": "ManualResolve",
+    "target": "ACFormula",
+    "value": "Unarmored",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "无甲防御等AC公式由角色卡计算模块后续接入。"
+  },
+  {
+    "effect_id": "effect_manual_combat_resource",
+    "effect_type": "AddResource",
+    "target": "ClassResource",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "狂暴、气、引导神力等资源第一版由人工或职业成长规则处理。"
+  },
+  {
+    "effect_id": "effect_feat_alert",
+    "effect_type": "InitiativeBonus",
+    "target": "Initiative",
+    "value": "5",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "另含免疫突袭和隐藏攻击者优势限制。"
+  },
+  {
+    "effect_id": "effect_feat_ability_choice",
+    "effect_type": "AbilityScoreBonus",
+    "target": "力量或敏捷",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_ability_cha",
+    "effect_type": "AbilityScoreBonus",
+    "target": "魅力",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_ability_con",
+    "effect_type": "AbilityScoreBonus",
+    "target": "体质",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_ability_int",
+    "effect_type": "AbilityScoreBonus",
+    "target": "智力",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_armor_light",
+    "effect_type": "ArmorProficiency",
+    "target": "轻甲",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "另含力量或敏捷+1选择。"
+  },
+  {
+    "effect_id": "effect_feat_armor_medium",
+    "effect_type": "ArmorProficiency",
+    "target": "中甲;盾牌",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "另含力量或敏捷+1选择。"
+  },
+  {
+    "effect_id": "effect_feat_armor_heavy",
+    "effect_type": "ArmorProficiency",
+    "target": "重甲",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "另含力量+1。"
+  },
+  {
+    "effect_id": "effect_feat_language",
+    "effect_type": "Language",
+    "target": "自选",
+    "value": "3",
+    "condition": "",
+    "stacking_rule": "Stack",
+    "manual_note": "另含智力+1和密码能力。"
+  },
+  {
+    "effect_id": "effect_feat_speed",
+    "effect_type": "SpeedBonus",
+    "target": "Walk",
+    "value": "10",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "另含困难地形和借机攻击相关效果。"
+  },
+  {
+    "effect_id": "effect_feat_hp",
+    "effect_type": "MaxHpBonus",
+    "target": "MaxHP",
+    "value": "2*level",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_dwarf_hill_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "体质",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_dwarf_hill_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_dwarf_mountain_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "体质",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_dwarf_mountain_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_elf_high_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "敏捷",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_elf_high_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_elf_wood_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "敏捷",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_elf_wood_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_elf_drow_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "敏捷",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_elf_drow_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "120",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_halfling_lightfoot_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "敏捷",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_halfling_stout_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "敏捷",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_human_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "全部",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_dragonborn_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "力量",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_gnome_forest_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "智力",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_gnome_forest_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_gnome_rock_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "智力",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_gnome_rock_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_half_elf_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "魅力",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_half_elf_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_half_orc_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "力量",
+    "value": "2",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_half_orc_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_tiefling_ability",
+    "effect_type": "AbilityScoreBonus",
+    "target": "智力",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Stack",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_tiefling_darkvision",
+    "effect_type": "Vision",
+    "target": "Darkvision",
+    "value": "60",
+    "condition": "",
+    "stacking_rule": "Highest",
+    "manual_note": ""
+  }
+]

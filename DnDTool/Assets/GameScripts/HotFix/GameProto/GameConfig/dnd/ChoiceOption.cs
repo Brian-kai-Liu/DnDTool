@@ -8,23 +8,27 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class ChoiceOption : Luban.BeanBase
 {
-    public ChoiceOption(ByteBuf _buf) 
+    public ChoiceOption(JToken _buf) 
     {
-        ChoiceGroupId = _buf.ReadString();
-        OptionId = _buf.ReadString();
-        Name = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); GrantFeatureIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GrantFeatureIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); GrantEffectIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); GrantEffectIds.Add(_e0);}}
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        ChoiceGroupId = (string)_obj.GetValue("choice_group_id");
+        OptionId = (string)_obj.GetValue("option_id");
+        Name = (string)_obj.GetValue("name");
+        { var __json0 = _obj.GetValue("grant_feature_ids"); GrantFeatureIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  GrantFeatureIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("grant_effect_ids"); GrantEffectIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  GrantEffectIds.Add(__v0); }   }
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static ChoiceOption DeserializeChoiceOption(ByteBuf _buf)
+    public static ChoiceOption DeserializeChoiceOption(JToken _buf)
     {
         return new dnd.ChoiceOption(_buf);
     }
@@ -53,7 +57,8 @@ public sealed partial class ChoiceOption : Luban.BeanBase
     /// 用户录入说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -1545999894;
     public override int GetTypeId() => __ID__;
 

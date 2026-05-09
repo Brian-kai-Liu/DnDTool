@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 选择组选项表。业务层按 choice_group_id + option_id 查询。
 /// </summary>
@@ -20,21 +23,23 @@ public partial class TbChoiceOption
     private readonly System.Collections.Generic.List<dnd.ChoiceOption> _dataList;
 
 
-    public TbChoiceOption(ByteBuf _buf)
+
+    public TbChoiceOption(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataList = new System.Collections.Generic.List<dnd.ChoiceOption>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataList = new System.Collections.Generic.List<dnd.ChoiceOption>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.ChoiceOption _v;
-            _v = global::GameConfig.dnd.ChoiceOption.DeserializeChoiceOption(_buf);
+            _v = global::GameConfig.dnd.ChoiceOption.DeserializeChoiceOption(_ele);
             _dataList.Add(_v);
         }
     }
 
     public System.Collections.Generic.IReadOnlyList<dnd.ChoiceOption> DataList => _dataList;
 
-    
+
+
     public void ResolveRef(Tables tables)
     {
         foreach(var _v in _dataList)
@@ -43,6 +48,5 @@ public partial class TbChoiceOption
         }
     }
 }
-
 }
 

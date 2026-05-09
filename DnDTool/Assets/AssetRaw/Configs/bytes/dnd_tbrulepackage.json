@@ -1,0 +1,10 @@
+[
+  {
+    "package_id": "phb_5e_zh_user",
+    "package_name": "D&D 5e PHB 角色规则（结构化摘要）",
+    "version": "phb-5e-zh-v1.72",
+    "author": "UserProvided",
+    "license": "UserProvided Local Reference",
+    "description": "根据用户提供的本地 PHB 中文整理的角色创建结构化数据；不包含手册长篇正文。"
+  }
+]

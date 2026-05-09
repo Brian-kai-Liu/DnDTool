@@ -8,26 +8,30 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class BackgroundDefine : Luban.BeanBase
 {
-    public BackgroundDefine(ByteBuf _buf) 
+    public BackgroundDefine(JToken _buf) 
     {
-        BackgroundId = _buf.ReadString();
-        PackageId = _buf.ReadString();
-        Name = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); SkillProficiencies = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); SkillProficiencies.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); ToolProficiencies = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ToolProficiencies.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); LanguageIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); LanguageIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); FeatureIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); FeatureIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); EquipmentGrantIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EquipmentGrantIds.Add(_e0);}}
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        BackgroundId = (string)_obj.GetValue("background_id");
+        PackageId = (string)_obj.GetValue("package_id");
+        Name = (string)_obj.GetValue("name");
+        { var __json0 = _obj.GetValue("skill_proficiencies"); SkillProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  SkillProficiencies.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("tool_proficiencies"); ToolProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ToolProficiencies.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("language_ids"); LanguageIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  LanguageIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("feature_ids"); FeatureIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  FeatureIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("equipment_grant_ids"); EquipmentGrantIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  EquipmentGrantIds.Add(__v0); }   }
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static BackgroundDefine DeserializeBackgroundDefine(ByteBuf _buf)
+    public static BackgroundDefine DeserializeBackgroundDefine(JToken _buf)
     {
         return new dnd.BackgroundDefine(_buf);
     }
@@ -68,7 +72,8 @@ public sealed partial class BackgroundDefine : Luban.BeanBase
     /// 用户录入说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = 991967997;
     public override int GetTypeId() => __ID__;
 

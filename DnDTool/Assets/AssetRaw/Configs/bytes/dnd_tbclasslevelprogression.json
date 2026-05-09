@@ -1,0 +1,3995 @@
+[
+  {
+    "class_id": "barbarian",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_barbarian_level_01_rage",
+      "feature_barbarian_level_01_unarmored_defense"
+    ],
+    "choice_group_ids": [
+      "choice_barbarian_skill"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "barbarian",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_02_reckless_attack",
+      "feature_barbarian_level_02_danger_sense"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_03_primal_path"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_05_extra_attack",
+      "feature_barbarian_level_05_fast_movement"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 7,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_07_feral_instinct"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_09_brutal_critical"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 7,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_11_relentless_rage"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 7,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 7,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_15_persistent_rage"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 7,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_18_indomitable_might"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "barbarian",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 7,
+    "feature_ids": [
+      "feature_barbarian_level_20_primal_champion"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_bard_level_01_spellcasting",
+      "feature_bard_level_01_bardic_inspiration"
+    ],
+    "choice_group_ids": [
+      "choice_bard_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "cantrip_known": 2,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "bard",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_bard_level_02_jack_of_all_trades",
+      "feature_bard_level_02_song_of_rest"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "cantrip_known": 2,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_bard_level_03_bard_college",
+      "feature_bard_level_03_expertise"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "cantrip_known": 2,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "cantrip_known": 3,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_bard_level_05_font_of_inspiration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "cantrip_known": 3,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_bard_level_06_countercharm"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "cantrip_known": 3,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "cantrip_known": 3,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "cantrip_known": 3,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "cantrip_known": 3,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_bard_level_10_magical_secrets"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "cantrip_known": 4,
+    "spell_known": 14,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "cantrip_known": 4,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "cantrip_known": 4,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "cantrip_known": 4,
+    "spell_known": 16,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "cantrip_known": 4,
+    "spell_known": 18,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "cantrip_known": 4,
+    "spell_known": 19,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "cantrip_known": 4,
+    "spell_known": 19,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "cantrip_known": 4,
+    "spell_known": 20,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "cantrip_known": 4,
+    "spell_known": 22,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "cantrip_known": 4,
+    "spell_known": 22,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "bard",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_bard_level_20_superior_inspiration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "cantrip_known": 4,
+    "spell_known": 22,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_cleric_level_01_spellcasting",
+      "feature_cleric_level_01_divine_domain"
+    ],
+    "choice_group_ids": [
+      "choice_subclass",
+      "choice_cleric_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "cleric",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_cleric_level_02_channel_divinity"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_cleric_level_05_destroy_undead"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat",
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_cleric_level_10_divine_intervention"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "cleric",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_druid_level_01_druidic",
+      "feature_druid_level_01_spellcasting"
+    ],
+    "choice_group_ids": [
+      "choice_druid_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "druid",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_druid_level_02_wild_shape",
+      "feature_druid_level_02_druid_circle"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_druid_level_18_timeless_body",
+      "feature_druid_level_18_beast_spells"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "druid",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_druid_level_20_archdruid"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "prepared_spell_formula": "level+WisMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_fighter_level_01_fighting_style",
+      "feature_fighter_level_01_second_wind"
+    ],
+    "choice_group_ids": [
+      "choice_fighter_skill"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "fighter",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_02_action_surge"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_03_martial_archetype"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_05_extra_attack"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_09_indomitable"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_11_extra_attack_2"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_17_action_surge_2",
+      "feature_fighter_level_17_indomitable_3"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "fighter",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_fighter_level_20_extra_attack_3"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_monk_level_01_unarmored_defense",
+      "feature_monk_level_01_martial_arts"
+    ],
+    "choice_group_ids": [
+      "choice_monk_skill"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "monk",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_02_ki",
+      "feature_monk_level_02_unarmored_movement"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_03_monastic_tradition",
+      "feature_monk_level_03_deflect_missiles"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_05_extra_attack",
+      "feature_monk_level_05_stunning_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_06_ki_empowered_strikes"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_07_evasion",
+      "feature_monk_level_07_stillness_of_mind"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_10_purity_of_body"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_13_tongue_of_the_sun_and_moon"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_14_diamond_soul"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_15_timeless_body"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_18_empty_body"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "monk",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_monk_level_20_perfect_self"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_paladin_level_01_divine_sense",
+      "feature_paladin_level_01_lay_on_hands"
+    ],
+    "choice_group_ids": [
+      "choice_paladin_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "paladin",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_02_fighting_style",
+      "feature_paladin_level_02_spellcasting",
+      "feature_paladin_level_02_divine_smite"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_03_sacred_oath",
+      "feature_paladin_level_03_divine_health"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_05_extra_attack"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_06_aura_of_protection"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_10_aura_of_courage"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_11_improved_divine_smite"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_paladin_level_14_cleansing_touch"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "paladin",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "prepared_spell_formula": "floor(level/2)+ChaMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_ranger_level_01_favored_enemy",
+      "feature_ranger_level_01_natural_explorer"
+    ],
+    "choice_group_ids": [
+      "choice_ranger_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "ranger",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_02_fighting_style",
+      "feature_ranger_level_02_spellcasting"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "spell_known": 2,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_03_ranger_archetype",
+      "feature_ranger_level_03_primeval_awareness"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "spell_known": 3,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "spell_known": 3,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_05_extra_attack"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_08_lands_stride",
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_10_hide_in_plain_sight"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_14_vanish"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_18_feral_senses"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "ranger",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 6,
+    "feature_ids": [
+      "feature_ranger_level_20_foe_slayer"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_rogue_level_01_expertise",
+      "feature_rogue_level_01_sneak_attack",
+      "feature_rogue_level_01_thieves_cant"
+    ],
+    "choice_group_ids": [
+      "choice_rogue_skill"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "rogue",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_02_cunning_action"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_03_roguish_archetype"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_05_uncanny_dodge"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_07_evasion"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_11_reliable_talent"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_14_blindsense"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_15_slippery_mind"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_18_elusive"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "rogue",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_rogue_level_20_stroke_of_luck"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_sorcerer_level_01_spellcasting",
+      "feature_sorcerer_level_01_sorcerous_origin"
+    ],
+    "choice_group_ids": [
+      "choice_subclass",
+      "choice_sorcerer_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "cantrip_known": 4,
+    "spell_known": 2,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_sorcerer_level_02_font_of_magic"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "cantrip_known": 4,
+    "spell_known": 3,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_sorcerer_level_03_metamagic"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "cantrip_known": 4,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "cantrip_known": 5,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "cantrip_known": 5,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "cantrip_known": 5,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "cantrip_known": 5,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "cantrip_known": 5,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "cantrip_known": 6,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "cantrip_known": 6,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "cantrip_known": 6,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "cantrip_known": 6,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "cantrip_known": 6,
+    "spell_known": 13,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "cantrip_known": 6,
+    "spell_known": 13,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "cantrip_known": 6,
+    "spell_known": 14,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "cantrip_known": 6,
+    "spell_known": 14,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "cantrip_known": 6,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "cantrip_known": 6,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "cantrip_known": 6,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "sorcerer",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_sorcerer_level_20_sorcerous_restoration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "cantrip_known": 6,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_warlock_level_01_otherworldly_patron",
+      "feature_warlock_level_01_pact_magic"
+    ],
+    "choice_group_ids": [
+      "choice_subclass",
+      "choice_warlock_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "cantrip_known": 2,
+    "spell_known": 2,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "warlock",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_02_eldritch_invocations"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "cantrip_known": 2,
+    "spell_known": 3,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_03_pact_boon"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "cantrip_known": 2,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "cantrip_known": 3,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "cantrip_known": 3,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "cantrip_known": 3,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "cantrip_known": 3,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "cantrip_known": 3,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "cantrip_known": 3,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "cantrip_known": 4,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_11_mystic_arcanum_6"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "cantrip_known": 4,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "cantrip_known": 4,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_13_mystic_arcanum_7"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "cantrip_known": 4,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "cantrip_known": 4,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_15_mystic_arcanum_8"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "cantrip_known": 4,
+    "spell_known": 13,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "cantrip_known": 4,
+    "spell_known": 13,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_17_mystic_arcanum_9"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "cantrip_known": 4,
+    "spell_known": 14,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "cantrip_known": 4,
+    "spell_known": 14,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "cantrip_known": 4,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "warlock",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 5,
+    "feature_ids": [
+      "feature_warlock_level_20_eldritch_master"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "cantrip_known": 4,
+    "spell_known": 15,
+    "prepared_spell_formula": "",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 1,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 0,
+    "feature_ids": [
+      "feature_wizard_level_01_spellcasting",
+      "feature_wizard_level_01_arcane_recovery"
+    ],
+    "choice_group_ids": [
+      "choice_wizard_skill"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+  },
+  {
+    "class_id": "wizard",
+    "level": 2,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_wizard_level_02_arcane_tradition"
+    ],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 3,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 4,
+    "proficiency_bonus": 2,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 5,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 6,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 7,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 8,
+    "proficiency_bonus": 3,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 9,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 10,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 11,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 12,
+    "proficiency_bonus": 4,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 13,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 14,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [
+      "choice_subclass"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 14,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": true,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 15,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 15,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 16,
+    "proficiency_bonus": 5,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 16,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 17,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 17,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 18,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_wizard_level_18_spell_mastery"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 18,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 19,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_asi"
+    ],
+    "choice_group_ids": [
+      "choice_asi_or_feat"
+    ],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 19,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": true,
+    "subclass_feature": false,
+    "note": ""
+  },
+  {
+    "class_id": "wizard",
+    "level": 20,
+    "proficiency_bonus": 6,
+    "fixed_hp_gain": 4,
+    "feature_ids": [
+      "feature_wizard_level_20_signature_spells"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 20,
+    "prepared_spell_formula": "level+IntMod",
+    "asi_available": false,
+    "subclass_feature": false,
+    "note": ""
+  }
+]

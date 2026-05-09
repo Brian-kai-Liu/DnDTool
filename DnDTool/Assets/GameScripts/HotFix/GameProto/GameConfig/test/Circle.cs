@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.test
@@ -15,14 +17,16 @@ namespace GameConfig.test
 /// <summary>
 /// 这是一个圆
 /// </summary>
+
 public sealed partial class Circle : Shape
 {
-    public Circle(ByteBuf _buf)  : base(_buf) 
+    public Circle(JToken _buf)  : base(_buf) 
     {
-        Radius = _buf.ReadFloat();
+        JObject _obj = _buf as JObject;
+        Radius = (float)_obj.GetValue("radius");
     }
 
-    public static Circle DeserializeCircle(ByteBuf _buf)
+    public static Circle DeserializeCircle(JToken _buf)
     {
         return new test.Circle(_buf);
     }
@@ -31,7 +35,8 @@ public sealed partial class Circle : Shape
     /// 半径
     /// </summary>
     public readonly float Radius;
-   
+
+
     public const int __ID__ = 2131829196;
     public override int GetTypeId() => __ID__;
 

@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 外部枚举/字典值表。业务层按 enum_type + value 查询。
 /// </summary>
@@ -20,21 +23,23 @@ public partial class TbEnumList
     private readonly System.Collections.Generic.List<dnd.EnumList> _dataList;
 
 
-    public TbEnumList(ByteBuf _buf)
+
+    public TbEnumList(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataList = new System.Collections.Generic.List<dnd.EnumList>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataList = new System.Collections.Generic.List<dnd.EnumList>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.EnumList _v;
-            _v = global::GameConfig.dnd.EnumList.DeserializeEnumList(_buf);
+            _v = global::GameConfig.dnd.EnumList.DeserializeEnumList(_ele);
             _dataList.Add(_v);
         }
     }
 
     public System.Collections.Generic.IReadOnlyList<dnd.EnumList> DataList => _dataList;
 
-    
+
+
     public void ResolveRef(Tables tables)
     {
         foreach(var _v in _dataList)
@@ -43,6 +48,5 @@ public partial class TbEnumList
         }
     }
 }
-
 }
 

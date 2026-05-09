@@ -8,28 +8,32 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.item
 {
+
 public sealed partial class Item : Luban.BeanBase
 {
-    public Item(ByteBuf _buf) 
+    public Item(JToken _buf) 
     {
-        Id = _buf.ReadInt();
-        Name = _buf.ReadString();
-        Desc = _buf.ReadString();
-        Price = _buf.ReadInt();
-        UpgradeToItemId = _buf.ReadInt();
+        JObject _obj = _buf as JObject;
+        Id = (int)_obj.GetValue("id");
+        Name = (string)_obj.GetValue("name");
+        Desc = (string)_obj.GetValue("desc");
+        Price = (int)_obj.GetValue("price");
+        UpgradeToItemId = (int)_obj.GetValue("upgrade_to_item_id");
         UpgradeToItemId_Ref = null;
-        if(_buf.ReadBool()){ ExpireTime = _buf.ReadLong(); } else { ExpireTime = null; }
-        BatchUseable = _buf.ReadBool();
-        ExchangeStream = global::GameConfig.item.ItemExchange.DeserializeItemExchange(_buf);
-        {int n0 = _buf.ReadSize(); ExchangeList = new System.Collections.Generic.List<item.ItemExchange>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { item.ItemExchange _e0;  _e0 = global::GameConfig.item.ItemExchange.DeserializeItemExchange(_buf); ExchangeList.Add(_e0);}}
-        ExchangeColumn = global::GameConfig.item.ItemExchange.DeserializeItemExchange(_buf);
+        {if (_obj.TryGetValue("expire_time", out var _j)) { ExpireTime = (long)_j; } else { ExpireTime = null; } }
+        BatchUseable = (bool)_obj.GetValue("batch_useable");
+        ExchangeStream = global::GameConfig.item.ItemExchange.DeserializeItemExchange(_obj.GetValue("exchange_stream"));
+        { var __json0 = _obj.GetValue("exchange_list"); ExchangeList = new System.Collections.Generic.List<item.ItemExchange>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { item.ItemExchange __v0;  __v0 = global::GameConfig.item.ItemExchange.DeserializeItemExchange(__e0);  ExchangeList.Add(__v0); }   }
+        ExchangeColumn = global::GameConfig.item.ItemExchange.DeserializeItemExchange(_obj.GetValue("exchange_column"));
     }
 
-    public static Item DeserializeItem(ByteBuf _buf)
+    public static Item DeserializeItem(JToken _buf)
     {
         return new item.Item(_buf);
     }
@@ -72,7 +76,8 @@ public sealed partial class Item : Luban.BeanBase
     /// 道具兑换配置
     /// </summary>
     public readonly item.ItemExchange ExchangeColumn;
-   
+
+
     public const int __ID__ = 2107285806;
     public override int GetTypeId() => __ID__;
 

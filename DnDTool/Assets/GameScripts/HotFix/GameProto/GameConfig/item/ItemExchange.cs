@@ -8,19 +8,23 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.item
 {
+
 public sealed partial class ItemExchange : Luban.BeanBase
 {
-    public ItemExchange(ByteBuf _buf) 
+    public ItemExchange(JToken _buf) 
     {
-        Id = _buf.ReadInt();
-        Num = _buf.ReadInt();
+        JObject _obj = _buf as JObject;
+        Id = (int)_obj.GetValue("id");
+        Num = (int)_obj.GetValue("num");
     }
 
-    public static ItemExchange DeserializeItemExchange(ByteBuf _buf)
+    public static ItemExchange DeserializeItemExchange(JToken _buf)
     {
         return new item.ItemExchange(_buf);
     }
@@ -33,7 +37,8 @@ public sealed partial class ItemExchange : Luban.BeanBase
     /// 道具数量
     /// </summary>
     public readonly int Num;
-   
+
+
     public const int __ID__ = 1814660465;
     public override int GetTypeId() => __ID__;
 

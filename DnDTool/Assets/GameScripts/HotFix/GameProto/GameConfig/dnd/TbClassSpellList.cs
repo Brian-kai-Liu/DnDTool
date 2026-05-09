@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 职业法术列表关系表。业务层按 class_id + spell_id 查询。
 /// </summary>
@@ -20,21 +23,23 @@ public partial class TbClassSpellList
     private readonly System.Collections.Generic.List<dnd.ClassSpellList> _dataList;
 
 
-    public TbClassSpellList(ByteBuf _buf)
+
+    public TbClassSpellList(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataList = new System.Collections.Generic.List<dnd.ClassSpellList>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataList = new System.Collections.Generic.List<dnd.ClassSpellList>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.ClassSpellList _v;
-            _v = global::GameConfig.dnd.ClassSpellList.DeserializeClassSpellList(_buf);
+            _v = global::GameConfig.dnd.ClassSpellList.DeserializeClassSpellList(_ele);
             _dataList.Add(_v);
         }
     }
 
     public System.Collections.Generic.IReadOnlyList<dnd.ClassSpellList> DataList => _dataList;
 
-    
+
+
     public void ResolveRef(Tables tables)
     {
         foreach(var _v in _dataList)
@@ -43,6 +48,5 @@ public partial class TbClassSpellList
         }
     }
 }
-
 }
 

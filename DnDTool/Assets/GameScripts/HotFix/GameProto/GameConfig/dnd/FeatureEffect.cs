@@ -8,24 +8,28 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class FeatureEffect : Luban.BeanBase
 {
-    public FeatureEffect(ByteBuf _buf) 
+    public FeatureEffect(JToken _buf) 
     {
-        EffectId = _buf.ReadString();
-        EffectType = _buf.ReadString();
-        Target = _buf.ReadString();
-        Value = _buf.ReadString();
-        Condition = _buf.ReadString();
-        StackingRule = _buf.ReadString();
-        ManualNote = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        EffectId = (string)_obj.GetValue("effect_id");
+        EffectType = (string)_obj.GetValue("effect_type");
+        Target = (string)_obj.GetValue("target");
+        Value = (string)_obj.GetValue("value");
+        Condition = (string)_obj.GetValue("condition");
+        StackingRule = (string)_obj.GetValue("stacking_rule");
+        ManualNote = (string)_obj.GetValue("manual_note");
     }
 
-    public static FeatureEffect DeserializeFeatureEffect(ByteBuf _buf)
+    public static FeatureEffect DeserializeFeatureEffect(JToken _buf)
     {
         return new dnd.FeatureEffect(_buf);
     }
@@ -58,7 +62,8 @@ public sealed partial class FeatureEffect : Luban.BeanBase
     /// 无法自动处理时的手动处理说明。
     /// </summary>
     public readonly string ManualNote;
-   
+
+
     public const int __ID__ = -614561229;
     public override int GetTypeId() => __ID__;
 

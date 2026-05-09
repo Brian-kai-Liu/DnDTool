@@ -8,35 +8,39 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class SpellDefine : Luban.BeanBase
 {
-    public SpellDefine(ByteBuf _buf) 
+    public SpellDefine(JToken _buf) 
     {
-        SpellId = _buf.ReadString();
-        PackageId = _buf.ReadString();
-        Name = _buf.ReadString();
-        Level = _buf.ReadInt();
-        School = _buf.ReadString();
-        CastingTime = _buf.ReadString();
-        Range = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); Components = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); Components.Add(_e0);}}
-        Duration = _buf.ReadString();
-        Concentration = _buf.ReadBool();
-        Ritual = _buf.ReadBool();
-        AttackType = _buf.ReadString();
-        SaveAbility = _buf.ReadString();
-        DamageFormula = _buf.ReadString();
-        DamageType = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); EffectTags = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EffectTags.Add(_e0);}}
-        Description = _buf.ReadString();
-        HigherLevelDescription = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        SpellId = (string)_obj.GetValue("spell_id");
+        PackageId = (string)_obj.GetValue("package_id");
+        Name = (string)_obj.GetValue("name");
+        Level = (int)_obj.GetValue("level");
+        School = (string)_obj.GetValue("school");
+        CastingTime = (string)_obj.GetValue("casting_time");
+        Range = (string)_obj.GetValue("range");
+        { var __json0 = _obj.GetValue("components"); Components = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  Components.Add(__v0); }   }
+        Duration = (string)_obj.GetValue("duration");
+        Concentration = (bool)_obj.GetValue("concentration");
+        Ritual = (bool)_obj.GetValue("ritual");
+        AttackType = (string)_obj.GetValue("attack_type");
+        SaveAbility = (string)_obj.GetValue("save_ability");
+        DamageFormula = (string)_obj.GetValue("damage_formula");
+        DamageType = (string)_obj.GetValue("damage_type");
+        { var __json0 = _obj.GetValue("effect_tags"); EffectTags = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  EffectTags.Add(__v0); }   }
+        Description = (string)_obj.GetValue("description");
+        HigherLevelDescription = (string)_obj.GetValue("higher_level_description");
     }
 
-    public static SpellDefine DeserializeSpellDefine(ByteBuf _buf)
+    public static SpellDefine DeserializeSpellDefine(JToken _buf)
     {
         return new dnd.SpellDefine(_buf);
     }
@@ -113,7 +117,8 @@ public sealed partial class SpellDefine : Luban.BeanBase
     /// 升环描述。
     /// </summary>
     public readonly string HigherLevelDescription;
-   
+
+
     public const int __ID__ = -145992177;
     public override int GetTypeId() => __ID__;
 

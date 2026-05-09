@@ -1,0 +1,172 @@
+[
+  {
+    "choice_group_id": "choice_asi_or_feat",
+    "package_id": "phb_5e_zh_user",
+    "name": "属性值提升或专长",
+    "choice_type": "FeatOrAbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "职业获得属性值提升时，如果启用可选规则可改选专长。"
+  },
+  {
+    "choice_group_id": "choice_subclass",
+    "package_id": "phb_5e_zh_user",
+    "name": "子职业/道路/领域/传统选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "by class",
+    "description": "在指定等级选择职业分支；第一版仅记录选择点。"
+  },
+  {
+    "choice_group_id": "choice_skill_any",
+    "package_id": "phb_5e_zh_user",
+    "name": "任选技能熟练",
+    "choice_type": "Skill",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnySkill",
+    "description": "通用技能选择占位。"
+  },
+  {
+    "choice_group_id": "choice_language_any",
+    "package_id": "phb_5e_zh_user",
+    "name": "任选语言",
+    "choice_type": "Language",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnyLanguage",
+    "description": "通用语言选择占位。"
+  },
+  {
+    "choice_group_id": "choice_feat",
+    "package_id": "phb_5e_zh_user",
+    "name": "选择专长",
+    "choice_type": "Feat",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "PHBFeat",
+    "description": "从 PHB 专长表中选择一个专长。"
+  },
+  {
+    "choice_group_id": "choice_barbarian_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "野蛮人技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "barbarian:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_bard_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "吟游诗人技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "bard:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_cleric_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "牧师技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "cleric:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_druid_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "德鲁伊技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "druid:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_fighter_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "战士技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "fighter:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_monk_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "武僧技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "monk:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_paladin_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "圣武士技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "paladin:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_ranger_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "ranger:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_rogue_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "游荡者技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "rogue:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "术士技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "sorcerer:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_warlock_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "邪术师技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "warlock:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  },
+  {
+    "choice_group_id": "choice_wizard_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "法师技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "wizard:classSkillList",
+    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+  }
+]

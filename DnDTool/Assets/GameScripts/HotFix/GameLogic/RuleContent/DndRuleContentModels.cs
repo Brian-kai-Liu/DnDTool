@@ -27,6 +27,10 @@ namespace GameLogic
 
         public List<DndChoiceOptionData> ChoiceOptions { get; } = new List<DndChoiceOptionData>();
 
+        public List<DndRaceMainDefineData> RaceMains { get; } = new List<DndRaceMainDefineData>();
+
+        public List<DndRaceSubDefineData> RaceSubs { get; } = new List<DndRaceSubDefineData>();
+
         public List<DndRaceDefineData> Races { get; } = new List<DndRaceDefineData>();
 
         public List<DndBackgroundDefineData> Backgrounds { get; } = new List<DndBackgroundDefineData>();
@@ -38,6 +42,8 @@ namespace GameLogic
         public List<DndClassSpellListData> ClassSpellLists { get; } = new List<DndClassSpellListData>();
 
         public List<DndEnumListData> EnumLists { get; } = new List<DndEnumListData>();
+
+        public List<DndAlignmentData> Alignments { get; } = new List<DndAlignmentData>();
     }
 
     internal sealed class DndRulePackageData
@@ -214,6 +220,48 @@ namespace GameLogic
         public string Description { get; set; } = string.Empty;
     }
 
+    internal sealed class DndRaceMainDefineData
+    {
+        public string MainRaceId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public string Size { get; set; } = string.Empty;
+
+        public int Speed { get; set; }
+
+        public List<string> LanguageIds { get; } = new List<string>();
+
+        public List<string> MainFeatureIds { get; } = new List<string>();
+
+        public List<string> ChoiceGroupIds { get; } = new List<string>();
+
+        public string Description { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndRaceSubDefineData
+    {
+        public string SubRaceId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string MainRaceId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public string Size { get; set; } = string.Empty;
+
+        public int Speed { get; set; }
+
+        public List<string> FeatureIds { get; } = new List<string>();
+
+        public List<string> ChoiceGroupIds { get; } = new List<string>();
+
+        public string Description { get; set; } = string.Empty;
+    }
+
     internal sealed class DndBackgroundDefineData
     {
         public string BackgroundId { get; set; } = string.Empty;
@@ -313,6 +361,15 @@ namespace GameLogic
         public string EnumType { get; set; } = string.Empty;
 
         public string Value { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndAlignmentData
+    {
+        public string AlignmentId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
     }

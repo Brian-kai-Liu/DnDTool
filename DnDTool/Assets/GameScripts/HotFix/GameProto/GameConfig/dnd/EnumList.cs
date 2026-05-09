@@ -8,20 +8,24 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class EnumList : Luban.BeanBase
 {
-    public EnumList(ByteBuf _buf) 
+    public EnumList(JToken _buf) 
     {
-        EnumType = _buf.ReadString();
-        Value = _buf.ReadString();
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        EnumType = (string)_obj.GetValue("enum_type");
+        Value = (string)_obj.GetValue("value");
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static EnumList DeserializeEnumList(ByteBuf _buf)
+    public static EnumList DeserializeEnumList(JToken _buf)
     {
         return new dnd.EnumList(_buf);
     }
@@ -38,7 +42,8 @@ public sealed partial class EnumList : Luban.BeanBase
     /// 说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -1794162765;
     public override int GetTypeId() => __ID__;
 

@@ -8,25 +8,29 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class FeatureDefine : Luban.BeanBase
 {
-    public FeatureDefine(ByteBuf _buf) 
+    public FeatureDefine(JToken _buf) 
     {
-        FeatureId = _buf.ReadString();
-        PackageId = _buf.ReadString();
-        Name = _buf.ReadString();
-        FeatureType = _buf.ReadString();
-        SourceRef = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); PrerequisiteIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); PrerequisiteIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); EffectIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EffectIds.Add(_e0);}}
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        FeatureId = (string)_obj.GetValue("feature_id");
+        PackageId = (string)_obj.GetValue("package_id");
+        Name = (string)_obj.GetValue("name");
+        FeatureType = (string)_obj.GetValue("feature_type");
+        SourceRef = (string)_obj.GetValue("source_ref");
+        { var __json0 = _obj.GetValue("prerequisite_ids"); PrerequisiteIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  PrerequisiteIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("effect_ids"); EffectIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  EffectIds.Add(__v0); }   }
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static FeatureDefine DeserializeFeatureDefine(ByteBuf _buf)
+    public static FeatureDefine DeserializeFeatureDefine(JToken _buf)
     {
         return new dnd.FeatureDefine(_buf);
     }
@@ -63,7 +67,8 @@ public sealed partial class FeatureDefine : Luban.BeanBase
     /// 用户手动录入的描述文本。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -644109731;
     public override int GetTypeId() => __ID__;
 

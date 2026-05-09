@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 角色创建与升级选择组表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbChoiceGroup
     private readonly System.Collections.Generic.Dictionary<string, dnd.ChoiceGroup> _dataMap;
     private readonly System.Collections.Generic.List<dnd.ChoiceGroup> _dataList;
     
-    public TbChoiceGroup(ByteBuf _buf)
+    public TbChoiceGroup(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.ChoiceGroup>(n);
-        _dataList = new System.Collections.Generic.List<dnd.ChoiceGroup>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.ChoiceGroup>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.ChoiceGroup>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.ChoiceGroup _v;
-            _v = global::GameConfig.dnd.ChoiceGroup.DeserializeChoiceGroup(_buf);
+            _v = global::GameConfig.dnd.ChoiceGroup.DeserializeChoiceGroup(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.ChoiceGroupId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.ChoiceGroup> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.ChoiceGroup> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbChoiceGroup
     }
 
 }
-
 }
 

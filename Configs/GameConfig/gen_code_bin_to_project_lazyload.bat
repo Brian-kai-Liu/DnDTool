@@ -12,8 +12,8 @@ xcopy /s /e /i /y "%CONF_ROOT%\CustomTemplate\ExternalTypeUtil.cs" "%WORKSPACE%\
 
 dotnet %LUBAN_DLL% ^
     -t client ^
-    -c cs-bin ^
-    -d bin^
+    -c cs-newtonsoft-json ^
+    -d json^
     --conf %CONF_ROOT%\luban.conf ^
     --customTemplateDir %CONF_ROOT%\CustomTemplate\CustomTemplate_Client_LazyLoad ^
     -x code.lineEnding=crlf ^

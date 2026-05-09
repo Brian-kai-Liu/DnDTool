@@ -8,25 +8,29 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class ChoiceGroup : Luban.BeanBase
 {
-    public ChoiceGroup(ByteBuf _buf) 
+    public ChoiceGroup(JToken _buf) 
     {
-        ChoiceGroupId = _buf.ReadString();
-        PackageId = _buf.ReadString();
-        Name = _buf.ReadString();
-        ChoiceType = _buf.ReadString();
-        MinSelect = _buf.ReadInt();
-        MaxSelect = _buf.ReadInt();
-        OptionFilter = _buf.ReadString();
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        ChoiceGroupId = (string)_obj.GetValue("choice_group_id");
+        PackageId = (string)_obj.GetValue("package_id");
+        Name = (string)_obj.GetValue("name");
+        ChoiceType = (string)_obj.GetValue("choice_type");
+        MinSelect = (int)_obj.GetValue("min_select");
+        MaxSelect = (int)_obj.GetValue("max_select");
+        OptionFilter = (string)_obj.GetValue("option_filter");
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static ChoiceGroup DeserializeChoiceGroup(ByteBuf _buf)
+    public static ChoiceGroup DeserializeChoiceGroup(JToken _buf)
     {
         return new dnd.ChoiceGroup(_buf);
     }
@@ -63,7 +67,8 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
     /// 说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -195751318;
     public override int GetTypeId() => __ID__;
 

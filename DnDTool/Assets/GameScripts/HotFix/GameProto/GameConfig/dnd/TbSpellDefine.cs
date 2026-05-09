@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 法术定义表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbSpellDefine
     private readonly System.Collections.Generic.Dictionary<string, dnd.SpellDefine> _dataMap;
     private readonly System.Collections.Generic.List<dnd.SpellDefine> _dataList;
     
-    public TbSpellDefine(ByteBuf _buf)
+    public TbSpellDefine(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.SpellDefine>(n);
-        _dataList = new System.Collections.Generic.List<dnd.SpellDefine>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.SpellDefine>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.SpellDefine>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.SpellDefine _v;
-            _v = global::GameConfig.dnd.SpellDefine.DeserializeSpellDefine(_buf);
+            _v = global::GameConfig.dnd.SpellDefine.DeserializeSpellDefine(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.SpellId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.SpellDefine> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.SpellDefine> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbSpellDefine
     }
 
 }
-
 }
 

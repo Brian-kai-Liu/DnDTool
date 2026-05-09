@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 规则包定义表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbRulePackage
     private readonly System.Collections.Generic.Dictionary<string, dnd.RulePackage> _dataMap;
     private readonly System.Collections.Generic.List<dnd.RulePackage> _dataList;
     
-    public TbRulePackage(ByteBuf _buf)
+    public TbRulePackage(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.RulePackage>(n);
-        _dataList = new System.Collections.Generic.List<dnd.RulePackage>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.RulePackage>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.RulePackage>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.RulePackage _v;
-            _v = global::GameConfig.dnd.RulePackage.DeserializeRulePackage(_buf);
+            _v = global::GameConfig.dnd.RulePackage.DeserializeRulePackage(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.PackageId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.RulePackage> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.RulePackage> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbRulePackage
     }
 
 }
-
 }
 

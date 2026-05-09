@@ -1,5 +1,17 @@
+root = true
+
 [*]
+charset = utf-8
 
 # ReSharper properties
 resharper_csharp_max_line_length = 180
 resharper_place_attribute_on_same_line = false
+
+[*.cs]
+charset = utf-8-bom
+
+[*.{asmdef,asmref,json,xml,txt,md,csv,tsv}]
+charset = utf-8
+
+[*.{prefab,unity,asset,meta,mat,controller,anim,overrideController,playable,shader,compute,uss,uxml}]
+charset = utf-8

@@ -8,26 +8,31 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig
 {
+
 public partial struct vector2int
 {
-    public vector2int(ByteBuf _buf) 
+    public vector2int(JToken _buf) 
     {
-        X = _buf.ReadInt();
-        Y = _buf.ReadInt();
+        JObject _obj = _buf as JObject;
+        X = (int)_obj.GetValue("x");
+        Y = (int)_obj.GetValue("y");
     }
 
-    public static vector2int Deserializevector2int(ByteBuf _buf)
+    public static vector2int Deserializevector2int(JToken _buf)
     {
         return new vector2int(_buf);
     }
 
     public readonly int X;
     public readonly int Y;
-   
+
+
 
     public  void ResolveRef(Tables tables)
     {

@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.test
@@ -15,15 +17,17 @@ namespace GameConfig.test
 /// <summary>
 /// 这是一个矩形
 /// </summary>
+
 public sealed partial class Rectangle : Shape
 {
-    public Rectangle(ByteBuf _buf)  : base(_buf) 
+    public Rectangle(JToken _buf)  : base(_buf) 
     {
-        Width = _buf.ReadFloat();
-        Height = _buf.ReadFloat();
+        JObject _obj = _buf as JObject;
+        Width = (float)_obj.GetValue("width");
+        Height = (float)_obj.GetValue("height");
     }
 
-    public static Rectangle DeserializeRectangle(ByteBuf _buf)
+    public static Rectangle DeserializeRectangle(JToken _buf)
     {
         return new test.Rectangle(_buf);
     }
@@ -36,7 +40,8 @@ public sealed partial class Rectangle : Shape
     /// 高度
     /// </summary>
     public readonly float Height;
-   
+
+
     public const int __ID__ = -31893773;
     public override int GetTypeId() => __ID__;
 

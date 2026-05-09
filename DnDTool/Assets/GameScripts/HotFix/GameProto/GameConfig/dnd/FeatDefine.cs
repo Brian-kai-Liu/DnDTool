@@ -8,25 +8,29 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class FeatDefine : Luban.BeanBase
 {
-    public FeatDefine(ByteBuf _buf) 
+    public FeatDefine(JToken _buf) 
     {
-        FeatId = _buf.ReadString();
-        PackageId = _buf.ReadString();
-        Name = _buf.ReadString();
-        {int n0 = _buf.ReadSize(); PrerequisiteIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); PrerequisiteIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); FeatureIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); FeatureIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); EffectIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EffectIds.Add(_e0);}}
-        {int n0 = _buf.ReadSize(); ChoiceGroupIds = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ChoiceGroupIds.Add(_e0);}}
-        Description = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        FeatId = (string)_obj.GetValue("feat_id");
+        PackageId = (string)_obj.GetValue("package_id");
+        Name = (string)_obj.GetValue("name");
+        { var __json0 = _obj.GetValue("prerequisite_ids"); PrerequisiteIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  PrerequisiteIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("feature_ids"); FeatureIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  FeatureIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("effect_ids"); EffectIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  EffectIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("choice_group_ids"); ChoiceGroupIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ChoiceGroupIds.Add(__v0); }   }
+        Description = (string)_obj.GetValue("description");
     }
 
-    public static FeatDefine DeserializeFeatDefine(ByteBuf _buf)
+    public static FeatDefine DeserializeFeatDefine(JToken _buf)
     {
         return new dnd.FeatDefine(_buf);
     }
@@ -63,7 +67,8 @@ public sealed partial class FeatDefine : Luban.BeanBase
     /// 用户录入说明。
     /// </summary>
     public readonly string Description;
-   
+
+
     public const int __ID__ = -1829855487;
     public override int GetTypeId() => __ID__;
 

@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json.Linq;
 using Luban;
+
 
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
 /// 职业/种族/背景/专长/法术特性定义表
 /// </summary>
@@ -20,19 +23,20 @@ public partial class TbFeatureDefine
     private readonly System.Collections.Generic.Dictionary<string, dnd.FeatureDefine> _dataMap;
     private readonly System.Collections.Generic.List<dnd.FeatureDefine> _dataList;
     
-    public TbFeatureDefine(ByteBuf _buf)
+    public TbFeatureDefine(JArray _buf)
     {
-        int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.FeatureDefine>(n);
-        _dataList = new System.Collections.Generic.List<dnd.FeatureDefine>(n);
-        for(int i = n ; i > 0 ; --i)
+        _dataMap = new System.Collections.Generic.Dictionary<string, dnd.FeatureDefine>(_buf.Count);
+        _dataList = new System.Collections.Generic.List<dnd.FeatureDefine>(_buf.Count);
+        
+        foreach(JObject _ele in _buf)
         {
             dnd.FeatureDefine _v;
-            _v = global::GameConfig.dnd.FeatureDefine.DeserializeFeatureDefine(_buf);
+            _v = global::GameConfig.dnd.FeatureDefine.DeserializeFeatureDefine(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.FeatureId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.FeatureDefine> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.FeatureDefine> DataList => _dataList;
@@ -50,6 +54,5 @@ public partial class TbFeatureDefine
     }
 
 }
-
 }
 

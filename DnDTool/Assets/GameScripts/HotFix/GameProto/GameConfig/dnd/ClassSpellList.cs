@@ -8,23 +8,27 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace GameConfig.dnd
 {
+
 public sealed partial class ClassSpellList : Luban.BeanBase
 {
-    public ClassSpellList(ByteBuf _buf) 
+    public ClassSpellList(JToken _buf) 
     {
-        ClassId = _buf.ReadString();
-        SpellId = _buf.ReadString();
-        MinClassLevel = _buf.ReadInt();
-        AlwaysPrepared = _buf.ReadBool();
-        SourceFeatureId = _buf.ReadString();
-        Note = _buf.ReadString();
+        JObject _obj = _buf as JObject;
+        ClassId = (string)_obj.GetValue("class_id");
+        SpellId = (string)_obj.GetValue("spell_id");
+        MinClassLevel = (int)_obj.GetValue("min_class_level");
+        AlwaysPrepared = (bool)_obj.GetValue("always_prepared");
+        SourceFeatureId = (string)_obj.GetValue("source_feature_id");
+        Note = (string)_obj.GetValue("note");
     }
 
-    public static ClassSpellList DeserializeClassSpellList(ByteBuf _buf)
+    public static ClassSpellList DeserializeClassSpellList(JToken _buf)
     {
         return new dnd.ClassSpellList(_buf);
     }
@@ -53,7 +57,8 @@ public sealed partial class ClassSpellList : Luban.BeanBase
     /// 备注。
     /// </summary>
     public readonly string Note;
-   
+
+
     public const int __ID__ = 480786114;
     public override int GetTypeId() => __ID__;
 

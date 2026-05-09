@@ -1,0 +1,253 @@
+[
+  {
+    "background_id": "acolyte",
+    "package_id": "phb_5e_zh_user",
+    "name": "侍僧",
+    "skill_proficiencies": [
+      "洞悉",
+      "宗教"
+    ],
+    "tool_proficiencies": [],
+    "language_ids": [
+      "自选",
+      "自选"
+    ],
+    "feature_ids": [
+      "feature_background_acolyte"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "charlatan",
+    "package_id": "phb_5e_zh_user",
+    "name": "骗子",
+    "skill_proficiencies": [
+      "欺瞒",
+      "巧手"
+    ],
+    "tool_proficiencies": [
+      "易容工具",
+      "文书伪造工具"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_charlatan"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "criminal",
+    "package_id": "phb_5e_zh_user",
+    "name": "罪犯",
+    "skill_proficiencies": [
+      "欺瞒",
+      "隐匿"
+    ],
+    "tool_proficiencies": [
+      "赌具",
+      "盗贼工具"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_criminal"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "entertainer",
+    "package_id": "phb_5e_zh_user",
+    "name": "艺人",
+    "skill_proficiencies": [
+      "体操",
+      "表演"
+    ],
+    "tool_proficiencies": [
+      "易容工具",
+      "乐器"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_entertainer"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "folk_hero",
+    "package_id": "phb_5e_zh_user",
+    "name": "平民英雄",
+    "skill_proficiencies": [
+      "驯兽",
+      "求生"
+    ],
+    "tool_proficiencies": [
+      "工匠工具",
+      "载具（陆运）"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_folk_hero"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "guild_artisan",
+    "package_id": "phb_5e_zh_user",
+    "name": "公会工匠",
+    "skill_proficiencies": [
+      "洞悉",
+      "游说"
+    ],
+    "tool_proficiencies": [
+      "工匠工具"
+    ],
+    "language_ids": [
+      "自选"
+    ],
+    "feature_ids": [
+      "feature_background_guild_artisan"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "hermit",
+    "package_id": "phb_5e_zh_user",
+    "name": "隐士",
+    "skill_proficiencies": [
+      "医药",
+      "宗教"
+    ],
+    "tool_proficiencies": [
+      "草药工具"
+    ],
+    "language_ids": [
+      "自选"
+    ],
+    "feature_ids": [
+      "feature_background_hermit"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "noble",
+    "package_id": "phb_5e_zh_user",
+    "name": "贵族",
+    "skill_proficiencies": [
+      "历史",
+      "游说"
+    ],
+    "tool_proficiencies": [
+      "赌具"
+    ],
+    "language_ids": [
+      "自选"
+    ],
+    "feature_ids": [
+      "feature_background_noble"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "outlander",
+    "package_id": "phb_5e_zh_user",
+    "name": "化外之民",
+    "skill_proficiencies": [
+      "运动",
+      "求生"
+    ],
+    "tool_proficiencies": [
+      "乐器"
+    ],
+    "language_ids": [
+      "自选"
+    ],
+    "feature_ids": [
+      "feature_background_outlander"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "sage",
+    "package_id": "phb_5e_zh_user",
+    "name": "贤者",
+    "skill_proficiencies": [
+      "奥秘",
+      "历史"
+    ],
+    "tool_proficiencies": [],
+    "language_ids": [
+      "自选",
+      "自选"
+    ],
+    "feature_ids": [
+      "feature_background_sage"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "sailor",
+    "package_id": "phb_5e_zh_user",
+    "name": "水手",
+    "skill_proficiencies": [
+      "运动",
+      "察觉"
+    ],
+    "tool_proficiencies": [
+      "领航工具",
+      "载具（水运）"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_sailor"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "soldier",
+    "package_id": "phb_5e_zh_user",
+    "name": "士兵",
+    "skill_proficiencies": [
+      "运动",
+      "威吓"
+    ],
+    "tool_proficiencies": [
+      "赌具",
+      "载具（陆运）"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_soldier"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  },
+  {
+    "background_id": "urchin",
+    "package_id": "phb_5e_zh_user",
+    "name": "流浪儿",
+    "skill_proficiencies": [
+      "巧手",
+      "隐匿"
+    ],
+    "tool_proficiencies": [
+      "易容工具",
+      "盗贼工具"
+    ],
+    "language_ids": [],
+    "feature_ids": [
+      "feature_background_urchin"
+    ],
+    "equipment_grant_ids": [],
+    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+  }
+]
