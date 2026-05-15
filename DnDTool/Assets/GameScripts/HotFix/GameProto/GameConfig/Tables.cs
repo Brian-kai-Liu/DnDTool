@@ -184,24 +184,45 @@ public partial class Tables
         }
     }
     /// <summary>
-    /// 种族/血统定义表
+    /// 主要种族定义表
     /// </summary>
-    private dnd.TbRaceDefine m_TbRaceDefine;
-    public dnd.TbRaceDefine TbRaceDefine
+    private dnd.TbRaceMainDefine m_TbRaceMainDefine;
+    public dnd.TbRaceMainDefine TbRaceMainDefine
     {
         get
         {
-            if (m_TbRaceDefine == null)
+            if (m_TbRaceMainDefine == null)
             {
-                m_TbRaceDefine = new dnd.TbRaceDefine(defaultLoader("dnd_tbracedefine"));
-                m_TbRaceDefine.ResolveRef(this);
+                m_TbRaceMainDefine = new dnd.TbRaceMainDefine(defaultLoader("dnd_tbracemaindefine"));
+                m_TbRaceMainDefine.ResolveRef(this);
             }
-            return m_TbRaceDefine;
+            return m_TbRaceMainDefine;
         }
         set
         {
-            m_TbRaceDefine = value;
-            m_TbRaceDefine.ResolveRef(this);
+            m_TbRaceMainDefine = value;
+            m_TbRaceMainDefine.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// 亚种定义表
+    /// </summary>
+    private dnd.TbRaceSubDefine m_TbRaceSubDefine;
+    public dnd.TbRaceSubDefine TbRaceSubDefine
+    {
+        get
+        {
+            if (m_TbRaceSubDefine == null)
+            {
+                m_TbRaceSubDefine = new dnd.TbRaceSubDefine(defaultLoader("dnd_tbracesubdefine"));
+                m_TbRaceSubDefine.ResolveRef(this);
+            }
+            return m_TbRaceSubDefine;
+        }
+        set
+        {
+            m_TbRaceSubDefine = value;
+            m_TbRaceSubDefine.ResolveRef(this);
         }
     }
     /// <summary>

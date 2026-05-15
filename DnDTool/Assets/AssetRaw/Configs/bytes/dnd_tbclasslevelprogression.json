@@ -90,7 +90,6 @@
     "fixed_hp_gain": 7,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -152,7 +151,6 @@
     "fixed_hp_gain": 7,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -212,7 +210,6 @@
     "fixed_hp_gain": 7,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -420,7 +417,6 @@
       "feature_bard_level_06_countercharm"
     ],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 6,
@@ -560,7 +556,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 14,
@@ -706,7 +701,6 @@
       "feature_cleric_level_02_channel_divinity"
     ],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 2,
@@ -770,7 +764,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 6,
@@ -802,8 +795,7 @@
       "feature_asi"
     ],
     "choice_group_ids": [
-      "choice_asi_or_feat",
-      "choice_subclass"
+      "choice_asi_or_feat"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 8,
@@ -941,7 +933,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 17,
@@ -1087,7 +1078,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 6,
@@ -1149,7 +1139,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 10,
@@ -1211,7 +1200,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 14,
@@ -1423,7 +1411,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -1470,7 +1457,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -1547,7 +1533,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -1595,7 +1580,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -1729,7 +1713,6 @@
       "feature_monk_level_06_ki_empowered_strikes"
     ],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -1805,7 +1788,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -1899,7 +1881,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -2067,7 +2048,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 7,
@@ -2195,7 +2175,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 15,
@@ -2275,7 +2254,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 20,
@@ -2399,7 +2377,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 7,
@@ -2468,7 +2445,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 11,
@@ -2536,7 +2512,6 @@
     "fixed_hp_gain": 6,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 15,
@@ -2768,7 +2743,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -2832,7 +2806,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -2894,7 +2867,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "prepared_spell_formula": "",
@@ -3050,7 +3022,6 @@
     "fixed_hp_gain": 4,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 6,
@@ -3188,7 +3159,6 @@
     "fixed_hp_gain": 4,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 14,
@@ -3258,7 +3228,6 @@
     "fixed_hp_gain": 4,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 18,
@@ -3408,7 +3377,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 6,
@@ -3478,7 +3446,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 10,
@@ -3552,7 +3519,6 @@
     "fixed_hp_gain": 5,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 14,
@@ -3763,7 +3729,6 @@
     "fixed_hp_gain": 4,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 6,
@@ -3825,7 +3790,6 @@
     "fixed_hp_gain": 4,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 10,
@@ -3887,7 +3851,6 @@
     "fixed_hp_gain": 4,
     "feature_ids": [],
     "choice_group_ids": [
-      "choice_subclass"
     ],
     "resource_grant_ids": [],
     "spell_slot_progression_level": 14,

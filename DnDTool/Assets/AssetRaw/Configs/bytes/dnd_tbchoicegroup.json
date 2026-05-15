@@ -57,7 +57,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "barbarian:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_bard_skill",
@@ -67,7 +67,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "bard:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_cleric_skill",
@@ -77,7 +77,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "cleric:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_druid_skill",
@@ -87,7 +87,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "druid:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_fighter_skill",
@@ -97,7 +97,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "fighter:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_monk_skill",
@@ -107,7 +107,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "monk:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_paladin_skill",
@@ -117,7 +117,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "paladin:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_ranger_skill",
@@ -127,7 +127,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "ranger:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_rogue_skill",
@@ -137,7 +137,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "rogue:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_sorcerer_skill",
@@ -147,7 +147,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "sorcerer:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_warlock_skill",
@@ -157,7 +157,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "warlock:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   },
   {
     "choice_group_id": "choice_wizard_skill",
@@ -167,6 +167,6 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "wizard:classSkillList",
-    "description": "PHB 职业技能选择；候选列表后续可继续精细化。"
+    "description": ""
   }
 ]

@@ -1,0 +1,139 @@
+[
+  {
+    "sub_race_id": "dwarf_hill",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "dwarf",
+    "name": "丘陵矮人",
+    "size": "中型",
+    "speed": 25,
+    "unique_feature_ids": [
+      "feature_race_dwarf_hill_ability_wisdom_1",
+      "feature_race_dwarf_hill_dwarven_toughness"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "dwarf_mountain",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "dwarf",
+    "name": "山地矮人",
+    "size": "中型",
+    "speed": 25,
+    "unique_feature_ids": [
+      "feature_race_dwarf_mountain_ability_strength_2",
+      "feature_race_dwarf_mountain_dwarven_armor_training"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "elf_high",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "elf",
+    "name": "高等精灵",
+    "size": "中型",
+    "speed": 30,
+    "unique_feature_ids": [
+      "feature_race_elf_high_ability_intelligence_1",
+      "feature_race_elf_high_elf_weapon_training",
+      "feature_race_elf_high_cantrip",
+      "feature_race_elf_high_extra_language"
+    ],
+    "choice_group_ids": [
+      "choice_language_any"
+    ],
+    "description": ""
+  },
+  {
+    "sub_race_id": "elf_wood",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "elf",
+    "name": "木精灵",
+    "size": "中型",
+    "speed": 35,
+    "unique_feature_ids": [
+      "feature_race_elf_wood_ability_wisdom_1",
+      "feature_race_elf_wood_elf_weapon_training",
+      "feature_race_elf_wood_fleet_of_foot",
+      "feature_race_elf_wood_mask_of_the_wild"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "elf_drow",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "elf",
+    "name": "卓尔精灵",
+    "size": "中型",
+    "speed": 30,
+    "unique_feature_ids": [
+      "feature_race_elf_drow_ability_charisma_1",
+      "feature_race_elf_drow_superior_darkvision",
+      "feature_race_elf_drow_sunlight_sensitivity",
+      "feature_race_elf_drow_drow_magic",
+      "feature_race_elf_drow_drow_weapon_training"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "halfling_lightfoot",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "halfling",
+    "name": "轻足半身人",
+    "size": "小型",
+    "speed": 25,
+    "unique_feature_ids": [
+      "feature_race_halfling_lightfoot_ability_charisma_1",
+      "feature_race_halfling_lightfoot_naturally_stealthy"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "halfling_stout",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "halfling",
+    "name": "敦实半身人",
+    "size": "小型",
+    "speed": 25,
+    "unique_feature_ids": [
+      "feature_race_halfling_stout_ability_constitution_1",
+      "feature_race_halfling_stout_stout_resilience"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "gnome_forest",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "gnome",
+    "name": "森林侏儒",
+    "size": "小型",
+    "speed": 25,
+    "unique_feature_ids": [
+      "feature_race_gnome_forest_ability_dexterity_1",
+      "feature_race_gnome_forest_natural_illusionist",
+      "feature_race_gnome_forest_speak_with_small_beasts"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "sub_race_id": "gnome_rock",
+    "package_id": "phb_5e_zh_user",
+    "main_race_id": "gnome",
+    "name": "岩侏儒",
+    "size": "小型",
+    "speed": 25,
+    "unique_feature_ids": [
+      "feature_race_gnome_rock_ability_constitution_1",
+      "feature_race_gnome_rock_artificers_lore",
+      "feature_race_gnome_rock_tinker"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  }
+]

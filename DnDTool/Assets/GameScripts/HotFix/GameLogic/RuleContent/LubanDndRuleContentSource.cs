@@ -26,14 +26,19 @@ namespace GameLogic
 
                 LoadRows(tables, "TbRulePackage", library.RulePackages, CreateRulePackage);
                 LoadRows(tables, "TbClassDefine", library.Classes, CreateClassDefine);
-                LoadRows(tables, "TbClassLevelProgression", library.ClassLevelProgressions, CreateClassLevelProgression);
+                LoadRows(tables, "TbLevelProgression", library.LevelProgressions, CreateLevelProgression);
+                if (library.LevelProgressions.Count == 0)
+                {
+                    LoadRows(tables, "TbClassLevelProgression", library.LevelProgressions, CreateLevelProgression);
+                }
                 LoadRows(tables, "TbFeatureDefine", library.Features, CreateFeatureDefine);
                 LoadRows(tables, "TbFeatureEffect", library.FeatureEffects, CreateFeatureEffect);
+                LoadRows(tables, "TbFeatureEffectCondition", library.FeatureEffectConditions, CreateFeatureEffectCondition);
                 LoadRows(tables, "TbChoiceGroup", library.ChoiceGroups, CreateChoiceGroup);
                 LoadRows(tables, "TbChoiceOption", library.ChoiceOptions, CreateChoiceOption);
+                LoadRows(tables, "TbSkillDefine", library.Skills, CreateSkillDefine);
                 LoadRows(tables, "TbRaceMainDefine", library.RaceMains, CreateRaceMainDefine);
                 LoadRows(tables, "TbRaceSubDefine", library.RaceSubs, CreateRaceSubDefine);
-                LoadRows(tables, "TbRaceDefine", library.Races, CreateRaceDefine);
                 LoadRows(tables, "TbBackgroundDefine", library.Backgrounds, CreateBackgroundDefine);
                 LoadRows(tables, "TbFeatDefine", library.Feats, CreateFeatDefine);
                 LoadRows(tables, "TbSpellDefine", library.Spells, CreateSpellDefine);
@@ -41,7 +46,7 @@ namespace GameLogic
                 LoadRows(tables, "TbEnumList", library.EnumLists, CreateEnumList);
                 LoadRows(tables, "TbAlignment", library.Alignments, CreateAlignment);
 
-                if (library.RaceMains.Count > 0)
+                if (library.RaceMains.Count > 0 || library.RaceSubs.Count > 0)
                 {
                     NormalizeRaceData(library);
                 }
@@ -388,11 +393,15 @@ namespace GameLogic
             return data;
         }
 
-        private static DndClassLevelProgressionData CreateClassLevelProgression(object row)
+        private static DndLevelProgressionData CreateLevelProgression(object row)
         {
-            DndClassLevelProgressionData data = new DndClassLevelProgressionData
+            DndLevelProgressionData data = new DndLevelProgressionData
             {
+                ProgressionId = GetString(row, "ProgressionId", "progression_id", "progressionId"),
+                OwnerType = GetString(row, "OwnerType", "owner_type", "ownerType"),
+                OwnerId = GetString(row, "OwnerId", "owner_id", "ownerId"),
                 ClassId = GetString(row, "ClassId", "class_id", "classId"),
+                SubclassId = GetString(row, "SubclassId", "subclass_id", "subclassId"),
                 Level = GetInt(row, "Level", "level"),
                 ProficiencyBonus = GetInt(row, "ProficiencyBonus", "proficiency_bonus", "proficiencyBonus"),
                 FixedHpGain = GetInt(row, "FixedHpGain", "fixed_hp_gain", "fixedHpGain"),
@@ -401,7 +410,9 @@ namespace GameLogic
                 SpellKnown = GetNullableInt(row, "SpellKnown", "spell_known", "spellKnown"),
                 PreparedSpellFormula = GetString(row, "PreparedSpellFormula", "prepared_spell_formula", "preparedSpellFormula"),
                 AsiAvailable = GetBool(row, "AsiAvailable", "asi_available", "asiAvailable"),
-                SubclassFeature = GetString(row, "SubclassFeature", "subclass_feature", "subclassFeature"),
+                AsiRuleId = GetString(row, "AsiRuleId", "asi_rule_id", "asiRuleId"),
+                SubclassFeature = GetBool(row, "SubclassFeature", "subclass_feature", "subclassFeature"),
+                SubclassChoiceGroupId = GetString(row, "SubclassChoiceGroupId", "subclass_choice_group_id", "subclassChoiceGroupId"),
                 Note = GetString(row, "Note", "note")
             };
             data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds"));
@@ -423,12 +434,13 @@ namespace GameLogic
             };
             data.PrerequisiteIds.AddRange(GetStringList(row, "PrerequisiteIds", "prerequisite_ids", "prerequisiteIds"));
             data.EffectIds.AddRange(GetStringList(row, "EffectIds", "effect_ids", "effectIds"));
+            data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
             return data;
         }
 
         private static DndFeatureEffectData CreateFeatureEffect(object row)
         {
-            return new DndFeatureEffectData
+            DndFeatureEffectData data = new DndFeatureEffectData
             {
                 EffectId = GetString(row, "EffectId", "effect_id", "effectId"),
                 EffectType = GetString(row, "EffectType", "effect_type", "effectType"),
@@ -437,6 +449,22 @@ namespace GameLogic
                 Condition = GetString(row, "Condition", "condition"),
                 StackingRule = GetString(row, "StackingRule", "stacking_rule", "stackingRule"),
                 ManualNote = GetString(row, "ManualNote", "manual_note", "manualNote")
+            };
+            data.ConditionIds.AddRange(GetStringList(row, "ConditionIds", "condition_ids", "conditionIds"));
+            return data;
+        }
+
+        private static DndFeatureEffectConditionData CreateFeatureEffectCondition(object row)
+        {
+            return new DndFeatureEffectConditionData
+            {
+                ConditionId = GetString(row, "ConditionId", "condition_id", "conditionId"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                ConditionType = GetString(row, "ConditionType", "condition_type", "conditionType"),
+                Target = GetString(row, "Target", "target"),
+                Operator = GetString(row, "Operator", "operator"),
+                Value = GetString(row, "Value", "value"),
+                Description = GetString(row, "Description", "description")
             };
         }
 
@@ -469,21 +497,16 @@ namespace GameLogic
             return data;
         }
 
-        private static DndRaceDefineData CreateRaceDefine(object row)
+        private static DndSkillDefineData CreateSkillDefine(object row)
         {
-            DndRaceDefineData data = new DndRaceDefineData
+            return new DndSkillDefineData
             {
-                RaceId = GetString(row, "RaceId", "race_id", "raceId"),
+                SkillId = GetString(row, "SkillId", "skill_id", "skillId"),
                 PackageId = GetString(row, "PackageId", "package_id", "packageId"),
                 Name = GetString(row, "Name", "name"),
-                Size = GetString(row, "Size", "size"),
-                Speed = GetInt(row, "Speed", "speed"),
+                AbilityId = GetString(row, "AbilityId", "ability_id", "abilityId"),
                 Description = GetString(row, "Description", "description")
             };
-            data.LanguageIds.AddRange(GetStringList(row, "LanguageIds", "language_ids", "languageIds"));
-            data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds"));
-            data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
-            return data;
         }
 
         private static DndRaceMainDefineData CreateRaceMainDefine(object row)
@@ -515,7 +538,7 @@ namespace GameLogic
                 Speed = GetInt(row, "Speed", "speed", "BaseSpeed", "base_speed", "baseSpeed"),
                 Description = GetString(row, "Description", "description", "Note", "note")
             };
-            data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds", "SubFeatureIds", "sub_feature_ids", "subFeatureIds"));
+            data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds", "SubFeatureIds", "sub_feature_ids", "subFeatureIds", "UniqueFeatureIds", "unique_feature_ids", "uniqueFeatureIds"));
             data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
             return data;
         }

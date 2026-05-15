@@ -16,7 +16,7 @@
       "feature_background_acolyte"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "charlatan",
@@ -35,7 +35,7 @@
       "feature_background_charlatan"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "criminal",
@@ -54,7 +54,7 @@
       "feature_background_criminal"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "entertainer",
@@ -73,7 +73,7 @@
       "feature_background_entertainer"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "folk_hero",
@@ -92,7 +92,7 @@
       "feature_background_folk_hero"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "guild_artisan",
@@ -112,7 +112,7 @@
       "feature_background_guild_artisan"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "hermit",
@@ -132,7 +132,7 @@
       "feature_background_hermit"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "noble",
@@ -152,7 +152,7 @@
       "feature_background_noble"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "outlander",
@@ -172,7 +172,7 @@
       "feature_background_outlander"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "sage",
@@ -191,7 +191,7 @@
       "feature_background_sage"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "sailor",
@@ -210,7 +210,7 @@
       "feature_background_sailor"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "soldier",
@@ -229,7 +229,7 @@
       "feature_background_soldier"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   },
   {
     "background_id": "urchin",
@@ -248,6 +248,6 @@
       "feature_background_urchin"
     ],
     "equipment_grant_ids": [],
-    "description": "PHB 背景结构化条目；装备、人物特征和叙事建议后续可拆成独立表。"
+    "description": ""
   }
 ]

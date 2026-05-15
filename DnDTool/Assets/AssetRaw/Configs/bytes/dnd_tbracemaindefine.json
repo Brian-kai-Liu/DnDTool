@@ -1,0 +1,182 @@
+[
+  {
+    "main_race_id": "dwarf",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人",
+    "size": "中型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "矮人语"
+    ],
+    "main_feature_ids": [
+      "feature_race_dwarf_hill_ability_constitution_2",
+      "feature_race_dwarf_hill_darkvision",
+      "feature_race_dwarf_hill_dwarven_resilience",
+      "feature_race_dwarf_hill_dwarven_combat_training",
+      "feature_race_dwarf_hill_tool_proficiency",
+      "feature_race_dwarf_hill_stonecunning"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "main_race_id": "elf",
+    "package_id": "phb_5e_zh_user",
+    "name": "精灵",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "精灵语"
+    ],
+    "main_feature_ids": [
+      "feature_race_elf_high_ability_dexterity_2",
+      "feature_race_elf_high_darkvision",
+      "feature_race_elf_high_keen_senses",
+      "feature_race_elf_high_fey_ancestry",
+      "feature_race_elf_high_trance"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "main_race_id": "halfling",
+    "package_id": "phb_5e_zh_user",
+    "name": "半身人",
+    "size": "小型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "半身人语"
+    ],
+    "main_feature_ids": [
+      "feature_race_halfling_lightfoot_ability_dexterity_2",
+      "feature_race_halfling_lightfoot_lucky",
+      "feature_race_halfling_lightfoot_brave",
+      "feature_race_halfling_lightfoot_halfling_nimbleness"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "main_race_id": "human",
+    "package_id": "phb_5e_zh_user",
+    "name": "人类",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语"
+    ],
+    "main_feature_ids": [
+      "feature_race_human_ability_all_1",
+      "feature_race_human_extra_language"
+    ],
+    "choice_group_ids": [
+      "choice_language_any"
+    ],
+    "description": ""
+  },
+  {
+    "main_race_id": "dragonborn",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙裔",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "龙语"
+    ],
+    "main_feature_ids": [
+      "feature_race_dragonborn_ability_strength_2",
+      "feature_race_dragonborn_ability_charisma_1",
+      "feature_race_dragonborn_draconic_ancestry",
+      "feature_race_dragonborn_breath_weapon",
+      "feature_race_dragonborn_damage_resistance"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "main_race_id": "gnome",
+    "package_id": "phb_5e_zh_user",
+    "name": "侏儒",
+    "size": "小型",
+    "speed": 25,
+    "language_ids": [
+      "通用语",
+      "侏儒语"
+    ],
+    "main_feature_ids": [
+      "feature_race_gnome_forest_ability_intelligence_2",
+      "feature_race_gnome_forest_darkvision",
+      "feature_race_gnome_forest_gnome_cunning"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "main_race_id": "half_elf",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "精灵语"
+    ],
+    "main_feature_ids": [
+      "feature_race_half_elf_ability_charisma_2",
+      "feature_race_half_elf_ability_twoother_1",
+      "feature_race_half_elf_darkvision",
+      "feature_race_half_elf_fey_ancestry",
+      "feature_race_half_elf_skill_versatility",
+      "feature_race_half_elf_extra_language"
+    ],
+    "choice_group_ids": [
+      "choice_language_any"
+    ],
+    "description": ""
+  },
+  {
+    "main_race_id": "half_orc",
+    "package_id": "phb_5e_zh_user",
+    "name": "半兽人",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "兽人语"
+    ],
+    "main_feature_ids": [
+      "feature_race_half_orc_ability_strength_2",
+      "feature_race_half_orc_ability_constitution_1",
+      "feature_race_half_orc_darkvision",
+      "feature_race_half_orc_menacing",
+      "feature_race_half_orc_relentless_endurance",
+      "feature_race_half_orc_savage_attacks"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  },
+  {
+    "main_race_id": "tiefling",
+    "package_id": "phb_5e_zh_user",
+    "name": "提夫林",
+    "size": "中型",
+    "speed": 30,
+    "language_ids": [
+      "通用语",
+      "炼狱语"
+    ],
+    "main_feature_ids": [
+      "feature_race_tiefling_ability_intelligence_1",
+      "feature_race_tiefling_ability_charisma_2",
+      "feature_race_tiefling_darkvision",
+      "feature_race_tiefling_hellish_resistance",
+      "feature_race_tiefling_infernal_legacy"
+    ],
+    "choice_group_ids": [],
+    "description": ""
+  }
+]

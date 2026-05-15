@@ -17,15 +17,19 @@ namespace GameLogic
 
         public List<DndClassDefineData> Classes { get; } = new List<DndClassDefineData>();
 
-        public List<DndClassLevelProgressionData> ClassLevelProgressions { get; } = new List<DndClassLevelProgressionData>();
+        public List<DndLevelProgressionData> LevelProgressions { get; } = new List<DndLevelProgressionData>();
 
         public List<DndFeatureDefineData> Features { get; } = new List<DndFeatureDefineData>();
 
         public List<DndFeatureEffectData> FeatureEffects { get; } = new List<DndFeatureEffectData>();
 
+        public List<DndFeatureEffectConditionData> FeatureEffectConditions { get; } = new List<DndFeatureEffectConditionData>();
+
         public List<DndChoiceGroupData> ChoiceGroups { get; } = new List<DndChoiceGroupData>();
 
         public List<DndChoiceOptionData> ChoiceOptions { get; } = new List<DndChoiceOptionData>();
+
+        public List<DndSkillDefineData> Skills { get; } = new List<DndSkillDefineData>();
 
         public List<DndRaceMainDefineData> RaceMains { get; } = new List<DndRaceMainDefineData>();
 
@@ -98,9 +102,17 @@ namespace GameLogic
         public string Description { get; set; } = string.Empty;
     }
 
-    internal sealed class DndClassLevelProgressionData
+    internal sealed class DndLevelProgressionData
     {
+        public string ProgressionId { get; set; } = string.Empty;
+
+        public string OwnerType { get; set; } = string.Empty;
+
+        public string OwnerId { get; set; } = string.Empty;
+
         public string ClassId { get; set; } = string.Empty;
+
+        public string SubclassId { get; set; } = string.Empty;
 
         public int Level { get; set; }
 
@@ -124,7 +136,11 @@ namespace GameLogic
 
         public bool AsiAvailable { get; set; }
 
-        public string SubclassFeature { get; set; } = string.Empty;
+        public string AsiRuleId { get; set; } = string.Empty;
+
+        public bool SubclassFeature { get; set; }
+
+        public string SubclassChoiceGroupId { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
     }
@@ -145,6 +161,8 @@ namespace GameLogic
 
         public List<string> EffectIds { get; } = new List<string>();
 
+        public List<string> ChoiceGroupIds { get; } = new List<string>();
+
         public string Description { get; set; } = string.Empty;
     }
 
@@ -160,9 +178,28 @@ namespace GameLogic
 
         public string Condition { get; set; } = string.Empty;
 
+        public List<string> ConditionIds { get; } = new List<string>();
+
         public string StackingRule { get; set; } = string.Empty;
 
         public string ManualNote { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndFeatureEffectConditionData
+    {
+        public string ConditionId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string ConditionType { get; set; } = string.Empty;
+
+        public string Target { get; set; } = string.Empty;
+
+        public string Operator { get; set; } = string.Empty;
+
+        public string Value { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
     }
 
     internal sealed class DndChoiceGroupData
@@ -195,6 +232,19 @@ namespace GameLogic
         public List<string> GrantFeatureIds { get; } = new List<string>();
 
         public List<string> GrantEffectIds { get; } = new List<string>();
+
+        public string Description { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndSkillDefineData
+    {
+        public string SkillId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public string AbilityId { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
     }

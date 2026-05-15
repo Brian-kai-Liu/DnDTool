@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -63,8 +63,6 @@ namespace GameLogic
         private TMP_Text m_tmpBackgroundValue = null!;
         private TMP_Text m_tmpFeatValue = null!;
         private TMP_Text m_tmpSpellValue = null!;
-        private TMP_Text m_tmpSelectionDetail = null!;
-        private TMP_Text m_tmpCharacterPreview = null!;
         private TMP_Text m_tmpPrevClassText = null!;
         private TMP_Text m_tmpNextClassText = null!;
         private TMP_Text m_tmpPrevRaceText = null!;
@@ -79,13 +77,27 @@ namespace GameLogic
         private TMP_Text m_tmpCharacterNameLabel = null!;
         private TMP_Text m_tmpAlignmentLabel = null!;
         private TMP_InputField m_tmpInputCharacterName = null!;
+        private TMP_InputField m_tmpInputCharacterLevel = null!;
+        private TMP_InputField m_tmpHpValue = null!;
         private TMP_Dropdown m_tmpDropdownAlignment = null!;
         private RectTransform m_rectPanelLeft = null!;
         private RectTransform m_rectPanelCenter = null!;
-        private RectTransform m_rectCreateDraft = null!;
         private GameObject m_goCardListRoot = null!;
         private GameObject m_goCreationOptionListRoot = null!;
+        private GameObject m_goRowCharacterBase = null!;
+        private GameObject m_goRowFeat = null!;
+        private GameObject m_goRowSpell = null!;
         private RectTransform m_rectCreationOptionListRoot = null!;
+        private RectTransform m_rectHpChoiceContent = null!;
+        private RectTransform m_rectHpRollContent = null!;
+        private RectTransform m_rectClassChoiceContent = null!;
+        private RectTransform m_rectFeatChoiceContent = null!;
+        private RectTransform m_rectSpellChoiceContent = null!;
+        private Button m_btnHpChoiceTemplate = null!;
+        private Button m_btnHpRoll = null!;
+        private Button m_btnHpRollConfirm = null!;
+        private Button m_btnClassChoiceTemplate = null!;
+        private Button m_btnFeatChoiceTemplate = null!;
         private GameObject m_goRowCharacterName = null!;
         private GameObject m_goRowAlignment = null!;
         private RectTransform m_rectCardContent = null!;
@@ -100,6 +112,45 @@ namespace GameLogic
         private Button m_btnRowBackground = null!;
         private Button m_btnRowFeat = null!;
         private Button m_btnRowSpell = null!;
+        private GameObject m_goPreviewDetailMainRaceBlock = null!;
+        private GameObject m_goPreviewDetailSubRaceBlock = null!;
+        private GameObject m_goPreviewDetailClassBlock = null!;
+        private GameObject m_goPreviewDetailBackgroundBlock = null!;
+        private RectTransform m_rectSelectionDetailContent = null!;
+        private TMP_Text m_tmpPreviewMainRaceName = null!;
+        private TMP_Text m_tmpPreviewBodySize = null!;
+        private TMP_Text m_tmpPreviewSpeed = null!;
+        private TMP_Text m_tmpPreviewLanguage = null!;
+        private TMP_Text m_tmpPreviewFeatureTitle = null!;
+        private TMP_Text m_tmpPreviewFeature = null!;
+        private TMP_Text m_tmpPreviewRaceDes = null!;
+        private TMP_Text m_tmpPreviewSubRaceName = null!;
+        private TMP_Text m_tmpPreviewSubRaceBodySize = null!;
+        private TMP_Text m_tmpPreviewSubRaceSpeed = null!;
+        private TMP_Text m_tmpPreviewSubFeatureTitle = null!;
+        private TMP_Text m_tmpPreviewSubRaceFeature = null!;
+        private TMP_Text m_tmpPreviewSubRaceDes = null!;
+        private TMP_Text m_tmpPreviewClassName = null!;
+        private TMP_Text m_tmpPreviewClassHPDice = null!;
+        private TMP_Text m_tmpPreviewClassMainAttri = null!;
+        private TMP_Text m_tmpPreviewClassDC = null!;
+        private TMP_Text m_tmpPreviewClassArmor = null!;
+        private TMP_Text m_tmpPreviewClassWeapon = null!;
+        private TMP_Text m_tmpPreviewClassTitle = null!;
+        private TMP_Text m_tmpPreviewClassFeature = null!;
+        private TMP_Text m_tmpPreviewBackgroundName = null!;
+        private TMP_Text m_tmpPreviewBackgroundSkill = null!;
+        private TMP_Text m_tmpPreviewBackgroundTools = null!;
+        private TMP_Text m_tmpPreviewBackgroundLanguage = null!;
+        private TMP_Text m_tmpPreviewBackgroundItem = null!;
+        private TMP_Text m_tmpPreviewBackgroundFeatureTitle = null!;
+        private TMP_Text m_tmpPreviewBackgroundFeature = null!;
+        private TMP_Text m_tmpPreviewBackgroundDes = null!;
+        private TMP_Text m_tmpHpRollLevel = null!;
+        private TMP_Text m_tmpHpRollHitDie = null!;
+        private TMP_Text m_tmpHpRollValue = null!;
+        private TMP_Text m_tmpHpRollConModifier = null!;
+        private TMP_Text m_tmpHpRollGain = null!;
 
         private readonly List<DndClassDefineData> m_classes = new List<DndClassDefineData>();
         private readonly List<DndRaceDefineData> m_races = new List<DndRaceDefineData>();
@@ -119,25 +170,8 @@ namespace GameLogic
         private Button[] m_rowRightButtons = Array.Empty<Button>();
         private TMP_Text[] m_rowLeftButtonTexts = Array.Empty<TMP_Text>();
         private TMP_Text[] m_rowRightButtonTexts = Array.Empty<TMP_Text>();
-        private RectTransform[] m_rowRects = Array.Empty<RectTransform>();
-        private Vector2[] m_rowOriginalAnchoredPositions = Array.Empty<Vector2>();
         private readonly List<CharacterCardListItemView> m_cardViews = new List<CharacterCardListItemView>();
         private readonly List<CharacterCreationOptionCardView> m_creationOptionCardViews = new List<CharacterCreationOptionCardView>();
-
-        private GridLayoutGroup m_creationOptionGridLayout = null!;
-        private ContentSizeFitter m_creationOptionContentFitter = null!;
-        private Vector2 m_creationOptionOriginalCellSize;
-        private Vector2 m_creationOptionOriginalSpacing;
-        private RectOffset m_creationOptionOriginalPadding = null!;
-        private int m_creationOptionOriginalConstraintCount;
-        private Vector2 m_panelLeftOriginalAnchorMin;
-        private Vector2 m_panelLeftOriginalAnchorMax;
-        private Vector2 m_panelLeftOriginalOffsetMin;
-        private Vector2 m_panelLeftOriginalOffsetMax;
-        private Vector2 m_panelCenterOriginalAnchorMax;
-        private Vector2 m_panelCenterOriginalOffsetMax;
-        private Vector2 m_createDraftOriginalAnchoredPosition;
-        private bool m_hasMovedCreationOptionListToLeft;
 
         private int m_selectedClassIndex;
         private int m_selectedRaceIndex;
@@ -147,6 +181,8 @@ namespace GameLogic
         private int m_selectedListCharacterIndex = -1;
         private string m_selectedMainRaceGroupKey = string.Empty;
         private bool m_isRefreshingCharacterInputs;
+        private int m_pendingHpRollLevel;
+        private int m_pendingHpRollValue;
         private CharacterCardManagementMode m_mode = CharacterCardManagementMode.List;
         private CharacterCreationOptionPanelMode m_centerOptionMode = CharacterCreationOptionPanelMode.None;
         private CharacterCardDraftSaveData m_currentCharacter;
@@ -154,99 +190,121 @@ namespace GameLogic
         protected override void ScriptGenerator()
         {
             m_btnBack = FindChildComponent<Button>("m_panelTopBar/m_btnBack");
-            m_btnPrevClass = FindChildComponent<Button>("m_panelLeft/m_rowClass/m_btnPrevClass");
-            m_btnNextClass = FindChildComponent<Button>("m_panelLeft/m_rowClass/m_btnNextClass");
-            m_btnPrevRace = FindChildComponent<Button>("m_panelLeft/m_rowRace/m_btnPrevRace");
-            m_btnNextRace = FindChildComponent<Button>("m_panelLeft/m_rowRace/m_btnNextRace");
-            m_btnPrevBackground = FindChildComponent<Button>("m_panelLeft/m_rowBackground/m_btnPrevBackground");
-            m_btnNextBackground = FindChildComponent<Button>("m_panelLeft/m_rowBackground/m_btnNextBackground");
-            m_btnPrevFeat = FindChildComponent<Button>("m_panelLeft/m_rowFeat/m_btnPrevFeat");
-            m_btnNextFeat = FindChildComponent<Button>("m_panelLeft/m_rowFeat/m_btnNextFeat");
-            m_btnPrevSpell = FindChildComponent<Button>("m_panelLeft/m_rowSpell/m_btnPrevSpell");
-            m_btnNextSpell = FindChildComponent<Button>("m_panelLeft/m_rowSpell/m_btnNextSpell");
+            const string creationEditorRootPath = "m_panelLeft/m_scrollCreationEditor/Viewport/m_rectCreationEditorContent";
+            m_btnPrevClass = FindChildComponent<Button>(creationEditorRootPath + "/m_rowClass/m_btnPrevClass");
+            m_btnNextClass = FindChildComponent<Button>(creationEditorRootPath + "/m_rowClass/m_btnNextClass");
+            m_btnPrevRace = FindChildComponent<Button>(creationEditorRootPath + "/m_rowRace/m_btnPrevRace");
+            m_btnNextRace = FindChildComponent<Button>(creationEditorRootPath + "/m_rowRace/m_btnNextRace");
+            m_btnPrevBackground = FindChildComponent<Button>(creationEditorRootPath + "/m_rowBackground/m_btnPrevBackground");
+            m_btnNextBackground = FindChildComponent<Button>(creationEditorRootPath + "/m_rowBackground/m_btnNextBackground");
+            m_btnPrevFeat = FindChildComponent<Button>(creationEditorRootPath + "/m_rowFeat/m_btnPrevFeat");
+            m_btnNextFeat = FindChildComponent<Button>(creationEditorRootPath + "/m_rowFeat/m_btnNextFeat");
+            m_btnPrevSpell = FindChildComponent<Button>(creationEditorRootPath + "/m_rowSpell/m_btnPrevSpell");
+            m_btnNextSpell = FindChildComponent<Button>(creationEditorRootPath + "/m_rowSpell/m_btnNextSpell");
             m_btnCreateDraft = FindChildComponent<Button>("m_panelLeft/m_btnCreateDraft");
             m_tmpTitle = FindChildComponent<TMP_Text>("m_panelTopBar/m_tmpTitle");
             m_tmpRuleStatus = FindChildComponent<TMP_Text>("m_panelLeft/m_tmpRuleStatus");
-            m_tmpClassLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowClass/Label");
-            m_tmpRaceLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowRace/Label");
-            m_tmpBackgroundLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowBackground/Label");
-            m_tmpFeatLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowFeat/Label");
-            m_tmpSpellLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowSpell/Label");
-            m_tmpClassValue = FindChildComponent<TMP_Text>("m_panelLeft/m_rowClass/m_tmpClassValue");
-            m_tmpRaceValue = FindChildComponent<TMP_Text>("m_panelLeft/m_rowRace/m_tmpRaceValue");
-            m_tmpBackgroundValue = FindChildComponent<TMP_Text>("m_panelLeft/m_rowBackground/m_tmpBackgroundValue");
-            m_tmpFeatValue = FindChildComponent<TMP_Text>("m_panelLeft/m_rowFeat/m_tmpFeatValue");
-            m_tmpSpellValue = FindChildComponent<TMP_Text>("m_panelLeft/m_rowSpell/m_tmpSpellValue");
-            m_tmpSelectionDetail = FindChildComponent<TMP_Text>("m_panelRight/m_tmpSelectionDetail");
-            m_tmpCharacterPreview = FindChildComponent<TMP_Text>("m_panelRight/m_tmpCharacterPreview");
-            m_goRowCharacterName = FindChild("m_panelLeft/m_rowCharacterName")?.gameObject;
-            m_goRowAlignment = FindChild("m_panelLeft/m_rowAlignment")?.gameObject;
-            m_tmpCharacterNameLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowCharacterName/Label");
-            m_tmpAlignmentLabel = FindChildComponent<TMP_Text>("m_panelLeft/m_rowAlignment/Label");
-            m_tmpInputCharacterName = FindChildComponent<TMP_InputField>("m_panelLeft/m_rowCharacterName/m_tmpInputCharacterName");
-            m_tmpDropdownAlignment = FindChildComponent<TMP_Dropdown>("m_panelLeft/m_rowAlignment/m_tmpDropdownAlignment");
-            m_btnRowRace = FindChildComponent<Button>("m_panelLeft/m_rowRace");
-            m_btnRowClass = FindChildComponent<Button>("m_panelLeft/m_rowClass");
-            m_btnRowBackground = FindChildComponent<Button>("m_panelLeft/m_rowBackground");
-            m_btnRowFeat = FindChildComponent<Button>("m_panelLeft/m_rowFeat");
-            m_btnRowSpell = FindChildComponent<Button>("m_panelLeft/m_rowSpell");
-            m_tmpPrevClassText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowClass/m_btnPrevClass");
-            m_tmpNextClassText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowClass/m_btnNextClass");
-            m_tmpPrevRaceText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowRace/m_btnPrevRace");
-            m_tmpNextRaceText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowRace/m_btnNextRace");
-            m_tmpPrevBackgroundText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowBackground/m_btnPrevBackground");
-            m_tmpNextBackgroundText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowBackground/m_btnNextBackground");
-            m_tmpPrevFeatText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowFeat/m_btnPrevFeat");
-            m_tmpNextFeatText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowFeat/m_btnNextFeat");
-            m_tmpPrevSpellText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowSpell/m_btnPrevSpell");
-            m_tmpNextSpellText = FindChildComponent<TMP_Text>("m_panelLeft/m_rowSpell/m_btnNextSpell");
+            m_tmpClassLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowClass/Label");
+            m_tmpRaceLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowRace/Label");
+            m_tmpBackgroundLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowBackground/Label");
+            m_tmpFeatLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowFeat/Label");
+            m_tmpSpellLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowSpell/Label");
+            m_tmpClassValue = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowClass/m_tmpClassValue");
+            m_tmpRaceValue = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowRace/m_tmpRaceValue");
+            m_tmpBackgroundValue = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowBackground/m_tmpBackgroundValue");
+            m_tmpFeatValue = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowFeat/m_tmpFeatValue");
+            m_tmpSpellValue = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowSpell/m_tmpSpellValue");
+            m_goRowCharacterBase = FindChild(creationEditorRootPath + "/m_rowCharacterBase")?.gameObject;
+            m_goRowCharacterName = FindChild(creationEditorRootPath + "/m_rowCharacterName")?.gameObject;
+            m_goRowAlignment = FindChild(creationEditorRootPath + "/m_rowAlignment")?.gameObject;
+            m_goRowFeat = FindChild(creationEditorRootPath + "/m_rowFeat")?.gameObject;
+            m_goRowSpell = FindChild(creationEditorRootPath + "/m_rowSpell")?.gameObject;
+            m_tmpCharacterNameLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowCharacterName/Label");
+            m_tmpAlignmentLabel = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowAlignment/Label");
+            m_tmpInputCharacterName = FindChildComponent<TMP_InputField>(creationEditorRootPath + "/m_rowCharacterName/m_tmpInputCharacterName");
+            m_tmpInputCharacterLevel = FindChildComponent<TMP_InputField>(creationEditorRootPath + "/m_rowCharacterBase/m_rowCharacterLevel/m_tmpInputCharacterLevel");
+            m_tmpHpValue = FindChildComponent<TMP_InputField>(creationEditorRootPath + "/m_rowCharacterBase/m_rowCharacterHp/m_tmpHpValue");
+            m_rectHpRollContent = FindHpRollRoot(creationEditorRootPath)?.GetComponent<RectTransform>();
+            m_tmpHpRollLevel = FindHpRollText("m_tmpHpRollLevel");
+            m_tmpHpRollHitDie = FindHpRollText("m_tmpHpRollHitDie");
+            m_tmpHpRollValue = FindHpRollText("m_tmpHpRollValue");
+            m_tmpHpRollConModifier = FindHpRollText("m_tmpHpRollConModifier");
+            m_tmpHpRollGain = FindHpRollText("m_tmpHpRollGain");
+            m_btnHpRoll = FindHpRollButton("m_btnHpRoll");
+            m_btnHpRollConfirm = FindHpRollButton("m_btnHpRollConfirm");
+            m_tmpDropdownAlignment = FindChildComponent<TMP_Dropdown>(creationEditorRootPath + "/m_rowAlignment/m_tmpDropdownAlignment");
+            m_rectHpChoiceContent = FindChildComponent<RectTransform>(creationEditorRootPath + "/m_rectHpChoiceContent");
+            m_rectClassChoiceContent = FindChildComponent<RectTransform>(creationEditorRootPath + "/m_rectClassChoiceContent");
+            m_rectFeatChoiceContent = FindChildComponent<RectTransform>(creationEditorRootPath + "/m_rectFeatChoiceContent");
+            m_rectSpellChoiceContent = FindChildComponent<RectTransform>(creationEditorRootPath + "/m_rectSpellChoiceContent");
+            m_btnHpChoiceTemplate = FindChildComponent<Button>(creationEditorRootPath + "/m_rectHpChoiceContent/m_btnChoiceTemplate");
+            m_btnClassChoiceTemplate = FindChildComponent<Button>(creationEditorRootPath + "/m_rectClassChoiceContent/m_btnChoiceTemplate");
+            m_btnFeatChoiceTemplate = FindChildComponent<Button>(creationEditorRootPath + "/m_rectFeatChoiceContent/m_btnChoiceTemplate");
+            m_btnRowRace = FindChildComponent<Button>(creationEditorRootPath + "/m_rowRace");
+            m_btnRowClass = FindChildComponent<Button>(creationEditorRootPath + "/m_rowClass");
+            m_btnRowBackground = FindChildComponent<Button>(creationEditorRootPath + "/m_rowBackground");
+            m_btnRowFeat = FindChildComponent<Button>(creationEditorRootPath + "/m_rowFeat");
+            m_btnRowSpell = FindChildComponent<Button>(creationEditorRootPath + "/m_rowSpell");
+            m_tmpPrevClassText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowClass/m_btnPrevClass");
+            m_tmpNextClassText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowClass/m_btnNextClass");
+            m_tmpPrevRaceText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowRace/m_btnPrevRace");
+            m_tmpNextRaceText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowRace/m_btnNextRace");
+            m_tmpPrevBackgroundText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowBackground/m_btnPrevBackground");
+            m_tmpNextBackgroundText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowBackground/m_btnNextBackground");
+            m_tmpPrevFeatText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowFeat/m_btnPrevFeat");
+            m_tmpNextFeatText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowFeat/m_btnNextFeat");
+            m_tmpPrevSpellText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowSpell/m_btnPrevSpell");
+            m_tmpNextSpellText = FindChildComponent<TMP_Text>(creationEditorRootPath + "/m_rowSpell/m_btnNextSpell");
             m_tmpCreateDraftText = FindChildComponent<TMP_Text>("m_panelLeft/m_btnCreateDraft");
             m_rectPanelLeft = FindChildComponent<RectTransform>("m_panelLeft");
             m_rectPanelCenter = FindChildComponent<RectTransform>("m_panelCenter");
-            m_rectCreateDraft = m_btnCreateDraft != null ? m_btnCreateDraft.GetComponent<RectTransform>() : null;
             m_goCardListRoot = FindChild("m_panelLeft/m_scrollCharacterCardList").gameObject;
-            m_goCreationOptionListRoot = FindChild("m_panelCenter/m_scrollCreationOptionCards")?.gameObject;
+            m_goCreationOptionListRoot = FindChild(creationEditorRootPath + "/m_scrollCreationOptionCards")?.gameObject;
             m_rectCreationOptionListRoot = m_goCreationOptionListRoot != null
                 ? m_goCreationOptionListRoot.GetComponent<RectTransform>()
                 : null;
             m_rectCardContent = FindChildComponent<RectTransform>("m_panelLeft/m_scrollCharacterCardList/Viewport/m_rectCharacterCardContent");
-            m_rectCreationOptionViewport = FindChildComponent<RectTransform>("m_panelCenter/m_scrollCreationOptionCards/Viewport");
-            m_rectCreationOptionCardContent = FindChildComponent<RectTransform>("m_panelCenter/m_scrollCreationOptionCards/Viewport/m_rectCreationOptionCardContent");
+            m_rectCreationOptionViewport = FindChildComponent<RectTransform>(creationEditorRootPath + "/m_scrollCreationOptionCards/Viewport");
+            m_rectCreationOptionCardContent = FindChildComponent<RectTransform>(creationEditorRootPath + "/m_scrollCreationOptionCards/Viewport/m_rectCreationOptionCardContent");
             m_goCharacterCardTemplate = FindChild("m_panelLeft/m_scrollCharacterCardList/Viewport/m_rectCharacterCardContent/m_itemCharacterCardTemplate").gameObject;
-            m_goCreationOptionCardTemplate = FindChild("m_panelCenter/m_scrollCreationOptionCards/Viewport/m_rectCreationOptionCardContent/m_itemCreationOptionCardTemplate")?.gameObject;
+            m_goCreationOptionCardTemplate = FindChild(creationEditorRootPath + "/m_scrollCreationOptionCards/Viewport/m_rectCreationOptionCardContent/m_itemCreationOptionCardTemplate")?.gameObject;
             m_btnDeleteSelected = FindChildComponent<Button>("m_panelLeft/m_btnDeleteSelectedCharacter");
             m_tmpDeleteSelectedText = FindChildComponent<TMP_Text>("m_panelLeft/m_btnDeleteSelectedCharacter");
-            m_creationOptionGridLayout = m_rectCreationOptionCardContent != null
-                ? m_rectCreationOptionCardContent.GetComponent<GridLayoutGroup>()
-                : null;
-            m_creationOptionContentFitter = m_rectCreationOptionCardContent != null
-                ? m_rectCreationOptionCardContent.GetComponent<ContentSizeFitter>()
-                : null;
-            if (m_creationOptionGridLayout != null)
-            {
-                m_creationOptionOriginalCellSize = m_creationOptionGridLayout.cellSize;
-                m_creationOptionOriginalSpacing = m_creationOptionGridLayout.spacing;
-                m_creationOptionOriginalConstraintCount = m_creationOptionGridLayout.constraintCount;
-                m_creationOptionOriginalPadding = new RectOffset(
-                    m_creationOptionGridLayout.padding.left,
-                    m_creationOptionGridLayout.padding.right,
-                    m_creationOptionGridLayout.padding.top,
-                    m_creationOptionGridLayout.padding.bottom);
-            }
-
-            if (m_rectPanelLeft != null)
-            {
-                m_panelLeftOriginalAnchorMin = m_rectPanelLeft.anchorMin;
-                m_panelLeftOriginalAnchorMax = m_rectPanelLeft.anchorMax;
-                m_panelLeftOriginalOffsetMin = m_rectPanelLeft.offsetMin;
-                m_panelLeftOriginalOffsetMax = m_rectPanelLeft.offsetMax;
-            }
-
-            if (m_rectPanelCenter != null)
-            {
-                m_panelCenterOriginalAnchorMax = m_rectPanelCenter.anchorMax;
-                m_panelCenterOriginalOffsetMax = m_rectPanelCenter.offsetMax;
-            }
+            const string previewContentRootPath = "m_panelCenter/m_scrollSelectionDetail/Viewport/m_rectSelectionDetailContent";
+            m_rectSelectionDetailContent = FindChildComponent<RectTransform>(previewContentRootPath);
+            m_goPreviewDetailMainRaceBlock = FindChild(previewContentRootPath + "/m_previewDetailMainRaceBlock")?.gameObject;
+            m_goPreviewDetailSubRaceBlock = FindChild(previewContentRootPath + "/m_previewDetailSubRaceBlock")?.gameObject;
+            m_goPreviewDetailClassBlock = FindChild(previewContentRootPath + "/m_previewDetailClassBlock")?.gameObject;
+            m_goPreviewDetailBackgroundBlock = FindChild(previewContentRootPath + "/m_previewDetailBackgroundBlock")?.gameObject;
+            m_tmpPreviewMainRaceName = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewMainRaceName");
+            m_tmpPreviewBodySize = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewBodySize");
+            m_tmpPreviewSpeed = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewSpeed");
+            m_tmpPreviewLanguage = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewlanguage");
+            m_tmpPreviewFeatureTitle = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewFeatureTitle");
+            m_tmpPreviewFeature = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewFeature");
+            m_tmpPreviewRaceDes = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailMainRaceBlock/m_tmpPreviewRaceDes");
+            m_tmpPreviewSubRaceName = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailSubRaceBlock/m_tmpPreviewSubRaceName");
+            m_tmpPreviewSubRaceBodySize = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailSubRaceBlock/m_tmpPreviewSubRaceBodySize");
+            m_tmpPreviewSubRaceSpeed = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailSubRaceBlock/m_tmpPreviewSubRaceRaceSpeed");
+            m_tmpPreviewSubFeatureTitle = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailSubRaceBlock/m_tmpPreviewSubFeatureTitle");
+            m_tmpPreviewSubRaceFeature = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailSubRaceBlock/m_tmpPreviewSubRaceFeature");
+            m_tmpPreviewSubRaceDes = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailSubRaceBlock/m_tmpPreviewSubRaceDes");
+            m_tmpPreviewClassName = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassName");
+            m_tmpPreviewClassHPDice = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassHPDice");
+            m_tmpPreviewClassMainAttri = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassMainAttri");
+            m_tmpPreviewClassDC = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassDC");
+            m_tmpPreviewClassArmor = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassArmr");
+            m_tmpPreviewClassWeapon = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassWeapon");
+            m_tmpPreviewClassTitle = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassTitle");
+            m_tmpPreviewClassFeature = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailClassBlock/m_tmpPreviewClassFeature");
+            m_tmpPreviewBackgroundName = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundName");
+            m_tmpPreviewBackgroundSkill = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundSkill");
+            m_tmpPreviewBackgroundTools = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundTools");
+            m_tmpPreviewBackgroundLanguage = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundLanguage");
+            m_tmpPreviewBackgroundItem = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundItem");
+            m_tmpPreviewBackgroundFeatureTitle = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/reviewClassBackgroundFeatureTitle");
+            m_tmpPreviewBackgroundFeature = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundFeature");
+            m_tmpPreviewBackgroundDes = FindChildComponent<TMP_Text>(previewContentRootPath + "/m_previewDetailBackgroundBlock/m_tmpPreviewBackgroundDes");
 
             m_rowLabels = new[] { m_tmpRaceLabel, m_tmpClassLabel, m_tmpBackgroundLabel, m_tmpFeatLabel, m_tmpSpellLabel };
             m_rowValues = new[] { m_tmpRaceValue, m_tmpClassValue, m_tmpBackgroundValue, m_tmpFeatValue, m_tmpSpellValue };
@@ -254,21 +312,6 @@ namespace GameLogic
             m_rowRightButtons = new[] { m_btnNextRace, m_btnNextClass, m_btnNextBackground, m_btnNextFeat, m_btnNextSpell };
             m_rowLeftButtonTexts = new[] { m_tmpPrevRaceText, m_tmpPrevClassText, m_tmpPrevBackgroundText, m_tmpPrevFeatText, m_tmpPrevSpellText };
             m_rowRightButtonTexts = new[] { m_tmpNextRaceText, m_tmpNextClassText, m_tmpNextBackgroundText, m_tmpNextFeatText, m_tmpNextSpellText };
-            m_rowRects = new[]
-            {
-                m_btnRowRace != null ? m_btnRowRace.GetComponent<RectTransform>() : null,
-                m_btnRowClass != null ? m_btnRowClass.GetComponent<RectTransform>() : null,
-                m_btnRowBackground != null ? m_btnRowBackground.GetComponent<RectTransform>() : null,
-                m_btnRowFeat != null ? m_btnRowFeat.GetComponent<RectTransform>() : null,
-                m_btnRowSpell != null ? m_btnRowSpell.GetComponent<RectTransform>() : null
-            };
-            m_rowOriginalAnchoredPositions = new Vector2[m_rowRects.Length];
-            for (int index = 0; index < m_rowRects.Length; index++)
-            {
-                m_rowOriginalAnchoredPositions[index] = m_rowRects[index] != null
-                    ? m_rowRects[index].anchoredPosition
-                    : Vector2.zero;
-            }
 
             BindButton(m_btnBack, OnClickBack);
             BindEditorInputFields();
@@ -282,12 +325,8 @@ namespace GameLogic
                 m_goCreationOptionCardTemplate.SetActive(false);
             }
 
-            MoveCreationOptionListToLeftPanel();
+            InitializeChoiceContentTemplates();
             ApplyCharacterListPanelLayout();
-            if (m_rectCreateDraft != null)
-            {
-                m_createDraftOriginalAnchoredPosition = m_rectCreateDraft.anchoredPosition;
-            }
             SetCharacterCardListVisible(false);
             SetCreationOptionListVisible(false);
         }
@@ -438,9 +477,6 @@ namespace GameLogic
                     () => OnClickSelectCharacterCard(capturedIndex),
                     () => OnClickEditCharacterCard(capturedIndex));
             }
-
-            SetText(m_tmpSelectionDetail, BuildCharacterListDetail());
-            SetText(m_tmpCharacterPreview, BuildCharacterListPreview());
         }
 
         private void OnClickCreateNewCharacter()
@@ -496,13 +532,13 @@ namespace GameLogic
             if (count <= 0)
             {
                 selectedIndex = 0;
-                SyncSelectedMainRaceGroupFromSelection();
+                ClearMainRaceDetailSelection();
                 RefreshView();
                 return;
             }
 
             selectedIndex = (selectedIndex + direction + count) % count;
-            SyncSelectedMainRaceGroupFromSelection();
+            ClearMainRaceDetailSelection();
             RefreshView();
         }
 
@@ -513,32 +549,11 @@ namespace GameLogic
             m_selectedBackgroundIndex = ClampIndex(m_selectedBackgroundIndex, m_backgrounds.Count);
             m_selectedFeatIndex = ClampIndex(m_selectedFeatIndex, m_feats.Count);
             m_selectedSpellIndex = ClampIndex(m_selectedSpellIndex, m_spells.Count);
-            SyncSelectedMainRaceGroupFromSelection();
         }
 
-        private void SyncSelectedMainRaceGroupFromSelection()
+        private void ClearMainRaceDetailSelection()
         {
             m_selectedMainRaceGroupKey = string.Empty;
-            if (!TryGetSelected(m_races, m_selectedRaceIndex, out DndRaceDefineData raceData))
-            {
-                return;
-            }
-
-            if (!TryGetRaceGroupPrefix(raceData, out string prefix))
-            {
-                return;
-            }
-
-            List<RaceGroupInfo> groups = BuildRaceGroups();
-            for (int index = 0; index < groups.Count; index++)
-            {
-                RaceGroupInfo group = groups[index];
-                if (group.IsGrouped && string.Equals(group.GroupKey, prefix, StringComparison.OrdinalIgnoreCase))
-                {
-                    m_selectedMainRaceGroupKey = group.GroupKey;
-                    return;
-                }
-            }
         }
 
         private void ResetEditorState()
@@ -588,10 +603,10 @@ namespace GameLogic
             SetText(m_tmpBackgroundValue, GetBackgroundLabel());
             SetText(m_tmpFeatValue, GetFeatLabel());
             SetText(m_tmpSpellValue, GetSpellLabel());
+            RefreshInlineChoiceContents();
             ApplyEditorRowAccordionLayout();
+            RefreshSelectionPreview();
             RefreshCreationOptionCards();
-            SetText(m_tmpSelectionDetail, BuildSelectionDetail());
-            SetText(m_tmpCharacterPreview, BuildCharacterPreview());
         }
 
         private void ApplyCreationStepLabels()
@@ -679,6 +694,26 @@ namespace GameLogic
                 m_tmpInputCharacterName.onValueChanged.AddListener(OnCharacterNameInputChanged);
             }
 
+            if (m_tmpInputCharacterLevel != null)
+            {
+                m_tmpInputCharacterLevel.contentType = TMP_InputField.ContentType.IntegerNumber;
+                m_tmpInputCharacterLevel.characterLimit = 2;
+                m_tmpInputCharacterLevel.onEndEdit.RemoveAllListeners();
+                m_tmpInputCharacterLevel.onEndEdit.AddListener(OnCharacterLevelInputEndEdit);
+            }
+
+            if (m_tmpHpValue != null)
+            {
+                m_tmpHpValue.readOnly = true;
+                m_tmpHpValue.onSelect.RemoveAllListeners();
+                m_tmpHpValue.onSelect.AddListener(_ => ToggleHpChoiceContent());
+                m_tmpHpValue.onEndEdit.RemoveAllListeners();
+                m_tmpHpValue.onEndEdit.AddListener(OnHpValueInputEndEdit);
+            }
+
+            BindButton(m_btnHpRoll, OnClickHpRoll);
+            BindButton(m_btnHpRollConfirm, OnClickHpRollConfirm);
+
             if (m_tmpDropdownAlignment != null)
             {
                 m_tmpDropdownAlignment.onValueChanged.RemoveAllListeners();
@@ -721,7 +756,6 @@ namespace GameLogic
             }
 
             m_currentCharacter.CharacterName = string.IsNullOrWhiteSpace(value) ? "未命名角色" : value.Trim();
-            SetText(m_tmpCharacterPreview, BuildCharacterPreview());
         }
 
         private void OnAlignmentDropdownChanged(int index)
@@ -732,7 +766,39 @@ namespace GameLogic
             }
 
             m_currentCharacter.Alignment = GetAlignmentDropdownText(index);
-            SetText(m_tmpCharacterPreview, BuildCharacterPreview());
+        }
+
+        private void OnCharacterLevelInputEndEdit(string value)
+        {
+            if (m_isRefreshingCharacterInputs || m_currentCharacter == null)
+            {
+                return;
+            }
+
+            m_currentCharacter.Level = ClampCharacterLevel(value);
+            RefreshCharacterHpByMode(m_currentCharacter);
+            RefreshView();
+        }
+
+        private void OnHpValueInputEndEdit(string value)
+        {
+            if (m_isRefreshingCharacterInputs || m_currentCharacter == null)
+            {
+                return;
+            }
+
+            if (!string.Equals(CharacterHpModeIds.Normalize(m_currentCharacter.HpModeId), CharacterHpModeIds.Custom, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            int hp = TryParseNonNegativeInt(value, out int parsedValue) ? parsedValue : 0;
+            m_currentCharacter.ManualHp = hp;
+            m_currentCharacter.MaxHp = hp;
+            if (m_tmpHpValue != null)
+            {
+                m_tmpHpValue.SetTextWithoutNotify(hp > 0 ? hp.ToString() : string.Empty);
+            }
         }
 
         private void RefreshRuleStatus()
@@ -750,18 +816,9 @@ namespace GameLogic
             SetText(m_tmpRuleStatus, $"规则内容未就绪：{error}");
         }
 
-        private string BuildCharacterListItemSummary(CharacterCardDraftSaveData character)
+        private bool HasSelectedCharacter()
         {
-            if (character == null)
-            {
-                return "空角色";
-            }
-
-            string status = character.IsCompleted ? "已完成" : "未完成";
-            string characterName = string.IsNullOrWhiteSpace(character.CharacterName) ? "未命名角色" : character.CharacterName;
-            string race = FormatSelectedName(character.RaceId, m_races, data => data.RaceId, data => data.Name, "未选种族");
-            string className = FormatSelectedName(character.ClassId, m_classes, data => data.ClassId, data => data.Name, "未选职业");
-            return $"{characterName} [{status}]  {race} / {className}";
+            return m_selectedListCharacterIndex >= 0 && m_selectedListCharacterIndex < m_characterCards.Count;
         }
 
         private string BuildCharacterCardClassLine(CharacterCardDraftSaveData character)
@@ -781,62 +838,6 @@ namespace GameLogic
             string status = character.IsCompleted ? "已完成" : "未完成";
             string race = FormatSelectedName(character.RaceId, m_races, data => data.RaceId, data => data.Name, "未选种族");
             return $"{status} / {race}";
-        }
-
-        private string BuildCharacterListDetail()
-        {
-            StringBuilder builder = new StringBuilder(512);
-            builder.AppendLine("[角色选择]");
-            builder.AppendLine("这里展示当前电脑上通过本软件创建的角色草稿和已完成角色。");
-            builder.AppendLine("点击左侧角色卡片后，右侧会显示该角色的完整详细信息；点击“删除所选”会移除本地角色记录。");
-            builder.AppendLine();
-            builder.AppendLine($"存档位置：{CharacterCardLocalRepository.GetSaveFilePath()}");
-            return builder.ToString();
-        }
-
-        private string BuildCharacterListPreview()
-        {
-            if (m_characterCards.Count == 0)
-            {
-                return "当前还没有角色。\n\n点击左侧“新建角色”创建一个未完成角色草稿。";
-            }
-
-            if (HasSelectedCharacter())
-            {
-                return BuildSelectedCharacterDetail(m_characterCards[m_selectedListCharacterIndex]);
-            }
-
-            StringBuilder builder = new StringBuilder(768);
-            builder.AppendLine("请选择一个角色卡片");
-            builder.AppendLine();
-            builder.AppendLine("点击左侧角色卡片后，这里会显示该角色的完整详细信息。");
-            return builder.ToString();
-        }
-
-        private string BuildSelectedCharacterDetail(CharacterCardDraftSaveData character)
-        {
-            StringBuilder builder = new StringBuilder(1024);
-            builder.AppendLine("角色详细信息");
-            builder.AppendLine($"名称：{(string.IsNullOrWhiteSpace(character.CharacterName) ? "未命名角色" : character.CharacterName)}");
-            builder.AppendLine($"状态：{(character.IsCompleted ? "已完成" : "未完成")}");
-            builder.AppendLine($"等级：{Math.Max(1, character.Level)}");
-            builder.AppendLine($"阵营：{(string.IsNullOrWhiteSpace(character.Alignment) ? "待选择" : character.Alignment)}");
-            builder.AppendLine($"种族：{FormatSelectedName(character.RaceId, m_races, data => data.RaceId, data => data.Name, "未选种族")}");
-            builder.AppendLine($"职业：{FormatSelectedName(character.ClassId, m_classes, data => data.ClassId, data => data.Name, "未选职业")}");
-            builder.AppendLine($"背景：{FormatSelectedName(character.BackgroundId, m_backgrounds, data => data.BackgroundId, data => data.Name, "未选背景")}");
-            builder.AppendLine($"专长：{FormatSelectedName(character.FeatId, m_feats, data => data.FeatId, data => data.Name, "未选专长")}");
-            builder.AppendLine($"法术：{FormatSelectedName(character.SpellId, m_spells, data => data.SpellId, data => data.Name, "未选法术")}");
-            builder.AppendLine();
-            builder.AppendLine($"创建时间：{FormatSavedTime(character.CreatedAt)}");
-            builder.AppendLine($"更新时间：{FormatSavedTime(character.UpdatedAt)}");
-            builder.AppendLine();
-            builder.AppendLine("说明：当前角色卡片已经保存了基础建卡选择。后续接入姓名、阵营、属性分配和预览图编辑后，这里会继续展示完整角色卡。");
-            return builder.ToString();
-        }
-
-        private bool HasSelectedCharacter()
-        {
-            return m_selectedListCharacterIndex >= 0 && m_selectedListCharacterIndex < m_characterCards.Count;
         }
 
         private void EnsureCardViewCount(int count)
@@ -883,91 +884,787 @@ namespace GameLogic
             }
         }
 
-        private void ApplyEditorRowAccordionLayout()
+        private void RefreshInlineChoiceContents()
         {
-            if (m_rectCreationOptionListRoot == null)
+            RefreshHpChoiceContent(false);
+            RefreshHpRollContent();
+            RefreshClassChoiceContent();
+            RefreshFeatChoiceContent();
+            SetActive(m_goRowSpell, false);
+            SetActive(m_rectSpellChoiceContent != null ? m_rectSpellChoiceContent.gameObject : null, false);
+        }
+
+        private void ToggleHpChoiceContent()
+        {
+            bool nextVisible = m_rectHpChoiceContent != null && !m_rectHpChoiceContent.gameObject.activeSelf;
+            RefreshHpChoiceContent(nextVisible);
+        }
+
+        private void RefreshHpChoiceContent(bool visible)
+        {
+            SetActive(m_rectHpChoiceContent != null ? m_rectHpChoiceContent.gameObject : null, visible);
+            if (!visible)
             {
                 return;
             }
 
-            float rowHeight = 74f;
-            float extraSpacing = 12f;
-            float expandedHeight = m_centerOptionMode == CharacterCreationOptionPanelMode.None ? 0f : GetCreationOptionListHeight();
-            int expandedRowIndex = GetExpandedRowIndex();
+            SetChoiceButtons(
+                m_rectHpChoiceContent,
+                m_btnHpChoiceTemplate,
+                new[] { "手动/自定义", "掷骰", "均值" },
+                new Action[]
+                {
+                    () => SelectHpMode(CharacterHpModeIds.Custom),
+                    () => SelectHpMode(CharacterHpModeIds.Rolled),
+                    () => SelectHpMode(CharacterHpModeIds.Average)
+                });
+        }
 
-            for (int index = 0; index < m_rowRects.Length; index++)
+        private void RefreshHpRollContent()
+        {
+            bool visible = m_currentCharacter != null
+                && string.Equals(CharacterHpModeIds.Normalize(m_currentCharacter.HpModeId), CharacterHpModeIds.Rolled, StringComparison.OrdinalIgnoreCase);
+
+            SetActive(m_rectHpRollContent != null ? m_rectHpRollContent.gameObject : null, visible);
+            RefreshCreationEditorHpLayout();
+            if (!visible)
             {
-                RectTransform rowRect = m_rowRects[index];
-                if (rowRect == null)
+                return;
+            }
+
+            int level = GetNextPendingHpRollLevel(GetCurrentCharacterLevel());
+            DndClassDefineData classData = TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData selectedClass) ? selectedClass : null;
+            int hitDie = classData?.HitDie ?? 0;
+            int constitutionModifier = GetCurrentConstitutionModifier();
+            CharacterHpRollSaveData roll = level > 0 ? FindHpRoll(level) : null;
+
+            bool isCompleted = level <= 0;
+            bool canRoll = !isCompleted && level > 1 && classData != null && hitDie > 0 && roll == null && (m_pendingHpRollLevel != level || m_pendingHpRollValue <= 0);
+            bool canConfirm = !isCompleted && classData != null && hitDie > 0 && (level == 1 || m_pendingHpRollLevel == level || roll != null);
+
+            SetText(m_tmpHpRollLevel, isCompleted ? "已完成" : (level == 1 ? "1级（自动确认）" : $"当前等级：{level}"));
+            SetText(m_tmpHpRollHitDie, hitDie > 0 ? $"生命骰：d{hitDie}" : "生命骰：-");
+            SetText(m_tmpHpRollConModifier, $"体质调整值：{FormatSignedNumber(constitutionModifier)}");
+
+            if (isCompleted)
+            {
+                SetText(m_tmpHpRollValue, m_currentCharacter != null ? m_currentCharacter.MaxHp.ToString() : string.Empty);
+                SetText(m_tmpHpRollGain, "本级生命值：-");
+            }
+            else if (roll != null)
+            {
+                SetText(m_tmpHpRollValue, roll.Level == 1 ? roll.HitDie.ToString() : roll.RollValue.ToString());
+                SetText(m_tmpHpRollGain, $"本级生命值：{roll.HpGain}");
+            }
+            else if (level == 1)
+            {
+                int gain = CalculateHpGain(hitDie, constitutionModifier, true, 0);
+                SetText(m_tmpHpRollValue, hitDie > 0 ? hitDie.ToString() : string.Empty);
+                SetText(m_tmpHpRollGain, $"本级生命值：{gain}");
+            }
+            else if (m_pendingHpRollLevel == level && m_pendingHpRollValue > 0)
+            {
+                int gain = CalculateHpGain(hitDie, constitutionModifier, false, m_pendingHpRollValue);
+                SetText(m_tmpHpRollValue, m_pendingHpRollValue.ToString());
+                SetText(m_tmpHpRollGain, $"本级生命值：{gain}");
+            }
+            else
+            {
+                SetText(m_tmpHpRollValue, "未掷骰");
+                SetText(m_tmpHpRollGain, "本级生命值：-");
+            }
+
+            if (m_btnHpRoll != null)
+            {
+                m_btnHpRoll.interactable = canRoll;
+            }
+
+            if (m_btnHpRollConfirm != null)
+            {
+                m_btnHpRollConfirm.interactable = canConfirm;
+            }
+        }
+
+        private void RefreshCreationEditorHpLayout()
+        {
+            if (m_rectHpRollContent != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(m_rectHpRollContent);
+                if (m_rectHpRollContent.parent is RectTransform parentRect)
+                {
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(parentRect);
+                }
+            }
+
+            RefreshCreationEditorScrollLayout(m_rectHpRollContent);
+        }
+
+        private void SelectHpMode(string hpModeId)
+        {
+            if (m_currentCharacter == null)
+            {
+                return;
+            }
+
+            m_currentCharacter.HpModeId = CharacterHpModeIds.Normalize(hpModeId);
+            m_pendingHpRollLevel = 0;
+            m_pendingHpRollValue = 0;
+            RefreshHpChoiceContent(false);
+            RefreshCharacterHpByMode(m_currentCharacter);
+            RefreshCharacterBasicInfoInputs();
+            RefreshHpRollContent();
+        }
+
+        private void OnClickHpRoll()
+        {
+            if (m_currentCharacter == null || !TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData) || classData == null || classData.HitDie <= 0)
+            {
+                return;
+            }
+
+            int level = GetNextPendingHpRollLevel(GetCurrentCharacterLevel());
+            if (level <= 1 || FindHpRoll(level) != null)
+            {
+                return;
+            }
+
+            m_pendingHpRollLevel = level;
+            m_pendingHpRollValue = UnityEngine.Random.Range(1, classData.HitDie + 1);
+            RefreshHpRollContent();
+        }
+
+        private void OnClickHpRollConfirm()
+        {
+            if (m_currentCharacter == null || !TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData) || classData == null || classData.HitDie <= 0)
+            {
+                return;
+            }
+
+            int level = GetNextPendingHpRollLevel(GetCurrentCharacterLevel());
+            if (level <= 0)
+            {
+                return;
+            }
+
+            if (FindHpRoll(level) != null)
+            {
+                RefreshHpRollContent();
+                return;
+            }
+
+            if (level > 1 && (m_pendingHpRollLevel != level || m_pendingHpRollValue <= 0))
+            {
+                return;
+            }
+
+            int constitutionModifier = GetCurrentConstitutionModifier();
+            int rollValue = level == 1 ? classData.HitDie : m_pendingHpRollValue;
+            int hpGain = CalculateHpGain(classData.HitDie, constitutionModifier, level == 1, rollValue);
+            m_currentCharacter.HpRolls ??= new List<CharacterHpRollSaveData>();
+            m_currentCharacter.HpRolls.RemoveAll(data => data != null && data.Level == level);
+            m_currentCharacter.HpRolls.Add(new CharacterHpRollSaveData
+            {
+                Level = level,
+                ClassId = classData.ClassId ?? string.Empty,
+                HitDie = classData.HitDie,
+                RollValue = rollValue,
+                ConstitutionModifier = constitutionModifier,
+                HpGain = hpGain
+            });
+
+            m_pendingHpRollLevel = 0;
+            m_pendingHpRollValue = 0;
+            RefreshCharacterHpByMode(m_currentCharacter);
+            RefreshCharacterBasicInfoInputs();
+            RefreshHpRollContent();
+        }
+
+        private void RefreshClassChoiceContent()
+        {
+            List<string> labels = BuildClassChoiceEntryLabels();
+            bool visible = labels.Count > 0;
+            SetActive(m_rectClassChoiceContent != null ? m_rectClassChoiceContent.gameObject : null, visible);
+            if (visible)
+            {
+                SetChoiceButtons(m_rectClassChoiceContent, m_btnClassChoiceTemplate, labels);
+            }
+        }
+
+        private void RefreshFeatChoiceContent()
+        {
+            List<string> labels = BuildFeatChoiceEntryLabels();
+            bool visible = labels.Count > 0;
+            SetActive(m_goRowFeat, visible);
+            SetActive(m_rectFeatChoiceContent != null ? m_rectFeatChoiceContent.gameObject : null, visible);
+            if (visible)
+            {
+                SetChoiceButtons(m_rectFeatChoiceContent, m_btnFeatChoiceTemplate, labels);
+            }
+        }
+
+        private List<string> BuildClassChoiceEntryLabels()
+        {
+            List<string> labels = new List<string>();
+            if (!TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData) || classData == null)
+            {
+                return labels;
+            }
+
+            IReadOnlyList<DndLevelProgressionData> progressions = DndRuleContentService.Instance.GetClassProgressions(classData.ClassId);
+            int level = GetCurrentCharacterLevel();
+            bool subclassChoiceAdded = false;
+            for (int index = 0; index < progressions.Count; index++)
+            {
+                DndLevelProgressionData progression = progressions[index];
+                if (progression.Level < 1 || progression.Level > level)
                 {
                     continue;
                 }
 
-                float offset = expandedRowIndex >= 0 && index > expandedRowIndex
-                    ? expandedHeight + extraSpacing
-                    : 0f;
-                Vector2 basePosition = GetEditorRowBaseAnchoredPosition(index);
-                rowRect.anchoredPosition = new Vector2(
-                    basePosition.x,
-                    basePosition.y - offset);
-            }
-
-            if (expandedRowIndex >= 0 && expandedRowIndex < m_rowRects.Length)
-            {
-                RectTransform expandedRow = m_rowRects[expandedRowIndex];
-                if (expandedRow != null)
+                bool hasSubclassChoice = !string.IsNullOrWhiteSpace(progression.SubclassChoiceGroupId) ||
+                    progression.ChoiceGroupIds.Contains("choice_subclass");
+                if (hasSubclassChoice && !subclassChoiceAdded)
                 {
-                    m_rectCreationOptionListRoot.anchoredPosition = new Vector2(0f, expandedRow.anchoredPosition.y - rowHeight - extraSpacing);
-                    m_rectCreationOptionListRoot.sizeDelta = new Vector2(-40f, expandedHeight);
-                    m_rectCreationOptionListRoot.SetAsLastSibling();
+                    labels.Add($"{progression.Level}级 选择子职业");
+                    subclassChoiceAdded = true;
                 }
             }
 
-            if (m_rectCreateDraft != null)
+            return labels;
+        }
+
+        private List<string> BuildFeatChoiceEntryLabels()
+        {
+            List<string> labels = new List<string>();
+            if (!TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData) || classData == null)
             {
-                float offset = expandedRowIndex >= 0 ? expandedHeight + extraSpacing : 0f;
-                m_rectCreateDraft.anchoredPosition = new Vector2(
-                    m_createDraftOriginalAnchoredPosition.x,
-                    m_createDraftOriginalAnchoredPosition.y - offset);
+                return labels;
+            }
+
+            IReadOnlyList<DndLevelProgressionData> progressions = DndRuleContentService.Instance.GetClassProgressions(classData.ClassId);
+            int level = GetCurrentCharacterLevel();
+            for (int index = 0; index < progressions.Count; index++)
+            {
+                DndLevelProgressionData progression = progressions[index];
+                if (progression.Level < 1 || progression.Level > level || !progression.AsiAvailable)
+                {
+                    continue;
+                }
+
+                labels.Add($"{progression.Level}级 属性值提升");
+                labels.Add($"{progression.Level}级 专长");
+            }
+
+            return labels;
+        }
+
+        private int GetCurrentCharacterLevel()
+        {
+            if (m_tmpInputCharacterLevel != null && !m_isRefreshingCharacterInputs)
+            {
+                return ClampCharacterLevel(m_tmpInputCharacterLevel.text);
+            }
+
+            return m_currentCharacter == null ? 1 : ClampCharacterLevel(m_currentCharacter.Level.ToString());
+        }
+
+        private int ResolveDisplayedHpValue()
+        {
+            if (m_currentCharacter == null)
+            {
+                return 0;
+            }
+
+            RefreshCharacterHpByMode(m_currentCharacter);
+            return Math.Max(0, m_currentCharacter.MaxHp);
+        }
+
+        private void RefreshCharacterHpByMode(CharacterCardDraftSaveData character)
+        {
+            if (character == null)
+            {
+                return;
+            }
+
+            character.HpModeId = CharacterHpModeIds.Normalize(character.HpModeId);
+            int level = Math.Max(1, character.Level);
+            DndClassDefineData classData = FindDataById(m_classes, character.ClassId, data => data.ClassId)
+                ?? (TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData selectedClass) ? selectedClass : null);
+
+            switch (character.HpModeId)
+            {
+                case CharacterHpModeIds.Average:
+                    character.MaxHp = CalculateAverageHp(classData, level, GetCurrentConstitutionModifier());
+                    break;
+                case CharacterHpModeIds.Rolled:
+                    NormalizeCurrentHpRolls(character, classData, level);
+                    character.MaxHp = SumHpRolls(character.HpRolls);
+                    break;
+                default:
+                    if (m_tmpHpValue != null && !m_isRefreshingCharacterInputs && TryParseNonNegativeInt(m_tmpHpValue.text, out int manualHp))
+                    {
+                        character.ManualHp = manualHp;
+                    }
+
+                    character.MaxHp = Math.Max(0, character.ManualHp);
+                    break;
             }
         }
 
-        private int GetExpandedRowIndex()
+        private void NormalizeCurrentHpRolls(CharacterCardDraftSaveData character, DndClassDefineData classData, int level)
         {
-            switch (m_centerOptionMode)
+            if (character == null)
+            {
+                return;
+            }
+
+            character.HpRolls ??= new List<CharacterHpRollSaveData>();
+            string classId = classData?.ClassId ?? string.Empty;
+            int hitDie = classData?.HitDie ?? 0;
+            character.HpRolls.RemoveAll(data =>
+                data == null ||
+                data.Level < 1 ||
+                data.Level > level ||
+                (!string.IsNullOrWhiteSpace(classId) && !string.Equals(data.ClassId, classId, StringComparison.OrdinalIgnoreCase)) ||
+                (hitDie > 0 && data.HitDie != hitDie));
+        }
+
+        private CharacterHpRollSaveData FindHpRoll(int level)
+        {
+            if (m_currentCharacter?.HpRolls == null)
+            {
+                return null;
+            }
+
+            for (int index = 0; index < m_currentCharacter.HpRolls.Count; index++)
+            {
+                CharacterHpRollSaveData roll = m_currentCharacter.HpRolls[index];
+                if (roll != null && roll.Level == level)
+                {
+                    return roll;
+                }
+            }
+
+            return null;
+        }
+
+        private int GetCurrentConstitutionModifier()
+        {
+            DndRaceDefineData raceData = TryGetSelected(m_races, m_selectedRaceIndex, out DndRaceDefineData selectedRace)
+                ? selectedRace
+                : null;
+            int[] raceBonuses = new int[6];
+            ApplyRaceAbilityBonuses(raceData, raceBonuses);
+            return CalculateAbilityModifier(DefaultAbilityScore + raceBonuses[2]);
+        }
+
+        private int GetNextPendingHpRollLevel(int currentLevel)
+        {
+            int level = Math.Max(1, currentLevel);
+            for (int checkLevel = 1; checkLevel <= level; checkLevel++)
+            {
+                if (FindHpRoll(checkLevel) == null)
+                {
+                    return checkLevel;
+                }
+            }
+
+            return -1;
+        }
+
+        private static int CalculateAverageHp(DndClassDefineData classData, int level, int constitutionModifier)
+        {
+            if (classData == null || classData.HitDie <= 0)
+            {
+                return 0;
+            }
+
+            int total = CalculateHpGain(classData.HitDie, constitutionModifier, true, 0);
+            int averageRoll = classData.HitDie / 2 + 1;
+            for (int currentLevel = 2; currentLevel <= Math.Max(1, level); currentLevel++)
+            {
+                total += CalculateHpGain(classData.HitDie, constitutionModifier, false, averageRoll);
+            }
+
+            return total;
+        }
+
+        private static int CalculateHpGain(int hitDie, int constitutionModifier, bool isLevelOne, int rollValue)
+        {
+            if (hitDie <= 0)
+            {
+                return 0;
+            }
+
+            int baseValue = isLevelOne ? hitDie : Math.Max(1, Math.Min(hitDie, rollValue));
+            return Math.Max(1, baseValue + constitutionModifier);
+        }
+
+        private static int SumHpRolls(List<CharacterHpRollSaveData> hpRolls)
+        {
+            if (hpRolls == null)
+            {
+                return 0;
+            }
+
+            int total = 0;
+            for (int index = 0; index < hpRolls.Count; index++)
+            {
+                total += Math.Max(0, hpRolls[index]?.HpGain ?? 0);
+            }
+
+            return total;
+        }
+
+        private static int CalculateAbilityModifier(int abilityScore)
+        {
+            return Mathf.FloorToInt((abilityScore - 10) / 2f);
+        }
+
+        private static bool TryParseNonNegativeInt(string value, out int result)
+        {
+            if (int.TryParse(value, out int parsedValue))
+            {
+                result = Math.Max(0, parsedValue);
+                return true;
+            }
+
+            result = 0;
+            return false;
+        }
+
+        private void InitializeChoiceContentTemplates()
+        {
+            ConfigureChoiceContentAutoLayout(m_rectHpChoiceContent, m_btnHpChoiceTemplate);
+            ConfigureChoiceContentAutoLayout(m_rectClassChoiceContent, m_btnClassChoiceTemplate);
+            ConfigureChoiceContentAutoLayout(m_rectFeatChoiceContent, m_btnFeatChoiceTemplate);
+            SetActive(m_rectHpChoiceContent != null ? m_rectHpChoiceContent.gameObject : null, false);
+            SetActive(m_rectClassChoiceContent != null ? m_rectClassChoiceContent.gameObject : null, false);
+            SetActive(m_rectFeatChoiceContent != null ? m_rectFeatChoiceContent.gameObject : null, false);
+            SetActive(m_rectSpellChoiceContent != null ? m_rectSpellChoiceContent.gameObject : null, false);
+            SetTemplateInactive(m_btnHpChoiceTemplate);
+            SetTemplateInactive(m_btnClassChoiceTemplate);
+            SetTemplateInactive(m_btnFeatChoiceTemplate);
+        }
+
+        private static void SetTemplateInactive(Button template)
+        {
+            if (template != null)
+            {
+                template.gameObject.SetActive(false);
+            }
+        }
+
+        private static void ConfigureChoiceContentAutoLayout(RectTransform content, Button template)
+        {
+            if (content == null)
+            {
+                return;
+            }
+
+            VerticalLayoutGroup layoutGroup = content.GetComponent<VerticalLayoutGroup>();
+            if (layoutGroup == null)
+            {
+                layoutGroup = content.gameObject.AddComponent(typeof(VerticalLayoutGroup)) as VerticalLayoutGroup;
+            }
+
+            if (layoutGroup != null)
+            {
+                layoutGroup.childAlignment = TextAnchor.UpperLeft;
+                layoutGroup.childControlWidth = true;
+                layoutGroup.childControlHeight = true;
+                layoutGroup.childForceExpandWidth = true;
+                layoutGroup.childForceExpandHeight = false;
+                layoutGroup.spacing = 6f;
+            }
+
+            ContentSizeFitter fitter = content.GetComponent<ContentSizeFitter>();
+            if (fitter == null)
+            {
+                fitter = content.gameObject.AddComponent(typeof(ContentSizeFitter)) as ContentSizeFitter;
+            }
+
+            if (fitter != null)
+            {
+                fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+                fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            }
+
+        }
+
+        private static void SetChoiceButtons(RectTransform content, Button template, IReadOnlyList<string> labels, IReadOnlyList<Action> actions = null)
+        {
+            if (content == null || template == null)
+            {
+                return;
+            }
+
+            for (int index = content.childCount - 1; index >= 0; index--)
+            {
+                Transform child = content.GetChild(index);
+                if (child == template.transform)
+                {
+                    continue;
+                }
+
+                UnityEngine.Object.Destroy(child.gameObject);
+            }
+
+            template.gameObject.SetActive(false);
+            if (labels == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < labels.Count; index++)
+            {
+                Button button = UnityEngine.Object.Instantiate(template, content);
+                button.name = $"{template.name}_{index + 1}";
+                button.gameObject.SetActive(true);
+                button.onClick.RemoveAllListeners();
+                if (actions != null && index < actions.Count && actions[index] != null)
+                {
+                    Action action = actions[index];
+                    button.onClick.AddListener(() => action?.Invoke());
+                }
+                TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+                SetText(label, labels[index]);
+            }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(content);
+            if (content.parent is RectTransform parentRect)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(parentRect);
+            }
+
+            RefreshCreationEditorScrollLayout(content);
+        }
+
+        private TMP_Text FindHpRollText(string name)
+        {
+            Transform root = FindHpRollRoot("m_panelLeft/m_scrollCreationEditor/Viewport/m_rectCreationEditorContent");
+            return root != null ? root.Find(name)?.GetComponent<TMP_Text>() : null;
+        }
+
+        private Button FindHpRollButton(string name)
+        {
+            Transform root = FindHpRollRoot("m_panelLeft/m_scrollCreationEditor/Viewport/m_rectCreationEditorContent");
+            return root != null ? root.Find(name)?.GetComponent<Button>() : null;
+        }
+
+        private Transform FindHpRollRoot(string creationEditorRootPath)
+        {
+            return FindChild(creationEditorRootPath + "/m_rectHpRollContent")
+                ?? FindChild(creationEditorRootPath + "/m_rowCharacterBase/m_rectHpRollContent");
+        }
+
+        private static void RefreshCreationEditorScrollLayout(RectTransform changedContent)
+        {
+            if (changedContent == null)
+            {
+                return;
+            }
+
+            ScrollRect scrollRect = changedContent.GetComponentInParent<ScrollRect>();
+            if (scrollRect == null || scrollRect.content == null)
+            {
+                return;
+            }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
+        }
+
+        private void ApplyEditorRowAccordionLayout()
+        {
+            if (m_goCreationOptionListRoot == null || m_centerOptionMode == CharacterCreationOptionPanelMode.None)
+            {
+                return;
+            }
+
+            Transform anchorRow = GetCreationOptionAnchorRowTransform(m_centerOptionMode);
+            if (anchorRow == null || anchorRow.parent == null)
+            {
+                return;
+            }
+
+            Transform optionListTransform = m_goCreationOptionListRoot.transform;
+            if (optionListTransform.parent != anchorRow.parent)
+            {
+                optionListTransform.SetParent(anchorRow.parent, false);
+            }
+
+            int targetSiblingIndex = anchorRow.GetSiblingIndex() + 1;
+            if (optionListTransform.GetSiblingIndex() != targetSiblingIndex)
+            {
+                optionListTransform.SetSiblingIndex(targetSiblingIndex);
+            }
+        }
+
+        private void RefreshSelectionPreview()
+        {
+            RefreshRaceSelectionPreview();
+            RefreshClassSelectionPreview();
+            RefreshBackgroundSelectionPreview();
+            RebuildSelectionDetailLayout();
+        }
+
+        private void RebuildSelectionDetailLayout()
+        {
+            if (m_rectSelectionDetailContent == null)
+            {
+                return;
+            }
+
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(m_rectSelectionDetailContent);
+        }
+
+        private void RefreshRaceSelectionPreview()
+        {
+            DndRaceDefineData selectedRace = TryGetSelected(m_races, m_selectedRaceIndex, out DndRaceDefineData raceData)
+                ? raceData
+                : null;
+            DndRaceSubDefineData raceSub = null;
+            DndRaceMainDefineData raceMain = null;
+
+            if (selectedRace != null && TryGetRaceSubData(selectedRace.RaceId, out DndRaceSubDefineData subData))
+            {
+                raceSub = subData;
+                if (!string.IsNullOrWhiteSpace(raceSub.MainRaceId))
+                {
+                    DndRuleContentService.Instance.TryGetRaceMain(raceSub.MainRaceId, out raceMain);
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(m_selectedMainRaceGroupKey))
+            {
+                DndRuleContentService.Instance.TryGetRaceMain(m_selectedMainRaceGroupKey, out raceMain);
+            }
+            else if (selectedRace != null)
+            {
+                DndRuleContentService.Instance.TryGetRaceMain(selectedRace.RaceId, out raceMain);
+            }
+
+            if (raceMain != null)
+            {
+                SetActive(m_goPreviewDetailMainRaceBlock, true);
+                SetText(m_tmpPreviewMainRaceName, FormatTextOrDefault(raceMain.Name, "未选择主要种族"));
+                SetText(m_tmpPreviewBodySize, $"体型：{FormatTextOrDefault(raceMain.Size, "未定")}");
+                SetText(m_tmpPreviewSpeed, $"速度：{FormatSpeed(raceMain.Speed)}");
+                SetText(m_tmpPreviewLanguage, $"语言：{FormatList(raceMain.LanguageIds)}");
+                SetText(m_tmpPreviewFeatureTitle, "主要种族特性");
+                SetText(m_tmpPreviewFeature, BuildFeatureDetailSummary(raceMain.MainFeatureIds));
+                SetText(m_tmpPreviewRaceDes, $"说明：{SummarizeText(raceMain.Description)}");
+            }
+            else if (selectedRace != null)
+            {
+                SetActive(m_goPreviewDetailMainRaceBlock, true);
+                SetText(m_tmpPreviewMainRaceName, FormatTextOrDefault(selectedRace.Name, "未选择种族"));
+                SetText(m_tmpPreviewBodySize, $"体型：{FormatTextOrDefault(selectedRace.Size, "未定")}");
+                SetText(m_tmpPreviewSpeed, $"速度：{FormatSpeed(selectedRace.Speed)}");
+                SetText(m_tmpPreviewLanguage, $"语言：{FormatList(selectedRace.LanguageIds)}");
+                SetText(m_tmpPreviewFeatureTitle, "种族特性");
+                SetText(m_tmpPreviewFeature, BuildFeatureDetailSummary(selectedRace.FeatureIds));
+                SetText(m_tmpPreviewRaceDes, $"说明：{SummarizeText(selectedRace.Description)}");
+            }
+            else
+            {
+                SetActive(m_goPreviewDetailMainRaceBlock, false);
+            }
+
+            if (raceSub != null)
+            {
+                SetActive(m_goPreviewDetailSubRaceBlock, true);
+                SetText(m_tmpPreviewSubRaceName, FormatTextOrDefault(raceSub.Name, "未选择亚种"));
+                SetText(m_tmpPreviewSubRaceBodySize, $"体型：{FormatTextOrDefault(raceSub.Size, "沿用主要种族")}");
+                SetText(m_tmpPreviewSubRaceSpeed, $"速度：{FormatSpeed(raceSub.Speed, "沿用主要种族")}");
+                SetText(m_tmpPreviewSubFeatureTitle, "亚种特性");
+                SetText(m_tmpPreviewSubRaceFeature, BuildFeatureDetailSummary(raceSub.FeatureIds));
+                SetText(m_tmpPreviewSubRaceDes, $"说明：{SummarizeText(raceSub.Description)}");
+            }
+            else
+            {
+                SetActive(m_goPreviewDetailSubRaceBlock, false);
+            }
+        }
+
+        private void RefreshClassSelectionPreview()
+        {
+            if (!TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData) || classData == null)
+            {
+                SetActive(m_goPreviewDetailClassBlock, false);
+                return;
+            }
+
+            SetActive(m_goPreviewDetailClassBlock, true);
+            SetText(m_tmpPreviewClassName, FormatTextOrDefault(classData.Name, "未选择职业"));
+            SetText(m_tmpPreviewClassHPDice, $"生命骰：d{Math.Max(0, classData.HitDie)}");
+            SetText(m_tmpPreviewClassMainAttri, $"主要属性：{FormatList(classData.PrimaryAbilityIds)}");
+            SetText(m_tmpPreviewClassDC, $"豁免熟练：{FormatList(classData.SavingThrowProficiencies)}");
+            SetText(m_tmpPreviewClassArmor, $"护甲熟练：{FormatList(classData.ArmorProficiencies)}");
+            SetText(m_tmpPreviewClassWeapon, $"武器熟练：{FormatList(classData.WeaponProficiencies)}");
+            SetText(m_tmpPreviewClassTitle, "职业特性");
+            SetText(m_tmpPreviewClassFeature, BuildClassLevelOneFeatureSummary(classData.ClassId));
+        }
+
+        private void RefreshBackgroundSelectionPreview()
+        {
+            if (!TryGetSelected(m_backgrounds, m_selectedBackgroundIndex, out DndBackgroundDefineData backgroundData) || backgroundData == null)
+            {
+                SetActive(m_goPreviewDetailBackgroundBlock, false);
+                return;
+            }
+
+            SetActive(m_goPreviewDetailBackgroundBlock, true);
+            SetText(m_tmpPreviewBackgroundName, FormatTextOrDefault(backgroundData.Name, "未选择背景"));
+            SetText(m_tmpPreviewBackgroundSkill, $"技能熟练：{FormatList(backgroundData.SkillProficiencies)}");
+            SetText(m_tmpPreviewBackgroundTools, $"工具熟练：{FormatList(backgroundData.ToolProficiencies)}");
+            SetText(m_tmpPreviewBackgroundLanguage, $"语言：{FormatList(backgroundData.LanguageIds)}");
+            SetText(m_tmpPreviewBackgroundItem, $"物品：{FormatList(backgroundData.EquipmentGrantIds)}");
+            SetText(m_tmpPreviewBackgroundFeatureTitle, "背景特性");
+            SetText(m_tmpPreviewBackgroundFeature, BuildFeatureDetailSummary(backgroundData.FeatureIds));
+            SetText(m_tmpPreviewBackgroundDes, $"说明：{SummarizeText(backgroundData.Description)}");
+        }
+
+        private string BuildClassLevelOneFeatureSummary(string classId)
+        {
+            if (!string.IsNullOrWhiteSpace(classId)
+                && DndRuleContentService.Instance.TryGetClassLevelProgression(classId, 1, out DndLevelProgressionData progression))
+            {
+                return BuildFeatureDetailSummary(progression.FeatureIds);
+            }
+
+            return "无";
+        }
+
+        private static string FormatSpeed(int speed, string emptyText = "未定")
+        {
+            return speed > 0 ? speed.ToString() : emptyText;
+        }
+
+        private static void SetActive(GameObject target, bool active)
+        {
+            if (target != null && target.activeSelf != active)
+            {
+                target.SetActive(active);
+            }
+        }
+
+        private Transform GetCreationOptionAnchorRowTransform(CharacterCreationOptionPanelMode mode)
+        {
+            switch (mode)
             {
                 case CharacterCreationOptionPanelMode.Race:
-                    return 0;
+                    return m_btnRowRace != null ? m_btnRowRace.transform : null;
                 case CharacterCreationOptionPanelMode.Class:
-                    return 1;
+                    return m_btnRowClass != null ? m_btnRowClass.transform : null;
                 case CharacterCreationOptionPanelMode.Background:
-                    return 2;
+                    return m_btnRowBackground != null ? m_btnRowBackground.transform : null;
                 case CharacterCreationOptionPanelMode.Feat:
-                    return 3;
+                    return m_btnRowFeat != null ? m_btnRowFeat.transform : null;
                 case CharacterCreationOptionPanelMode.Spell:
-                    return 4;
+                    return m_btnRowSpell != null ? m_btnRowSpell.transform : null;
                 default:
-                    return -1;
-            }
-        }
-
-        private Vector2 GetEditorRowBaseAnchoredPosition(int rowIndex)
-        {
-            if (rowIndex < 0 || rowIndex >= m_rowOriginalAnchoredPositions.Length)
-            {
-                return Vector2.zero;
-            }
-
-            switch (rowIndex)
-            {
-                case 0:
-                    return m_rowOriginalAnchoredPositions.Length > 1
-                        ? m_rowOriginalAnchoredPositions[1]
-                        : m_rowOriginalAnchoredPositions[0];
-                case 1:
-                    return m_rowOriginalAnchoredPositions[0];
-                default:
-                    return m_rowOriginalAnchoredPositions[rowIndex];
+                    return null;
             }
         }
 
@@ -995,74 +1692,29 @@ namespace GameLogic
             m_expandedEditorSections.Clear();
         }
 
-        private float GetCreationOptionListHeight()
-        {
-            int optionCount = GetCreationOptionCount();
-            if (optionCount <= 0)
-            {
-                return 220f;
-            }
-
-            float cardHeight = m_creationOptionOriginalCellSize.y;
-            float spacingY = m_creationOptionOriginalSpacing.y;
-            int topPadding = m_creationOptionOriginalPadding != null ? m_creationOptionOriginalPadding.top : 6;
-            int bottomPadding = m_creationOptionOriginalPadding != null ? m_creationOptionOriginalPadding.bottom : 18;
-            float contentHeight = topPadding + bottomPadding + (cardHeight * optionCount) + (spacingY * Math.Max(0, optionCount - 1));
-            return Mathf.Min(420f, Mathf.Max(220f, contentHeight + 24f));
-        }
-
-        private void MoveCreationOptionListToLeftPanel()
-        {
-            if (m_hasMovedCreationOptionListToLeft || m_rectPanelLeft == null || m_rectCreationOptionListRoot == null)
-            {
-                return;
-            }
-
-            m_rectCreationOptionListRoot.SetParent(m_rectPanelLeft, false);
-            m_rectCreationOptionListRoot.anchorMin = new Vector2(0f, 1f);
-            m_rectCreationOptionListRoot.anchorMax = new Vector2(1f, 1f);
-            m_rectCreationOptionListRoot.pivot = new Vector2(0.5f, 1f);
-            m_rectCreationOptionListRoot.anchoredPosition = Vector2.zero;
-            m_rectCreationOptionListRoot.sizeDelta = new Vector2(-40f, 340f);
-            m_rectCreationOptionListRoot.SetAsLastSibling();
-            m_hasMovedCreationOptionListToLeft = true;
-        }
-
         private void ApplyEditorPanelLayout()
         {
-            MoveCreationOptionListToLeftPanel();
-            if (m_rectPanelLeft != null)
-            {
-                m_rectPanelLeft.anchorMin = m_panelLeftOriginalAnchorMin;
-                m_rectPanelLeft.anchorMax = m_panelLeftOriginalAnchorMax;
-                m_rectPanelLeft.offsetMin = m_panelLeftOriginalOffsetMin;
-                m_rectPanelLeft.offsetMax = m_panelLeftOriginalOffsetMax;
-            }
-
             if (m_rectPanelCenter != null)
             {
-                m_rectPanelCenter.gameObject.SetActive(false);
+                m_rectPanelCenter.gameObject.SetActive(true);
             }
         }
 
         private void ApplyCharacterListPanelLayout()
         {
-            if (m_rectPanelLeft != null)
-            {
-                m_rectPanelLeft.anchorMin = m_panelLeftOriginalAnchorMin;
-                m_rectPanelLeft.anchorMax = m_panelLeftOriginalAnchorMax;
-                m_rectPanelLeft.offsetMin = m_panelLeftOriginalOffsetMin;
-                m_rectPanelLeft.offsetMax = m_panelLeftOriginalOffsetMax;
-            }
-
             if (m_rectPanelCenter != null)
             {
-                m_rectPanelCenter.gameObject.SetActive(false);
+                m_rectPanelCenter.gameObject.SetActive(true);
             }
         }
 
         private void SetBasicInfoRowsActive(bool active)
         {
+            if (m_goRowCharacterBase != null)
+            {
+                m_goRowCharacterBase.SetActive(active);
+            }
+
             if (m_goRowCharacterName != null)
             {
                 m_goRowCharacterName.SetActive(active);
@@ -1071,6 +1723,11 @@ namespace GameLogic
             if (m_goRowAlignment != null)
             {
                 m_goRowAlignment.SetActive(active);
+            }
+
+            if (!active)
+            {
+                SetActive(m_rectHpChoiceContent != null ? m_rectHpChoiceContent.gameObject : null, false);
             }
         }
 
@@ -1109,143 +1766,100 @@ namespace GameLogic
                 : "可暂不选择法术";
         }
 
-        private string BuildSelectionDetail()
+        private CharacterRuntimeSnapshotData BuildCurrentRuntimeSnapshot()
         {
-            StringBuilder builder = new StringBuilder(768);
-
-            if (!TryAppendSelectedMainRaceDetail(builder) && TryGetSelected(m_races, m_selectedRaceIndex, out DndRaceDefineData raceData))
-            {
-                AppendSection(builder, "种族", raceData.Name);
-                AppendLine(builder, "体型/速度", $"{raceData.Size} / {raceData.Speed}");
-                AppendLine(builder, "语言", FormatList(raceData.LanguageIds));
-                AppendLine(builder, "属性加值", BuildRaceAbilityBonusSummary(raceData));
-                AppendLine(builder, "种族特性", BuildFeatureSummary(raceData.FeatureIds));
-                AppendLine(builder, "说明", raceData.Description);
-            }
-
-            if (TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData))
-            {
-                AppendSection(builder, "职业", classData.Name);
-                AppendLine(builder, "主属性", $"{FormatList(classData.PrimaryAbilityIds)} / {classData.PrimaryAbilityMode}");
-                AppendLine(builder, "豁免熟练", FormatList(classData.SavingThrowProficiencies));
-                AppendLine(builder, "护甲熟练", FormatList(classData.ArmorProficiencies));
-                AppendLine(builder, "武器熟练", FormatList(classData.WeaponProficiencies));
-                AppendLine(builder, "说明", classData.Description);
-            }
-
-            if (TryGetSelected(m_backgrounds, m_selectedBackgroundIndex, out DndBackgroundDefineData backgroundData))
-            {
-                AppendSection(builder, "背景", backgroundData.Name);
-                AppendLine(builder, "技能熟练", FormatList(backgroundData.SkillProficiencies));
-                AppendLine(builder, "工具熟练", FormatList(backgroundData.ToolProficiencies));
-                AppendLine(builder, "说明", backgroundData.Description);
-            }
-
-            if (TryGetSelected(m_feats, m_selectedFeatIndex, out DndFeatDefineData featData))
-            {
-                AppendSection(builder, "专长", featData.Name);
-                AppendLine(builder, "前置条件", FormatList(featData.PrerequisiteIds));
-                AppendLine(builder, "说明", featData.Description);
-            }
-
-            if (TryGetSelected(m_spells, m_selectedSpellIndex, out DndSpellDefineData spellData))
-            {
-                AppendSection(builder, "法术", spellData.Name);
-                AppendLine(builder, "环级/学派", $"{FormatSpellLevel(spellData.Level)} / {spellData.School}");
-                AppendLine(builder, "施法/距离/持续", $"{spellData.CastingTime} / {spellData.Range} / {spellData.Duration}");
-                AppendLine(builder, "说明", spellData.Description);
-            }
-
-            return builder.Length == 0
-                ? "当前没有可展示的规则详情。完成 Luban 转表后，这里会按种族、职业、背景、专长和法术的建卡顺序展示录入内容。"
-                : builder.ToString();
+            CharacterCardDraftSaveData draft = CloneCharacterDraft(m_currentCharacter) ?? CharacterCardLocalRepository.CreateDraft();
+            ApplyCurrentSelectionsToCharacter(draft);
+            return BuildRuntimeSnapshot(draft);
         }
 
-        private string BuildCharacterPreview()
+        private CharacterRuntimeSnapshotData BuildRuntimeSnapshot(CharacterCardDraftSaveData character)
         {
-            StringBuilder builder = new StringBuilder(768);
-            builder.AppendLine("当前角色详情预览");
-            builder.AppendLine($"名称：{GetCurrentCharacterName()}");
-            builder.AppendLine($"阵营：{GetCurrentAlignment()}");
-            builder.AppendLine($"种族：{GetRaceLabel()}");
-            builder.AppendLine($"职业：{GetClassLabel()}");
-            builder.AppendLine($"背景：{GetBackgroundLabel()}");
-            builder.AppendLine("等级：1");
-            builder.AppendLine($"专长：{GetFeatLabel()}");
-            builder.AppendLine($"法术：{GetSpellLabel()}");
-            builder.AppendLine();
-            builder.AppendLine("六维属性");
-            builder.Append(BuildAbilityScorePreview());
-            builder.AppendLine();
-            builder.AppendLine("熟练项与加值");
-            builder.Append(BuildProficiencyPreview());
-            return builder.ToString();
-        }
+            CharacterRuntimeSnapshotData snapshot = new CharacterRuntimeSnapshotData();
+            if (character == null)
+            {
+                return snapshot;
+            }
 
-        private string GetCurrentCharacterName()
-        {
-            return m_currentCharacter == null || string.IsNullOrWhiteSpace(m_currentCharacter.CharacterName)
-                ? "未命名角色"
-                : m_currentCharacter.CharacterName;
-        }
+            snapshot.CharacterId = character.CharacterId ?? string.Empty;
+            snapshot.CharacterName = string.IsNullOrWhiteSpace(character.CharacterName) ? "未命名角色" : character.CharacterName.Trim();
+            snapshot.Alignment = character.Alignment ?? string.Empty;
+            snapshot.Level = Math.Max(1, character.Level);
+            snapshot.RaceId = character.RaceId ?? string.Empty;
+            snapshot.ClassId = character.ClassId ?? string.Empty;
+            snapshot.BackgroundId = character.BackgroundId ?? string.Empty;
+            snapshot.FeatId = character.FeatId ?? string.Empty;
+            snapshot.SpellId = character.SpellId ?? string.Empty;
 
-        private string GetCurrentAlignment()
-        {
-            return m_currentCharacter == null || string.IsNullOrWhiteSpace(m_currentCharacter.Alignment)
-                ? "待选择"
-                : m_currentCharacter.Alignment;
-        }
+            DndRaceDefineData raceData = FindDataById(m_races, snapshot.RaceId, data => data.RaceId);
+            DndClassDefineData classData = FindDataById(m_classes, snapshot.ClassId, data => data.ClassId);
+            DndBackgroundDefineData backgroundData = FindDataById(m_backgrounds, snapshot.BackgroundId, data => data.BackgroundId);
+            DndFeatDefineData featData = FindDataById(m_feats, snapshot.FeatId, data => data.FeatId);
+            DndSpellDefineData spellData = FindDataById(m_spells, snapshot.SpellId, data => data.SpellId);
 
-        private string BuildAbilityScorePreview()
-        {
+            snapshot.RaceName = raceData?.Name ?? string.Empty;
+            snapshot.ClassName = classData?.Name ?? string.Empty;
+            snapshot.BackgroundName = backgroundData?.Name ?? string.Empty;
+            snapshot.FeatName = featData?.Name ?? string.Empty;
+            snapshot.SpellName = spellData?.Name ?? string.Empty;
+            snapshot.Size = raceData?.Size ?? string.Empty;
+            snapshot.Speed = raceData?.Speed ?? 0;
+
+            if (raceData != null && TryGetRaceSubData(raceData.RaceId, out DndRaceSubDefineData raceSubData))
+            {
+                snapshot.MainRaceId = raceSubData.MainRaceId ?? string.Empty;
+                snapshot.MainRaceName = GetMainRaceDisplayName(raceSubData.MainRaceId);
+            }
+            else
+            {
+                snapshot.MainRaceId = raceData?.RaceId ?? string.Empty;
+                snapshot.MainRaceName = raceData?.Name ?? string.Empty;
+            }
+
             int[] raceBonuses = new int[6];
-            if (TryGetSelected(m_races, m_selectedRaceIndex, out DndRaceDefineData raceData))
+            ApplyRaceAbilityBonuses(raceData, raceBonuses);
+            snapshot.Strength = DefaultAbilityScore + raceBonuses[0];
+            snapshot.Dexterity = DefaultAbilityScore + raceBonuses[1];
+            snapshot.Constitution = DefaultAbilityScore + raceBonuses[2];
+            snapshot.Intelligence = DefaultAbilityScore + raceBonuses[3];
+            snapshot.Wisdom = DefaultAbilityScore + raceBonuses[4];
+            snapshot.Charisma = DefaultAbilityScore + raceBonuses[5];
+
+            snapshot.SavingThrows = classData != null ? FormatListWithBonus(classData.SavingThrowProficiencies) : "无";
+            snapshot.Skills = backgroundData != null ? FormatListWithBonus(backgroundData.SkillProficiencies) : "无";
+            snapshot.WeaponProficiencies = BuildWeaponProficiencySummary(classData?.WeaponProficiencies, raceData?.FeatureIds);
+            snapshot.ToolProficiencies = BuildToolProficiencySummary(backgroundData?.ToolProficiencies, raceData?.FeatureIds);
+
+            List<string> languages = new List<string>();
+            AppendUniqueValues(languages, raceData?.LanguageIds);
+            AppendUniqueValues(languages, backgroundData?.LanguageIds);
+            snapshot.Languages = FormatList(languages);
+
+            snapshot.Senses = BuildFeatureSenseSummary(raceData?.FeatureIds);
+            snapshot.DamageResistances = BuildRaceDamageResistanceSummary(raceData?.FeatureIds);
+            snapshot.PendingSelections = BuildRacePendingSelectionSummary(raceData?.FeatureIds);
+            snapshot.ConditionalBenefits = BuildRaceConditionalBenefitSummary(raceData?.FeatureIds);
+
+            List<string> traitEntries = new List<string>();
+            AppendUniqueValues(traitEntries, BuildFeatureDetailEntries(raceData?.FeatureIds));
+            AppendUniqueValues(traitEntries, BuildFeatureDetailEntries(backgroundData?.FeatureIds));
+            AppendUniqueValues(traitEntries, BuildFeatureDetailEntries(featData?.FeatureIds));
+            snapshot.Traits = FormatFeatureDetailEntries(traitEntries);
+
+            List<string> notes = new List<string>();
+            if (classData != null && classData.HitDie > 0)
             {
-                ApplyRaceAbilityBonuses(raceData, raceBonuses);
+                notes.Add($"职业生命骰：d{classData.HitDie}");
             }
 
-            StringBuilder builder = new StringBuilder(256);
-            AppendAbilityLine(builder, "力量", DefaultAbilityScore + raceBonuses[0], raceBonuses[0]);
-            AppendAbilityLine(builder, "敏捷", DefaultAbilityScore + raceBonuses[1], raceBonuses[1]);
-            AppendAbilityLine(builder, "体质", DefaultAbilityScore + raceBonuses[2], raceBonuses[2]);
-            AppendAbilityLine(builder, "智力", DefaultAbilityScore + raceBonuses[3], raceBonuses[3]);
-            AppendAbilityLine(builder, "感知", DefaultAbilityScore + raceBonuses[4], raceBonuses[4]);
-            AppendAbilityLine(builder, "魅力", DefaultAbilityScore + raceBonuses[5], raceBonuses[5]);
-            return builder.ToString();
-        }
-
-        private string BuildProficiencyPreview()
-        {
-            StringBuilder builder = new StringBuilder(320);
-            builder.AppendLine($"熟练加值：+{LevelOneProficiencyBonus}");
-
-            if (TryGetSelected(m_classes, m_selectedClassIndex, out DndClassDefineData classData))
+            if (!string.IsNullOrWhiteSpace(snapshot.MainRaceName)
+                && !string.Equals(snapshot.MainRaceName, snapshot.RaceName, StringComparison.OrdinalIgnoreCase))
             {
-                AppendLine(builder, "豁免熟练", FormatListWithBonus(classData.SavingThrowProficiencies));
-                AppendLine(builder, "护甲熟练", FormatList(classData.ArmorProficiencies));
-                AppendLine(builder, "武器熟练", FormatList(classData.WeaponProficiencies));
-            }
-            else
-            {
-                AppendLine(builder, "豁免熟练", "未选择职业");
+                notes.Add($"所属主种族：{snapshot.MainRaceName}");
             }
 
-            if (TryGetSelected(m_backgrounds, m_selectedBackgroundIndex, out DndBackgroundDefineData backgroundData))
-            {
-                AppendLine(builder, "技能熟练", FormatListWithBonus(backgroundData.SkillProficiencies));
-                AppendLine(builder, "工具熟练", FormatList(backgroundData.ToolProficiencies));
-            }
-            else
-            {
-                AppendLine(builder, "技能熟练", "未选择背景");
-            }
-
-            if (TryGetSelected(m_races, m_selectedRaceIndex, out DndRaceDefineData raceData))
-            {
-                AppendLine(builder, "语言", FormatList(raceData.LanguageIds));
-            }
-
-            return builder.ToString();
+            snapshot.Notes = notes.Count > 0 ? string.Join(" / ", notes) : string.Empty;
+            return snapshot;
         }
 
         private void SetCreationOptionPanelMode(CharacterCreationOptionPanelMode mode)
@@ -1457,7 +2071,7 @@ namespace GameLogic
         {
             m_centerOptionMode = CharacterCreationOptionPanelMode.Race;
             m_selectedRaceIndex = ClampIndex(index, m_races.Count);
-            SyncSelectedMainRaceGroupFromSelection();
+            ClearMainRaceDetailSelection();
             RefreshView();
         }
 
@@ -1477,6 +2091,7 @@ namespace GameLogic
         {
             m_centerOptionMode = CharacterCreationOptionPanelMode.Class;
             m_selectedClassIndex = ClampIndex(index, m_classes.Count);
+            m_selectedFeatIndex = 0;
             RefreshView();
         }
 
@@ -1511,10 +2126,15 @@ namespace GameLogic
 
         private string BuildRaceOptionDetail(DndRaceDefineData raceData)
         {
+            if (raceData != null && TryGetRaceSubData(raceData.RaceId, out DndRaceSubDefineData raceSubData))
+            {
+                return BuildSubRaceOptionDetail(raceSubData);
+            }
+
             StringBuilder builder = new StringBuilder(256);
             AppendLine(builder, "属性加值", BuildRaceAbilityBonusSummary(raceData));
             AppendLine(builder, "语言", FormatList(raceData?.LanguageIds));
-            AppendLine(builder, "特性", BuildFeatureSummary(raceData?.FeatureIds));
+            AppendLine(builder, "特性", BuildFeatureDetailSummary(raceData?.FeatureIds));
             AppendLine(builder, "说明", SummarizeText(raceData?.Description));
             return builder.ToString().TrimEnd();
         }
@@ -1619,42 +2239,15 @@ namespace GameLogic
         }
         private void ApplyCreationOptionLayout(int optionCount)
         {
-            if (m_creationOptionGridLayout == null)
-            {
-                return;
-            }
-
-            if (m_creationOptionContentFitter != null)
-            {
-                m_creationOptionContentFitter.enabled = true;
-            }
-
-            m_creationOptionGridLayout.enabled = true;
-            m_creationOptionGridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            m_creationOptionGridLayout.constraintCount = 1;
-            float availableWidth = m_rectCreationOptionViewport != null && m_rectCreationOptionViewport.rect.width > 0f
-                ? m_rectCreationOptionViewport.rect.width
-                : m_creationOptionOriginalCellSize.x;
-            int leftPadding = m_creationOptionOriginalPadding != null ? m_creationOptionOriginalPadding.left : 6;
-            int rightPadding = m_creationOptionOriginalPadding != null ? m_creationOptionOriginalPadding.right : 6;
-            float cellWidth = Mathf.Max(240f, availableWidth - leftPadding - rightPadding);
-            m_creationOptionGridLayout.cellSize = new Vector2(cellWidth, m_creationOptionOriginalCellSize.y);
-            m_creationOptionGridLayout.spacing = m_creationOptionOriginalSpacing;
-            if (m_creationOptionOriginalPadding != null)
-            {
-                m_creationOptionGridLayout.padding = new RectOffset(
-                    m_creationOptionOriginalPadding.left,
-                    m_creationOptionOriginalPadding.right,
-                    m_creationOptionOriginalPadding.top,
-                    m_creationOptionOriginalPadding.bottom);
-            }
-
             for (int index = 0; index < optionCount && index < m_creationOptionCardViews.Count; index++)
             {
                 m_creationOptionCardViews[index].ResetLayout();
             }
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(m_rectCreationOptionCardContent);
+            if (m_rectCreationOptionCardContent != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(m_rectCreationOptionCardContent);
+            }
         }
 
         private List<RaceGroupInfo> BuildRaceGroups()
@@ -1741,8 +2334,11 @@ namespace GameLogic
                     continue;
                 }
 
-                List<int> childRaceIndexes = FindRaceIndexesByMainRace(raceMain.MainRaceId);
-                bool isGrouped = childRaceIndexes.Count > 1;
+                bool hasSubRaces = HasSubRaces(service, raceMain.MainRaceId);
+                List<int> childRaceIndexes = hasSubRaces
+                    ? FindSubRaceIndexesByMainRace(service, raceMain.MainRaceId)
+                    : FindRaceIndexesByMainRace(raceMain.MainRaceId);
+                bool isGrouped = hasSubRaces;
                 string groupName = string.IsNullOrWhiteSpace(raceMain.Name) ? raceMain.MainRaceId : raceMain.Name;
                 groups.Add(new RaceGroupInfo(raceMain.MainRaceId, groupName, childRaceIndexes, isGrouped));
                 m_mainRacePreviewDataByGroupKey[raceMain.MainRaceId] = new MainRacePreviewData(
@@ -1775,6 +2371,61 @@ namespace GameLogic
             }
 
             return groups;
+        }
+
+        private bool HasSubRaces(DndRuleContentService service, string mainRaceId)
+        {
+            if (service == null || string.IsNullOrWhiteSpace(mainRaceId))
+            {
+                return false;
+            }
+
+            IReadOnlyList<DndRaceSubDefineData> raceSubs = service.RaceSubs;
+            for (int index = 0; index < raceSubs.Count; index++)
+            {
+                DndRaceSubDefineData raceSub = raceSubs[index];
+                if (raceSub != null
+                    && !string.IsNullOrWhiteSpace(raceSub.SubRaceId)
+                    && string.Equals(raceSub.MainRaceId, mainRaceId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private List<int> FindSubRaceIndexesByMainRace(DndRuleContentService service, string mainRaceId)
+        {
+            List<int> indexes = new List<int>();
+            if (service == null || string.IsNullOrWhiteSpace(mainRaceId))
+            {
+                return indexes;
+            }
+
+            HashSet<int> addedIndexes = new HashSet<int>();
+            IReadOnlyList<DndRaceSubDefineData> raceSubs = service.RaceSubs;
+            for (int index = 0; index < raceSubs.Count; index++)
+            {
+                DndRaceSubDefineData raceSub = raceSubs[index];
+                if (raceSub == null
+                    || string.IsNullOrWhiteSpace(raceSub.SubRaceId)
+                    || !string.Equals(raceSub.MainRaceId, mainRaceId, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                int raceIndex = FindIndexById(m_races, raceSub.SubRaceId, data => data.RaceId);
+                if (raceIndex >= 0
+                    && raceIndex < m_races.Count
+                    && string.Equals(m_races[raceIndex].RaceId, raceSub.SubRaceId, StringComparison.OrdinalIgnoreCase)
+                    && addedIndexes.Add(raceIndex))
+                {
+                    indexes.Add(raceIndex);
+                }
+            }
+
+            return indexes.Count > 0 ? indexes : FindRaceIndexesByMainRace(mainRaceId);
         }
 
         private List<int> FindRaceIndexesByMainRace(string mainRaceId)
@@ -1918,6 +2569,22 @@ namespace GameLogic
         {
             int[] raceBonuses = new int[6];
             ApplyRaceAbilityBonuses(raceData, raceBonuses);
+            return BuildAbilityBonusSummary(raceBonuses);
+        }
+
+        private string BuildFeatureAbilityBonusSummary(IReadOnlyList<string> featureIds)
+        {
+            int[] raceBonuses = new int[6];
+            ApplyFeatureAbilityBonuses(featureIds, raceBonuses);
+            return BuildAbilityBonusSummary(raceBonuses);
+        }
+
+        private string BuildAbilityBonusSummary(int[] raceBonuses)
+        {
+            if (raceBonuses == null || raceBonuses.Length < 6)
+            {
+                return "当前种族未录入可自动解析的属性加值";
+            }
 
             List<string> summaries = new List<string>();
             AddAbilityBonusSummary(summaries, "力量", raceBonuses[0]);
@@ -1961,10 +2628,20 @@ namespace GameLogic
                 return;
             }
 
-            DndRuleContentService service = DndRuleContentService.Instance;
-            for (int featureIndex = 0; featureIndex < raceData.FeatureIds.Count; featureIndex++)
+            ApplyFeatureAbilityBonuses(raceData.FeatureIds, raceBonuses);
+        }
+
+        private void ApplyFeatureAbilityBonuses(IReadOnlyList<string> featureIds, int[] raceBonuses)
+        {
+            if (featureIds == null || raceBonuses == null || raceBonuses.Length < 6)
             {
-                if (!service.TryGetFeature(raceData.FeatureIds[featureIndex], out DndFeatureDefineData feature))
+                return;
+            }
+
+            DndRuleContentService service = DndRuleContentService.Instance;
+            for (int featureIndex = 0; featureIndex < featureIds.Count; featureIndex++)
+            {
+                if (!service.TryGetFeature(featureIds[featureIndex], out DndFeatureDefineData feature))
                 {
                     continue;
                 }
@@ -1984,29 +2661,6 @@ namespace GameLogic
                     raceBonuses[abilityIndex] += value;
                 }
             }
-        }
-
-        private bool TryAppendSelectedMainRaceDetail(StringBuilder builder)
-        {
-            if (builder == null
-                || m_centerOptionMode != CharacterCreationOptionPanelMode.Race
-                || string.IsNullOrWhiteSpace(m_selectedMainRaceGroupKey))
-            {
-                return false;
-            }
-
-            if (!TryGetMainRacePreviewData(m_selectedMainRaceGroupKey, out MainRacePreviewData previewData))
-            {
-                return false;
-            }
-
-            AppendSection(builder, "种族", previewData.Name);
-            AppendLine(builder, "体型", FormatTextOrDefault(previewData.Size, "未定"));
-            AppendLine(builder, "速度", previewData.Speed > 0 ? previewData.Speed.ToString() : "未定");
-            AppendLine(builder, "语言", FormatList(previewData.LanguageIds));
-            AppendLine(builder, "特性", BuildFeatureDetailSummary(previewData.FeatureIds));
-            AppendLine(builder, "描述", FormatTextOrDefault(previewData.Description, "无"));
-            return true;
         }
 
         private bool TryGetMainRacePreviewData(string groupKey, out MainRacePreviewData previewData)
@@ -2216,6 +2870,111 @@ namespace GameLogic
             return entries;
         }
 
+        private string BuildFeatureSenseSummary(IReadOnlyList<string> featureIds)
+        {
+            if (featureIds == null || featureIds.Count == 0)
+            {
+                return "无";
+            }
+
+            DndRuleContentService service = DndRuleContentService.Instance;
+            List<string> senses = new List<string>();
+            for (int featureIndex = 0; featureIndex < featureIds.Count; featureIndex++)
+            {
+                string featureId = featureIds[featureIndex];
+                if (string.IsNullOrWhiteSpace(featureId) || !service.TryGetFeature(featureId, out DndFeatureDefineData feature))
+                {
+                    continue;
+                }
+
+                for (int effectIndex = 0; effectIndex < feature.EffectIds.Count; effectIndex++)
+                {
+                    if (!service.TryGetFeatureEffect(feature.EffectIds[effectIndex], out DndFeatureEffectData effect))
+                    {
+                        continue;
+                    }
+
+                    string senseEntry = TryBuildSenseEntry(effect);
+                    if (!string.IsNullOrWhiteSpace(senseEntry) && !ContainsIgnoreCase(senses, senseEntry))
+                    {
+                        senses.Add(senseEntry);
+                    }
+                }
+            }
+
+            return senses.Count > 0 ? string.Join(" / ", senses) : "无";
+        }
+
+        private string BuildRaceDamageResistanceSummary(IReadOnlyList<string> featureIds)
+        {
+            List<string> values = new List<string>();
+            if (HasFeature(featureIds, "矮人体魄", "dwarvenresilience"))
+            {
+                values.Add("毒素");
+            }
+
+            return values.Count > 0 ? string.Join(" / ", values) : "无";
+        }
+
+        private string BuildWeaponProficiencySummary(IReadOnlyList<string> baseWeaponProficiencies, IReadOnlyList<string> raceFeatureIds)
+        {
+            List<string> values = new List<string>();
+            AppendUniqueValues(values, baseWeaponProficiencies);
+
+            if (HasFeature(raceFeatureIds, "矮人战斗训练", "dwarvencombattraining"))
+            {
+                AppendUniqueValues(values, new[]
+                {
+                    "战斧",
+                    "手斧",
+                    "轻锤",
+                    "战锤"
+                });
+            }
+
+            return FormatList(values);
+        }
+
+        private string BuildToolProficiencySummary(IReadOnlyList<string> baseToolProficiencies, IReadOnlyList<string> raceFeatureIds)
+        {
+            List<string> values = new List<string>();
+            AppendUniqueValues(values, baseToolProficiencies);
+
+            if (HasFeature(raceFeatureIds, "工具熟练", "toolproficiency"))
+            {
+                values.Add("待选择：铁匠工具 / 酿酒工具 / 石匠工具");
+            }
+
+            return FormatList(values);
+        }
+
+        private string BuildRacePendingSelectionSummary(IReadOnlyList<string> featureIds)
+        {
+            List<string> values = new List<string>();
+            if (HasFeature(featureIds, "工具熟练", "toolproficiency"))
+            {
+                values.Add("工匠工具三选一：铁匠工具 / 酿酒工具 / 石匠工具");
+            }
+
+            return values.Count > 0 ? string.Join(" / ", values) : "无";
+        }
+
+        private string BuildRaceConditionalBenefitSummary(IReadOnlyList<string> featureIds)
+        {
+            List<string> values = new List<string>();
+            if (HasFeature(featureIds, "石工巧匠", "stonecunning"))
+            {
+                values.Add("石制品相关历史检定：视为熟练，且熟练加值翻倍");
+            }
+
+            if (HasFeature(featureIds, "矮人体魄", "dwarvenresilience"))
+            {
+                values.Add("对抗毒素的豁免：具有优势");
+            }
+
+            return values.Count > 0 ? string.Join(" / ", values) : "无";
+        }
+
         private static string FormatFeatureDetailEntries(IReadOnlyList<string> entries)
         {
             if (entries == null || entries.Count == 0)
@@ -2263,13 +3022,10 @@ namespace GameLogic
             if (TryGetMainRacePreviewData(groupKey, out MainRacePreviewData previewData))
             {
                 StringBuilder previewBuilder = new StringBuilder(256);
+                AppendLine(previewBuilder, "属性加值", BuildFeatureAbilityBonusSummary(previewData.FeatureIds));
                 AppendLine(previewBuilder, "语言", FormatList(previewData.LanguageIds));
-                AppendLine(previewBuilder, "特性", BuildFeatureSummary(previewData.FeatureIds));
-                if (TryGetRaceGroupInfo(groupKey, out RaceGroupInfo previewGroupInfo))
-                {
-                    AppendLine(previewBuilder, "亚种", BuildGroupedRaceSubRaceSummary(GetGroupedRaces(previewGroupInfo)));
-                }
-
+                AppendLine(previewBuilder, "特性", BuildFeatureDetailSummary(previewData.FeatureIds));
+                AppendLine(previewBuilder, "说明", SummarizeText(previewData.Description));
                 return previewBuilder.ToString().TrimEnd();
             }
 
@@ -2287,9 +3043,43 @@ namespace GameLogic
             StringBuilder builder = new StringBuilder(256);
             AppendLine(builder, "属性加值", BuildGroupedRaceAbilityBonusSummary(groupedRaces));
             AppendLine(builder, "语言", BuildGroupedRaceLanguages(groupedRaces));
-            AppendLine(builder, "特性", BuildGroupedRaceFeatureSummary(groupedRaces));
-            AppendLine(builder, "亚种", BuildGroupedRaceSubRaceSummary(groupedRaces));
+            AppendLine(builder, "特性", BuildGroupedRaceFeatureDetailSummary(groupedRaces));
             return builder.ToString().TrimEnd();
+        }
+
+        private string BuildSubRaceOptionDetail(DndRaceSubDefineData raceSubData)
+        {
+            StringBuilder builder = new StringBuilder(256);
+            AppendLine(builder, "所属主种族", GetMainRaceDisplayName(raceSubData?.MainRaceId));
+            AppendLine(builder, "体型", string.IsNullOrWhiteSpace(raceSubData?.Size) ? "沿用主种族" : raceSubData.Size);
+            AppendLine(builder, "速度", raceSubData != null && raceSubData.Speed > 0 ? raceSubData.Speed.ToString() : "沿用主种族");
+            AppendLine(builder, "属性加值", BuildFeatureAbilityBonusSummary(raceSubData?.FeatureIds));
+            AppendLine(builder, "特性", BuildFeatureDetailSummary(raceSubData?.FeatureIds));
+            AppendLine(builder, "说明", SummarizeText(raceSubData?.Description));
+            return builder.ToString().TrimEnd();
+        }
+
+        private bool TryGetRaceSubData(string raceId, out DndRaceSubDefineData raceSubData)
+        {
+            raceSubData = null;
+            if (string.IsNullOrWhiteSpace(raceId))
+            {
+                return false;
+            }
+
+            return DndRuleContentService.Instance.TryGetRaceSub(raceId, out raceSubData);
+        }
+
+        private string GetMainRaceDisplayName(string mainRaceId)
+        {
+            if (!string.IsNullOrWhiteSpace(mainRaceId)
+                && DndRuleContentService.Instance.TryGetRaceMain(mainRaceId, out DndRaceMainDefineData raceMain)
+                && !string.IsNullOrWhiteSpace(raceMain.Name))
+            {
+                return raceMain.Name;
+            }
+
+            return FormatTextOrDefault(mainRaceId, "未定");
         }
 
         private List<string> GetCommonValues(IReadOnlyList<DndRaceDefineData> groupedRaces, Func<DndRaceDefineData, IReadOnlyList<string>> selector)
@@ -2398,6 +3188,7 @@ namespace GameLogic
             }
 
             ApplyCurrentSelectionsToCharacter(m_currentCharacter);
+            m_currentCharacter.RuntimeSnapshot = BuildRuntimeSnapshot(m_currentCharacter);
             CharacterCardLocalRepository.Upsert(m_currentCharacter);
         }
 
@@ -2415,7 +3206,9 @@ namespace GameLogic
             character.BackgroundId = TryGetSelected(m_backgrounds, m_selectedBackgroundIndex, out DndBackgroundDefineData backgroundData) ? backgroundData.BackgroundId : string.Empty;
             character.FeatId = TryGetSelected(m_feats, m_selectedFeatIndex, out DndFeatDefineData featData) ? featData.FeatId : string.Empty;
             character.SpellId = TryGetSelected(m_spells, m_selectedSpellIndex, out DndSpellDefineData spellData) ? spellData.SpellId : string.Empty;
-            character.Level = Math.Max(1, character.Level);
+            character.Level = ClampCharacterLevel(m_tmpInputCharacterLevel != null ? m_tmpInputCharacterLevel.text : character.Level.ToString());
+            character.HpModeId = CharacterHpModeIds.Normalize(character.HpModeId);
+            RefreshCharacterHpByMode(character);
             character.IsCompleted = false;
             character.UpdatedAt = DateTime.UtcNow.ToString("O");
         }
@@ -2442,6 +3235,19 @@ namespace GameLogic
                     m_tmpInputCharacterName.SetTextWithoutNotify(characterName);
                 }
 
+                if (m_tmpInputCharacterLevel != null)
+                {
+                    int level = m_currentCharacter == null ? 1 : ClampCharacterLevel(m_currentCharacter.Level.ToString());
+                    m_tmpInputCharacterLevel.SetTextWithoutNotify(level.ToString());
+                }
+
+                if (m_tmpHpValue != null)
+                {
+                    int hpValue = ResolveDisplayedHpValue();
+                    m_tmpHpValue.readOnly = !string.Equals(CharacterHpModeIds.Normalize(m_currentCharacter?.HpModeId), CharacterHpModeIds.Custom, StringComparison.OrdinalIgnoreCase);
+                    m_tmpHpValue.SetTextWithoutNotify(hpValue > 0 ? hpValue.ToString() : string.Empty);
+                }
+
                 if (m_tmpDropdownAlignment != null)
                 {
                     int alignmentIndex = FindAlignmentDropdownIndex(m_currentCharacter?.Alignment);
@@ -2458,6 +3264,11 @@ namespace GameLogic
         private string NormalizeAlignmentText(string alignment)
         {
             return string.IsNullOrWhiteSpace(alignment) ? string.Empty : alignment.Trim();
+        }
+
+        private static int ClampCharacterLevel(string value)
+        {
+            return int.TryParse(value, out int level) ? Math.Max(1, Math.Min(20, level)) : 1;
         }
 
         private static string GetInputValue(TMP_InputField inputField, string fallback)
@@ -2533,6 +3344,19 @@ namespace GameLogic
             for (int index = 0; index < m_rowLabels.Length; index++)
             {
                 SetRowActive(index, active);
+            }
+
+            if (active)
+            {
+                SetActive(m_goRowFeat, BuildFeatChoiceEntryLabels().Count > 0);
+                SetActive(m_goRowSpell, false);
+            }
+            else
+            {
+                SetActive(m_rectHpChoiceContent != null ? m_rectHpChoiceContent.gameObject : null, false);
+                SetActive(m_rectClassChoiceContent != null ? m_rectClassChoiceContent.gameObject : null, false);
+                SetActive(m_rectFeatChoiceContent != null ? m_rectFeatChoiceContent.gameObject : null, false);
+                SetActive(m_rectSpellChoiceContent != null ? m_rectSpellChoiceContent.gameObject : null, false);
             }
         }
 
@@ -2619,16 +3443,6 @@ namespace GameLogic
             return "未知";
         }
 
-        private static void AppendSection(StringBuilder builder, string title, string value)
-        {
-            if (builder.Length > 0)
-            {
-                builder.AppendLine();
-            }
-
-            builder.AppendLine($"[{title}] {value}");
-        }
-
         private static void AppendLine(StringBuilder builder, string label, string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -2639,23 +3453,12 @@ namespace GameLogic
             builder.AppendLine($"{label}：{value}");
         }
 
-        private static void AppendAbilityLine(StringBuilder builder, string label, int score, int raceBonus)
-        {
-            string bonusText = raceBonus == 0 ? string.Empty : $"，种族{FormatSignedNumber(raceBonus)}";
-            builder.AppendLine($"{label}：{score}（调整值{FormatSignedNumber(CalculateAbilityModifier(score))}{bonusText}）");
-        }
-
         private static void AddAbilityBonusSummary(List<string> summaries, string label, int bonus)
         {
             if (bonus != 0)
             {
                 summaries.Add($"{label}{FormatSignedNumber(bonus)}");
             }
-        }
-
-        private static int CalculateAbilityModifier(int score)
-        {
-            return (int)Math.Floor((score - 10) / 2f);
         }
 
         private static string FormatSignedNumber(int value)
@@ -2671,6 +3474,105 @@ namespace GameLogic
             }
 
             return string.Join(" / ", values);
+        }
+
+        private static string BuildPrimaryAbilitySummary(DndClassDefineData classData)
+        {
+            if (classData == null)
+            {
+                return "无";
+            }
+
+            string abilityText = FormatAbilityList(classData.PrimaryAbilityIds);
+            switch (classData.PrimaryAbilityMode)
+            {
+                case DndPrimaryAbilityMode.AnyOne:
+                    return $"{abilityText} / 任选其一";
+                case DndPrimaryAbilityMode.All:
+                    return $"{abilityText} / 全部适用";
+                case DndPrimaryAbilityMode.Manual:
+                    return $"{abilityText} / 需手动确认";
+                default:
+                    return $"{abilityText} / 固定";
+            }
+        }
+
+        private static string BuildPrimaryAbilityChoiceDescription(DndPrimaryAbilityMode mode, IReadOnlyList<string> optionLabels)
+        {
+            string abilityText = FormatTextOrDefault(FormatList(optionLabels), "无");
+            switch (mode)
+            {
+                case DndPrimaryAbilityMode.AnyOne:
+                    return $"该职业的主要属性需要从以下候选项中选择 1 项：{abilityText}";
+                case DndPrimaryAbilityMode.Manual:
+                    return $"该职业的主要属性需要在以下候选项中手动确认：{abilityText}";
+                case DndPrimaryAbilityMode.All:
+                    return $"该职业会同时使用以下主要属性：{abilityText}";
+                default:
+                    return $"该职业的主要属性为：{abilityText}";
+            }
+        }
+
+        private static bool RequiresPrimaryAbilitySelection(DndPrimaryAbilityMode mode, int optionCount)
+        {
+            switch (mode)
+            {
+                case DndPrimaryAbilityMode.AnyOne:
+                case DndPrimaryAbilityMode.Manual:
+                    return optionCount > 0;
+                default:
+                    return false;
+            }
+        }
+
+        private static string FormatAbilityList(IReadOnlyList<string> abilityIds)
+        {
+            if (abilityIds == null || abilityIds.Count == 0)
+            {
+                return "无";
+            }
+
+            List<string> labels = new List<string>();
+            for (int index = 0; index < abilityIds.Count; index++)
+            {
+                labels.Add(GetAbilityDisplayName(abilityIds[index]));
+            }
+
+            return FormatList(labels);
+        }
+
+        private static string GetAbilityDisplayName(string abilityId)
+        {
+            string normalized = NormalizeKey(abilityId);
+            switch (normalized)
+            {
+                case "str":
+                case "strength":
+                case "力量":
+                    return "力量";
+                case "dex":
+                case "dexterity":
+                case "敏捷":
+                    return "敏捷";
+                case "con":
+                case "constitution":
+                case "体质":
+                    return "体质";
+                case "int":
+                case "intelligence":
+                case "智力":
+                    return "智力";
+                case "wis":
+                case "wisdom":
+                case "感知":
+                    return "感知";
+                case "cha":
+                case "charisma":
+                case "魅力":
+                    return "魅力";
+                default:
+                    return FormatTextOrDefault(abilityId, "未定");
+            }
         }
 
         private static string FormatListWithBonus(IReadOnlyList<string> values)
@@ -2841,6 +3743,173 @@ namespace GameLogic
             return int.TryParse(text, out result);
         }
 
+        private static bool HasFeature(IReadOnlyList<string> featureIds, string expectedName, string expectedFeatureIdKey)
+        {
+            if (featureIds == null || featureIds.Count == 0)
+            {
+                return false;
+            }
+
+            string normalizedName = NormalizeKey(expectedName);
+            string normalizedFeatureIdKey = NormalizeKey(expectedFeatureIdKey);
+            DndRuleContentService service = DndRuleContentService.Instance;
+            for (int index = 0; index < featureIds.Count; index++)
+            {
+                string featureId = featureIds[index];
+                if (string.IsNullOrWhiteSpace(featureId))
+                {
+                    continue;
+                }
+
+                string normalizedFeatureId = NormalizeKey(featureId);
+                if (!string.IsNullOrWhiteSpace(normalizedFeatureIdKey) && normalizedFeatureId.Contains(normalizedFeatureIdKey))
+                {
+                    return true;
+                }
+
+                if (!service.TryGetFeature(featureId, out DndFeatureDefineData feature))
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(normalizedName) && NormalizeKey(feature.Name).Contains(normalizedName))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string TryBuildSenseEntry(DndFeatureEffectData effect)
+        {
+            string effectType = NormalizeKey(effect?.EffectType);
+            string target = NormalizeKey(effect?.Target);
+            if (!effectType.Contains("vision") && !effectType.Contains("sense") && !target.Contains("vision") && !target.Contains("sense"))
+            {
+                return string.Empty;
+            }
+
+            string label;
+            if (target.Contains("superiordarkvision"))
+            {
+                label = "增强黑暗视觉";
+            }
+            else if (target.Contains("darkvision"))
+            {
+                label = "黑暗视觉";
+            }
+            else if (target.Contains("blindsight"))
+            {
+                label = "盲视";
+            }
+            else if (target.Contains("tremorsense"))
+            {
+                label = "震颤感知";
+            }
+            else if (target.Contains("truesight"))
+            {
+                label = "真实视觉";
+            }
+            else
+            {
+                label = FormatTextOrDefault(effect?.Target, "特殊感官");
+            }
+
+            if (TryParseSignedInt(effect?.Value, out int range) && range > 0)
+            {
+                return $"{label} {range} 尺";
+            }
+
+            return label;
+        }
+
+        private static void AppendUniqueValues(List<string> target, IReadOnlyList<string> values)
+        {
+            if (target == null || values == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < values.Count; index++)
+            {
+                string value = values[index];
+                if (string.IsNullOrWhiteSpace(value) || ContainsIgnoreCase(target, value))
+                {
+                    continue;
+                }
+
+                target.Add(value.Trim());
+            }
+        }
+
+        private static CharacterCardDraftSaveData CloneCharacterDraft(CharacterCardDraftSaveData source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            return new CharacterCardDraftSaveData
+            {
+                CharacterId = source.CharacterId ?? string.Empty,
+                CharacterName = source.CharacterName ?? string.Empty,
+                Alignment = source.Alignment ?? string.Empty,
+                RaceId = source.RaceId ?? string.Empty,
+                ClassId = source.ClassId ?? string.Empty,
+                BackgroundId = source.BackgroundId ?? string.Empty,
+                FeatId = source.FeatId ?? string.Empty,
+                SpellId = source.SpellId ?? string.Empty,
+                PreviewImagePath = source.PreviewImagePath ?? string.Empty,
+                Level = Math.Max(1, source.Level),
+                HpModeId = CharacterHpModeIds.Normalize(source.HpModeId),
+                MaxHp = Math.Max(0, source.MaxHp),
+                ManualHp = Math.Max(0, source.ManualHp),
+                HpRolls = CloneHpRolls(source.HpRolls),
+                IsCompleted = source.IsCompleted,
+                CreatedAt = source.CreatedAt ?? string.Empty,
+                UpdatedAt = source.UpdatedAt ?? string.Empty,
+                RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(source.RuntimeSnapshot)
+            };
+        }
+
+        private static List<CharacterHpRollSaveData> CloneHpRolls(List<CharacterHpRollSaveData> source)
+        {
+            List<CharacterHpRollSaveData> result = new List<CharacterHpRollSaveData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                CharacterHpRollSaveData roll = source[index];
+                if (roll == null)
+                {
+                    continue;
+                }
+
+                result.Add(new CharacterHpRollSaveData
+                {
+                    Level = Math.Max(1, roll.Level),
+                    ClassId = roll.ClassId ?? string.Empty,
+                    HitDie = Math.Max(0, roll.HitDie),
+                    RollValue = Math.Max(0, roll.RollValue),
+                    ConstitutionModifier = roll.ConstitutionModifier,
+                    HpGain = Math.Max(0, roll.HpGain)
+                });
+            }
+
+            return result;
+        }
+
+        private static T FindDataById<T>(List<T> list, string id, Func<T, string> idGetter)
+            where T : class
+        {
+            int index = FindIndexById(list, id, idGetter);
+            return index >= 0 && index < list.Count ? list[index] : null;
+        }
+
         private static string NormalizeKey(string value)
         {
             return string.IsNullOrWhiteSpace(value)
@@ -2881,9 +3950,164 @@ namespace GameLogic
         public string SpellId = string.Empty;
         public string PreviewImagePath = string.Empty;
         public int Level = 1;
+        public string HpModeId = CharacterHpModeIds.Custom;
+        public int MaxHp;
+        public int ManualHp;
+        public List<CharacterHpRollSaveData> HpRolls = new List<CharacterHpRollSaveData>();
         public bool IsCompleted;
         public string CreatedAt = string.Empty;
         public string UpdatedAt = string.Empty;
+        public CharacterRuntimeSnapshotData RuntimeSnapshot = new CharacterRuntimeSnapshotData();
+    }
+
+    internal static class CharacterHpModeIds
+    {
+        public const string Custom = "custom";
+        public const string Rolled = "rolled";
+        public const string Average = "average";
+
+        public static string Normalize(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return Custom;
+            }
+
+            string normalized = value.Trim();
+            return normalized.Equals(Custom, StringComparison.OrdinalIgnoreCase) ||
+                normalized.Equals(Rolled, StringComparison.OrdinalIgnoreCase) ||
+                normalized.Equals(Average, StringComparison.OrdinalIgnoreCase)
+                ? normalized.ToLowerInvariant()
+                : Custom;
+        }
+    }
+
+    [Serializable]
+    internal sealed class CharacterHpRollSaveData
+    {
+        public int Level;
+        public string ClassId = string.Empty;
+        public int HitDie;
+        public int RollValue;
+        public int ConstitutionModifier;
+        public int HpGain;
+    }
+
+    [Serializable]
+    internal sealed class CharacterRuntimeSnapshotData
+    {
+        public string CharacterId = string.Empty;
+        public string CharacterName = string.Empty;
+        public string Alignment = string.Empty;
+        public int Level = 1;
+        public string RaceId = string.Empty;
+        public string RaceName = string.Empty;
+        public string MainRaceId = string.Empty;
+        public string MainRaceName = string.Empty;
+        public string ClassId = string.Empty;
+        public string ClassName = string.Empty;
+        public string BackgroundId = string.Empty;
+        public string BackgroundName = string.Empty;
+        public string FeatId = string.Empty;
+        public string FeatName = string.Empty;
+        public string SpellId = string.Empty;
+        public string SpellName = string.Empty;
+        public string Size = string.Empty;
+        public int Speed;
+        public string HpModeId = CharacterHpModeIds.Custom;
+        public int MaxHp;
+        public int Strength = 10;
+        public int Dexterity = 10;
+        public int Constitution = 10;
+        public int Intelligence = 10;
+        public int Wisdom = 10;
+        public int Charisma = 10;
+        public string SavingThrows = string.Empty;
+        public string Skills = string.Empty;
+        public string WeaponProficiencies = string.Empty;
+        public string ToolProficiencies = string.Empty;
+        public string Senses = string.Empty;
+        public string Languages = string.Empty;
+        public string DamageResistances = string.Empty;
+        public string PendingSelections = string.Empty;
+        public string ConditionalBenefits = string.Empty;
+        public string Traits = string.Empty;
+        public string Notes = string.Empty;
+
+        public ChapterCreatureData ToChapterCreatureData()
+        {
+            return ChapterCreatureDataStructureUtility.NormalizeCreatureTemplateData(new ChapterCreatureData
+            {
+                CreatureId = string.IsNullOrWhiteSpace(CharacterId) ? string.Empty : CharacterId,
+                Name = string.IsNullOrWhiteSpace(CharacterName) ? "未命名角色" : CharacterName,
+                CreatureType = "玩家角色",
+                CreatureSize = Size ?? string.Empty,
+                Alignment = Alignment ?? string.Empty,
+                Speed = Speed > 0 ? $"{Speed} 尺" : string.Empty,
+                Strength = Strength.ToString(),
+                Dexterity = Dexterity.ToString(),
+                Constitution = Constitution.ToString(),
+                Intelligence = Intelligence.ToString(),
+                Wisdom = Wisdom.ToString(),
+                Charisma = Charisma.ToString(),
+                DamageResistances = DamageResistances ?? string.Empty,
+                SavingThrows = SavingThrows ?? string.Empty,
+                Skills = Skills ?? string.Empty,
+                Senses = Senses ?? string.Empty,
+                Languages = Languages ?? string.Empty,
+                Traits = Traits ?? string.Empty,
+                BattleNotes = Notes ?? string.Empty
+            });
+        }
+
+        public static CharacterRuntimeSnapshotData Clone(CharacterRuntimeSnapshotData source)
+        {
+            if (source == null)
+            {
+                return new CharacterRuntimeSnapshotData();
+            }
+
+            return new CharacterRuntimeSnapshotData
+            {
+                CharacterId = source.CharacterId ?? string.Empty,
+                CharacterName = source.CharacterName ?? string.Empty,
+                Alignment = source.Alignment ?? string.Empty,
+                Level = Math.Max(1, source.Level),
+                RaceId = source.RaceId ?? string.Empty,
+                RaceName = source.RaceName ?? string.Empty,
+                MainRaceId = source.MainRaceId ?? string.Empty,
+                MainRaceName = source.MainRaceName ?? string.Empty,
+                ClassId = source.ClassId ?? string.Empty,
+                ClassName = source.ClassName ?? string.Empty,
+                BackgroundId = source.BackgroundId ?? string.Empty,
+                BackgroundName = source.BackgroundName ?? string.Empty,
+                FeatId = source.FeatId ?? string.Empty,
+                FeatName = source.FeatName ?? string.Empty,
+                SpellId = source.SpellId ?? string.Empty,
+                SpellName = source.SpellName ?? string.Empty,
+                Size = source.Size ?? string.Empty,
+                Speed = source.Speed,
+                HpModeId = CharacterHpModeIds.Normalize(source.HpModeId),
+                MaxHp = Math.Max(0, source.MaxHp),
+                Strength = source.Strength,
+                Dexterity = source.Dexterity,
+                Constitution = source.Constitution,
+                Intelligence = source.Intelligence,
+                Wisdom = source.Wisdom,
+                Charisma = source.Charisma,
+                WeaponProficiencies = source.WeaponProficiencies ?? string.Empty,
+                SavingThrows = source.SavingThrows ?? string.Empty,
+                Skills = source.Skills ?? string.Empty,
+                ToolProficiencies = source.ToolProficiencies ?? string.Empty,
+                Senses = source.Senses ?? string.Empty,
+                Languages = source.Languages ?? string.Empty,
+                DamageResistances = source.DamageResistances ?? string.Empty,
+                PendingSelections = source.PendingSelections ?? string.Empty,
+                ConditionalBenefits = source.ConditionalBenefits ?? string.Empty,
+                Traits = source.Traits ?? string.Empty,
+                Notes = source.Notes ?? string.Empty
+            };
+        }
     }
 
     internal static class CharacterCardLocalRepository
@@ -2938,6 +4162,10 @@ namespace GameLogic
                 CharacterName = "未命名角色",
                 Alignment = string.Empty,
                 Level = 1,
+                HpModeId = CharacterHpModeIds.Custom,
+                MaxHp = 0,
+                ManualHp = 0,
+                HpRolls = new List<CharacterHpRollSaveData>(),
                 IsCompleted = false,
                 CreatedAt = now,
                 UpdatedAt = now
@@ -3019,6 +4247,10 @@ namespace GameLogic
             character.SpellId ??= string.Empty;
             character.PreviewImagePath ??= string.Empty;
             character.Level = Math.Max(1, character.Level);
+            character.HpModeId = CharacterHpModeIds.Normalize(character.HpModeId);
+            character.MaxHp = Math.Max(0, character.MaxHp);
+            character.ManualHp = Math.Max(0, character.ManualHp);
+            character.HpRolls = NormalizeHpRolls(character.HpRolls, character.ClassId);
 
             string now = DateTime.UtcNow.ToString("O");
             if (string.IsNullOrWhiteSpace(character.CreatedAt))
@@ -3032,6 +4264,36 @@ namespace GameLogic
             }
 
             return character;
+        }
+
+        private static List<CharacterHpRollSaveData> NormalizeHpRolls(List<CharacterHpRollSaveData> source, string classId)
+        {
+            List<CharacterHpRollSaveData> result = new List<CharacterHpRollSaveData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                CharacterHpRollSaveData roll = source[index];
+                if (roll == null)
+                {
+                    continue;
+                }
+
+                result.Add(new CharacterHpRollSaveData
+                {
+                    Level = Math.Max(1, roll.Level),
+                    ClassId = string.IsNullOrWhiteSpace(roll.ClassId) ? (classId ?? string.Empty) : roll.ClassId,
+                    HitDie = Math.Max(0, roll.HitDie),
+                    RollValue = Math.Max(0, roll.RollValue),
+                    ConstitutionModifier = roll.ConstitutionModifier,
+                    HpGain = Math.Max(0, roll.HpGain)
+                });
+            }
+
+            return result;
         }
     }
 
@@ -3360,19 +4622,7 @@ namespace GameLogic
                     : new Color(0.72f, 0.78f, 0.86f, 1f);
             }
 
-            if (m_rootRect != null)
-            {
-                if (style == CharacterCreationOptionCardStyle.SubRace)
-                {
-                    m_rootRect.offsetMin = new Vector2(m_originalOffsetMin.x + 20f, m_originalOffsetMin.y);
-                    m_rootRect.offsetMax = new Vector2(m_originalOffsetMax.x - 12f, m_originalOffsetMax.y);
-                }
-                else
-                {
-                    m_rootRect.offsetMin = m_originalOffsetMin;
-                    m_rootRect.offsetMax = m_originalOffsetMax;
-                }
-            }
+            // Layout stays on the prefab. Runtime only changes data and visual state.
         }
 
         public void ResetLayout()
