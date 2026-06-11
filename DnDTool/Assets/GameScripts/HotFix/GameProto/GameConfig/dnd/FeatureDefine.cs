@@ -26,6 +26,7 @@ public sealed partial class FeatureDefine : Luban.BeanBase
         FeatureType = (string)_obj.GetValue("feature_type");
         SourceRef = (string)_obj.GetValue("source_ref");
         { var __json0 = _obj.GetValue("prerequisite_ids"); PrerequisiteIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  PrerequisiteIds.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("choice_group_ids"); ChoiceGroupIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ChoiceGroupIds.Add(__v0); }   }
         { var __json0 = _obj.GetValue("effect_ids"); EffectIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  EffectIds.Add(__v0); }   }
         Description = (string)_obj.GetValue("description");
     }
@@ -60,6 +61,10 @@ public sealed partial class FeatureDefine : Luban.BeanBase
     /// </summary>
     public readonly System.Collections.Generic.List<string> PrerequisiteIds;
     /// <summary>
+    /// 特性对应的选择组ID
+    /// </summary>
+    public readonly System.Collections.Generic.List<string> ChoiceGroupIds;
+    /// <summary>
     /// 关联 TbFeatureEffect.effect_id 列表。
     /// </summary>
     public readonly System.Collections.Generic.List<string> EffectIds;
@@ -85,6 +90,7 @@ public sealed partial class FeatureDefine : Luban.BeanBase
         + "featureType:" + FeatureType + ","
         + "sourceRef:" + SourceRef + ","
         + "prerequisiteIds:" + Luban.StringUtil.CollectionToString(PrerequisiteIds) + ","
+        + "choiceGroupIds:" + Luban.StringUtil.CollectionToString(ChoiceGroupIds) + ","
         + "effectIds:" + Luban.StringUtil.CollectionToString(EffectIds) + ","
         + "description:" + Description + ","
         + "}";

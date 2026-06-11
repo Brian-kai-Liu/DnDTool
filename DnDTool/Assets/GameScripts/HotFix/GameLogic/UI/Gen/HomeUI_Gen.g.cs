@@ -22,6 +22,7 @@ namespace GameLogic
 		private Button m_btnCreateModule = null!;
 		private Button m_btnBrowseModule = null!;
 		private Button m_btnCharacterCard = null!;
+		private Button m_btnItemInfoEditor = null!;
 		private Button m_btnSettings = null!;
 		private Button m_btnExit = null!;
 
@@ -37,14 +38,17 @@ namespace GameLogic
 			m_btnCreateModule = m_bindComponent.GetComponent<Button>(1);
 			m_btnBrowseModule = m_bindComponent.GetComponent<Button>(2);
 			m_btnCharacterCard = m_bindComponent.GetComponent<Button>(3);
-			m_btnSettings = m_bindComponent.GetComponent<Button>(4);
-			m_btnExit = m_bindComponent.GetComponent<Button>(5);
+			m_btnItemInfoEditor = m_bindComponent.GetComponent<Button>(4);
+			m_btnSettings = m_bindComponent.GetComponent<Button>(5);
+			m_btnExit = m_bindComponent.GetComponent<Button>(6);
 			m_btnCreateModule.onClick.RemoveAllListeners();
 			m_btnCreateModule.onClick.AddListener(OnClickCreateModuleBtn);
 			m_btnBrowseModule.onClick.RemoveAllListeners();
 			m_btnBrowseModule.onClick.AddListener(OnClickBrowseModuleBtn);
 			m_btnCharacterCard.onClick.RemoveAllListeners();
 			m_btnCharacterCard.onClick.AddListener(OnClickCharacterCardBtn);
+			m_btnItemInfoEditor.onClick.RemoveAllListeners();
+			m_btnItemInfoEditor.onClick.AddListener(OnClickItemInfoEditorBtn);
 			m_btnSettings.onClick.RemoveAllListeners();
 			m_btnSettings.onClick.AddListener(OnClickSettingsBtn);
 			m_btnExit.onClick.RemoveAllListeners();
@@ -60,6 +64,8 @@ namespace GameLogic
 		private partial void OnClickBrowseModuleBtn();
 
 		private partial void OnClickCharacterCardBtn();
+
+		private partial void OnClickItemInfoEditorBtn();
 
 		private partial void OnClickSettingsBtn();
 

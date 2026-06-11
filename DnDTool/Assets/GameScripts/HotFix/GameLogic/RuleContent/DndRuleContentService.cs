@@ -16,10 +16,12 @@ namespace GameLogic
         private readonly Dictionary<string, List<DndChoiceOptionData>> m_choiceOptionsByGroupId = new Dictionary<string, List<DndChoiceOptionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndSkillDefineData> m_skillById = new Dictionary<string, DndSkillDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndSpellDefineData> m_spellById = new Dictionary<string, DndSpellDefineData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndItemDefineData> m_itemById = new Dictionary<string, DndItemDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndAlignmentData> m_alignmentById = new Dictionary<string, DndAlignmentData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndRaceMainDefineData> m_raceMainById = new Dictionary<string, DndRaceMainDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndRaceSubDefineData> m_raceSubById = new Dictionary<string, DndRaceSubDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndLevelProgressionData>> m_classProgressionsByClassId = new Dictionary<string, List<DndLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<DndSubclassLevelProgressionData>> m_subclassProgressionsBySubclassId = new Dictionary<string, List<DndSubclassLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndClassSpellListData>> m_classSpellListsByClassId = new Dictionary<string, List<DndClassSpellListData>>(StringComparer.OrdinalIgnoreCase);
 
         private DndRuleContentLibraryData m_library = new DndRuleContentLibraryData();
@@ -59,6 +61,8 @@ namespace GameLogic
         public IReadOnlyList<DndAlignmentData> Alignments => GetLibrary().Alignments;
 
         public IReadOnlyList<DndSkillDefineData> Skills => GetLibrary().Skills;
+
+        public IReadOnlyList<DndItemDefineData> Items => GetLibrary().Items;
 
         public bool HasLoadedContent()
         {
@@ -124,6 +128,12 @@ namespace GameLogic
         {
             GetLibrary();
             return m_spellById.TryGetValue(spellId ?? string.Empty, out spell);
+        }
+
+        public bool TryGetItem(string itemId, out DndItemDefineData item)
+        {
+            GetLibrary();
+            return m_itemById.TryGetValue(itemId ?? string.Empty, out item);
         }
 
         public bool TryGetChoiceGroup(string choiceGroupId, out DndChoiceGroupData choiceGroup)
@@ -192,6 +202,14 @@ namespace GameLogic
             return m_classProgressionsByClassId.TryGetValue(classId ?? string.Empty, out List<DndLevelProgressionData> progressions)
                 ? progressions
                 : Array.Empty<DndLevelProgressionData>();
+        }
+
+        public IReadOnlyList<DndSubclassLevelProgressionData> GetSubclassProgressions(string subclassId)
+        {
+            GetLibrary();
+            return m_subclassProgressionsBySubclassId.TryGetValue(subclassId ?? string.Empty, out List<DndSubclassLevelProgressionData> progressions)
+                ? progressions
+                : Array.Empty<DndSubclassLevelProgressionData>();
         }
 
         public IReadOnlyList<DndClassSpellListData> GetClassSpellList(string classId)
@@ -278,10 +296,12 @@ namespace GameLogic
             m_choiceOptionsByGroupId.Clear();
             m_skillById.Clear();
             m_spellById.Clear();
+            m_itemById.Clear();
             m_alignmentById.Clear();
             m_raceMainById.Clear();
             m_raceSubById.Clear();
             m_classProgressionsByClassId.Clear();
+            m_subclassProgressionsBySubclassId.Clear();
             m_classSpellListsByClassId.Clear();
         }
 
@@ -369,6 +389,15 @@ namespace GameLogic
                 }
             }
 
+            for (int index = 0; index < m_library.Items.Count; index++)
+            {
+                DndItemDefineData item = m_library.Items[index];
+                if (!string.IsNullOrWhiteSpace(item.ItemId))
+                {
+                    m_itemById[item.ItemId] = item;
+                }
+            }
+
             for (int index = 0; index < m_library.Alignments.Count; index++)
             {
                 DndAlignmentData alignment = m_library.Alignments[index];
@@ -420,6 +449,28 @@ namespace GameLogic
             }
 
             foreach (List<DndLevelProgressionData> progressions in m_classProgressionsByClassId.Values)
+            {
+                progressions.Sort((left, right) => left.Level.CompareTo(right.Level));
+            }
+
+            for (int index = 0; index < m_library.SubclassLevelProgressions.Count; index++)
+            {
+                DndSubclassLevelProgressionData progression = m_library.SubclassLevelProgressions[index];
+                if (string.IsNullOrWhiteSpace(progression.SubclassId))
+                {
+                    continue;
+                }
+
+                if (!m_subclassProgressionsBySubclassId.TryGetValue(progression.SubclassId, out List<DndSubclassLevelProgressionData> list))
+                {
+                    list = new List<DndSubclassLevelProgressionData>();
+                    m_subclassProgressionsBySubclassId[progression.SubclassId] = list;
+                }
+
+                list.Add(progression);
+            }
+
+            foreach (List<DndSubclassLevelProgressionData> progressions in m_subclassProgressionsBySubclassId.Values)
             {
                 progressions.Sort((left, right) => left.Level.CompareTo(right.Level));
             }

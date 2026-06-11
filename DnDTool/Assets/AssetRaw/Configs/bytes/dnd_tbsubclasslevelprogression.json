@@ -1,0 +1,2307 @@
+[
+  {
+    "subclass_id": "subclass_barbarian_berserker",
+    "class_id": "barbarian",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_barbarian_berserker_frenzy"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_berserker",
+    "class_id": "barbarian",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_barbarian_berserker_mindless_rage"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_berserker",
+    "class_id": "barbarian",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_barbarian_berserker_intimidating_presence"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_berserker",
+    "class_id": "barbarian",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_barbarian_berserker_retaliation"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_totem_warrior",
+    "class_id": "barbarian",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_barbarian_totem_warrior_spirit_seeker",
+      "feature_subclass_barbarian_totem_warrior_totem_spirit"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_totem_warrior",
+    "class_id": "barbarian",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_barbarian_totem_warrior_aspect_of_the_beast"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_totem_warrior",
+    "class_id": "barbarian",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_barbarian_totem_warrior_spirit_walker"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_barbarian_totem_warrior",
+    "class_id": "barbarian",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_barbarian_totem_warrior_totemic_attunement"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_bard_lore",
+    "class_id": "bard",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_bard_lore_bonus_proficiencies",
+      "feature_subclass_bard_lore_cutting_words"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_bard_lore",
+    "class_id": "bard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_bard_lore_additional_magical_secrets"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_bard_lore",
+    "class_id": "bard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_bard_lore_peerless_skill"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_bard_valor",
+    "class_id": "bard",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_bard_valor_bonus_proficiencies",
+      "feature_subclass_bard_valor_combat_inspiration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_bard_valor",
+    "class_id": "bard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_bard_valor_extra_attack"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_bard_valor",
+    "class_id": "bard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_bard_valor_battle_magic"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_knowledge",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_knowledge_domain_spells",
+      "feature_subclass_cleric_knowledge_blessings_of_knowledge"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_knowledge",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_knowledge_channel_divinity_knowledge_of_the_ages"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_knowledge",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_knowledge_channel_divinity_read_thoughts"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_knowledge",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_knowledge_potent_spellcasting"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_knowledge",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_knowledge_visions_of_the_past"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_life",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_life_domain_spells",
+      "feature_subclass_cleric_life_bonus_proficiency",
+      "feature_subclass_cleric_life_disciple_of_life"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_life",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_life_channel_divinity_preserve_life"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_life",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_life_blessed_healer"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_life",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_life_divine_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_life",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_life_supreme_healing"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_light",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_light_domain_spells",
+      "feature_subclass_cleric_light_bonus_cantrip",
+      "feature_subclass_cleric_light_warding_flare"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_light",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_light_channel_divinity_radiance_of_the_dawn"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_light",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_light_improved_flare"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_light",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_light_potent_spellcasting"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_light",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_light_corona_of_light"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_nature",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_nature_domain_spells",
+      "feature_subclass_cleric_nature_acolyte_of_nature",
+      "feature_subclass_cleric_nature_bonus_proficiency"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_nature",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_nature_channel_divinity_charm_animals_and_plants"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_nature",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_nature_dampen_elements"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_nature",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_nature_divine_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_nature",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_nature_master_of_nature"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_tempest",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_tempest_domain_spells",
+      "feature_subclass_cleric_tempest_bonus_proficiencies",
+      "feature_subclass_cleric_tempest_wrath_of_the_storm"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_tempest",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_tempest_channel_divinity_destructive_wrath"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_tempest",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_tempest_thunderbolt_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_tempest",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_tempest_divine_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_tempest",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_tempest_stormborn"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_trickery",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_trickery_domain_spells",
+      "feature_subclass_cleric_trickery_blessing_of_the_trickster"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_trickery",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_trickery_channel_divinity_invoke_duplicity"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_trickery",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_trickery_channel_divinity_cloak_of_shadows"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_trickery",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_trickery_divine_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_trickery",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_trickery_improved_duplicity"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_war",
+    "class_id": "cleric",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_cleric_war_domain_spells",
+      "feature_subclass_cleric_war_bonus_proficiencies",
+      "feature_subclass_cleric_war_priest"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_war",
+    "class_id": "cleric",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_cleric_war_channel_divinity_guided_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_war",
+    "class_id": "cleric",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_cleric_war_channel_divinity_war_gods_blessing"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_war",
+    "class_id": "cleric",
+    "level": 8,
+    "feature_ids": [
+      "feature_subclass_cleric_war_divine_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_cleric_war",
+    "class_id": "cleric",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_cleric_war_avatar_of_battle"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_land",
+    "class_id": "druid",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_druid_land_bonus_cantrip",
+      "feature_subclass_druid_land_natural_recovery"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_land",
+    "class_id": "druid",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_druid_land_circle_spells"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_land",
+    "class_id": "druid",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_druid_land_lands_stride"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_land",
+    "class_id": "druid",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_druid_land_natures_ward"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_land",
+    "class_id": "druid",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_druid_land_natures_sanctuary"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_moon",
+    "class_id": "druid",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_druid_moon_combat_wild_shape",
+      "feature_subclass_druid_moon_circle_forms"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_moon",
+    "class_id": "druid",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_druid_moon_primal_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_moon",
+    "class_id": "druid",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_druid_moon_elemental_wild_shape"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_druid_moon",
+    "class_id": "druid",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_druid_moon_thousand_forms"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_champion",
+    "class_id": "fighter",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_fighter_champion_improved_critical"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_champion",
+    "class_id": "fighter",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_fighter_champion_remarkable_athlete"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_champion",
+    "class_id": "fighter",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_fighter_champion_additional_fighting_style"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_champion",
+    "class_id": "fighter",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_fighter_champion_superior_critical"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_champion",
+    "class_id": "fighter",
+    "level": 18,
+    "feature_ids": [
+      "feature_subclass_fighter_champion_survivor"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_battle_master",
+    "class_id": "fighter",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_fighter_battle_master_combat_superiority",
+      "feature_subclass_fighter_battle_master_student_of_war"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_battle_master",
+    "class_id": "fighter",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_fighter_battle_master_know_your_enemy"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_battle_master",
+    "class_id": "fighter",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_fighter_battle_master_improved_combat_superiority"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_battle_master",
+    "class_id": "fighter",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_fighter_battle_master_relentless"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_fighter_eldritch_knight_spellcasting",
+      "feature_subclass_fighter_eldritch_knight_weapon_bond"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "cantrip_known": 2,
+    "spell_known": 3,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "cantrip_known": 2,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_fighter_eldritch_knight_war_magic"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "cantrip_known": 2,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 8,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "cantrip_known": 2,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_fighter_eldritch_knight_eldritch_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "cantrip_known": 3,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 11,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "cantrip_known": 3,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 13,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "cantrip_known": 3,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 14,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "cantrip_known": 3,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_fighter_eldritch_knight_arcane_charge"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "cantrip_known": 3,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 16,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "cantrip_known": 3,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 18,
+    "feature_ids": [
+      "feature_subclass_fighter_eldritch_knight_improved_war_magic"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "cantrip_known": 3,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 19,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "cantrip_known": 3,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_fighter_eldritch_knight",
+    "class_id": "fighter",
+    "level": 20,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 13,
+    "cantrip_known": 3,
+    "spell_known": 13,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_open_hand",
+    "class_id": "monk",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_monk_open_hand_open_hand_technique"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_open_hand",
+    "class_id": "monk",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_monk_open_hand_wholeness_of_body"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_open_hand",
+    "class_id": "monk",
+    "level": 11,
+    "feature_ids": [
+      "feature_subclass_monk_open_hand_tranquility"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_open_hand",
+    "class_id": "monk",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_monk_open_hand_quivering_palm"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_shadow",
+    "class_id": "monk",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_monk_shadow_shadow_arts"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_shadow",
+    "class_id": "monk",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_monk_shadow_shadow_step"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_shadow",
+    "class_id": "monk",
+    "level": 11,
+    "feature_ids": [
+      "feature_subclass_monk_shadow_cloak_of_shadows"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_shadow",
+    "class_id": "monk",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_monk_shadow_opportunist"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_four_elements",
+    "class_id": "monk",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_monk_four_elements_disciple_of_the_elements"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_four_elements",
+    "class_id": "monk",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_monk_four_elements_elemental_discipline_6"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_four_elements",
+    "class_id": "monk",
+    "level": 11,
+    "feature_ids": [
+      "feature_subclass_monk_four_elements_elemental_discipline_11"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_monk_four_elements",
+    "class_id": "monk",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_monk_four_elements_elemental_discipline_17"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_devotion",
+    "class_id": "paladin",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_paladin_devotion_oath_spells",
+      "feature_subclass_paladin_devotion_channel_divinity_sacred_weapon",
+      "feature_subclass_paladin_devotion_channel_divinity_turn_the_unholy"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_devotion",
+    "class_id": "paladin",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_paladin_devotion_aura_of_devotion"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_devotion",
+    "class_id": "paladin",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_paladin_devotion_purity_of_spirit"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_devotion",
+    "class_id": "paladin",
+    "level": 20,
+    "feature_ids": [
+      "feature_subclass_paladin_devotion_holy_nimbus"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_ancients",
+    "class_id": "paladin",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_paladin_ancients_oath_spells",
+      "feature_subclass_paladin_ancients_channel_divinity_natures_wrath",
+      "feature_subclass_paladin_ancients_channel_divinity_turn_the_faithless"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_ancients",
+    "class_id": "paladin",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_paladin_ancients_aura_of_warding"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_ancients",
+    "class_id": "paladin",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_paladin_ancients_undying_sentinel"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_ancients",
+    "class_id": "paladin",
+    "level": 20,
+    "feature_ids": [
+      "feature_subclass_paladin_ancients_elder_champion"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_vengeance",
+    "class_id": "paladin",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_paladin_vengeance_oath_spells",
+      "feature_subclass_paladin_vengeance_channel_divinity_abjure_enemy",
+      "feature_subclass_paladin_vengeance_channel_divinity_vow_of_enmity"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_vengeance",
+    "class_id": "paladin",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_paladin_vengeance_relentless_avenger"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_vengeance",
+    "class_id": "paladin",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_paladin_vengeance_soul_of_vengeance"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_paladin_vengeance",
+    "class_id": "paladin",
+    "level": 20,
+    "feature_ids": [
+      "feature_subclass_paladin_vengeance_avenging_angel"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_hunter",
+    "class_id": "ranger",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_ranger_hunter_hunters_prey"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_hunter",
+    "class_id": "ranger",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_ranger_hunter_defensive_tactics"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_hunter",
+    "class_id": "ranger",
+    "level": 11,
+    "feature_ids": [
+      "feature_subclass_ranger_hunter_multiattack"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_hunter",
+    "class_id": "ranger",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_ranger_hunter_superior_hunters_defense"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_beast_master",
+    "class_id": "ranger",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_ranger_beast_master_rangers_companion"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_beast_master",
+    "class_id": "ranger",
+    "level": 7,
+    "feature_ids": [
+      "feature_subclass_ranger_beast_master_exceptional_training"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_beast_master",
+    "class_id": "ranger",
+    "level": 11,
+    "feature_ids": [
+      "feature_subclass_ranger_beast_master_bestial_fury"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_ranger_beast_master",
+    "class_id": "ranger",
+    "level": 15,
+    "feature_ids": [
+      "feature_subclass_ranger_beast_master_share_spells"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_thief",
+    "class_id": "rogue",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_rogue_thief_fast_hands",
+      "feature_subclass_rogue_thief_second_story_work"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_thief",
+    "class_id": "rogue",
+    "level": 9,
+    "feature_ids": [
+      "feature_subclass_rogue_thief_supreme_sneak"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_thief",
+    "class_id": "rogue",
+    "level": 13,
+    "feature_ids": [
+      "feature_subclass_rogue_thief_use_magic_device"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_thief",
+    "class_id": "rogue",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_rogue_thief_thiefs_reflexes"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_assassin",
+    "class_id": "rogue",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_rogue_assassin_bonus_proficiencies",
+      "feature_subclass_rogue_assassin_assassinate"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_assassin",
+    "class_id": "rogue",
+    "level": 9,
+    "feature_ids": [
+      "feature_subclass_rogue_assassin_infiltration_expertise"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_assassin",
+    "class_id": "rogue",
+    "level": 13,
+    "feature_ids": [
+      "feature_subclass_rogue_assassin_impostor"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_assassin",
+    "class_id": "rogue",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_rogue_assassin_death_strike"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 3,
+    "feature_ids": [
+      "feature_subclass_rogue_arcane_trickster_spellcasting",
+      "feature_subclass_rogue_arcane_trickster_mage_hand_legerdemain"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 1,
+    "cantrip_known": 3,
+    "spell_known": 3,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 4,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 2,
+    "cantrip_known": 3,
+    "spell_known": 4,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 7,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 3,
+    "cantrip_known": 3,
+    "spell_known": 5,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 8,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "cantrip_known": 3,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 9,
+    "feature_ids": [
+      "feature_subclass_rogue_arcane_trickster_magical_ambush"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 4,
+    "cantrip_known": 3,
+    "spell_known": 6,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 10,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 5,
+    "cantrip_known": 4,
+    "spell_known": 7,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 11,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 6,
+    "cantrip_known": 4,
+    "spell_known": 8,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 13,
+    "feature_ids": [
+      "feature_subclass_rogue_arcane_trickster_versatile_trickster"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 7,
+    "cantrip_known": 4,
+    "spell_known": 9,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 14,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 8,
+    "cantrip_known": 4,
+    "spell_known": 10,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 16,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 9,
+    "cantrip_known": 4,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 17,
+    "feature_ids": [
+      "feature_subclass_rogue_arcane_trickster_spell_thief"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 10,
+    "cantrip_known": 4,
+    "spell_known": 11,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 19,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 11,
+    "cantrip_known": 4,
+    "spell_known": 12,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_rogue_arcane_trickster",
+    "class_id": "rogue",
+    "level": 20,
+    "feature_ids": [],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "spell_slot_progression_level": 12,
+    "cantrip_known": 4,
+    "spell_known": 13,
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_draconic_bloodline",
+    "class_id": "sorcerer",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_sorcerer_draconic_bloodline_dragon_ancestor",
+      "feature_subclass_sorcerer_draconic_bloodline_draconic_resilience"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_draconic_bloodline",
+    "class_id": "sorcerer",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_sorcerer_draconic_bloodline_elemental_affinity"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_draconic_bloodline",
+    "class_id": "sorcerer",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_sorcerer_draconic_bloodline_dragon_wings"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_draconic_bloodline",
+    "class_id": "sorcerer",
+    "level": 18,
+    "feature_ids": [
+      "feature_subclass_sorcerer_draconic_bloodline_draconic_presence"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_wild_magic",
+    "class_id": "sorcerer",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_sorcerer_wild_magic_wild_magic_surge",
+      "feature_subclass_sorcerer_wild_magic_tides_of_chaos"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_wild_magic",
+    "class_id": "sorcerer",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_sorcerer_wild_magic_bend_luck"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_wild_magic",
+    "class_id": "sorcerer",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_sorcerer_wild_magic_controlled_chaos"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_sorcerer_wild_magic",
+    "class_id": "sorcerer",
+    "level": 18,
+    "feature_ids": [
+      "feature_subclass_sorcerer_wild_magic_spell_bombardment"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_archfey",
+    "class_id": "warlock",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_warlock_archfey_expanded_spell_list",
+      "feature_subclass_warlock_archfey_fey_presence"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_archfey",
+    "class_id": "warlock",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_warlock_archfey_misty_escape"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_archfey",
+    "class_id": "warlock",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_warlock_archfey_beguiling_defenses"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_archfey",
+    "class_id": "warlock",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_warlock_archfey_dark_delirium"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_fiend",
+    "class_id": "warlock",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_warlock_fiend_expanded_spell_list",
+      "feature_subclass_warlock_fiend_dark_ones_blessing"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_fiend",
+    "class_id": "warlock",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_warlock_fiend_dark_ones_own_luck"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_fiend",
+    "class_id": "warlock",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_warlock_fiend_fiendish_resilience"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_fiend",
+    "class_id": "warlock",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_warlock_fiend_hurl_through_hell"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_great_old_one",
+    "class_id": "warlock",
+    "level": 1,
+    "feature_ids": [
+      "feature_subclass_warlock_great_old_one_expanded_spell_list",
+      "feature_subclass_warlock_great_old_one_awakened_mind"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_great_old_one",
+    "class_id": "warlock",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_warlock_great_old_one_entropic_ward"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_great_old_one",
+    "class_id": "warlock",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_warlock_great_old_one_thought_shield"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_warlock_great_old_one",
+    "class_id": "warlock",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_warlock_great_old_one_create_thrall"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_abjuration",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_abjuration_abjuration_savant",
+      "feature_subclass_wizard_abjuration_arcane_ward"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_abjuration",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_abjuration_projected_ward"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_abjuration",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_abjuration_improved_abjuration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_abjuration",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_abjuration_spell_resistance"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_conjuration",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_conjuration_conjuration_savant",
+      "feature_subclass_wizard_conjuration_minor_conjuration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_conjuration",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_conjuration_benign_transposition"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_conjuration",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_conjuration_focused_conjuration"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_conjuration",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_conjuration_durable_summons"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_divination",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_divination_divination_savant",
+      "feature_subclass_wizard_divination_portent"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_divination",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_divination_expert_divination"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_divination",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_divination_the_third_eye"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_divination",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_divination_greater_portent"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_enchantment",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_enchantment_enchantment_savant",
+      "feature_subclass_wizard_enchantment_hypnotic_gaze"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_enchantment",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_enchantment_instinctive_charm"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_enchantment",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_enchantment_split_enchantment"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_enchantment",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_enchantment_alter_memories"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_evocation",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_evocation_evocation_savant",
+      "feature_subclass_wizard_evocation_sculpt_spells"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_evocation",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_evocation_potent_cantrip"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_evocation",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_evocation_empowered_evocation"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_evocation",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_evocation_overchannel"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_illusion",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_illusion_illusion_savant",
+      "feature_subclass_wizard_illusion_improved_minor_illusion"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_illusion",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_illusion_malleable_illusions"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_illusion",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_illusion_illusory_self"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_illusion",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_illusion_illusory_reality"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_necromancy",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_necromancy_necromancy_savant",
+      "feature_subclass_wizard_necromancy_grim_harvest"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_necromancy",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_necromancy_undead_thralls"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_necromancy",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_necromancy_inured_to_undeath"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_necromancy",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_necromancy_command_undead"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_transmutation",
+    "class_id": "wizard",
+    "level": 2,
+    "feature_ids": [
+      "feature_subclass_wizard_transmutation_transmutation_savant",
+      "feature_subclass_wizard_transmutation_minor_alchemy"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_transmutation",
+    "class_id": "wizard",
+    "level": 6,
+    "feature_ids": [
+      "feature_subclass_wizard_transmutation_transmuters_stone"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_transmutation",
+    "class_id": "wizard",
+    "level": 10,
+    "feature_ids": [
+      "feature_subclass_wizard_transmutation_shapechanger"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  },
+  {
+    "subclass_id": "subclass_wizard_transmutation",
+    "class_id": "wizard",
+    "level": 14,
+    "feature_ids": [
+      "feature_subclass_wizard_transmutation_master_transmuter"
+    ],
+    "choice_group_ids": [],
+    "resource_grant_ids": [],
+    "prepared_spell_formula": "",
+    "note": ""
+  }
+]

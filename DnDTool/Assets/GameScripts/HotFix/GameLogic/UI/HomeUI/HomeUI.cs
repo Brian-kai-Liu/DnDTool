@@ -30,6 +30,12 @@ namespace GameLogic
             GameModule.UI.ShowUIAsync<CharacterCardManagementUI>();
         }
 
+        private partial void OnClickItemInfoEditorBtn()
+        {
+            GameModule.UI.CloseUI<HomeUI>();
+            GameModule.UI.ShowUIAsync<ItemInfoEditorUI>();
+        }
+
         private partial void OnClickSettingsBtn()
         {
             Log.Info("主界面：设置功能暂未接入。");

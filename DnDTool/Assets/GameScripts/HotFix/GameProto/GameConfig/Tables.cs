@@ -330,6 +330,27 @@ public partial class Tables
             m_TbEnumList.ResolveRef(this);
         }
     }
+    /// <summary>
+    /// 子职业按主职业等级成长表。
+    /// </summary>
+    private dnd.TbSubclassLevelProgression m_TbSubclassLevelProgression;
+    public dnd.TbSubclassLevelProgression TbSubclassLevelProgression
+    {
+        get
+        {
+            if (m_TbSubclassLevelProgression == null)
+            {
+                m_TbSubclassLevelProgression = new dnd.TbSubclassLevelProgression(defaultLoader("dnd_tbsubclasslevelprogression"));
+                m_TbSubclassLevelProgression.ResolveRef(this);
+            }
+            return m_TbSubclassLevelProgression;
+        }
+        set
+        {
+            m_TbSubclassLevelProgression = value;
+            m_TbSubclassLevelProgression.ResolveRef(this);
+        }
+    }
 
     #endregion
 

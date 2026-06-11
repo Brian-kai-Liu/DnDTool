@@ -520,5 +520,1115 @@
       "effect_manual_resolve"
     ],
     "description": "力量或敏捷提高1，并获得四种武器熟练。"
+  },
+  {
+    "choice_group_id": "choice_subclass_barbarian",
+    "option_id": "subclass_barbarian_berserker",
+    "name": "狂战士道途",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "以狂暴攻势强化野蛮人的正面战斗能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_barbarian",
+    "option_id": "subclass_barbarian_totem_warrior",
+    "name": "图腾武者道途",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "通过图腾精魂获得多样化的野性能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_bard",
+    "option_id": "subclass_bard_lore",
+    "name": "逸闻学院",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "以知识、技巧和额外魔法秘密拓展吟游诗人的泛用性。"
+  },
+  {
+    "choice_group_id": "choice_subclass_bard",
+    "option_id": "subclass_bard_valor",
+    "name": "勇气学院",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "强化护甲、武器与鼓舞战斗的能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_knowledge",
+    "name": "知识领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "获得知识、语言和神术理解相关能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_life",
+    "name": "生命领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专注治疗与生命能量。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_light",
+    "name": "光明领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "操纵光辉与火焰驱散黑暗。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_nature",
+    "name": "自然领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "连接自然神力、动植物与元素。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_tempest",
+    "name": "风暴领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "驾驭雷鸣、闪电与风暴之力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_trickery",
+    "name": "诡术领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "强化欺瞒、幻术与潜行相关能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "option_id": "subclass_cleric_war",
+    "name": "战争领域",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "以神力强化武装战斗。"
+  },
+  {
+    "choice_group_id": "choice_subclass_druid",
+    "option_id": "subclass_druid_land",
+    "name": "大地结社",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "从所选地貌获得额外法术与自然魔力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_druid",
+    "option_id": "subclass_druid_moon",
+    "name": "月亮结社",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "强化荒野形态与变身战斗。"
+  },
+  {
+    "choice_group_id": "choice_subclass_fighter",
+    "option_id": "subclass_fighter_champion",
+    "name": "冠军勇士",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "以重击、体能和可靠战斗表现强化战士。"
+  },
+  {
+    "choice_group_id": "choice_subclass_fighter",
+    "option_id": "subclass_fighter_battle_master",
+    "name": "战斗大师",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "使用战技骰和战技控制战场。"
+  },
+  {
+    "choice_group_id": "choice_subclass_fighter",
+    "option_id": "subclass_fighter_eldritch_knight",
+    "name": "奥法骑士",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "结合战士武艺与奥术施法。"
+  },
+  {
+    "choice_group_id": "choice_subclass_monk",
+    "option_id": "subclass_monk_open_hand",
+    "name": "散打宗",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "强化徒手打击与震慑控制。"
+  },
+  {
+    "choice_group_id": "choice_subclass_monk",
+    "option_id": "subclass_monk_shadow",
+    "name": "暗影宗",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "操纵阴影、潜行与欺敌能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_monk",
+    "option_id": "subclass_monk_four_elements",
+    "name": "四象宗",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "以气施展元素技艺。"
+  },
+  {
+    "choice_group_id": "choice_subclass_paladin",
+    "option_id": "subclass_paladin_devotion",
+    "name": "奉献誓言",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "体现诚实、勇气与正义的圣武士誓言。"
+  },
+  {
+    "choice_group_id": "choice_subclass_paladin",
+    "option_id": "subclass_paladin_ancients",
+    "name": "古贤誓言",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "守护生命、光明与自然之美。"
+  },
+  {
+    "choice_group_id": "choice_subclass_paladin",
+    "option_id": "subclass_paladin_vengeance",
+    "name": "复仇誓言",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专注追猎和惩戒强敌。"
+  },
+  {
+    "choice_group_id": "choice_subclass_ranger",
+    "option_id": "subclass_ranger_hunter",
+    "name": "猎人",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "通过猎人技艺强化对多类敌人的战斗能力。"
+  },
+  {
+    "choice_group_id": "choice_subclass_ranger",
+    "option_id": "subclass_ranger_beast_master",
+    "name": "兽王",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "与动物伙伴并肩行动。"
+  },
+  {
+    "choice_group_id": "choice_subclass_rogue",
+    "option_id": "subclass_rogue_thief",
+    "name": "盗贼",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "强化攀爬、潜行、工具和敏捷行动。"
+  },
+  {
+    "choice_group_id": "choice_subclass_rogue",
+    "option_id": "subclass_rogue_assassin",
+    "name": "刺客",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专注伏击、伪装和致命突袭。"
+  },
+  {
+    "choice_group_id": "choice_subclass_rogue",
+    "option_id": "subclass_rogue_arcane_trickster",
+    "name": "诡术师",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "结合盗贼技巧与奥术幻惑。"
+  },
+  {
+    "choice_group_id": "choice_subclass_sorcerer",
+    "option_id": "subclass_sorcerer_draconic_bloodline",
+    "name": "龙族血脉",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "通过龙族血脉获得防护和元素亲和。"
+  },
+  {
+    "choice_group_id": "choice_subclass_sorcerer",
+    "option_id": "subclass_sorcerer_wild_magic",
+    "name": "狂野魔法",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "施法时引发不可预测的魔法波动。"
+  },
+  {
+    "choice_group_id": "choice_subclass_warlock",
+    "option_id": "subclass_warlock_archfey",
+    "name": "至高妖精",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "与强大的妖精存在订立契约。"
+  },
+  {
+    "choice_group_id": "choice_subclass_warlock",
+    "option_id": "subclass_warlock_fiend",
+    "name": "邪魔",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "与炼狱或深渊存在订立契约。"
+  },
+  {
+    "choice_group_id": "choice_subclass_warlock",
+    "option_id": "subclass_warlock_great_old_one",
+    "name": "旧日支配者",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "与远古不可名状存在建立联系。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_abjuration",
+    "name": "防护学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精防护和结界魔法。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_conjuration",
+    "name": "咒法学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精召唤和传送魔法。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_divination",
+    "name": "预言学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精预知与洞察。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_enchantment",
+    "name": "惑控学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精影响心智的魔法。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_evocation",
+    "name": "塑能学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精塑造能量和范围伤害。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_illusion",
+    "name": "幻术学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精欺骗感官的幻象魔法。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_necromancy",
+    "name": "死灵学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精生命力、死亡与不死生物。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "option_id": "subclass_wizard_transmutation",
+    "name": "变化学派",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": "专精物质和形态转化。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "option_id": "option_fighting_style_fighter_archery",
+    "name": "箭术",
+    "grant_feature_ids": [
+      "feature_fighting_style_archery"
+    ],
+    "grant_effect_ids": [],
+    "description": "使用远程武器进行攻击检定时具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "option_id": "option_fighting_style_fighter_defense",
+    "name": "防御",
+    "grant_feature_ids": [
+      "feature_fighting_style_defense"
+    ],
+    "grant_effect_ids": [],
+    "description": "穿着护甲时 AC 获得 +1 加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "option_id": "option_fighting_style_fighter_dueling",
+    "name": "对决",
+    "grant_feature_ids": [
+      "feature_fighting_style_dueling"
+    ],
+    "grant_effect_ids": [],
+    "description": "单手持用一把近战武器且没有持用其他武器时，伤害掷骰获得 +2 加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "option_id": "option_fighting_style_fighter_great_weapon_fighting",
+    "name": "巨武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_great_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "用双手持用近战武器攻击时，伤害骰掷出 1 或 2 可重掷。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "option_id": "option_fighting_style_fighter_protection",
+    "name": "保护",
+    "grant_feature_ids": [
+      "feature_fighting_style_protection"
+    ],
+    "grant_effect_ids": [],
+    "description": "持用盾牌时，可用反应保护邻近盟友，使一次攻击具有劣势。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "option_id": "option_fighting_style_fighter_two_weapon_fighting",
+    "name": "双武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_two_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "进行双武器战斗时，可将属性调整值加入副手攻击伤害。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_paladin",
+    "option_id": "option_fighting_style_paladin_defense",
+    "name": "防御",
+    "grant_feature_ids": [
+      "feature_fighting_style_defense"
+    ],
+    "grant_effect_ids": [],
+    "description": "穿着护甲时 AC 获得 +1 加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_paladin",
+    "option_id": "option_fighting_style_paladin_dueling",
+    "name": "对决",
+    "grant_feature_ids": [
+      "feature_fighting_style_dueling"
+    ],
+    "grant_effect_ids": [],
+    "description": "单手持用一把近战武器且没有持用其他武器时，伤害掷骰获得 +2 加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_paladin",
+    "option_id": "option_fighting_style_paladin_great_weapon_fighting",
+    "name": "巨武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_great_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "用双手持用近战武器攻击时，伤害骰掷出 1 或 2 可重掷。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_paladin",
+    "option_id": "option_fighting_style_paladin_protection",
+    "name": "保护",
+    "grant_feature_ids": [
+      "feature_fighting_style_protection"
+    ],
+    "grant_effect_ids": [],
+    "description": "持用盾牌时，可用反应保护邻近盟友，使一次攻击具有劣势。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_ranger",
+    "option_id": "option_fighting_style_ranger_archery",
+    "name": "箭术",
+    "grant_feature_ids": [
+      "feature_fighting_style_archery"
+    ],
+    "grant_effect_ids": [],
+    "description": "使用远程武器进行攻击检定时具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_ranger",
+    "option_id": "option_fighting_style_ranger_defense",
+    "name": "防御",
+    "grant_feature_ids": [
+      "feature_fighting_style_defense"
+    ],
+    "grant_effect_ids": [],
+    "description": "穿着护甲时 AC 获得 +1 加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_ranger",
+    "option_id": "option_fighting_style_ranger_dueling",
+    "name": "对决",
+    "grant_feature_ids": [
+      "feature_fighting_style_dueling"
+    ],
+    "grant_effect_ids": [],
+    "description": "单手持用一把近战武器且没有持用其他武器时，伤害掷骰获得 +2 加值。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_ranger",
+    "option_id": "option_fighting_style_ranger_two_weapon_fighting",
+    "name": "双武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_two_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "进行双武器战斗时，可将属性调整值加入副手攻击伤害。"
+  },
+  {
+    "choice_group_id": "choice_dwarf_tool_proficiency",
+    "option_id": "option_dwarf_tool_smith",
+    "name": "铁匠工具",
+    "grant_feature_ids": [
+      "feature_dwarf_tool_smith"
+    ],
+    "grant_effect_ids": [],
+    "description": "获得 铁匠工具 熟练项。"
+  },
+  {
+    "choice_group_id": "choice_dwarf_tool_proficiency",
+    "option_id": "option_dwarf_tool_brewer",
+    "name": "酿酒工具",
+    "grant_feature_ids": [
+      "feature_dwarf_tool_brewer"
+    ],
+    "grant_effect_ids": [],
+    "description": "获得 酿酒工具 熟练项。"
+  },
+  {
+    "choice_group_id": "choice_dwarf_tool_proficiency",
+    "option_id": "option_dwarf_tool_mason",
+    "name": "石匠工具",
+    "grant_feature_ids": [
+      "feature_dwarf_tool_mason"
+    ],
+    "grant_effect_ids": [],
+    "description": "获得 石匠工具 熟练项。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_ability_two_other",
+    "option_id": "option_half_elf_ability_str",
+    "name": "力量",
+    "grant_feature_ids": [
+      "feature_half_elf_ability_str"
+    ],
+    "grant_effect_ids": [],
+    "description": "力量 +1。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_ability_two_other",
+    "option_id": "option_half_elf_ability_dex",
+    "name": "敏捷",
+    "grant_feature_ids": [
+      "feature_half_elf_ability_dex"
+    ],
+    "grant_effect_ids": [],
+    "description": "敏捷 +1。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_ability_two_other",
+    "option_id": "option_half_elf_ability_con",
+    "name": "体质",
+    "grant_feature_ids": [
+      "feature_half_elf_ability_con"
+    ],
+    "grant_effect_ids": [],
+    "description": "体质 +1。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_ability_two_other",
+    "option_id": "option_half_elf_ability_int",
+    "name": "智力",
+    "grant_feature_ids": [
+      "feature_half_elf_ability_int"
+    ],
+    "grant_effect_ids": [],
+    "description": "智力 +1。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_ability_two_other",
+    "option_id": "option_half_elf_ability_wis",
+    "name": "感知",
+    "grant_feature_ids": [
+      "feature_half_elf_ability_wis"
+    ],
+    "grant_effect_ids": [],
+    "description": "感知 +1。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_black",
+    "name": "黑龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_black"
+    ],
+    "grant_effect_ids": [],
+    "description": "黑龙血脉：Acid，Line，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_blue",
+    "name": "蓝龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_blue"
+    ],
+    "grant_effect_ids": [],
+    "description": "蓝龙血脉：Lightning，Line，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_brass",
+    "name": "黄铜龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_brass"
+    ],
+    "grant_effect_ids": [],
+    "description": "黄铜龙血脉：Fire，Line，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_bronze",
+    "name": "青铜龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_bronze"
+    ],
+    "grant_effect_ids": [],
+    "description": "青铜龙血脉：Lightning，Line，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_copper",
+    "name": "赤铜龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_copper"
+    ],
+    "grant_effect_ids": [],
+    "description": "赤铜龙血脉：Acid，Line，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_gold",
+    "name": "金龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_gold"
+    ],
+    "grant_effect_ids": [],
+    "description": "金龙血脉：Fire，Cone，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_green",
+    "name": "绿龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_green"
+    ],
+    "grant_effect_ids": [],
+    "description": "绿龙血脉：Poison，Cone，Constitution 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_red",
+    "name": "红龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_red"
+    ],
+    "grant_effect_ids": [],
+    "description": "红龙血脉：Fire，Cone，Dexterity 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_silver",
+    "name": "银龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_silver"
+    ],
+    "grant_effect_ids": [],
+    "description": "银龙血脉：Cold，Cone，Constitution 豁免。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "option_id": "option_dragonborn_ancestry_white",
+    "name": "白龙",
+    "grant_feature_ids": [
+      "feature_dragonborn_ancestry_white"
+    ],
+    "grant_effect_ids": [],
+    "description": "白龙血脉：Cold，Cone，Constitution 豁免。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "option_id": "option_fighting_style_archery",
+    "name": "箭术",
+    "grant_feature_ids": [
+      "feature_fighting_style_archery"
+    ],
+    "grant_effect_ids": [],
+    "description": "使用远程武器进行攻击检定时具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "option_id": "option_fighting_style_defense",
+    "name": "防御",
+    "grant_feature_ids": [
+      "feature_fighting_style_defense"
+    ],
+    "grant_effect_ids": [],
+    "description": "穿着护甲时 AC 具有 +1 的加值。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "option_id": "option_fighting_style_dueling",
+    "name": "对决",
+    "grant_feature_ids": [
+      "feature_fighting_style_dueling"
+    ],
+    "grant_effect_ids": [],
+    "description": "单手持用近战武器且另一只手未持武器时，该武器伤害具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "option_id": "option_fighting_style_great_weapon_fighting",
+    "name": "巨武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_great_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "双手持用或两用近战武器时，伤害骰掷出 1 或 2 可重掷一次。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "option_id": "option_fighting_style_protection",
+    "name": "保护",
+    "grant_feature_ids": [
+      "feature_fighting_style_protection"
+    ],
+    "grant_effect_ids": [],
+    "description": "持盾时可用反应让攻击邻近盟友的攻击检定具有劣势。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "option_id": "option_fighting_style_two_weapon_fighting",
+    "name": "双武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_two_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "进行双武器战斗时，可将属性调整值加入第二次攻击的伤害。"
+  },
+  {
+    "choice_group_id": "choice_paladin_fighting_style",
+    "option_id": "option_fighting_style_defense",
+    "name": "防御",
+    "grant_feature_ids": [
+      "feature_fighting_style_defense"
+    ],
+    "grant_effect_ids": [],
+    "description": "穿着护甲时 AC 具有 +1 的加值。"
+  },
+  {
+    "choice_group_id": "choice_paladin_fighting_style",
+    "option_id": "option_fighting_style_dueling",
+    "name": "对决",
+    "grant_feature_ids": [
+      "feature_fighting_style_dueling"
+    ],
+    "grant_effect_ids": [],
+    "description": "单手持用近战武器且另一只手未持武器时，该武器伤害具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_paladin_fighting_style",
+    "option_id": "option_fighting_style_great_weapon_fighting",
+    "name": "巨武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_great_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "双手持用或两用近战武器时，伤害骰掷出 1 或 2 可重掷一次。"
+  },
+  {
+    "choice_group_id": "choice_paladin_fighting_style",
+    "option_id": "option_fighting_style_protection",
+    "name": "保护",
+    "grant_feature_ids": [
+      "feature_fighting_style_protection"
+    ],
+    "grant_effect_ids": [],
+    "description": "持盾时可用反应让攻击邻近盟友的攻击检定具有劣势。"
+  },
+  {
+    "choice_group_id": "choice_ranger_fighting_style",
+    "option_id": "option_fighting_style_archery",
+    "name": "箭术",
+    "grant_feature_ids": [
+      "feature_fighting_style_archery"
+    ],
+    "grant_effect_ids": [],
+    "description": "使用远程武器进行攻击检定时具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_ranger_fighting_style",
+    "option_id": "option_fighting_style_defense",
+    "name": "防御",
+    "grant_feature_ids": [
+      "feature_fighting_style_defense"
+    ],
+    "grant_effect_ids": [],
+    "description": "穿着护甲时 AC 具有 +1 的加值。"
+  },
+  {
+    "choice_group_id": "choice_ranger_fighting_style",
+    "option_id": "option_fighting_style_dueling",
+    "name": "对决",
+    "grant_feature_ids": [
+      "feature_fighting_style_dueling"
+    ],
+    "grant_effect_ids": [],
+    "description": "单手持用近战武器且另一只手未持武器时，该武器伤害具有 +2 的加值。"
+  },
+  {
+    "choice_group_id": "choice_ranger_fighting_style",
+    "option_id": "option_fighting_style_two_weapon_fighting",
+    "name": "双武器战斗",
+    "grant_feature_ids": [
+      "feature_fighting_style_two_weapon_fighting"
+    ],
+    "grant_effect_ids": [],
+    "description": "进行双武器战斗时，可将属性调整值加入第二次攻击的伤害。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_aberration",
+    "name": "异怪",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_aberration"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 异怪 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_beast",
+    "name": "野兽",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_beast"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 野兽 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_celestial",
+    "name": "天界生物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_celestial"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 天界生物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_construct",
+    "name": "构装生物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_construct"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 构装生物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_dragon",
+    "name": "龙",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_dragon"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 龙 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_elemental",
+    "name": "元素生物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_elemental"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 元素生物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_fey",
+    "name": "精类生物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_fey"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 精类生物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_fiend",
+    "name": "邪魔",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_fiend"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 邪魔 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_giant",
+    "name": "巨人",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_giant"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 巨人 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_humanoid",
+    "name": "类人生物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_humanoid"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 类人生物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_monstrosity",
+    "name": "怪兽",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_monstrosity"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 怪兽 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_ooze",
+    "name": "泥怪",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_ooze"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 泥怪 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_plant",
+    "name": "植物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_plant"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 植物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "option_id": "option_ranger_favored_enemy_undead",
+    "name": "不死生物",
+    "grant_feature_ids": [
+      "feature_ranger_favored_enemy_undead"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 不死生物 作为宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_arctic",
+    "name": "极地",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_arctic"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 极地 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_coast",
+    "name": "海岸",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_coast"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 海岸 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_desert",
+    "name": "沙漠",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_desert"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 沙漠 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_forest",
+    "name": "森林",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_forest"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 森林 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_grassland",
+    "name": "草原",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_grassland"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 草原 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_mountain",
+    "name": "山地",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_mountain"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 山地 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_swamp",
+    "name": "沼泽",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_swamp"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 沼泽 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "option_id": "option_ranger_natural_explorer_underdark",
+    "name": "幽暗地域",
+    "grant_feature_ids": [
+      "feature_ranger_natural_explorer_underdark"
+    ],
+    "grant_effect_ids": [],
+    "description": "选择 幽暗地域 作为熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_careful_spell",
+    "name": "谨慎法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_careful_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "保护部分生物免受你法术豁免失败影响。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_distant_spell",
+    "name": "远程法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_distant_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "延长法术射程。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_empowered_spell",
+    "name": "强效法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_empowered_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "重掷部分法术伤害骰。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_extended_spell",
+    "name": "延效法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_extended_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "延长法术持续时间。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_heightened_spell",
+    "name": "升阶法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_heightened_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "使目标对法术的首次豁免具有劣势。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_quickened_spell",
+    "name": "瞬发法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_quickened_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "将施法时间为 1 动作的法术改为附赠动作施放。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_subtle_spell",
+    "name": "隐微法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_subtle_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "施法时不需要姿势或言语成分。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "option_id": "option_sorcerer_metamagic_twinned_spell",
+    "name": "孪生法术",
+    "grant_feature_ids": [
+      "feature_sorcerer_metamagic_twinned_spell"
+    ],
+    "grant_effect_ids": [],
+    "description": "让符合条件的单体法术额外指定第二个目标。"
+  },
+  {
+    "choice_group_id": "choice_warlock_pact_boon",
+    "option_id": "option_warlock_pact_boon_chain",
+    "name": "链之契约",
+    "grant_feature_ids": [
+      "feature_warlock_pact_boon_chain"
+    ],
+    "grant_effect_ids": [],
+    "description": "获得特殊魔宠并可施展寻找魔宠。"
+  },
+  {
+    "choice_group_id": "choice_warlock_pact_boon",
+    "option_id": "option_warlock_pact_boon_blade",
+    "name": "刃之契约",
+    "grant_feature_ids": [
+      "feature_warlock_pact_boon_blade"
+    ],
+    "grant_effect_ids": [],
+    "description": "可以创造或绑定一把契约武器。"
+  },
+  {
+    "choice_group_id": "choice_warlock_pact_boon",
+    "option_id": "option_warlock_pact_boon_tome",
+    "name": "书之契约",
+    "grant_feature_ids": [
+      "feature_warlock_pact_boon_tome"
+    ],
+    "grant_effect_ids": [],
+    "description": "获得影之书并选择额外戏法。"
   }
 ]

@@ -10,16 +10,6 @@
     "description": "职业获得属性值提升时，如果启用可选规则可改选专长。"
   },
   {
-    "choice_group_id": "choice_subclass",
-    "package_id": "phb_5e_zh_user",
-    "name": "子职业/道路/领域/传统选择",
-    "choice_type": "Subclass",
-    "min_select": 1,
-    "max_select": 1,
-    "option_filter": "by class",
-    "description": "在指定等级选择职业分支；第一版仅记录选择点。"
-  },
-  {
     "choice_group_id": "choice_skill_any",
     "package_id": "phb_5e_zh_user",
     "name": "任选技能熟练",
@@ -168,5 +158,325 @@
     "max_select": 2,
     "option_filter": "wizard:classSkillList",
     "description": ""
+  },
+  {
+    "choice_group_id": "choice_subclass_barbarian",
+    "package_id": "phb_5e_zh_user",
+    "name": "野蛮人子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "野蛮人达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_bard",
+    "package_id": "phb_5e_zh_user",
+    "name": "吟游诗人子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "吟游诗人达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_cleric",
+    "package_id": "phb_5e_zh_user",
+    "name": "牧师子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "牧师达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_druid",
+    "package_id": "phb_5e_zh_user",
+    "name": "德鲁伊子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "德鲁伊达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_fighter",
+    "package_id": "phb_5e_zh_user",
+    "name": "战士子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "战士达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_monk",
+    "package_id": "phb_5e_zh_user",
+    "name": "武僧子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "武僧达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_paladin",
+    "package_id": "phb_5e_zh_user",
+    "name": "圣武士子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "圣武士达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_ranger",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "游侠达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_rogue",
+    "package_id": "phb_5e_zh_user",
+    "name": "游荡者子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "游荡者达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_sorcerer",
+    "package_id": "phb_5e_zh_user",
+    "name": "术士子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "术士达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_warlock",
+    "package_id": "phb_5e_zh_user",
+    "name": "邪术师子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "邪术师达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_subclass_wizard",
+    "package_id": "phb_5e_zh_user",
+    "name": "法师子职业选择",
+    "choice_type": "Subclass",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "法师达到子职业解锁等级时，从本职业子职业列表中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_fighter",
+    "package_id": "phb_5e_zh_user",
+    "name": "战士战斗风格选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "战士 1 级时选择一个战斗风格。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_paladin",
+    "package_id": "phb_5e_zh_user",
+    "name": "圣武士战斗风格选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "圣武士 2 级时选择一个战斗风格。"
+  },
+  {
+    "choice_group_id": "choice_fighting_style_ranger",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠战斗风格选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "游侠 2 级时选择一个战斗风格。"
+  },
+  {
+    "choice_group_id": "choice_bard_expertise_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "吟游诗人专精技能选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "AnySkill",
+    "description": "从已熟练技能中选择两项获得专精；当前表仅记录选择入口。"
+  },
+  {
+    "choice_group_id": "choice_rogue_expertise_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "游荡者专精技能选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "AnySkill",
+    "description": "从已熟练技能或盗贼工具中选择两项获得专精；当前表仅记录技能选择入口。"
+  },
+  {
+    "choice_group_id": "choice_dwarf_tool_proficiency",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人工具熟练选择",
+    "choice_type": "Tool",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "矮人选择一种工具熟练项。"
+  },
+  {
+    "choice_group_id": "choice_dragonborn_draconic_ancestry",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙裔龙族血脉选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "龙裔选择一种龙族血脉。"
+  },
+  {
+    "choice_group_id": "choice_elf_high_cantrip",
+    "package_id": "phb_5e_zh_user",
+    "name": "高等精灵戏法选择",
+    "choice_type": "Spell",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "WizardCantrip",
+    "description": "从法师戏法中选择一个。"
+  },
+  {
+    "choice_group_id": "choice_elf_high_extra_language",
+    "package_id": "phb_5e_zh_user",
+    "name": "高等精灵额外语言选择",
+    "choice_type": "Language",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnyLanguage",
+    "description": "选择一种额外语言。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_ability_two_other",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵额外属性选择",
+    "choice_type": "AbilityScore",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "",
+    "description": "从力量、敏捷、体质、智力、感知中选择两项各 +1。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_skill_versatility",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵技能多才选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "AnySkill",
+    "description": "选择两项技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_half_elf_extra_language",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵额外语言选择",
+    "choice_type": "Language",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnyLanguage",
+    "description": "选择一种额外语言。"
+  },
+  {
+    "choice_group_id": "choice_human_extra_language",
+    "package_id": "phb_5e_zh_user",
+    "name": "人类额外语言选择",
+    "choice_type": "Language",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnyLanguage",
+    "description": "选择一种额外语言。"
+  },
+  {
+    "choice_group_id": "choice_group_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "战士战斗风格选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "战士选择一个战斗风格。"
+  },
+  {
+    "choice_group_id": "choice_paladin_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "圣武士战斗风格选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "圣武士选择一个战斗风格。"
+  },
+  {
+    "choice_group_id": "choice_ranger_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠战斗风格选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "游侠选择一个战斗风格。"
+  },
+  {
+    "choice_group_id": "choice_ranger_favored_enemy",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠宿敌选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "选择一个宿敌类别。"
+  },
+  {
+    "choice_group_id": "choice_ranger_natural_explorer",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠自然探索者地形选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "选择一个熟悉地形。"
+  },
+  {
+    "choice_group_id": "choice_sorcerer_metamagic",
+    "package_id": "phb_5e_zh_user",
+    "name": "术士魔法超能选择",
+    "choice_type": "Feature",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "",
+    "description": "第 3 级选择两项魔法超能。"
+  },
+  {
+    "choice_group_id": "choice_warlock_pact_boon",
+    "package_id": "phb_5e_zh_user",
+    "name": "邪术师契约恩赐选择",
+    "choice_type": "Feature",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "description": "第 3 级选择一项契约恩赐。"
   }
 ]

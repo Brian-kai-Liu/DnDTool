@@ -31,6 +31,7 @@ namespace GameLogic
                 {
                     LoadRows(tables, "TbClassLevelProgression", library.LevelProgressions, CreateLevelProgression);
                 }
+                LoadRows(tables, "TbSubclassLevelProgression", library.SubclassLevelProgressions, CreateSubclassLevelProgression);
                 LoadRows(tables, "TbFeatureDefine", library.Features, CreateFeatureDefine);
                 LoadRows(tables, "TbFeatureEffect", library.FeatureEffects, CreateFeatureEffect);
                 LoadRows(tables, "TbFeatureEffectCondition", library.FeatureEffectConditions, CreateFeatureEffectCondition);
@@ -43,6 +44,7 @@ namespace GameLogic
                 LoadRows(tables, "TbFeatDefine", library.Feats, CreateFeatDefine);
                 LoadRows(tables, "TbSpellDefine", library.Spells, CreateSpellDefine);
                 LoadRows(tables, "TbClassSpellList", library.ClassSpellLists, CreateClassSpellList);
+                LoadRows(tables, "TbDndItemDefine", library.Items, CreateDndItemDefine);
                 LoadRows(tables, "TbEnumList", library.EnumLists, CreateEnumList);
                 LoadRows(tables, "TbAlignment", library.Alignments, CreateAlignment);
 
@@ -251,6 +253,32 @@ namespace GameLogic
             return int.TryParse(value.ToString(), out int parsed) ? parsed : 0;
         }
 
+        private static float GetFloat(object row, params string[] memberNames)
+        {
+            object value = GetFirstValue(row, memberNames);
+            if (value == null)
+            {
+                return 0f;
+            }
+
+            if (value is float floatValue)
+            {
+                return floatValue;
+            }
+
+            if (value is double doubleValue)
+            {
+                return (float)doubleValue;
+            }
+
+            if (value is int intValue)
+            {
+                return intValue;
+            }
+
+            return float.TryParse(value.ToString(), out float parsed) ? parsed : 0f;
+        }
+
         private static int? GetNullableInt(object row, params string[] memberNames)
         {
             object value = GetFirstValue(row, memberNames);
@@ -413,6 +441,25 @@ namespace GameLogic
                 AsiRuleId = GetString(row, "AsiRuleId", "asi_rule_id", "asiRuleId"),
                 SubclassFeature = GetBool(row, "SubclassFeature", "subclass_feature", "subclassFeature"),
                 SubclassChoiceGroupId = GetString(row, "SubclassChoiceGroupId", "subclass_choice_group_id", "subclassChoiceGroupId"),
+                Note = GetString(row, "Note", "note")
+            };
+            data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds"));
+            data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
+            data.ResourceGrantIds.AddRange(GetStringList(row, "ResourceGrantIds", "resource_grant_ids", "resourceGrantIds"));
+            return data;
+        }
+
+        private static DndSubclassLevelProgressionData CreateSubclassLevelProgression(object row)
+        {
+            DndSubclassLevelProgressionData data = new DndSubclassLevelProgressionData
+            {
+                SubclassId = GetString(row, "SubclassId", "subclass_id", "subclassId"),
+                ClassId = GetString(row, "ClassId", "class_id", "classId"),
+                Level = GetInt(row, "Level", "level"),
+                SpellSlotProgressionLevel = GetNullableInt(row, "SpellSlotProgressionLevel", "spell_slot_progression_level", "spellSlotProgressionLevel"),
+                CantripKnown = GetNullableInt(row, "CantripKnown", "cantrip_known", "cantripKnown"),
+                SpellKnown = GetNullableInt(row, "SpellKnown", "spell_known", "spellKnown"),
+                PreparedSpellFormula = GetString(row, "PreparedSpellFormula", "prepared_spell_formula", "preparedSpellFormula"),
                 Note = GetString(row, "Note", "note")
             };
             data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds"));
@@ -732,6 +779,51 @@ namespace GameLogic
                 SourceFeatureId = GetString(row, "SourceFeatureId", "source_feature_id", "sourceFeatureId"),
                 Note = GetString(row, "Note", "note")
             };
+        }
+
+        private static DndItemDefineData CreateDndItemDefine(object row)
+        {
+            DndItemDefineData data = new DndItemDefineData
+            {
+                ItemId = GetString(row, "ItemId", "item_id", "itemId"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                Name = GetString(row, "Name", "name"),
+                ItemType = GetString(row, "ItemType", "item_type", "itemType"),
+                Rarity = GetString(row, "Rarity", "rarity"),
+                Description = GetString(row, "Description", "description"),
+                SourceBook = GetString(row, "SourceBook", "source_book", "sourceBook"),
+                SourcePage = GetString(row, "SourcePage", "source_page", "sourcePage"),
+                Stackable = GetBool(row, "Stackable", "stackable"),
+                MaxStack = GetInt(row, "MaxStack", "max_stack", "maxStack"),
+                Weight = GetFloat(row, "Weight", "weight"),
+                PriceGp = GetInt(row, "PriceGp", "price_gp", "priceGp"),
+                IsEquippable = GetBool(row, "IsEquippable", "is_equippable", "isEquippable"),
+                DefaultQuantity = GetInt(row, "DefaultQuantity", "default_quantity", "defaultQuantity"),
+                EquipmentSlot = GetString(row, "EquipmentSlot", "equipment_slot", "equipmentSlot"),
+                RequiresAttunement = GetBool(row, "RequiresAttunement", "requires_attunement", "requiresAttunement"),
+                DefaultEquipped = GetBool(row, "DefaultEquipped", "default_equipped", "defaultEquipped"),
+                ArmorCategory = GetString(row, "ArmorCategory", "armor_category", "armorCategory"),
+                ArmorBaseAc = GetInt(row, "ArmorBaseAc", "armor_base_ac", "armorBaseAc"),
+                AcBonus = GetInt(row, "AcBonus", "ac_bonus", "acBonus"),
+                MaxDexBonus = GetInt(row, "MaxDexBonus", "max_dex_bonus", "maxDexBonus"),
+                StrengthRequirement = GetInt(row, "StrengthRequirement", "strength_requirement", "strengthRequirement"),
+                StealthDisadvantage = GetBool(row, "StealthDisadvantage", "stealth_disadvantage", "stealthDisadvantage"),
+                WeaponCategory = GetString(row, "WeaponCategory", "weapon_category", "weaponCategory"),
+                WeaponRangeType = GetString(row, "WeaponRangeType", "weapon_range_type", "weaponRangeType"),
+                DamageDice = GetString(row, "DamageDice", "damage_dice", "damageDice"),
+                DamageType = GetString(row, "DamageType", "damage_type", "damageType"),
+                NormalRange = GetInt(row, "NormalRange", "normal_range", "normalRange"),
+                LongRange = GetInt(row, "LongRange", "long_range", "longRange"),
+                TwoHandDamageDice = GetString(row, "TwoHandDamageDice", "two_hand_damage_dice", "twoHandDamageDice"),
+                ToolCategory = GetString(row, "ToolCategory", "tool_category", "toolCategory"),
+                Consumable = GetBool(row, "Consumable", "consumable"),
+                Charges = GetInt(row, "Charges", "charges"),
+                ConsumeOnUse = GetBool(row, "ConsumeOnUse", "consume_on_use", "consumeOnUse"),
+                EffectApplyCondition = GetString(row, "EffectApplyCondition", "effect_apply_condition", "effectApplyCondition")
+            };
+            data.WeaponProperties.AddRange(GetStringList(row, "WeaponProperties", "weapon_properties", "weaponProperties"));
+            data.EffectIds.AddRange(GetStringList(row, "EffectIds", "effect_ids", "effectIds"));
+            return data;
         }
 
         private static DndEnumListData CreateEnumList(object row)

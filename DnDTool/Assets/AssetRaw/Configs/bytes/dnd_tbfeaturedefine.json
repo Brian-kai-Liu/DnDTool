@@ -6,10 +6,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_combat_resource"
     ],
-    "description": ""
+    "description": "可进入狂暴状态，增强近战力量伤害并提高对常见武器伤害的承受力，但需要避免中断条件。"
   },
   {
     "feature_id": "feature_barbarian_level_01_unarmored_defense",
@@ -18,10 +19,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_ac_formula_manual"
     ],
-    "description": ""
+    "description": "未穿护甲时，护甲等级可由敏捷和体质共同决定，仍可正常使用盾牌。"
   },
   {
     "feature_id": "feature_barbarian_level_02_reckless_attack",
@@ -30,10 +32,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "回合首次攻击时可选择鲁莽攻击，使本回合力量近战攻击更容易命中，但也让敌人更容易命中你。"
   },
   {
     "feature_id": "feature_barbarian_level_02_danger_sense",
@@ -42,10 +45,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对能看见的危险具有敏锐直觉，在规避陷阱、法术等效果的敏捷豁免上更有优势。"
   },
   {
     "feature_id": "feature_barbarian_level_03_primal_path",
@@ -54,10 +58,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一条原初道途，之后在指定等级获得该道途的子职业能力。"
   },
   {
     "feature_id": "feature_barbarian_level_05_extra_attack",
@@ -66,10 +71,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_extra_attack"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击两次，而不是一次。"
   },
   {
     "feature_id": "feature_barbarian_level_05_fast_movement",
@@ -78,10 +84,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "未穿重甲时移动速度提高。"
   },
   {
     "feature_id": "feature_barbarian_level_07_feral_instinct",
@@ -90,10 +97,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:7",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "先攻检定更有优势；遭遇突袭时若能立即进入狂暴，也可以正常行动。"
   },
   {
     "feature_id": "feature_barbarian_level_09_brutal_critical",
@@ -102,10 +110,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:9",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "近战攻击造成重击时，可以额外掷一枚武器伤害骰；之后等级提升会增加额外骰数量。"
   },
   {
     "feature_id": "feature_barbarian_level_11_relentless_rage",
@@ -114,10 +123,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:11",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_combat_resource"
     ],
-    "description": ""
+    "description": "狂暴期间生命值降至 0 时，可尝试通过体质豁免维持在 1 点生命值。"
   },
   {
     "feature_id": "feature_barbarian_level_15_persistent_rage",
@@ -126,10 +136,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:15",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_combat_resource"
     ],
-    "description": ""
+    "description": "狂暴不再因没有攻击或没有受到伤害而提前结束。"
   },
   {
     "feature_id": "feature_barbarian_level_18_indomitable_might",
@@ -138,10 +149,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "力量检定结果低于你的力量属性值时，可改用力量属性值作为结果。"
   },
   {
     "feature_id": "feature_barbarian_level_20_primal_champion",
@@ -150,10 +162,11 @@
     "feature_type": "Class",
     "source_ref": "barbarian:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "力量和体质提高，并突破通常的属性上限。"
   },
   {
     "feature_id": "feature_bard_level_01_spellcasting",
@@ -162,10 +175,11 @@
     "feature_type": "Class",
     "source_ref": "bard:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以魅力作为施法属性，按照吟游诗人的法术表和已知法术规则施展法术。"
   },
   {
     "feature_id": "feature_bard_level_01_bardic_inspiration",
@@ -174,10 +188,11 @@
     "feature_type": "Class",
     "source_ref": "bard:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可用附赠动作给予盟友激励骰，使其在之后的检定、攻击或豁免中追加该骰结果。"
   },
   {
     "feature_id": "feature_bard_level_02_jack_of_all_trades",
@@ -186,10 +201,11 @@
     "feature_type": "Class",
     "source_ref": "bard:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对没有熟练加值的属性检定，可以加入一半熟练加值。"
   },
   {
     "feature_id": "feature_bard_level_02_song_of_rest",
@@ -198,10 +214,11 @@
     "feature_type": "Class",
     "source_ref": "bard:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "短休期间用音乐或演说帮助同伴恢复，使消耗生命骰治疗的生物额外恢复生命值。"
   },
   {
     "feature_id": "feature_bard_level_03_bard_college",
@@ -210,10 +227,11 @@
     "feature_type": "Class",
     "source_ref": "bard:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个诗人学院，之后在指定等级获得该学院的子职业能力。"
   },
   {
     "feature_id": "feature_bard_level_03_expertise",
@@ -222,10 +240,11 @@
     "feature_type": "Class",
     "source_ref": "bard:3",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_bard_expertise_skill"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择已熟练的技能获得专精，使对应检定使用双倍熟练加值。"
   },
   {
     "feature_id": "feature_bard_level_05_font_of_inspiration",
@@ -234,10 +253,11 @@
     "feature_type": "Class",
     "source_ref": "bard:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "吟游激励的使用次数在短休或长休后恢复。"
   },
   {
     "feature_id": "feature_bard_level_06_countercharm",
@@ -246,10 +266,11 @@
     "feature_type": "Class",
     "source_ref": "bard:6",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可用动作进行表演，使附近盟友对魅惑和恐慌相关豁免更有优势。"
   },
   {
     "feature_id": "feature_bard_level_10_magical_secrets",
@@ -258,10 +279,11 @@
     "feature_type": "Class",
     "source_ref": "bard:10",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "从任意职业法术列表中选择额外法术，作为吟游诗人法术掌握。"
   },
   {
     "feature_id": "feature_bard_level_20_superior_inspiration",
@@ -270,10 +292,11 @@
     "feature_type": "Class",
     "source_ref": "bard:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "掷先攻时若没有剩余吟游激励次数，可恢复一次使用次数。"
   },
   {
     "feature_id": "feature_cleric_level_01_spellcasting",
@@ -282,10 +305,11 @@
     "feature_type": "Class",
     "source_ref": "cleric:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以感知作为施法属性，准备并施展牧师法术。"
   },
   {
     "feature_id": "feature_cleric_level_01_divine_domain",
@@ -294,10 +318,11 @@
     "feature_type": "Class",
     "source_ref": "cleric:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个神圣领域，获得领域法术和领域能力，并在之后等级继续强化。"
   },
   {
     "feature_id": "feature_cleric_level_02_channel_divinity",
@@ -306,10 +331,11 @@
     "feature_type": "Class",
     "source_ref": "cleric:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得引导神力次数，可用于驱散不死生物或领域提供的神力选项。"
   },
   {
     "feature_id": "feature_cleric_level_05_destroy_undead",
@@ -318,10 +344,11 @@
     "feature_type": "Class",
     "source_ref": "cleric:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "驱散不死生物时，低挑战等级的不死生物会直接被摧毁；可影响的挑战等级随牧师等级提高。"
   },
   {
     "feature_id": "feature_cleric_level_10_divine_intervention",
@@ -330,10 +357,11 @@
     "feature_type": "Class",
     "source_ref": "cleric:10",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可以请求神祇直接介入；成功率与牧师等级相关，达到高等级后会自动成功。"
   },
   {
     "feature_id": "feature_druid_level_01_druidic",
@@ -342,10 +370,11 @@
     "feature_type": "Class",
     "source_ref": "druid:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "掌握德鲁伊的秘密语言，可用于留下或辨识德鲁伊之间的隐秘讯息。"
   },
   {
     "feature_id": "feature_druid_level_01_spellcasting",
@@ -354,10 +383,11 @@
     "feature_type": "Class",
     "source_ref": "druid:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以感知作为施法属性，准备并施展德鲁伊法术。"
   },
   {
     "feature_id": "feature_druid_level_02_wild_shape",
@@ -366,10 +396,11 @@
     "feature_type": "Class",
     "source_ref": "druid:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可以用动作变形成见过的野兽，形态限制和持续时间随等级提升而变化。"
   },
   {
     "feature_id": "feature_druid_level_02_druid_circle",
@@ -378,10 +409,11 @@
     "feature_type": "Class",
     "source_ref": "druid:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个德鲁伊结社，之后在指定等级获得该结社的子职业能力。"
   },
   {
     "feature_id": "feature_druid_level_18_timeless_body",
@@ -390,10 +422,11 @@
     "feature_type": "Class",
     "source_ref": "druid:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "自然魔法减缓你的衰老速度。"
   },
   {
     "feature_id": "feature_druid_level_18_beast_spells",
@@ -402,10 +435,11 @@
     "feature_type": "Class",
     "source_ref": "druid:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "处于荒野形态时也可以施展部分德鲁伊法术。"
   },
   {
     "feature_id": "feature_druid_level_20_archdruid",
@@ -414,10 +448,11 @@
     "feature_type": "Class",
     "source_ref": "druid:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "荒野形态使用次数不再受限，并可在施法时忽略部分成分限制。"
   },
   {
     "feature_id": "feature_fighter_level_01_fighting_style",
@@ -426,10 +461,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:1",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_fighting_style_fighter"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种战斗风格，获得与武器、护甲或防护方式相关的专门强化。"
   },
   {
     "feature_id": "feature_fighter_level_01_second_wind",
@@ -438,10 +474,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_fighter_second_wind"
     ],
-    "description": ""
+    "description": "可用附赠动作恢复生命值；恢复量与战士等级相关，短休或长休后恢复使用。"
   },
   {
     "feature_id": "feature_fighter_level_02_action_surge",
@@ -450,10 +487,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_fighter_action_surge_1"
     ],
-    "description": ""
+    "description": "可在自己回合额外获得一次动作；之后等级提升会增加使用次数。"
   },
   {
     "feature_id": "feature_fighter_level_03_martial_archetype",
@@ -462,10 +500,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:3",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_subclass_fighter"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种武术范型，之后在指定等级获得该范型的子职业能力。"
   },
   {
     "feature_id": "feature_fighter_level_05_extra_attack",
@@ -474,10 +513,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_extra_attack"
+      "effect_fighter_extra_attack_2"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击两次，而不是一次。"
   },
   {
     "feature_id": "feature_fighter_level_09_indomitable",
@@ -486,10 +526,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:9",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_fighter_indomitable_1"
     ],
-    "description": ""
+    "description": "豁免失败时可以重掷一次；之后等级提升会增加使用次数。"
   },
   {
     "feature_id": "feature_fighter_level_11_extra_attack_2",
@@ -498,10 +539,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:11",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_extra_attack"
+      "effect_fighter_extra_attack_3"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击三次。"
   },
   {
     "feature_id": "feature_fighter_level_17_action_surge_2",
@@ -510,10 +552,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:17",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_fighter_action_surge_2"
     ],
-    "description": ""
+    "description": "动作如潮的可用次数提高。"
   },
   {
     "feature_id": "feature_fighter_level_17_indomitable_3",
@@ -522,10 +565,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:17",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_fighter_indomitable_3"
     ],
-    "description": ""
+    "description": "不屈的可用次数提高。"
   },
   {
     "feature_id": "feature_fighter_level_20_extra_attack_3",
@@ -534,10 +578,11 @@
     "feature_type": "Class",
     "source_ref": "fighter:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_extra_attack"
+      "effect_fighter_extra_attack_4"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击四次。"
   },
   {
     "feature_id": "feature_monk_level_01_unarmored_defense",
@@ -546,10 +591,11 @@
     "feature_type": "Class",
     "source_ref": "monk:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_ac_formula_manual"
     ],
-    "description": ""
+    "description": "未穿护甲且未持盾时，护甲等级可由敏捷和感知共同决定。"
   },
   {
     "feature_id": "feature_monk_level_01_martial_arts",
@@ -558,10 +604,11 @@
     "feature_type": "Class",
     "source_ref": "monk:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "未穿护甲且未持盾时，可用敏捷进行徒手和武僧武器攻击，并可用附赠动作追加徒手打击。"
   },
   {
     "feature_id": "feature_monk_level_02_ki",
@@ -570,10 +617,11 @@
     "feature_type": "Class",
     "source_ref": "monk:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得气点，可用于疾风连击、患者防御、踏风步等能力，短休或长休后恢复。"
   },
   {
     "feature_id": "feature_monk_level_02_unarmored_movement",
@@ -582,10 +630,11 @@
     "feature_type": "Class",
     "source_ref": "monk:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "未穿护甲且未持盾时移动速度提高，之后等级提升会进一步增强。"
   },
   {
     "feature_id": "feature_monk_level_03_monastic_tradition",
@@ -594,10 +643,11 @@
     "feature_type": "Class",
     "source_ref": "monk:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个武僧宗派，之后在指定等级获得该宗派的子职业能力。"
   },
   {
     "feature_id": "feature_monk_level_03_deflect_missiles",
@@ -606,10 +656,11 @@
     "feature_type": "Class",
     "source_ref": "monk:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "受到远程武器攻击时可用反应减免伤害，减至 0 时有机会将飞弹掷回。"
   },
   {
     "feature_id": "feature_monk_level_05_extra_attack",
@@ -618,10 +669,11 @@
     "feature_type": "Class",
     "source_ref": "monk:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_extra_attack"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击两次，而不是一次。"
   },
   {
     "feature_id": "feature_monk_level_05_stunning_strike",
@@ -630,10 +682,11 @@
     "feature_type": "Class",
     "source_ref": "monk:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "以近战武器攻击命中时可消耗气点尝试震慑目标。"
   },
   {
     "feature_id": "feature_monk_level_06_ki_empowered_strikes",
@@ -642,10 +695,11 @@
     "feature_type": "Class",
     "source_ref": "monk:6",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "徒手打击在克服非魔法攻击抗性和免疫时视为魔法攻击。"
   },
   {
     "feature_id": "feature_monk_level_07_evasion",
@@ -654,10 +708,11 @@
     "feature_type": "Class",
     "source_ref": "monk:7",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "遭受可用敏捷豁免减伤的效果时，成功可免受伤害，失败也只承受一半伤害。"
   },
   {
     "feature_id": "feature_monk_level_07_stillness_of_mind",
@@ -666,10 +721,11 @@
     "feature_type": "Class",
     "source_ref": "monk:7",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可用动作结束自己身上的魅惑或恐慌状态。"
   },
   {
     "feature_id": "feature_monk_level_10_purity_of_body",
@@ -678,10 +734,11 @@
     "feature_type": "Class",
     "source_ref": "monk:10",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得对疾病和毒素的免疫。"
   },
   {
     "feature_id": "feature_monk_level_13_tongue_of_the_sun_and_moon",
@@ -690,10 +747,11 @@
     "feature_type": "Class",
     "source_ref": "monk:13",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可以理解所有语言，也能让其他生物理解你的话语。"
   },
   {
     "feature_id": "feature_monk_level_14_diamond_soul",
@@ -702,10 +760,11 @@
     "feature_type": "Class",
     "source_ref": "monk:14",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得所有豁免熟练，并可消耗气点重掷失败的豁免。"
   },
   {
     "feature_id": "feature_monk_level_15_timeless_body",
@@ -714,10 +773,11 @@
     "feature_type": "Class",
     "source_ref": "monk:15",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "气维持身体活力，使你不受衰老衰弱影响，也不再需要食物和水。"
   },
   {
     "feature_id": "feature_monk_level_18_empty_body",
@@ -726,10 +786,11 @@
     "feature_type": "Class",
     "source_ref": "monk:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可消耗气点进入隐形并获得对多数伤害的抗性，也可施展星界投影。"
   },
   {
     "feature_id": "feature_monk_level_20_perfect_self",
@@ -738,10 +799,11 @@
     "feature_type": "Class",
     "source_ref": "monk:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "掷先攻时若气点不足，可恢复一定气点。"
   },
   {
     "feature_id": "feature_paladin_level_01_divine_sense",
@@ -750,10 +812,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可感知附近天界、邪魔和不死生物的位置，也能辨认被圣化或亵渎的地点或物件。"
   },
   {
     "feature_id": "feature_paladin_level_01_lay_on_hands",
@@ -762,10 +825,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "拥有随圣武士等级增长的治疗池，可用动作治疗生物或消耗点数解除疾病和毒素。"
   },
   {
     "feature_id": "feature_paladin_level_02_fighting_style",
@@ -774,10 +838,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:2",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_paladin_fighting_style"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种圣武士可用的战斗风格，获得对应战斗强化。"
   },
   {
     "feature_id": "feature_paladin_level_02_spellcasting",
@@ -786,10 +851,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以魅力作为施法属性，准备并施展圣武士法术。"
   },
   {
     "feature_id": "feature_paladin_level_02_divine_smite",
@@ -798,10 +864,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "近战武器攻击命中时可消耗法术位追加光耀伤害，对不死生物和邪魔更有效。"
   },
   {
     "feature_id": "feature_paladin_level_03_sacred_oath",
@@ -810,10 +877,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个神圣誓言，获得誓言法术、引导神力选项和后续誓言能力。"
   },
   {
     "feature_id": "feature_paladin_level_03_divine_health",
@@ -822,10 +890,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "神圣力量使你免疫疾病。"
   },
   {
     "feature_id": "feature_paladin_level_05_extra_attack",
@@ -834,10 +903,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_extra_attack"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击两次，而不是一次。"
   },
   {
     "feature_id": "feature_paladin_level_06_aura_of_protection",
@@ -846,10 +916,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:6",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "你和附近盟友进行豁免时，可获得基于你魅力调整值的加值。"
   },
   {
     "feature_id": "feature_paladin_level_10_aura_of_courage",
@@ -858,10 +929,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:10",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_combat_resource"
     ],
-    "description": ""
+    "description": "你和附近盟友免疫恐慌。"
   },
   {
     "feature_id": "feature_paladin_level_11_improved_divine_smite",
@@ -870,10 +942,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:11",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "近战武器攻击命中时自动追加光耀伤害。"
   },
   {
     "feature_id": "feature_paladin_level_14_cleansing_touch",
@@ -882,10 +955,11 @@
     "feature_type": "Class",
     "source_ref": "paladin:14",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可用动作结束自己或自愿生物身上的一个法术效果。"
   },
   {
     "feature_id": "feature_ranger_level_01_favored_enemy",
@@ -894,10 +968,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:1",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_ranger_favored_enemy"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种宿敌，对追踪和回忆相关信息更有优势，并学习相关语言。"
   },
   {
     "feature_id": "feature_ranger_level_01_natural_explorer",
@@ -906,10 +981,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:1",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_ranger_natural_explorer"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种偏好地形，在该地形旅行、追踪、觅食和导航时获得强化。"
   },
   {
     "feature_id": "feature_ranger_level_02_fighting_style",
@@ -918,10 +994,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:2",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_ranger_fighting_style"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种游侠可用的战斗风格，获得对应战斗强化。"
   },
   {
     "feature_id": "feature_ranger_level_02_spellcasting",
@@ -930,10 +1007,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以感知作为施法属性，按照游侠的已知法术规则施展法术。"
   },
   {
     "feature_id": "feature_ranger_level_03_ranger_archetype",
@@ -942,10 +1020,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一种游侠范型，之后在指定等级获得该范型的子职业能力。"
   },
   {
     "feature_id": "feature_ranger_level_03_primeval_awareness",
@@ -954,10 +1033,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可消耗法术位感知一定范围内特定生物类型是否存在。"
   },
   {
     "feature_id": "feature_ranger_level_05_extra_attack",
@@ -966,10 +1046,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_extra_attack"
     ],
-    "description": ""
+    "description": "执行攻击动作时可以攻击两次，而不是一次。"
   },
   {
     "feature_id": "feature_ranger_level_08_lands_stride",
@@ -978,10 +1059,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:8",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "穿越非魔法困难地形和植物阻碍时更灵活，并更容易抵抗魔法植物的阻碍。"
   },
   {
     "feature_id": "feature_ranger_level_10_hide_in_plain_sight",
@@ -990,10 +1072,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:10",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "花时间伪装后，可在不移动也不执行动作时大幅提高隐匿效果。"
   },
   {
     "feature_id": "feature_ranger_level_14_vanish",
@@ -1002,10 +1085,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:14",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可用附赠动作隐藏，且不会被非魔法手段追踪，除非你选择留下踪迹。"
   },
   {
     "feature_id": "feature_ranger_level_18_feral_senses",
@@ -1014,10 +1098,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "攻击看不见的生物时不再因看不见而处于劣势，并能感知附近隐藏生物的位置。"
   },
   {
     "feature_id": "feature_ranger_level_20_foe_slayer",
@@ -1026,10 +1111,11 @@
     "feature_type": "Class",
     "source_ref": "ranger:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "每回合可在攻击或伤害宿敌时加入感知调整值。"
   },
   {
     "feature_id": "feature_rogue_level_01_expertise",
@@ -1038,10 +1124,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:1",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_rogue_expertise_skill"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择已熟练项目获得专精，使对应检定使用双倍熟练加值。"
   },
   {
     "feature_id": "feature_rogue_level_01_sneak_attack",
@@ -1050,10 +1137,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "满足优势或盟友牵制等条件时，每回合一次用灵巧或远程武器追加伤害。"
   },
   {
     "feature_id": "feature_rogue_level_01_thieves_cant",
@@ -1062,10 +1150,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "掌握盗贼黑话，可在普通谈话中隐藏秘密讯息，也懂得相关符号标记。"
   },
   {
     "feature_id": "feature_rogue_level_02_cunning_action",
@@ -1074,10 +1163,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "每回合可用附赠动作疾走、撤离或隐藏。"
   },
   {
     "feature_id": "feature_rogue_level_03_roguish_archetype",
@@ -1086,10 +1176,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:3",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一种游荡者范型，之后在指定等级获得该范型的子职业能力。"
   },
   {
     "feature_id": "feature_rogue_level_05_uncanny_dodge",
@@ -1098,10 +1189,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:5",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "被能看见的攻击者命中时，可用反应将该次攻击伤害减半。"
   },
   {
     "feature_id": "feature_rogue_level_07_evasion",
@@ -1110,10 +1202,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:7",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "遭受可用敏捷豁免减伤的效果时，成功可免受伤害，失败也只承受一半伤害。"
   },
   {
     "feature_id": "feature_rogue_level_11_reliable_talent",
@@ -1122,10 +1215,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:11",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "进行已熟练属性检定时，d20 掷出较低结果可视为 10。"
   },
   {
     "feature_id": "feature_rogue_level_14_blindsense",
@@ -1134,10 +1228,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:14",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "能察觉附近隐藏或隐形生物的位置。"
   },
   {
     "feature_id": "feature_rogue_level_15_slippery_mind",
@@ -1146,10 +1241,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:15",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得感知豁免熟练。"
   },
   {
     "feature_id": "feature_rogue_level_18_elusive",
@@ -1158,10 +1254,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "只要没有失能，攻击者不会因你看不见它而对你具有优势。"
   },
   {
     "feature_id": "feature_rogue_level_20_stroke_of_luck",
@@ -1170,10 +1267,11 @@
     "feature_type": "Class",
     "source_ref": "rogue:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "失败的攻击可改为命中，或失败的属性检定可视为掷出 20；短休或长休后恢复。"
   },
   {
     "feature_id": "feature_sorcerer_level_01_spellcasting",
@@ -1182,10 +1280,11 @@
     "feature_type": "Class",
     "source_ref": "sorcerer:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以魅力作为施法属性，按照术士的已知法术规则施展法术。"
   },
   {
     "feature_id": "feature_sorcerer_level_01_sorcerous_origin",
@@ -1194,10 +1293,11 @@
     "feature_type": "Class",
     "source_ref": "sorcerer:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一种术法起源，获得起源能力并在后续等级继续强化。"
   },
   {
     "feature_id": "feature_sorcerer_level_02_font_of_magic",
@@ -1206,10 +1306,11 @@
     "feature_type": "Class",
     "source_ref": "sorcerer:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得术法点，可用于创造法术位或配合其他术法能力使用。"
   },
   {
     "feature_id": "feature_sorcerer_level_03_metamagic",
@@ -1218,10 +1319,11 @@
     "feature_type": "Class",
     "source_ref": "sorcerer:3",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_sorcerer_metamagic"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择超魔法选项，用术法点改变法术的施放方式或效果。"
   },
   {
     "feature_id": "feature_sorcerer_level_20_sorcerous_restoration",
@@ -1230,10 +1332,11 @@
     "feature_type": "Class",
     "source_ref": "sorcerer:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "短休后可恢复部分术法点。"
   },
   {
     "feature_id": "feature_warlock_level_01_otherworldly_patron",
@@ -1242,10 +1345,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一位异界宗主，获得宗主扩展法术和后续宗主能力。"
   },
   {
     "feature_id": "feature_warlock_level_01_pact_magic",
@@ -1254,10 +1358,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "以魅力作为施法属性，使用随短休恢复的契约魔法法术位施展法术。"
   },
   {
     "feature_id": "feature_warlock_level_02_eldritch_invocations",
@@ -1266,10 +1371,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择魔能祈唤，获得持续性魔法能力或对法术的特殊强化。"
   },
   {
     "feature_id": "feature_warlock_level_03_pact_boon",
@@ -1278,10 +1384,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:3",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_warlock_pact_boon"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择契约恩泽，获得链、刃或书等契约礼赠。"
   },
   {
     "feature_id": "feature_warlock_level_11_mystic_arcanum_6",
@@ -1290,10 +1397,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:11",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个 6 环法术作为玄奥秘法，每次长休可施展一次且不消耗法术位。"
   },
   {
     "feature_id": "feature_warlock_level_13_mystic_arcanum_7",
@@ -1302,10 +1410,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:13",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个 7 环法术作为玄奥秘法，每次长休可施展一次且不消耗法术位。"
   },
   {
     "feature_id": "feature_warlock_level_15_mystic_arcanum_8",
@@ -1314,10 +1423,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:15",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个 8 环法术作为玄奥秘法，每次长休可施展一次且不消耗法术位。"
   },
   {
     "feature_id": "feature_warlock_level_17_mystic_arcanum_9",
@@ -1326,10 +1436,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:17",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个 9 环法术作为玄奥秘法，每次长休可施展一次且不消耗法术位。"
   },
   {
     "feature_id": "feature_warlock_level_20_eldritch_master",
@@ -1338,10 +1449,11 @@
     "feature_type": "Class",
     "source_ref": "warlock:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "花费短时间祈求宗主帮助，可恢复已消耗的契约魔法法术位。"
   },
   {
     "feature_id": "feature_wizard_level_01_spellcasting",
@@ -1350,10 +1462,11 @@
     "feature_type": "Class",
     "source_ref": "wizard:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_enable_spellcasting"
     ],
-    "description": ""
+    "description": "以智力作为施法属性，通过法术书准备并施展法师法术。"
   },
   {
     "feature_id": "feature_wizard_level_01_arcane_recovery",
@@ -1362,10 +1475,11 @@
     "feature_type": "Class",
     "source_ref": "wizard:1",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "短休后可恢复部分已消耗法术位，恢复额度与法师等级相关。"
   },
   {
     "feature_id": "feature_wizard_level_02_arcane_tradition",
@@ -1374,10 +1488,11 @@
     "feature_type": "Class",
     "source_ref": "wizard:2",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择一个奥术传承学派，获得学派能力并在后续等级继续强化。"
   },
   {
     "feature_id": "feature_wizard_level_18_spell_mastery",
@@ -1386,10 +1501,11 @@
     "feature_type": "Class",
     "source_ref": "wizard:18",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择低环法术作为法术精通，可不消耗法术位反复施展。"
   },
   {
     "feature_id": "feature_wizard_level_20_signature_spells",
@@ -1398,10 +1514,11 @@
     "feature_type": "Class",
     "source_ref": "wizard:20",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "选择两个 3 环法术作为招牌法术，始终准备且每次短休可各免费施展一次。"
   },
   {
     "feature_id": "feature_asi",
@@ -1410,8 +1527,9 @@
     "feature_type": "Class",
     "source_ref": "class:any",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "将属性值提高，或在允许时改为选择一个专长。"
   },
   {
     "feature_id": "feature_extra_attack",
@@ -1420,8 +1538,9 @@
     "feature_type": "Class",
     "source_ref": "class:martial",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "执行攻击动作时可以进行额外攻击；具体攻击次数由职业等级特性决定。"
   },
   {
     "feature_id": "feature_spellcasting",
@@ -1430,8 +1549,9 @@
     "feature_type": "Class",
     "source_ref": "class:spellcaster",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "获得施法能力；施法属性、准备方式、已知法术与法术位由职业规则决定。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_ability_constitution_2",
@@ -1440,10 +1560,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_dwarf_ability"
     ],
-    "description": ""
+    "description": "体质属性提高 2。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_darkvision",
@@ -1452,10 +1573,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_dwarven_resilience",
@@ -1464,10 +1586,12 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_dwarven_resilience_poison_save",
+      "effect_dwarf_dwarven_resilience_poison_resistance"
     ],
-    "description": ""
+    "description": "对毒素豁免更有优势，并具有毒素伤害抗性。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_dwarven_combat_training",
@@ -1476,10 +1600,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_dwarven_combat_training_weapon_proficiency"
     ],
-    "description": ""
+    "description": "获得战斧、手斧、轻锤和战锤熟练。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_tool_proficiency",
@@ -1488,10 +1613,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_dwarf_tool_proficiency"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择铁匠工具、酿酒工具或石匠工具之一获得熟练。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_stonecunning",
@@ -1500,10 +1626,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_stonecunning_history_check"
     ],
-    "description": ""
+    "description": "进行与石制品来源相关的历史检定时，可加入更高的熟练加值。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_ability_wisdom_1",
@@ -1512,10 +1639,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_wisdom_1"
     ],
-    "description": ""
+    "description": "感知属性提高 1。"
   },
   {
     "feature_id": "feature_race_dwarf_hill_dwarven_toughness",
@@ -1524,10 +1652,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_hill",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_hill_dwarven_toughness"
     ],
-    "description": ""
+    "description": "每提升一级，生命值上限额外增加。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_ability_constitution_2",
@@ -1536,10 +1665,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_dwarf_ability"
     ],
-    "description": ""
+    "description": "体质属性提高 2。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_darkvision",
@@ -1548,10 +1678,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_dwarven_resilience",
@@ -1560,10 +1691,12 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_dwarven_resilience_poison_save",
+      "effect_dwarf_dwarven_resilience_poison_resistance"
     ],
-    "description": ""
+    "description": "对毒素豁免更有优势，并具有毒素伤害抗性。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_dwarven_combat_training",
@@ -1572,10 +1705,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_dwarven_combat_training_weapon_proficiency"
     ],
-    "description": ""
+    "description": "获得战斧、手斧、轻锤和战锤熟练。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_tool_proficiency",
@@ -1584,10 +1718,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_dwarf_tool_proficiency"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择铁匠工具、酿酒工具或石匠工具之一获得熟练。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_stonecunning",
@@ -1596,10 +1731,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_stonecunning_history_check"
     ],
-    "description": ""
+    "description": "进行与石制品来源相关的历史检定时，可加入更高的熟练加值。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_ability_strength_2",
@@ -1608,10 +1744,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_dwarf_mountain_strength_2"
     ],
-    "description": ""
+    "description": "力量属性提高 2。"
   },
   {
     "feature_id": "feature_race_dwarf_mountain_dwarven_armor_training",
@@ -1620,10 +1757,11 @@
     "feature_type": "Race",
     "source_ref": "dwarf_mountain",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_dwarf_mountain_armor_training"
     ],
-    "description": ""
+    "description": "获得轻甲和中甲熟练。"
   },
   {
     "feature_id": "feature_race_elf_high_ability_dexterity_2",
@@ -1632,10 +1770,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_dexterity_2"
     ],
-    "description": ""
+    "description": "敏捷属性提高 2。"
   },
   {
     "feature_id": "feature_race_elf_high_darkvision",
@@ -1644,10 +1783,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_elf_high_keen_senses",
@@ -1656,10 +1796,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得察觉技能熟练。"
   },
   {
     "feature_id": "feature_race_elf_high_fey_ancestry",
@@ -1668,10 +1809,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗魅惑的豁免更有优势，并且魔法不能使你入睡。"
   },
   {
     "feature_id": "feature_race_elf_high_trance",
@@ -1680,10 +1822,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "不需要睡眠，通过短时间冥想即可完成长休所需的休息。"
   },
   {
     "feature_id": "feature_race_elf_high_ability_intelligence_1",
@@ -1692,10 +1835,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_elf_high_intelligence_1"
     ],
-    "description": ""
+    "description": "智力属性提高 1。"
   },
   {
     "feature_id": "feature_race_elf_high_elf_weapon_training",
@@ -1704,10 +1848,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得长剑、短剑、短弓和长弓熟练。"
   },
   {
     "feature_id": "feature_race_elf_high_cantrip",
@@ -1716,10 +1861,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_elf_high_cantrip"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "从法师法术列表中选择一个戏法；施法属性为智力。"
   },
   {
     "feature_id": "feature_race_elf_high_extra_language",
@@ -1728,10 +1874,11 @@
     "feature_type": "Race",
     "source_ref": "elf_high",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_elf_high_extra_language"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "额外掌握一种自选语言。"
   },
   {
     "feature_id": "feature_race_elf_wood_ability_dexterity_2",
@@ -1740,10 +1887,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_dexterity_2"
     ],
-    "description": ""
+    "description": "敏捷属性提高 2。"
   },
   {
     "feature_id": "feature_race_elf_wood_darkvision",
@@ -1752,10 +1900,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_elf_wood_keen_senses",
@@ -1764,10 +1913,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得察觉技能熟练。"
   },
   {
     "feature_id": "feature_race_elf_wood_fey_ancestry",
@@ -1776,10 +1926,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗魅惑的豁免更有优势，并且魔法不能使你入睡。"
   },
   {
     "feature_id": "feature_race_elf_wood_trance",
@@ -1788,10 +1939,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "不需要睡眠，通过短时间冥想即可完成长休所需的休息。"
   },
   {
     "feature_id": "feature_race_elf_wood_ability_wisdom_1",
@@ -1800,10 +1952,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_wisdom_1"
     ],
-    "description": ""
+    "description": "感知属性提高 1。"
   },
   {
     "feature_id": "feature_race_elf_wood_elf_weapon_training",
@@ -1812,10 +1965,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得长剑、短剑、短弓和长弓熟练。"
   },
   {
     "feature_id": "feature_race_elf_wood_fleet_of_foot",
@@ -1824,10 +1978,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "基础步行速度提高。"
   },
   {
     "feature_id": "feature_race_elf_wood_mask_of_the_wild",
@@ -1836,10 +1991,11 @@
     "feature_type": "Race",
     "source_ref": "elf_wood",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "在自然现象轻度遮蔽时也可以尝试隐藏。"
   },
   {
     "feature_id": "feature_race_elf_drow_ability_dexterity_2",
@@ -1848,10 +2004,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_dexterity_2"
     ],
-    "description": ""
+    "description": "敏捷属性提高 2。"
   },
   {
     "feature_id": "feature_race_elf_drow_superior_darkvision",
@@ -1860,10 +2017,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_elf_drow_darkvision"
     ],
-    "description": ""
+    "description": "拥有更远距离的黑暗视觉。"
   },
   {
     "feature_id": "feature_race_elf_drow_keen_senses",
@@ -1872,10 +2030,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得察觉技能熟练。"
   },
   {
     "feature_id": "feature_race_elf_drow_fey_ancestry",
@@ -1884,10 +2043,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗魅惑的豁免更有优势，并且魔法不能使你入睡。"
   },
   {
     "feature_id": "feature_race_elf_drow_trance",
@@ -1896,10 +2056,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "不需要睡眠，通过短时间冥想即可完成长休所需的休息。"
   },
   {
     "feature_id": "feature_race_elf_drow_ability_charisma_1",
@@ -1908,10 +2069,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_charisma_1"
     ],
-    "description": ""
+    "description": "魅力属性提高 1。"
   },
   {
     "feature_id": "feature_race_elf_drow_sunlight_sensitivity",
@@ -1920,10 +2082,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "在阳光下进行攻击和依赖视觉的察觉检定时会处于劣势。"
   },
   {
     "feature_id": "feature_race_elf_drow_drow_magic",
@@ -1932,10 +2095,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得与卓尔血统相关的法术能力，等级提高后可施展更多法术。"
   },
   {
     "feature_id": "feature_race_elf_drow_drow_weapon_training",
@@ -1944,10 +2108,11 @@
     "feature_type": "Race",
     "source_ref": "elf_drow",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得刺剑、短剑和手弩熟练。"
   },
   {
     "feature_id": "feature_race_halfling_lightfoot_ability_dexterity_2",
@@ -1956,10 +2121,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_lightfoot",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_dexterity_2"
     ],
-    "description": ""
+    "description": "敏捷属性提高 2。"
   },
   {
     "feature_id": "feature_race_halfling_lightfoot_lucky",
@@ -1968,10 +2134,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_lightfoot",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "攻击、属性检定或豁免掷出 1 时可以重掷，但必须采用新结果。"
   },
   {
     "feature_id": "feature_race_halfling_lightfoot_brave",
@@ -1980,10 +2147,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_lightfoot",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗恐慌的豁免更有优势。"
   },
   {
     "feature_id": "feature_race_halfling_lightfoot_halfling_nimbleness",
@@ -1992,10 +2160,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_lightfoot",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可以穿过体型比你大的生物所在空间。"
   },
   {
     "feature_id": "feature_race_halfling_lightfoot_ability_charisma_1",
@@ -2004,10 +2173,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_lightfoot",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_charisma_1"
     ],
-    "description": ""
+    "description": "魅力属性提高 1。"
   },
   {
     "feature_id": "feature_race_halfling_lightfoot_naturally_stealthy",
@@ -2016,10 +2186,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_lightfoot",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "被比你体型大的生物遮挡时也可以尝试隐藏。"
   },
   {
     "feature_id": "feature_race_halfling_stout_ability_dexterity_2",
@@ -2028,10 +2199,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_stout",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_dexterity_2"
     ],
-    "description": ""
+    "description": "敏捷属性提高 2。"
   },
   {
     "feature_id": "feature_race_halfling_stout_lucky",
@@ -2040,10 +2212,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_stout",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "攻击、属性检定或豁免掷出 1 时可以重掷，但必须采用新结果。"
   },
   {
     "feature_id": "feature_race_halfling_stout_brave",
@@ -2052,10 +2225,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_stout",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗恐慌的豁免更有优势。"
   },
   {
     "feature_id": "feature_race_halfling_stout_halfling_nimbleness",
@@ -2064,10 +2238,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_stout",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可以穿过体型比你大的生物所在空间。"
   },
   {
     "feature_id": "feature_race_halfling_stout_ability_constitution_1",
@@ -2076,10 +2251,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_stout",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_constitution_1"
     ],
-    "description": ""
+    "description": "体质属性提高 1。"
   },
   {
     "feature_id": "feature_race_halfling_stout_stout_resilience",
@@ -2088,10 +2264,11 @@
     "feature_type": "Race",
     "source_ref": "halfling_stout",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对毒素豁免更有优势，并具有毒素伤害抗性。"
   },
   {
     "feature_id": "feature_race_human_ability_all_1",
@@ -2100,10 +2277,11 @@
     "feature_type": "Race",
     "source_ref": "human",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_human_ability"
     ],
-    "description": ""
+    "description": "所有属性值各提高 1。"
   },
   {
     "feature_id": "feature_race_human_extra_language",
@@ -2112,10 +2290,11 @@
     "feature_type": "Race",
     "source_ref": "human",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_human_extra_language"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "额外掌握一种自选语言。"
   },
   {
     "feature_id": "feature_race_dragonborn_ability_strength_2",
@@ -2124,10 +2303,11 @@
     "feature_type": "Race",
     "source_ref": "dragonborn",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_strength_2"
     ],
-    "description": ""
+    "description": "力量属性提高 2。"
   },
   {
     "feature_id": "feature_race_dragonborn_ability_charisma_1",
@@ -2136,10 +2316,11 @@
     "feature_type": "Race",
     "source_ref": "dragonborn",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_charisma_1"
     ],
-    "description": ""
+    "description": "魅力属性提高 1。"
   },
   {
     "feature_id": "feature_race_dragonborn_draconic_ancestry",
@@ -2148,10 +2329,11 @@
     "feature_type": "Race",
     "source_ref": "dragonborn",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_dragonborn_draconic_ancestry"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择一种龙族血统，决定吐息武器的伤害类型、范围和相关抗性。"
   },
   {
     "feature_id": "feature_race_dragonborn_breath_weapon",
@@ -2160,10 +2342,11 @@
     "feature_type": "Race",
     "source_ref": "dragonborn",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可用动作喷吐能量攻击，目标进行豁免以减免伤害，伤害随等级提升。"
   },
   {
     "feature_id": "feature_race_dragonborn_damage_resistance",
@@ -2172,10 +2355,11 @@
     "feature_type": "Race",
     "source_ref": "dragonborn",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得与你龙族血统对应伤害类型的抗性。"
   },
   {
     "feature_id": "feature_race_gnome_forest_ability_intelligence_2",
@@ -2184,10 +2368,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_forest",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_intelligence_2"
     ],
-    "description": ""
+    "description": "智力属性提高 2。"
   },
   {
     "feature_id": "feature_race_gnome_forest_darkvision",
@@ -2196,10 +2381,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_forest",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_gnome_forest_gnome_cunning",
@@ -2208,10 +2394,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_forest",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗魔法造成的智力、感知和魅力豁免更有优势。"
   },
   {
     "feature_id": "feature_race_gnome_forest_ability_dexterity_1",
@@ -2220,10 +2407,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_forest",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_gnome_forest_dexterity_1"
     ],
-    "description": ""
+    "description": "敏捷属性提高 1。"
   },
   {
     "feature_id": "feature_race_gnome_forest_natural_illusionist",
@@ -2232,10 +2420,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_forest",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "掌握次级幻影戏法，施法属性为智力。"
   },
   {
     "feature_id": "feature_race_gnome_forest_speak_with_small_beasts",
@@ -2244,10 +2433,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_forest",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "可以用声音和姿势向小型或更小的野兽传达简单意思。"
   },
   {
     "feature_id": "feature_race_gnome_rock_ability_intelligence_2",
@@ -2256,10 +2446,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_rock",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_intelligence_2"
     ],
-    "description": ""
+    "description": "智力属性提高 2。"
   },
   {
     "feature_id": "feature_race_gnome_rock_darkvision",
@@ -2268,10 +2459,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_rock",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_gnome_rock_gnome_cunning",
@@ -2280,10 +2472,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_rock",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗魔法造成的智力、感知和魅力豁免更有优势。"
   },
   {
     "feature_id": "feature_race_gnome_rock_ability_constitution_1",
@@ -2292,10 +2485,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_rock",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_constitution_1"
     ],
-    "description": ""
+    "description": "体质属性提高 1。"
   },
   {
     "feature_id": "feature_race_gnome_rock_artificers_lore",
@@ -2304,10 +2498,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_rock",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "进行与魔法物品、炼金物品或机械装置相关的历史检定时，可加入更高的熟练加值。"
   },
   {
     "feature_id": "feature_race_gnome_rock_tinker",
@@ -2316,10 +2511,11 @@
     "feature_type": "Race",
     "source_ref": "gnome_rock",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "熟练使用工匠工具制造小型发条装置。"
   },
   {
     "feature_id": "feature_race_half_elf_ability_charisma_2",
@@ -2328,10 +2524,11 @@
     "feature_type": "Race",
     "source_ref": "half_elf",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_half_elf_ability"
     ],
-    "description": ""
+    "description": "魅力属性提高 2。"
   },
   {
     "feature_id": "feature_race_half_elf_ability_twoother_1",
@@ -2340,10 +2537,11 @@
     "feature_type": "Race",
     "source_ref": "half_elf",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_half_elf_ability"
+    "choice_group_ids": [
+      "choice_half_elf_ability_two_other"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "从力量、敏捷、体质、智力、感知中选择两项，各提高 1。"
   },
   {
     "feature_id": "feature_race_half_elf_darkvision",
@@ -2352,10 +2550,11 @@
     "feature_type": "Race",
     "source_ref": "half_elf",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_half_elf_fey_ancestry",
@@ -2364,10 +2563,11 @@
     "feature_type": "Race",
     "source_ref": "half_elf",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "对抗魅惑的豁免更有优势，并且魔法不能使你入睡。"
   },
   {
     "feature_id": "feature_race_half_elf_skill_versatility",
@@ -2376,10 +2576,11 @@
     "feature_type": "Race",
     "source_ref": "half_elf",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_half_elf_skill_versatility"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "选择两项技能获得熟练。"
   },
   {
     "feature_id": "feature_race_half_elf_extra_language",
@@ -2388,10 +2589,11 @@
     "feature_type": "Race",
     "source_ref": "half_elf",
     "prerequisite_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_half_elf_extra_language"
     ],
-    "description": ""
+    "effect_ids": [],
+    "description": "额外掌握一种自选语言。"
   },
   {
     "feature_id": "feature_race_half_orc_ability_strength_2",
@@ -2400,10 +2602,11 @@
     "feature_type": "Race",
     "source_ref": "half_orc",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_strength_2"
     ],
-    "description": ""
+    "description": "力量属性提高 2。"
   },
   {
     "feature_id": "feature_race_half_orc_ability_constitution_1",
@@ -2412,10 +2615,11 @@
     "feature_type": "Race",
     "source_ref": "half_orc",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_ability_constitution_1"
     ],
-    "description": ""
+    "description": "体质属性提高 1。"
   },
   {
     "feature_id": "feature_race_half_orc_darkvision",
@@ -2424,10 +2628,11 @@
     "feature_type": "Race",
     "source_ref": "half_orc",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_half_orc_menacing",
@@ -2436,10 +2641,11 @@
     "feature_type": "Race",
     "source_ref": "half_orc",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得威吓技能熟练。"
   },
   {
     "feature_id": "feature_race_half_orc_relentless_endurance",
@@ -2448,10 +2654,11 @@
     "feature_type": "Race",
     "source_ref": "half_orc",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "生命值降至 0 但未立即死亡时，可改为保留 1 点生命值；长休后恢复。"
   },
   {
     "feature_id": "feature_race_half_orc_savage_attacks",
@@ -2460,10 +2667,11 @@
     "feature_type": "Race",
     "source_ref": "half_orc",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "近战武器攻击造成重击时，可以额外掷一枚武器伤害骰。"
   },
   {
     "feature_id": "feature_race_tiefling_ability_intelligence_1",
@@ -2472,10 +2680,11 @@
     "feature_type": "Race",
     "source_ref": "tiefling",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_tiefling_ability"
     ],
-    "description": ""
+    "description": "智力属性提高 1。"
   },
   {
     "feature_id": "feature_race_tiefling_ability_charisma_2",
@@ -2484,10 +2693,11 @@
     "feature_type": "Race",
     "source_ref": "tiefling",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_tiefling_charisma_2"
     ],
-    "description": ""
+    "description": "魅力属性提高 2。"
   },
   {
     "feature_id": "feature_race_tiefling_darkvision",
@@ -2496,10 +2706,11 @@
     "feature_type": "Race",
     "source_ref": "tiefling",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_race_darkvision_60"
     ],
-    "description": ""
+    "description": "在一定距离内可于黑暗中视物；昏暗光照视为明亮，黑暗视为昏暗。"
   },
   {
     "feature_id": "feature_race_tiefling_hellish_resistance",
@@ -2508,10 +2719,11 @@
     "feature_type": "Race",
     "source_ref": "tiefling",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得火焰伤害抗性。"
   },
   {
     "feature_id": "feature_race_tiefling_infernal_legacy",
@@ -2520,10 +2732,11 @@
     "feature_type": "Race",
     "source_ref": "tiefling",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
-    "description": ""
+    "description": "获得与炼狱血脉相关的法术能力，等级提高后可施展更多法术。"
   },
   {
     "feature_id": "feature_background_acolyte",
@@ -2532,8 +2745,9 @@
     "feature_type": "Background",
     "source_ref": "acolyte",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "信仰共同体会为你和同伴提供基本食宿与治疗协助，你也可在所属宗教中请求一定帮助。"
   },
   {
     "feature_id": "feature_background_charlatan",
@@ -2542,8 +2756,9 @@
     "feature_type": "Background",
     "source_ref": "charlatan",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "拥有第二身份，可伪造相应文书、熟人和伪装来维持这个身份。"
   },
   {
     "feature_id": "feature_background_criminal",
@@ -2552,8 +2767,9 @@
     "feature_type": "Background",
     "source_ref": "criminal",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "有可靠的犯罪联系人，可通过地下渠道传递消息。"
   },
   {
     "feature_id": "feature_background_entertainer",
@@ -2562,8 +2778,9 @@
     "feature_type": "Background",
     "source_ref": "entertainer",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "凭表演可以换取免费食宿，也容易在当地获得一定名声。"
   },
   {
     "feature_id": "feature_background_folk_hero",
@@ -2572,8 +2789,9 @@
     "feature_type": "Background",
     "source_ref": "folk_hero",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "平民会愿意庇护你、帮助你，并在危险时支持你对抗压迫者。"
   },
   {
     "feature_id": "feature_background_guild_artisan",
@@ -2582,8 +2800,9 @@
     "feature_type": "Background",
     "source_ref": "guild_artisan",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "作为公会成员，可获得公会提供的食宿、信息、人脉和一定法律或政治支援。"
   },
   {
     "feature_id": "feature_background_hermit",
@@ -2592,8 +2811,9 @@
     "feature_type": "Background",
     "source_ref": "hermit",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "隐居期间获得一项重要发现，其具体内容由玩家和 DM 共同确定。"
   },
   {
     "feature_id": "feature_background_noble",
@@ -2602,8 +2822,9 @@
     "feature_type": "Background",
     "source_ref": "noble",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "出身使你更容易进入上流社会，平民也常会因你的地位而礼让。"
   },
   {
     "feature_id": "feature_background_outlander",
@@ -2612,8 +2833,9 @@
     "feature_type": "Background",
     "source_ref": "outlander",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "对地图和地貌记忆出色，旅行时也更容易为队伍找到食物和淡水。"
   },
   {
     "feature_id": "feature_background_sage",
@@ -2622,8 +2844,9 @@
     "feature_type": "Background",
     "source_ref": "sage",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "不知道某项知识时，通常知道从哪里或向谁可以查到答案。"
   },
   {
     "feature_id": "feature_background_sailor",
@@ -2632,8 +2855,9 @@
     "feature_type": "Background",
     "source_ref": "sailor",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "可以为自己和同伴取得船只通行便利，作为交换需要协助船上工作。"
   },
   {
     "feature_id": "feature_background_soldier",
@@ -2642,8 +2866,9 @@
     "feature_type": "Background",
     "source_ref": "soldier",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "军旅身份让你能获得友方军队或组织的认可，并在军中取得一定协助。"
   },
   {
     "feature_id": "feature_background_urchin",
@@ -2652,8 +2877,9 @@
     "feature_type": "Background",
     "source_ref": "urchin",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [],
-    "description": ""
+    "description": "熟悉城市通道与节奏，在城市中可让队伍更快穿行。"
   },
   {
     "feature_id": "feature_feat_alert",
@@ -2662,6 +2888,7 @@
     "feature_type": "Feat",
     "source_ref": "alert",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_alert"
     ],
@@ -2674,6 +2901,7 @@
     "feature_type": "Feat",
     "source_ref": "athlete",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_ability_choice"
     ],
@@ -2686,6 +2914,7 @@
     "feature_type": "Feat",
     "source_ref": "actor",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_ability_cha"
     ],
@@ -2698,6 +2927,7 @@
     "feature_type": "Feat",
     "source_ref": "charger",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2710,6 +2940,7 @@
     "feature_type": "Feat",
     "source_ref": "crossbow_expert",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2724,6 +2955,7 @@
     "prerequisite_ids": [
       "prereq_dexterity_13"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2736,6 +2968,7 @@
     "feature_type": "Feat",
     "source_ref": "dual_wielder",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2748,6 +2981,7 @@
     "feature_type": "Feat",
     "source_ref": "dungeon_delver",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2760,6 +2994,7 @@
     "feature_type": "Feat",
     "source_ref": "durable",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_ability_con"
     ],
@@ -2774,6 +3009,7 @@
     "prerequisite_ids": [
       "prereq_spellcasting"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2788,6 +3024,7 @@
     "prerequisite_ids": [
       "prereq_strength_13"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2800,6 +3037,7 @@
     "feature_type": "Feat",
     "source_ref": "great_weapon_master",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2812,6 +3050,7 @@
     "feature_type": "Feat",
     "source_ref": "healer",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2826,6 +3065,7 @@
     "prerequisite_ids": [
       "prereq_mediumarmorproficiency"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_armor_heavy"
     ],
@@ -2840,6 +3080,7 @@
     "prerequisite_ids": [
       "prereq_heavyarmorproficiency"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2854,6 +3095,7 @@
     "prerequisite_ids": [
       "prereq_charisma_13"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2866,6 +3108,7 @@
     "feature_type": "Feat",
     "source_ref": "keen_mind",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_ability_int"
     ],
@@ -2878,6 +3121,7 @@
     "feature_type": "Feat",
     "source_ref": "lightly_armored",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_armor_light"
     ],
@@ -2890,6 +3134,7 @@
     "feature_type": "Feat",
     "source_ref": "linguist",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_language"
     ],
@@ -2902,6 +3147,7 @@
     "feature_type": "Feat",
     "source_ref": "lucky",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2914,6 +3160,7 @@
     "feature_type": "Feat",
     "source_ref": "mage_slayer",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2926,6 +3173,7 @@
     "feature_type": "Feat",
     "source_ref": "magic_initiate",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2938,6 +3186,7 @@
     "feature_type": "Feat",
     "source_ref": "martial_adept",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2952,6 +3201,7 @@
     "prerequisite_ids": [
       "prereq_mediumarmorproficiency"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -2964,6 +3214,7 @@
     "feature_type": "Feat",
     "source_ref": "mobile",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_speed"
     ],
@@ -2978,6 +3229,7 @@
     "prerequisite_ids": [
       "prereq_lightarmorproficiency"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_armor_medium"
     ],
@@ -2990,6 +3242,7 @@
     "feature_type": "Feat",
     "source_ref": "mounted_combatant",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3002,6 +3255,7 @@
     "feature_type": "Feat",
     "source_ref": "observant",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3014,6 +3268,7 @@
     "feature_type": "Feat",
     "source_ref": "polearm_master",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3026,6 +3281,7 @@
     "feature_type": "Feat",
     "source_ref": "resilient",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3040,6 +3296,7 @@
     "prerequisite_ids": [
       "prereq_intelligenceorwisdom_13"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3052,6 +3309,7 @@
     "feature_type": "Feat",
     "source_ref": "savage_attacker",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3064,6 +3322,7 @@
     "feature_type": "Feat",
     "source_ref": "sentinel",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3076,6 +3335,7 @@
     "feature_type": "Feat",
     "source_ref": "sharpshooter",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3088,6 +3348,7 @@
     "feature_type": "Feat",
     "source_ref": "shield_master",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3100,6 +3361,7 @@
     "feature_type": "Feat",
     "source_ref": "skilled",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3114,6 +3376,7 @@
     "prerequisite_ids": [
       "prereq_dexterity_13"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3128,6 +3391,7 @@
     "prerequisite_ids": [
       "prereq_spellcasting"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3140,6 +3404,7 @@
     "feature_type": "Feat",
     "source_ref": "tavern_brawler",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3152,6 +3417,7 @@
     "feature_type": "Feat",
     "source_ref": "tough",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_feat_hp"
     ],
@@ -3166,6 +3432,7 @@
     "prerequisite_ids": [
       "prereq_spellcasting"
     ],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3178,9 +3445,3470 @@
     "feature_type": "Feat",
     "source_ref": "weapon_master",
     "prerequisite_ids": [],
+    "choice_group_ids": [],
     "effect_ids": [
       "effect_manual_resolve"
     ],
     "description": "力量或敏捷提高1，并获得四种武器熟练。"
+  },
+  {
+    "feature_id": "feature_dwarf_tool_smith",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人工具熟练：铁匠工具",
+    "feature_type": "Race",
+    "source_ref": "dwarf:tool_proficiency",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dwarf_tool_smith"
+    ],
+    "description": "获得 铁匠工具 熟练项。"
+  },
+  {
+    "feature_id": "feature_dwarf_tool_brewer",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人工具熟练：酿酒工具",
+    "feature_type": "Race",
+    "source_ref": "dwarf:tool_proficiency",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dwarf_tool_brewer"
+    ],
+    "description": "获得 酿酒工具 熟练项。"
+  },
+  {
+    "feature_id": "feature_dwarf_tool_mason",
+    "package_id": "phb_5e_zh_user",
+    "name": "矮人工具熟练：石匠工具",
+    "feature_type": "Race",
+    "source_ref": "dwarf:tool_proficiency",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dwarf_tool_mason"
+    ],
+    "description": "获得 石匠工具 熟练项。"
+  },
+  {
+    "feature_id": "feature_half_elf_ability_str",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵属性：力量",
+    "feature_type": "Race",
+    "source_ref": "half_elf:ability_two_other",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability_str"
+    ],
+    "description": "力量 +1。"
+  },
+  {
+    "feature_id": "feature_half_elf_ability_dex",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵属性：敏捷",
+    "feature_type": "Race",
+    "source_ref": "half_elf:ability_two_other",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability_dex"
+    ],
+    "description": "敏捷 +1。"
+  },
+  {
+    "feature_id": "feature_half_elf_ability_con",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵属性：体质",
+    "feature_type": "Race",
+    "source_ref": "half_elf:ability_two_other",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability_con"
+    ],
+    "description": "体质 +1。"
+  },
+  {
+    "feature_id": "feature_half_elf_ability_int",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵属性：智力",
+    "feature_type": "Race",
+    "source_ref": "half_elf:ability_two_other",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability_int"
+    ],
+    "description": "智力 +1。"
+  },
+  {
+    "feature_id": "feature_half_elf_ability_wis",
+    "package_id": "phb_5e_zh_user",
+    "name": "半精灵属性：感知",
+    "feature_type": "Race",
+    "source_ref": "half_elf:ability_two_other",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_half_elf_ability_wis"
+    ],
+    "description": "感知 +1。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_black",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：黑龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_black"
+    ],
+    "description": "黑龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_blue",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：蓝龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_blue"
+    ],
+    "description": "蓝龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_brass",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：黄铜龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_brass"
+    ],
+    "description": "黄铜龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_bronze",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：青铜龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_bronze"
+    ],
+    "description": "青铜龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_copper",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：赤铜龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_copper"
+    ],
+    "description": "赤铜龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_gold",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：金龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_gold"
+    ],
+    "description": "金龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_green",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：绿龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_green"
+    ],
+    "description": "绿龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_red",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：红龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_red"
+    ],
+    "description": "红龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_silver",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：银龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_silver"
+    ],
+    "description": "银龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_dragonborn_ancestry_white",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族血脉：白龙",
+    "feature_type": "Race",
+    "source_ref": "dragonborn:draconic_ancestry",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_dragonborn_ancestry_white"
+    ],
+    "description": "白龙血脉决定吐息武器与伤害抗性。"
+  },
+  {
+    "feature_id": "feature_fighting_style_archery",
+    "package_id": "phb_5e_zh_user",
+    "name": "箭术",
+    "feature_type": "Class",
+    "source_ref": "fighting_style",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_fighting_style_archery"
+    ],
+    "description": "使用远程武器进行攻击检定时具有 +2 的加值。"
+  },
+  {
+    "feature_id": "feature_fighting_style_defense",
+    "package_id": "phb_5e_zh_user",
+    "name": "防御",
+    "feature_type": "Class",
+    "source_ref": "fighting_style",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_fighting_style_defense"
+    ],
+    "description": "穿着护甲时 AC 具有 +1 的加值。"
+  },
+  {
+    "feature_id": "feature_fighting_style_dueling",
+    "package_id": "phb_5e_zh_user",
+    "name": "对决",
+    "feature_type": "Class",
+    "source_ref": "fighting_style",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_fighting_style_dueling"
+    ],
+    "description": "单手持用近战武器且另一只手未持武器时，该武器伤害具有 +2 的加值。"
+  },
+  {
+    "feature_id": "feature_fighting_style_great_weapon_fighting",
+    "package_id": "phb_5e_zh_user",
+    "name": "巨武器战斗",
+    "feature_type": "Class",
+    "source_ref": "fighting_style",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_fighting_style_great_weapon_fighting"
+    ],
+    "description": "双手持用或两用近战武器时，伤害骰掷出 1 或 2 可重掷一次。"
+  },
+  {
+    "feature_id": "feature_fighting_style_protection",
+    "package_id": "phb_5e_zh_user",
+    "name": "保护",
+    "feature_type": "Class",
+    "source_ref": "fighting_style",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_fighting_style_protection"
+    ],
+    "description": "持盾时可用反应让攻击邻近盟友的攻击检定具有劣势。"
+  },
+  {
+    "feature_id": "feature_fighting_style_two_weapon_fighting",
+    "package_id": "phb_5e_zh_user",
+    "name": "双武器战斗",
+    "feature_type": "Class",
+    "source_ref": "fighting_style",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_fighting_style_two_weapon_fighting"
+    ],
+    "description": "进行双武器战斗时，可将属性调整值加入第二次攻击的伤害。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_aberration",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：异怪",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_aberration"
+    ],
+    "description": "将 异怪 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_beast",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：野兽",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_beast"
+    ],
+    "description": "将 野兽 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_celestial",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：天界生物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_celestial"
+    ],
+    "description": "将 天界生物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_construct",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：构装生物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_construct"
+    ],
+    "description": "将 构装生物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_dragon",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：龙",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_dragon"
+    ],
+    "description": "将 龙 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_elemental",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：元素生物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_elemental"
+    ],
+    "description": "将 元素生物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_fey",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：精类生物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_fey"
+    ],
+    "description": "将 精类生物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_fiend",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：邪魔",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_fiend"
+    ],
+    "description": "将 邪魔 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_giant",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：巨人",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_giant"
+    ],
+    "description": "将 巨人 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_humanoid",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：类人生物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_humanoid"
+    ],
+    "description": "将 类人生物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_monstrosity",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：怪兽",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_monstrosity"
+    ],
+    "description": "将 怪兽 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_ooze",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：泥怪",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_ooze"
+    ],
+    "description": "将 泥怪 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_plant",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：植物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_plant"
+    ],
+    "description": "将 植物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_favored_enemy_undead",
+    "package_id": "phb_5e_zh_user",
+    "name": "宿敌：不死生物",
+    "feature_type": "Class",
+    "source_ref": "ranger:favored_enemy",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_favored_enemy_undead"
+    ],
+    "description": "将 不死生物 作为宿敌类别。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_arctic",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：极地",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_arctic"
+    ],
+    "description": "将 极地 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_coast",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：海岸",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_coast"
+    ],
+    "description": "将 海岸 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_desert",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：沙漠",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_desert"
+    ],
+    "description": "将 沙漠 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_forest",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：森林",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_forest"
+    ],
+    "description": "将 森林 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_grassland",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：草原",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_grassland"
+    ],
+    "description": "将 草原 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_mountain",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：山地",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_mountain"
+    ],
+    "description": "将 山地 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_swamp",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：沼泽",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_swamp"
+    ],
+    "description": "将 沼泽 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_ranger_natural_explorer_underdark",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然探索者：幽暗地域",
+    "feature_type": "Class",
+    "source_ref": "ranger:natural_explorer",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_ranger_natural_explorer_underdark"
+    ],
+    "description": "将 幽暗地域 作为熟悉地形。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_careful_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "谨慎法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_careful_spell"
+    ],
+    "description": "保护部分生物免受你法术豁免失败影响。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_distant_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "远程法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_distant_spell"
+    ],
+    "description": "延长法术射程。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_empowered_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "强效法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_empowered_spell"
+    ],
+    "description": "重掷部分法术伤害骰。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_extended_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "延效法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_extended_spell"
+    ],
+    "description": "延长法术持续时间。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_heightened_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "升阶法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_heightened_spell"
+    ],
+    "description": "使目标对法术的首次豁免具有劣势。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_quickened_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "瞬发法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_quickened_spell"
+    ],
+    "description": "将施法时间为 1 动作的法术改为附赠动作施放。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_subtle_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "隐微法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_subtle_spell"
+    ],
+    "description": "施法时不需要姿势或言语成分。"
+  },
+  {
+    "feature_id": "feature_sorcerer_metamagic_twinned_spell",
+    "package_id": "phb_5e_zh_user",
+    "name": "孪生法术",
+    "feature_type": "Class",
+    "source_ref": "sorcerer:metamagic",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_sorcerer_metamagic_twinned_spell"
+    ],
+    "description": "让符合条件的单体法术额外指定第二个目标。"
+  },
+  {
+    "feature_id": "feature_warlock_pact_boon_chain",
+    "package_id": "phb_5e_zh_user",
+    "name": "链之契约",
+    "feature_type": "Class",
+    "source_ref": "warlock:pact_boon",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_warlock_pact_boon_chain"
+    ],
+    "description": "获得特殊魔宠并可施展寻找魔宠。"
+  },
+  {
+    "feature_id": "feature_warlock_pact_boon_blade",
+    "package_id": "phb_5e_zh_user",
+    "name": "刃之契约",
+    "feature_type": "Class",
+    "source_ref": "warlock:pact_boon",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_warlock_pact_boon_blade"
+    ],
+    "description": "可以创造或绑定一把契约武器。"
+  },
+  {
+    "feature_id": "feature_warlock_pact_boon_tome",
+    "package_id": "phb_5e_zh_user",
+    "name": "书之契约",
+    "feature_type": "Class",
+    "source_ref": "warlock:pact_boon",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_warlock_pact_boon_tome"
+    ],
+    "description": "获得影之书并选择额外戏法。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_eldritch_knight_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "奥法骑士施法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_eldritch_knight:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting",
+      "effect_eldritch_knight_spellcasting_ability"
+    ],
+    "description": "获得奥法骑士的施法能力，并以智力作为施法属性。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_berserker_frenzy",
+    "package_id": "phb_5e_zh_user",
+    "name": "狂乱",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_berserker:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "狂乱。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_berserker_mindless_rage",
+    "package_id": "phb_5e_zh_user",
+    "name": "无念狂暴",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_berserker:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "无念狂暴。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_berserker_intimidating_presence",
+    "package_id": "phb_5e_zh_user",
+    "name": "威吓仪态",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_berserker:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "威吓仪态。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_berserker_retaliation",
+    "package_id": "phb_5e_zh_user",
+    "name": "反击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_berserker:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "反击。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_totem_warrior_spirit_seeker",
+    "package_id": "phb_5e_zh_user",
+    "name": "精魂追寻者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_totem_warrior:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精魂追寻者。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_totem_warrior_totem_spirit",
+    "package_id": "phb_5e_zh_user",
+    "name": "图腾精魂",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_totem_warrior:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "图腾精魂。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_totem_warrior_aspect_of_the_beast",
+    "package_id": "phb_5e_zh_user",
+    "name": "野兽形态",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_totem_warrior:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "野兽形态。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_totem_warrior_spirit_walker",
+    "package_id": "phb_5e_zh_user",
+    "name": "精魂行者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_totem_warrior:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精魂行者。"
+  },
+  {
+    "feature_id": "feature_subclass_barbarian_totem_warrior_totemic_attunement",
+    "package_id": "phb_5e_zh_user",
+    "name": "图腾协调",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_barbarian_totem_warrior:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "图腾协调。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_lore_bonus_proficiencies",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_lore:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_lore_cutting_words",
+    "package_id": "phb_5e_zh_user",
+    "name": "语出伤人",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_lore:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "语出伤人。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_lore_additional_magical_secrets",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外魔法奥秘",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_lore:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外魔法奥秘。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_lore_peerless_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "无双技艺",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_lore:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "无双技艺。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_valor_bonus_proficiencies",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_valor:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_valor_combat_inspiration",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗激励",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_valor:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战斗激励。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_valor_extra_attack",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外攻击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_valor:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外攻击。"
+  },
+  {
+    "feature_id": "feature_subclass_bard_valor_battle_magic",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗魔法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_bard_valor:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战斗魔法。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_knowledge_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_knowledge:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_knowledge_blessings_of_knowledge",
+    "package_id": "phb_5e_zh_user",
+    "name": "知识祝福",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_knowledge:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "知识祝福。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_knowledge_channel_divinity_knowledge_of_the_ages",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：古往知识",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_knowledge:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：古往知识。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_knowledge_channel_divinity_read_thoughts",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：读取思想",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_knowledge:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：读取思想。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_knowledge_potent_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "强效施法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_knowledge:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强效施法。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_knowledge_visions_of_the_past",
+    "package_id": "phb_5e_zh_user",
+    "name": "往昔幻视",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_knowledge:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "往昔幻视。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_bonus_proficiency",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_disciple_of_life",
+    "package_id": "phb_5e_zh_user",
+    "name": "生命门徒",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "生命门徒。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_channel_divinity_preserve_life",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：维持生命",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：维持生命。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_blessed_healer",
+    "package_id": "phb_5e_zh_user",
+    "name": "受祝福医者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "受祝福医者。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_divine_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "神圣打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_life_supreme_healing",
+    "package_id": "phb_5e_zh_user",
+    "name": "至高治疗",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_life:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "至高治疗。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_bonus_cantrip",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外戏法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外戏法。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_warding_flare",
+    "package_id": "phb_5e_zh_user",
+    "name": "守御闪光",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "守御闪光。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_channel_divinity_radiance_of_the_dawn",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：黎明辉光",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：黎明辉光。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_improved_flare",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通闪光",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通闪光。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_potent_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "强效施法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强效施法。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_light_corona_of_light",
+    "package_id": "phb_5e_zh_user",
+    "name": "光辉冠冕",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_light:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "光辉冠冕。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_acolyte_of_nature",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然侍僧",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "自然侍僧。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_bonus_proficiency",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_channel_divinity_charm_animals_and_plants",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：魅惑动植物",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：魅惑动植物。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_dampen_elements",
+    "package_id": "phb_5e_zh_user",
+    "name": "抑制元素",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "抑制元素。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_divine_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "神圣打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_nature_master_of_nature",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然大师",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_nature:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "自然大师。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_bonus_proficiencies",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_wrath_of_the_storm",
+    "package_id": "phb_5e_zh_user",
+    "name": "风暴怒火",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "风暴怒火。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_channel_divinity_destructive_wrath",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：毁灭怒火",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：毁灭怒火。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_thunderbolt_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "雷霆打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "雷霆打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_divine_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "神圣打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_tempest_stormborn",
+    "package_id": "phb_5e_zh_user",
+    "name": "风暴降生",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_tempest:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "风暴降生。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_trickery_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_trickery:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_trickery_blessing_of_the_trickster",
+    "package_id": "phb_5e_zh_user",
+    "name": "诡诈者祝福",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_trickery:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "诡诈者祝福。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_trickery_channel_divinity_invoke_duplicity",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：召唤分身",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_trickery:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：召唤分身。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_trickery_channel_divinity_cloak_of_shadows",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：暗影斗篷",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_trickery:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：暗影斗篷。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_trickery_divine_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_trickery:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "神圣打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_trickery_improved_duplicity",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通分身",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_trickery:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通分身。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_domain_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "领域法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "领域法术。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_bonus_proficiencies",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_priest",
+    "package_id": "phb_5e_zh_user",
+    "name": "战争祭司",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战争祭司。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_channel_divinity_guided_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：制导打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：制导打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_channel_divinity_war_gods_blessing",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：战神祝福",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：战神祝福。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_divine_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "神圣打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:8",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "神圣打击。"
+  },
+  {
+    "feature_id": "feature_subclass_cleric_war_avatar_of_battle",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗化身",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_cleric_war:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战斗化身。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_land_bonus_cantrip",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外戏法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_land:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外戏法。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_land_natural_recovery",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然恢复",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_land:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "自然恢复。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_land_circle_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "结社法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_land:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "结社法术。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_land_lands_stride",
+    "package_id": "phb_5e_zh_user",
+    "name": "大地步伐",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_land:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "大地步伐。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_land_natures_ward",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然守护",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_land:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "自然守护。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_land_natures_sanctuary",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然庇护",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_land:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "自然庇护。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_moon_combat_wild_shape",
+    "package_id": "phb_5e_zh_user",
+    "name": "战斗荒野形态",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_moon:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战斗荒野形态。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_moon_circle_forms",
+    "package_id": "phb_5e_zh_user",
+    "name": "结社形态",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_moon:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "结社形态。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_moon_primal_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "原初打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_moon:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "原初打击。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_moon_elemental_wild_shape",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素荒野形态",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_moon:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "元素荒野形态。"
+  },
+  {
+    "feature_id": "feature_subclass_druid_moon_thousand_forms",
+    "package_id": "phb_5e_zh_user",
+    "name": "千面万形",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_druid_moon:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "千面万形。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_champion_improved_critical",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通重击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_champion:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通重击。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_champion_remarkable_athlete",
+    "package_id": "phb_5e_zh_user",
+    "name": "杰出运动员",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_champion:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "杰出运动员。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_champion_additional_fighting_style",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外战斗风格",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_champion:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外战斗风格。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_champion_superior_critical",
+    "package_id": "phb_5e_zh_user",
+    "name": "高等重击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_champion:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "高等重击。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_champion_survivor",
+    "package_id": "phb_5e_zh_user",
+    "name": "幸存者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_champion:18",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "幸存者。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_battle_master_combat_superiority",
+    "package_id": "phb_5e_zh_user",
+    "name": "卓越战技",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_battle_master:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "卓越战技。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_battle_master_student_of_war",
+    "package_id": "phb_5e_zh_user",
+    "name": "战争学徒",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_battle_master:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战争学徒。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_battle_master_know_your_enemy",
+    "package_id": "phb_5e_zh_user",
+    "name": "知己知彼",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_battle_master:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "知己知彼。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_battle_master_improved_combat_superiority",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通卓越战技",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_battle_master:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通卓越战技。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_battle_master_relentless",
+    "package_id": "phb_5e_zh_user",
+    "name": "不屈不挠",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_battle_master:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "不屈不挠。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_eldritch_knight_weapon_bond",
+    "package_id": "phb_5e_zh_user",
+    "name": "武器联结",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_eldritch_knight:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "武器联结。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_eldritch_knight_war_magic",
+    "package_id": "phb_5e_zh_user",
+    "name": "战争魔法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_eldritch_knight:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "战争魔法。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_eldritch_knight_eldritch_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔能打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_eldritch_knight:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "魔能打击。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_eldritch_knight_arcane_charge",
+    "package_id": "phb_5e_zh_user",
+    "name": "奥术冲锋",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_eldritch_knight:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "奥术冲锋。"
+  },
+  {
+    "feature_id": "feature_subclass_fighter_eldritch_knight_improved_war_magic",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通战争魔法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_fighter_eldritch_knight:18",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通战争魔法。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_open_hand_open_hand_technique",
+    "package_id": "phb_5e_zh_user",
+    "name": "散打技法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_open_hand:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "散打技法。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_open_hand_wholeness_of_body",
+    "package_id": "phb_5e_zh_user",
+    "name": "混元体",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_open_hand:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "混元体。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_open_hand_tranquility",
+    "package_id": "phb_5e_zh_user",
+    "name": "宁静",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_open_hand:11",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "宁静。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_open_hand_quivering_palm",
+    "package_id": "phb_5e_zh_user",
+    "name": "渗透劲",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_open_hand:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "渗透劲。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_shadow_shadow_arts",
+    "package_id": "phb_5e_zh_user",
+    "name": "暗影技艺",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_shadow:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "暗影技艺。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_shadow_shadow_step",
+    "package_id": "phb_5e_zh_user",
+    "name": "暗影步",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_shadow:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "暗影步。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_shadow_cloak_of_shadows",
+    "package_id": "phb_5e_zh_user",
+    "name": "影衣",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_shadow:11",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "影衣。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_shadow_opportunist",
+    "package_id": "phb_5e_zh_user",
+    "name": "借机攻击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_shadow:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "借机攻击。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_four_elements_disciple_of_the_elements",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素门徒",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_four_elements:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "元素门徒。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_four_elements_elemental_discipline_6",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素训诫",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_four_elements:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "元素训诫。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_four_elements_elemental_discipline_11",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素训诫",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_four_elements:11",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "元素训诫。"
+  },
+  {
+    "feature_id": "feature_subclass_monk_four_elements_elemental_discipline_17",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素训诫",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_monk_four_elements:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "元素训诫。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_devotion_oath_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "誓言法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_devotion:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "誓言法术。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_devotion_channel_divinity_sacred_weapon",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：圣化武器",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_devotion:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：圣化武器。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_devotion_channel_divinity_turn_the_unholy",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：驱散邪秽",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_devotion:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：驱散邪秽。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_devotion_aura_of_devotion",
+    "package_id": "phb_5e_zh_user",
+    "name": "奉献灵光",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_devotion:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "奉献灵光。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_devotion_purity_of_spirit",
+    "package_id": "phb_5e_zh_user",
+    "name": "灵魂纯净",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_devotion:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "灵魂纯净。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_devotion_holy_nimbus",
+    "package_id": "phb_5e_zh_user",
+    "name": "圣洁光辉",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_devotion:20",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "圣洁光辉。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_ancients_oath_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "誓言法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_ancients:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "誓言法术。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_ancients_channel_divinity_natures_wrath",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：自然之怒",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_ancients:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：自然之怒。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_ancients_channel_divinity_turn_the_faithless",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：驱散无信者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_ancients:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：驱散无信者。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_ancients_aura_of_warding",
+    "package_id": "phb_5e_zh_user",
+    "name": "守护灵光",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_ancients:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "守护灵光。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_ancients_undying_sentinel",
+    "package_id": "phb_5e_zh_user",
+    "name": "不朽哨卫",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_ancients:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "不朽哨卫。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_ancients_elder_champion",
+    "package_id": "phb_5e_zh_user",
+    "name": "古贤斗士",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_ancients:20",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "古贤斗士。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_vengeance_oath_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "誓言法术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_vengeance:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "誓言法术。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_vengeance_channel_divinity_abjure_enemy",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：斥喝敌人",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_vengeance:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：斥喝敌人。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_vengeance_channel_divinity_vow_of_enmity",
+    "package_id": "phb_5e_zh_user",
+    "name": "引导神力：敌意誓言",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_vengeance:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "引导神力：敌意誓言。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_vengeance_relentless_avenger",
+    "package_id": "phb_5e_zh_user",
+    "name": "无情复仇者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_vengeance:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "无情复仇者。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_vengeance_soul_of_vengeance",
+    "package_id": "phb_5e_zh_user",
+    "name": "复仇之魂",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_vengeance:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "复仇之魂。"
+  },
+  {
+    "feature_id": "feature_subclass_paladin_vengeance_avenging_angel",
+    "package_id": "phb_5e_zh_user",
+    "name": "复仇天使",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_paladin_vengeance:20",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "复仇天使。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_hunter_hunters_prey",
+    "package_id": "phb_5e_zh_user",
+    "name": "猎人猎物",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_hunter:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "猎人猎物。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_hunter_defensive_tactics",
+    "package_id": "phb_5e_zh_user",
+    "name": "防御战术",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_hunter:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "防御战术。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_hunter_multiattack",
+    "package_id": "phb_5e_zh_user",
+    "name": "多重攻击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_hunter:11",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "多重攻击。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_hunter_superior_hunters_defense",
+    "package_id": "phb_5e_zh_user",
+    "name": "高等猎人防御",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_hunter:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "高等猎人防御。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_beast_master_rangers_companion",
+    "package_id": "phb_5e_zh_user",
+    "name": "游侠伙伴",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_beast_master:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "游侠伙伴。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_beast_master_exceptional_training",
+    "package_id": "phb_5e_zh_user",
+    "name": "卓越训练",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_beast_master:7",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "卓越训练。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_beast_master_bestial_fury",
+    "package_id": "phb_5e_zh_user",
+    "name": "兽性狂怒",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_beast_master:11",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "兽性狂怒。"
+  },
+  {
+    "feature_id": "feature_subclass_ranger_beast_master_share_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术共享",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_ranger_beast_master:15",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "法术共享。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_thief_fast_hands",
+    "package_id": "phb_5e_zh_user",
+    "name": "快手",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_thief:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "快手。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_thief_second_story_work",
+    "package_id": "phb_5e_zh_user",
+    "name": "飞檐走壁",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_thief:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "飞檐走壁。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_thief_supreme_sneak",
+    "package_id": "phb_5e_zh_user",
+    "name": "极效潜行",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_thief:9",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "极效潜行。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_thief_use_magic_device",
+    "package_id": "phb_5e_zh_user",
+    "name": "使用魔法装置",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_thief:13",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "使用魔法装置。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_thief_thiefs_reflexes",
+    "package_id": "phb_5e_zh_user",
+    "name": "盗贼反射",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_thief:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "盗贼反射。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_assassin_bonus_proficiencies",
+    "package_id": "phb_5e_zh_user",
+    "name": "额外熟练项",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_assassin:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "额外熟练项。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_assassin_assassinate",
+    "package_id": "phb_5e_zh_user",
+    "name": "刺杀",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_assassin:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "刺杀。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_assassin_infiltration_expertise",
+    "package_id": "phb_5e_zh_user",
+    "name": "渗透专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_assassin:9",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "渗透专家。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_assassin_impostor",
+    "package_id": "phb_5e_zh_user",
+    "name": "冒名顶替",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_assassin:13",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "冒名顶替。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_assassin_death_strike",
+    "package_id": "phb_5e_zh_user",
+    "name": "死亡打击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_assassin:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "死亡打击。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_arcane_trickster_spellcasting",
+    "package_id": "phb_5e_zh_user",
+    "name": "诡术师施法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_arcane_trickster:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_enable_spellcasting",
+      "effect_arcane_trickster_spellcasting_ability"
+    ],
+    "description": "获得诡术师的施法能力，并以智力作为施法属性。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_arcane_trickster_mage_hand_legerdemain",
+    "package_id": "phb_5e_zh_user",
+    "name": "法师之手巧技",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_arcane_trickster:3",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "法师之手巧技。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_arcane_trickster_magical_ambush",
+    "package_id": "phb_5e_zh_user",
+    "name": "魔法伏击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_arcane_trickster:9",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "魔法伏击。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_arcane_trickster_versatile_trickster",
+    "package_id": "phb_5e_zh_user",
+    "name": "多变戏法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_arcane_trickster:13",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "多变戏法。"
+  },
+  {
+    "feature_id": "feature_subclass_rogue_arcane_trickster_spell_thief",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术窃贼",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_rogue_arcane_trickster:17",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "法术窃贼。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_draconic_bloodline_dragon_ancestor",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族先祖",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_draconic_bloodline:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "龙族先祖。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_draconic_bloodline_draconic_resilience",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族韧性",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_draconic_bloodline:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "龙族韧性。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_draconic_bloodline_elemental_affinity",
+    "package_id": "phb_5e_zh_user",
+    "name": "元素亲和",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_draconic_bloodline:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "元素亲和。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_draconic_bloodline_dragon_wings",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙翼",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_draconic_bloodline:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "龙翼。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_draconic_bloodline_draconic_presence",
+    "package_id": "phb_5e_zh_user",
+    "name": "龙族威仪",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_draconic_bloodline:18",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "龙族威仪。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_wild_magic_wild_magic_surge",
+    "package_id": "phb_5e_zh_user",
+    "name": "狂野魔法浪涌",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_wild_magic:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "狂野魔法浪涌。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_wild_magic_tides_of_chaos",
+    "package_id": "phb_5e_zh_user",
+    "name": "混沌之潮",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_wild_magic:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "混沌之潮。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_wild_magic_bend_luck",
+    "package_id": "phb_5e_zh_user",
+    "name": "扭转运气",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_wild_magic:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "扭转运气。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_wild_magic_controlled_chaos",
+    "package_id": "phb_5e_zh_user",
+    "name": "控制混沌",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_wild_magic:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "控制混沌。"
+  },
+  {
+    "feature_id": "feature_subclass_sorcerer_wild_magic_spell_bombardment",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术轰击",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_sorcerer_wild_magic:18",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "法术轰击。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_archfey_expanded_spell_list",
+    "package_id": "phb_5e_zh_user",
+    "name": "扩展法术列表",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_archfey:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "扩展法术列表。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_archfey_fey_presence",
+    "package_id": "phb_5e_zh_user",
+    "name": "妖精仪态",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_archfey:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "妖精仪态。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_archfey_misty_escape",
+    "package_id": "phb_5e_zh_user",
+    "name": "迷踪遁逃",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_archfey:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "迷踪遁逃。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_archfey_beguiling_defenses",
+    "package_id": "phb_5e_zh_user",
+    "name": "迷惑防御",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_archfey:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "迷惑防御。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_archfey_dark_delirium",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗谵妄",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_archfey:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "黑暗谵妄。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_fiend_expanded_spell_list",
+    "package_id": "phb_5e_zh_user",
+    "name": "扩展法术列表",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_fiend:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "扩展法术列表。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_fiend_dark_ones_blessing",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗眷顾",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_fiend:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "黑暗眷顾。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_fiend_dark_ones_own_luck",
+    "package_id": "phb_5e_zh_user",
+    "name": "黑暗气运",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_fiend:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "黑暗气运。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_fiend_fiendish_resilience",
+    "package_id": "phb_5e_zh_user",
+    "name": "邪魔韧性",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_fiend:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "邪魔韧性。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_fiend_hurl_through_hell",
+    "package_id": "phb_5e_zh_user",
+    "name": "炼狱投掷",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_fiend:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "炼狱投掷。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_great_old_one_expanded_spell_list",
+    "package_id": "phb_5e_zh_user",
+    "name": "扩展法术列表",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_great_old_one:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "扩展法术列表。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_great_old_one_awakened_mind",
+    "package_id": "phb_5e_zh_user",
+    "name": "觉醒心智",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_great_old_one:1",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "觉醒心智。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_great_old_one_entropic_ward",
+    "package_id": "phb_5e_zh_user",
+    "name": "熵光结界",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_great_old_one:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "熵光结界。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_great_old_one_thought_shield",
+    "package_id": "phb_5e_zh_user",
+    "name": "思想护盾",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_great_old_one:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "思想护盾。"
+  },
+  {
+    "feature_id": "feature_subclass_warlock_great_old_one_create_thrall",
+    "package_id": "phb_5e_zh_user",
+    "name": "创造奴仆",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_warlock_great_old_one:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "创造奴仆。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_abjuration_abjuration_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "防护学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_abjuration:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "防护学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_abjuration_arcane_ward",
+    "package_id": "phb_5e_zh_user",
+    "name": "奥术守御",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_abjuration:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "奥术守御。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_abjuration_projected_ward",
+    "package_id": "phb_5e_zh_user",
+    "name": "投射守御",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_abjuration:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "投射守御。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_abjuration_improved_abjuration",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通防护",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_abjuration:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通防护。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_abjuration_spell_resistance",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术抗性",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_abjuration:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "法术抗性。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_conjuration_conjuration_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "咒法学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_conjuration:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "咒法学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_conjuration_minor_conjuration",
+    "package_id": "phb_5e_zh_user",
+    "name": "次级咒法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_conjuration:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "次级咒法。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_conjuration_benign_transposition",
+    "package_id": "phb_5e_zh_user",
+    "name": "良性转位",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_conjuration:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "良性转位。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_conjuration_focused_conjuration",
+    "package_id": "phb_5e_zh_user",
+    "name": "专注咒法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_conjuration:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "专注咒法。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_conjuration_durable_summons",
+    "package_id": "phb_5e_zh_user",
+    "name": "持久召唤",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_conjuration:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "持久召唤。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_divination_divination_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "预言学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_divination:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "预言学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_divination_portent",
+    "package_id": "phb_5e_zh_user",
+    "name": "预兆",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_divination:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "预兆。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_divination_expert_divination",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通预言",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_divination:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通预言。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_divination_the_third_eye",
+    "package_id": "phb_5e_zh_user",
+    "name": "第三只眼",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_divination:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "第三只眼。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_divination_greater_portent",
+    "package_id": "phb_5e_zh_user",
+    "name": "高等预兆",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_divination:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "高等预兆。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_enchantment_enchantment_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "惑控学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_enchantment:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "惑控学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_enchantment_hypnotic_gaze",
+    "package_id": "phb_5e_zh_user",
+    "name": "催眠凝视",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_enchantment:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "催眠凝视。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_enchantment_instinctive_charm",
+    "package_id": "phb_5e_zh_user",
+    "name": "本能魅惑",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_enchantment:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "本能魅惑。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_enchantment_split_enchantment",
+    "package_id": "phb_5e_zh_user",
+    "name": "分裂惑控",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_enchantment:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "分裂惑控。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_enchantment_alter_memories",
+    "package_id": "phb_5e_zh_user",
+    "name": "篡改记忆",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_enchantment:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "篡改记忆。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_evocation_evocation_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "塑能学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_evocation:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "塑能学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_evocation_sculpt_spells",
+    "package_id": "phb_5e_zh_user",
+    "name": "法术塑形",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_evocation:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "法术塑形。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_evocation_potent_cantrip",
+    "package_id": "phb_5e_zh_user",
+    "name": "强效戏法",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_evocation:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强效戏法。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_evocation_empowered_evocation",
+    "package_id": "phb_5e_zh_user",
+    "name": "强化塑能",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_evocation:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "强化塑能。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_evocation_overchannel",
+    "package_id": "phb_5e_zh_user",
+    "name": "超限导能",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_evocation:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "超限导能。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_illusion_illusion_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "幻术学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_illusion:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "幻术学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_illusion_improved_minor_illusion",
+    "package_id": "phb_5e_zh_user",
+    "name": "精通次级幻影",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_illusion:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "精通次级幻影。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_illusion_malleable_illusions",
+    "package_id": "phb_5e_zh_user",
+    "name": "可塑幻象",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_illusion:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "可塑幻象。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_illusion_illusory_self",
+    "package_id": "phb_5e_zh_user",
+    "name": "幻象替身",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_illusion:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "幻象替身。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_illusion_illusory_reality",
+    "package_id": "phb_5e_zh_user",
+    "name": "幻象现实",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_illusion:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "幻象现实。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_necromancy_necromancy_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "死灵学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_necromancy:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "死灵学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_necromancy_grim_harvest",
+    "package_id": "phb_5e_zh_user",
+    "name": "冷酷收割",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_necromancy:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "冷酷收割。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_necromancy_undead_thralls",
+    "package_id": "phb_5e_zh_user",
+    "name": "亡灵奴仆",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_necromancy:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "亡灵奴仆。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_necromancy_inured_to_undeath",
+    "package_id": "phb_5e_zh_user",
+    "name": "不死适应",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_necromancy:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "不死适应。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_necromancy_command_undead",
+    "package_id": "phb_5e_zh_user",
+    "name": "号令亡灵",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_necromancy:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "号令亡灵。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_transmutation_transmutation_savant",
+    "package_id": "phb_5e_zh_user",
+    "name": "变化学派专家",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_transmutation:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "变化学派专家。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_transmutation_minor_alchemy",
+    "package_id": "phb_5e_zh_user",
+    "name": "次级炼金",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_transmutation:2",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "次级炼金。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_transmutation_transmuters_stone",
+    "package_id": "phb_5e_zh_user",
+    "name": "变化师之石",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_transmutation:6",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "变化师之石。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_transmutation_shapechanger",
+    "package_id": "phb_5e_zh_user",
+    "name": "变形者",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_transmutation:10",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "变形者。"
+  },
+  {
+    "feature_id": "feature_subclass_wizard_transmutation_master_transmuter",
+    "package_id": "phb_5e_zh_user",
+    "name": "变化大师",
+    "feature_type": "Subclass",
+    "source_ref": "subclass_wizard_transmutation:14",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_manual_resolve"
+    ],
+    "description": "变化大师。"
   }
 ]

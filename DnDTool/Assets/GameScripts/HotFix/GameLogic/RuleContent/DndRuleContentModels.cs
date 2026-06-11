@@ -19,6 +19,8 @@ namespace GameLogic
 
         public List<DndLevelProgressionData> LevelProgressions { get; } = new List<DndLevelProgressionData>();
 
+        public List<DndSubclassLevelProgressionData> SubclassLevelProgressions { get; } = new List<DndSubclassLevelProgressionData>();
+
         public List<DndFeatureDefineData> Features { get; } = new List<DndFeatureDefineData>();
 
         public List<DndFeatureEffectData> FeatureEffects { get; } = new List<DndFeatureEffectData>();
@@ -44,6 +46,8 @@ namespace GameLogic
         public List<DndSpellDefineData> Spells { get; } = new List<DndSpellDefineData>();
 
         public List<DndClassSpellListData> ClassSpellLists { get; } = new List<DndClassSpellListData>();
+
+        public List<DndItemDefineData> Items { get; } = new List<DndItemDefineData>();
 
         public List<DndEnumListData> EnumLists { get; } = new List<DndEnumListData>();
 
@@ -141,6 +145,31 @@ namespace GameLogic
         public bool SubclassFeature { get; set; }
 
         public string SubclassChoiceGroupId { get; set; } = string.Empty;
+
+        public string Note { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndSubclassLevelProgressionData
+    {
+        public string SubclassId { get; set; } = string.Empty;
+
+        public string ClassId { get; set; } = string.Empty;
+
+        public int Level { get; set; }
+
+        public List<string> FeatureIds { get; } = new List<string>();
+
+        public List<string> ChoiceGroupIds { get; } = new List<string>();
+
+        public List<string> ResourceGrantIds { get; } = new List<string>();
+
+        public int? SpellSlotProgressionLevel { get; set; }
+
+        public int? CantripKnown { get; set; }
+
+        public int? SpellKnown { get; set; }
+
+        public string PreparedSpellFormula { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
     }
@@ -404,6 +433,83 @@ namespace GameLogic
         public string SourceFeatureId { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndItemDefineData
+    {
+        public string ItemId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public string ItemType { get; set; } = string.Empty;
+
+        public string Rarity { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
+
+        public string SourceBook { get; set; } = string.Empty;
+
+        public string SourcePage { get; set; } = string.Empty;
+
+        public bool Stackable { get; set; }
+
+        public int MaxStack { get; set; }
+
+        public float Weight { get; set; }
+
+        public int PriceGp { get; set; }
+
+        public bool IsEquippable { get; set; }
+
+        public int DefaultQuantity { get; set; }
+
+        public string EquipmentSlot { get; set; } = string.Empty;
+
+        public bool RequiresAttunement { get; set; }
+
+        public bool DefaultEquipped { get; set; }
+
+        public string ArmorCategory { get; set; } = string.Empty;
+
+        public int ArmorBaseAc { get; set; }
+
+        public int AcBonus { get; set; }
+
+        public int MaxDexBonus { get; set; }
+
+        public int StrengthRequirement { get; set; }
+
+        public bool StealthDisadvantage { get; set; }
+
+        public string WeaponCategory { get; set; } = string.Empty;
+
+        public string WeaponRangeType { get; set; } = string.Empty;
+
+        public string DamageDice { get; set; } = string.Empty;
+
+        public string DamageType { get; set; } = string.Empty;
+
+        public List<string> WeaponProperties { get; } = new List<string>();
+
+        public int NormalRange { get; set; }
+
+        public int LongRange { get; set; }
+
+        public string TwoHandDamageDice { get; set; } = string.Empty;
+
+        public string ToolCategory { get; set; } = string.Empty;
+
+        public bool Consumable { get; set; }
+
+        public int Charges { get; set; }
+
+        public bool ConsumeOnUse { get; set; }
+
+        public List<string> EffectIds { get; } = new List<string>();
+
+        public string EffectApplyCondition { get; set; } = string.Empty;
     }
 
     internal sealed class DndEnumListData

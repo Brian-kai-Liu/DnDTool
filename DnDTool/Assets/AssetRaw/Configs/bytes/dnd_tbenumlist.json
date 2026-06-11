@@ -128,5 +128,25 @@
     "enum_type": "EffectType",
     "value": "ManualResolve",
     "description": "手动处理。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "AdvantageOnSavingThrow",
+    "description": "豁免优势。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "DamageResistance",
+    "description": "伤害抗性。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "ProficiencyMultiplier",
+    "description": "熟练加值倍率。"
+  },
+  {
+    "enum_type": "EffectType",
+    "value": "SpellcastingAbility",
+    "description": "设置角色施法属性。"
   }
 ]
