@@ -313,6 +313,25 @@ public partial class Tables
     /// 外部枚举/字典值表。业务层按 enum_type + value 查询。
     /// </summary>
     private dnd.TbEnumList m_TbEnumList;
+    private dnd.TbDndItemDefine m_TbDndItemDefine;
+    public dnd.TbDndItemDefine TbDndItemDefine
+    {
+        get
+        {
+            if (m_TbDndItemDefine == null)
+            {
+                m_TbDndItemDefine = new dnd.TbDndItemDefine(defaultLoader("dnd_tbdnditemdefine"));
+                m_TbDndItemDefine.ResolveRef(this);
+            }
+            return m_TbDndItemDefine;
+        }
+        set
+        {
+            m_TbDndItemDefine = value;
+            m_TbDndItemDefine.ResolveRef(this);
+        }
+    }
+
     public dnd.TbEnumList TbEnumList
     {
         get

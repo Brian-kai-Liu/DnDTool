@@ -859,7 +859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1653378404371929881}
   m_Layer: 5
-  m_Name: "Buff\u6A21\u677F"
+  m_Name: m_itemStatusEffectTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 4361487274802121135}
   - component: {fileID: 8352004087827249326}
   m_Layer: 5
-  m_Name: "Buff\u533A\u57DF"
+  m_Name: m_gridStatusEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12228,7 +12228,7 @@ GameObject:
   - component: {fileID: 5970142442095019056}
   - component: {fileID: 5583497406917501258}
   m_Layer: 5
-  m_Name: BuffName
+  m_Name: m_tmpStatusEffectName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18109,7 +18109,7 @@ GameObject:
   - component: {fileID: 3852732762486969073}
   - component: {fileID: 4818815103473405764}
   m_Layer: 5
-  m_Name: BuffIcon
+  m_Name: m_imgStatusEffectIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23724,7 +23724,7 @@ GameObject:
   - component: {fileID: 1314252811868325382}
   - component: {fileID: 7621866735776755789}
   m_Layer: 5
-  m_Name: "Buff\u6301\u7EED\u65F6\u95F4"
+  m_Name: m_tmpStatusEffectDuration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

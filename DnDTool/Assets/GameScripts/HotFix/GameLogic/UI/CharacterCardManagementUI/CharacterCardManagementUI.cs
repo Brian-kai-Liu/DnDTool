@@ -50,6 +50,18 @@ namespace GameLogic
         }
     }
 
+    internal readonly struct CharacterStatusEffectDisplayEntry
+    {
+        public readonly string Name;
+        public readonly string Duration;
+
+        public CharacterStatusEffectDisplayEntry(string name, string duration)
+        {
+            Name = name ?? string.Empty;
+            Duration = duration ?? string.Empty;
+        }
+    }
+
     [Window(UILayer.UI, location: "CharacterCardManagementUI", fullScreen: true)]
     internal sealed class CharacterCardManagementUI : UIWindow
     {
@@ -174,6 +186,11 @@ namespace GameLogic
         private RectTransform m_rectInventoryContent;
         private GameObject m_goInventoryItemTemplate;
         private TMP_Text m_tmpInventorySectionTitle;
+        private TMP_Text m_tmpCurrentWeight;
+        private TMP_Text m_tmpWeightLine;
+        private TMP_Text m_tmpMaxWeight;
+        private RectTransform m_gridStatusEffects;
+        private GameObject m_goStatusEffectTemplate;
         private readonly TMP_Text[] m_tmpSkillBonuses = new TMP_Text[18];
         private readonly Image[] m_imgSkillBackgrounds = new Image[18];
         private readonly Color[] m_defaultSkillBackgroundColors = new Color[18];
@@ -182,6 +199,7 @@ namespace GameLogic
         private readonly List<GameObject> m_raceFeatureItems = new List<GameObject>();
         private readonly List<GameObject> m_otherFeatureItems = new List<GameObject>();
         private readonly List<GameObject> m_inventoryItems = new List<GameObject>();
+        private readonly List<GameObject> m_statusEffectItems = new List<GameObject>();
 
         private readonly List<CharacterCardDraftSaveData> m_characterCards = new List<CharacterCardDraftSaveData>();
         private readonly List<CharacterCardListItemView> m_cardViews = new List<CharacterCardListItemView>();
@@ -267,6 +285,11 @@ namespace GameLogic
             m_rectInventoryContent = GetBoundComponent<RectTransform>(63, nameof(m_rectInventoryContent));
             m_goInventoryItemTemplate = GetBoundComponent<RectTransform>(64, nameof(m_goInventoryItemTemplate))?.gameObject;
             m_tmpInventorySectionTitle = GetBoundComponent<TextMeshProUGUI>(65, nameof(m_tmpInventorySectionTitle));
+            m_tmpCurrentWeight = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_tmpCurrentWeight");
+            m_tmpWeightLine = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_tmpWeightLine");
+            m_tmpMaxWeight = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_tmpMaxWeight");
+            m_gridStatusEffects = FindRightPanelComponent<RectTransform>("m_gridStatusEffects");
+            m_goStatusEffectTemplate = FindRightPanelComponent<RectTransform>("m_gridStatusEffects/m_itemStatusEffectTemplate")?.gameObject;
             m_tmpAc = FindRightPanelComponent<TextMeshProUGUI>("m_imgAcBackground/m_tmpAc");
             m_tmpInitiative = FindRightPanelComponent<TextMeshProUGUI>("m_imgInitiativeBackground/m_tmpInitiative");
             m_tmpSpeed = FindRightPanelComponent<TextMeshProUGUI>("m_imgSpeedBackground/m_tmpSpeed");
@@ -309,12 +332,14 @@ namespace GameLogic
             SetText(m_tmpDeleteSelectedText, "删除所选");
             SetText(m_tmpOtherFeatureSectionTitle, "其他特性");
             SetText(m_tmpInventorySectionTitle, "物品");
+            SetText(m_tmpWeightLine, string.Empty);
             SetActive(m_goCharacterCardTemplate, false);
             SetActive(m_goEquipmentToolTemplate, false);
             SetActive(m_goClassFeatureTemplate, false);
             SetActive(m_goRaceFeatureTemplate, false);
             SetActive(m_goOtherFeatureTemplate, false);
             SetActive(m_goInventoryItemTemplate, false);
+            SetActive(m_goStatusEffectTemplate, false);
             ShowFeatureDetail("特性详情", string.Empty);
         }
 
@@ -447,8 +472,10 @@ namespace GameLogic
             SetAbilityTexts(snapshot);
             SetHpTexts(snapshot);
             SetCombatOverviewTexts(character, snapshot);
+            RefreshStatusEffectItems(character);
             SetExperienceProgress(character.Experience, snapshot.Level);
             SetCurrencyTexts(character.Currency);
+            SetCarryingWeightTexts();
             SetDeathSaveTexts(character.DeathSaves);
             SetHitDiceTexts(character);
             SetRoleplayTexts(character.RoleplayProfile);
@@ -474,8 +501,10 @@ namespace GameLogic
             SetAbilityTexts(empty);
             SetHpTexts(empty);
             SetEmptyCombatOverviewTexts();
+            RefreshStatusEffectItems(null);
             SetExperienceProgress(0, 1);
             SetCurrencyTexts(null);
+            SetCarryingWeightTexts();
             SetDeathSaveTexts(null);
             SetHitDiceTexts(null);
             SetRoleplayTexts(null);
@@ -640,6 +669,132 @@ namespace GameLogic
             SetText(m_tmpElectrum, normalized.Electrum.ToString());
             SetText(m_tmpGold, normalized.Gold.ToString());
             SetText(m_tmpPlatinum, normalized.Platinum.ToString());
+        }
+
+        private void SetCarryingWeightTexts()
+        {
+            SetText(m_tmpCurrentWeight, string.Empty);
+            SetText(m_tmpWeightLine, string.Empty);
+            SetText(m_tmpMaxWeight, string.Empty);
+        }
+
+        private void RefreshStatusEffectItems(CharacterCardDraftSaveData character)
+        {
+            List<CharacterStatusEffectDisplayEntry> entries = BuildStatusEffectEntries(character);
+            EnsureStatusEffectItemCount(entries.Count);
+
+            for (int index = 0; index < m_statusEffectItems.Count; index++)
+            {
+                GameObject item = m_statusEffectItems[index];
+                bool active = index < entries.Count;
+                SetActive(item, active);
+                if (active)
+                {
+                    SetStatusEffectItem(item, entries[index]);
+                }
+            }
+
+            SetActive(m_goStatusEffectTemplate, false);
+            SetActive(m_gridStatusEffects != null ? m_gridStatusEffects.gameObject : null, entries.Count > 0);
+        }
+
+        private void EnsureStatusEffectItemCount(int count)
+        {
+            if (m_gridStatusEffects == null || m_goStatusEffectTemplate == null)
+            {
+                return;
+            }
+
+            while (m_statusEffectItems.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goStatusEffectTemplate, m_gridStatusEffects);
+                itemObject.name = $"m_itemStatusEffect_{m_statusEffectItems.Count + 1}";
+                SetActive(itemObject, true);
+                m_statusEffectItems.Add(itemObject);
+            }
+        }
+
+        private static void SetStatusEffectItem(GameObject item, CharacterStatusEffectDisplayEntry entry)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            TMP_Text nameText = item.transform.Find("m_tmpStatusEffectName")?.GetComponent<TMP_Text>();
+            TMP_Text durationText = item.transform.Find("m_imgStatusEffectIcon/m_tmpStatusEffectDuration")?.GetComponent<TMP_Text>();
+            SetText(nameText, entry.Name);
+            SetText(durationText, entry.Duration);
+        }
+
+        private static List<CharacterStatusEffectDisplayEntry> BuildStatusEffectEntries(CharacterCardDraftSaveData character)
+        {
+            List<CharacterStatusEffectDisplayEntry> entries = new List<CharacterStatusEffectDisplayEntry>();
+            if (character == null)
+            {
+                return entries;
+            }
+
+            AppendConditionStatusEffects(entries, character.Conditions);
+            AppendTemporaryStatusEffects(entries, character.TemporaryEffects);
+            return entries;
+        }
+
+        private static void AppendConditionStatusEffects(
+            List<CharacterStatusEffectDisplayEntry> entries,
+            IReadOnlyList<CharacterConditionStateSaveData> conditions)
+        {
+            if (entries == null || conditions == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < conditions.Count; index++)
+            {
+                CharacterConditionStateSaveData condition = conditions[index];
+                if (condition == null)
+                {
+                    continue;
+                }
+
+                string name = FirstNonEmpty(condition.Name, condition.ConditionId);
+                if (condition.ExhaustionLevel > 0)
+                {
+                    name = string.IsNullOrWhiteSpace(name)
+                        ? $"Exhaustion {condition.ExhaustionLevel}"
+                        : $"{name} {condition.ExhaustionLevel}";
+                }
+
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    entries.Add(new CharacterStatusEffectDisplayEntry(name.Trim(), condition.Duration));
+                }
+            }
+        }
+
+        private static void AppendTemporaryStatusEffects(
+            List<CharacterStatusEffectDisplayEntry> entries,
+            IReadOnlyList<CharacterTemporaryEffectSaveData> effects)
+        {
+            if (entries == null || effects == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < effects.Count; index++)
+            {
+                CharacterTemporaryEffectSaveData effect = effects[index];
+                if (effect == null || !effect.IsActive)
+                {
+                    continue;
+                }
+
+                string name = FirstNonEmpty(effect.Name, effect.EffectId);
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    entries.Add(new CharacterStatusEffectDisplayEntry(name.Trim(), effect.Duration));
+                }
+            }
         }
 
         private void SetDeathSaveTexts(CharacterDeathSaveData deathSaves)
@@ -2781,7 +2936,8 @@ namespace GameLogic
 
         private void OnClickCreateCharacter()
         {
-            Log.Info("角色卡管理界面：角色创建功能已拆分，等待重新开发独立创建界面。");
+            GameModule.UI.CloseUI<CharacterCardManagementUI>();
+            GameModule.UI.ShowUIAsync<CharacterCreationUI>();
         }
 
         private void OnClickToggleSkillProficiencies()
@@ -4502,6 +4658,7 @@ namespace GameLogic
         public string ArmorCategory = CharacterArmorCategoryIds.None;
         public int ArmorBaseAc;
         public int AcBonus;
+        public string Weight = string.Empty;
         public int Quantity = 1;
         public bool IsEquipped;
         public bool RequiresAttunement;
@@ -4530,6 +4687,7 @@ namespace GameLogic
                 ArmorCategory = CharacterArmorCategoryIds.Normalize(source.ArmorCategory),
                 ArmorBaseAc = Math.Max(0, source.ArmorBaseAc),
                 AcBonus = source.AcBonus,
+                Weight = source.Weight?.Trim() ?? string.Empty,
                 Quantity = Math.Max(1, source.Quantity),
                 IsEquipped = source.IsEquipped,
                 RequiresAttunement = source.RequiresAttunement,
@@ -4548,6 +4706,7 @@ namespace GameLogic
                 && (!string.IsNullOrWhiteSpace(item.SourceItemId)
                     || !string.IsNullOrWhiteSpace(item.ItemId)
                     || !string.IsNullOrWhiteSpace(item.ItemName)
+                    || !string.IsNullOrWhiteSpace(item.Weight)
                     || item.ArmorBaseAc > 0
                     || item.AcBonus != 0
                     || (item.EffectIds != null && item.EffectIds.Count > 0)
