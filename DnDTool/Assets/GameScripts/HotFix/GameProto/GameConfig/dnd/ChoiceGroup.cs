@@ -27,6 +27,7 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
         MinSelect = (int)_obj.GetValue("min_select");
         MaxSelect = (int)_obj.GetValue("max_select");
         OptionFilter = (string)_obj.GetValue("option_filter");
+        SelectionMode = (string)_obj.GetValue("selection_mode");
         Description = (string)_obj.GetValue("description");
     }
 
@@ -64,6 +65,10 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
     /// </summary>
     public readonly string OptionFilter;
     /// <summary>
+    /// 选择模式：Distinct=同一选项只能选一次；Repeatable=同一选项可重复选择。留空按 Distinct 处理。
+    /// </summary>
+    public readonly string SelectionMode;
+    /// <summary>
     /// 说明。
     /// </summary>
     public readonly string Description;
@@ -86,6 +91,7 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
         + "minSelect:" + MinSelect + ","
         + "maxSelect:" + MaxSelect + ","
         + "optionFilter:" + OptionFilter + ","
+        + "selectionMode:" + SelectionMode + ","
         + "description:" + Description + ","
         + "}";
     }

@@ -29,6 +29,7 @@ public sealed partial class ClassDefine : Luban.BeanBase
         { var __json0 = _obj.GetValue("saving_throw_proficiencies"); SavingThrowProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  SavingThrowProficiencies.Add(__v0); }   }
         { var __json0 = _obj.GetValue("armor_proficiencies"); ArmorProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ArmorProficiencies.Add(__v0); }   }
         { var __json0 = _obj.GetValue("weapon_proficiencies"); WeaponProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  WeaponProficiencies.Add(__v0); }   }
+        { var __json0 = _obj.GetValue("tool_proficiencies"); ToolProficiencies = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  ToolProficiencies.Add(__v0); }   }
         SpellcastingAbility = (string)_obj.GetValue("spellcasting_ability");
         SpellSlotProgressionId = (string)_obj.GetValue("spell_slot_progression_id");
         Description = (string)_obj.GetValue("description");
@@ -76,6 +77,10 @@ public sealed partial class ClassDefine : Luban.BeanBase
     /// </summary>
     public readonly System.Collections.Generic.List<string> WeaponProficiencies;
     /// <summary>
+    /// 工具熟练列表。
+    /// </summary>
+    public readonly System.Collections.Generic.List<string> ToolProficiencies;
+    /// <summary>
     /// 施法属性。无施法可留空。
     /// </summary>
     public readonly string SpellcastingAbility;
@@ -108,6 +113,7 @@ public sealed partial class ClassDefine : Luban.BeanBase
         + "savingThrowProficiencies:" + Luban.StringUtil.CollectionToString(SavingThrowProficiencies) + ","
         + "armorProficiencies:" + Luban.StringUtil.CollectionToString(ArmorProficiencies) + ","
         + "weaponProficiencies:" + Luban.StringUtil.CollectionToString(WeaponProficiencies) + ","
+        + "toolProficiencies:" + Luban.StringUtil.CollectionToString(ToolProficiencies) + ","
         + "spellcastingAbility:" + SpellcastingAbility + ","
         + "spellSlotProgressionId:" + SpellSlotProgressionId + ","
         + "description:" + Description + ","

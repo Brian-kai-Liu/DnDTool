@@ -8,30 +8,35 @@
 //------------------------------------------------------------------------------
 
 using Newtonsoft.Json.Linq;
+using Luban;
+
+
 
 namespace GameConfig.dnd
 {
+
 /// <summary>
-/// DnD item definition table.
+/// DnD 物品定义表。
 /// </summary>
 public partial class TbDndItemDefine
 {
     private readonly System.Collections.Generic.Dictionary<string, dnd.DndItemDefine> _dataMap;
     private readonly System.Collections.Generic.List<dnd.DndItemDefine> _dataList;
-
+    
     public TbDndItemDefine(JArray _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<string, dnd.DndItemDefine>(_buf.Count);
         _dataList = new System.Collections.Generic.List<dnd.DndItemDefine>(_buf.Count);
-
+        
         foreach(JObject _ele in _buf)
         {
             dnd.DndItemDefine _v;
             _v = global::GameConfig.dnd.DndItemDefine.DeserializeDndItemDefine(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.ItemId, _v);
-        }
+         }
     }
+
 
     public System.Collections.Generic.IReadOnlyDictionary<string, dnd.DndItemDefine> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<dnd.DndItemDefine> DataList => _dataList;
@@ -47,5 +52,7 @@ public partial class TbDndItemDefine
             _v.ResolveRef(tables);
         }
     }
+
 }
 }
+

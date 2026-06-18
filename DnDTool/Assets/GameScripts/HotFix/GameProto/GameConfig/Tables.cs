@@ -313,25 +313,6 @@ public partial class Tables
     /// 外部枚举/字典值表。业务层按 enum_type + value 查询。
     /// </summary>
     private dnd.TbEnumList m_TbEnumList;
-    private dnd.TbDndItemDefine m_TbDndItemDefine;
-    public dnd.TbDndItemDefine TbDndItemDefine
-    {
-        get
-        {
-            if (m_TbDndItemDefine == null)
-            {
-                m_TbDndItemDefine = new dnd.TbDndItemDefine(defaultLoader("dnd_tbdnditemdefine"));
-                m_TbDndItemDefine.ResolveRef(this);
-            }
-            return m_TbDndItemDefine;
-        }
-        set
-        {
-            m_TbDndItemDefine = value;
-            m_TbDndItemDefine.ResolveRef(this);
-        }
-    }
-
     public dnd.TbEnumList TbEnumList
     {
         get
@@ -347,6 +328,48 @@ public partial class Tables
         {
             m_TbEnumList = value;
             m_TbEnumList.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// 阵营定义表
+    /// </summary>
+    private dnd.TbAlignment m_TbAlignment;
+    public dnd.TbAlignment TbAlignment
+    {
+        get
+        {
+            if (m_TbAlignment == null)
+            {
+                m_TbAlignment = new dnd.TbAlignment(defaultLoader("dnd_tbalignment"));
+                m_TbAlignment.ResolveRef(this);
+            }
+            return m_TbAlignment;
+        }
+        set
+        {
+            m_TbAlignment = value;
+            m_TbAlignment.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// 技能定义表。用于技能熟练选择等配置。
+    /// </summary>
+    private dnd.TbSkillDefine m_TbSkillDefine;
+    public dnd.TbSkillDefine TbSkillDefine
+    {
+        get
+        {
+            if (m_TbSkillDefine == null)
+            {
+                m_TbSkillDefine = new dnd.TbSkillDefine(defaultLoader("dnd_tbskilldefine"));
+                m_TbSkillDefine.ResolveRef(this);
+            }
+            return m_TbSkillDefine;
+        }
+        set
+        {
+            m_TbSkillDefine = value;
+            m_TbSkillDefine.ResolveRef(this);
         }
     }
     /// <summary>
@@ -368,6 +391,69 @@ public partial class Tables
         {
             m_TbSubclassLevelProgression = value;
             m_TbSubclassLevelProgression.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// DnD 物品定义表。
+    /// </summary>
+    private dnd.TbDndItemDefine m_TbDndItemDefine;
+    public dnd.TbDndItemDefine TbDndItemDefine
+    {
+        get
+        {
+            if (m_TbDndItemDefine == null)
+            {
+                m_TbDndItemDefine = new dnd.TbDndItemDefine(defaultLoader("dnd_tbdnditemdefine"));
+                m_TbDndItemDefine.ResolveRef(this);
+            }
+            return m_TbDndItemDefine;
+        }
+        set
+        {
+            m_TbDndItemDefine = value;
+            m_TbDndItemDefine.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// DnD 工具定义表
+    /// </summary>
+    private dnd.TbDndToolDefine m_TbDndToolDefine;
+    public dnd.TbDndToolDefine TbDndToolDefine
+    {
+        get
+        {
+            if (m_TbDndToolDefine == null)
+            {
+                m_TbDndToolDefine = new dnd.TbDndToolDefine(defaultLoader("dnd_tbdndtooldefine"));
+                m_TbDndToolDefine.ResolveRef(this);
+            }
+            return m_TbDndToolDefine;
+        }
+        set
+        {
+            m_TbDndToolDefine = value;
+            m_TbDndToolDefine.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// DnD 语言定义表
+    /// </summary>
+    private dnd.TbDndLanguageDefine m_TbDndLanguageDefine;
+    public dnd.TbDndLanguageDefine TbDndLanguageDefine
+    {
+        get
+        {
+            if (m_TbDndLanguageDefine == null)
+            {
+                m_TbDndLanguageDefine = new dnd.TbDndLanguageDefine(defaultLoader("dnd_tbdndlanguagedefine"));
+                m_TbDndLanguageDefine.ResolveRef(this);
+            }
+            return m_TbDndLanguageDefine;
+        }
+        set
+        {
+            m_TbDndLanguageDefine = value;
+            m_TbDndLanguageDefine.ResolveRef(this);
         }
     }
 

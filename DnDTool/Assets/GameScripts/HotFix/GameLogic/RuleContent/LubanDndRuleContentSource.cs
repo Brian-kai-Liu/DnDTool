@@ -45,6 +45,8 @@ namespace GameLogic
                 LoadRows(tables, "TbSpellDefine", library.Spells, CreateSpellDefine);
                 LoadRows(tables, "TbClassSpellList", library.ClassSpellLists, CreateClassSpellList);
                 LoadRows(tables, "TbDndItemDefine", library.Items, CreateDndItemDefine);
+                LoadRows(tables, "TbDndToolDefine", library.Tools, CreateDndToolDefine);
+                LoadRows(tables, "TbDndLanguageDefine", library.Languages, CreateDndLanguageDefine);
                 LoadRows(tables, "TbEnumList", library.EnumLists, CreateEnumList);
                 LoadRows(tables, "TbAlignment", library.Alignments, CreateAlignment);
 
@@ -418,6 +420,7 @@ namespace GameLogic
             data.SavingThrowProficiencies.AddRange(GetStringList(row, "SavingThrowProficiencies", "saving_throw_proficiencies", "savingThrowProficiencies"));
             data.ArmorProficiencies.AddRange(GetStringList(row, "ArmorProficiencies", "armor_proficiencies", "armorProficiencies"));
             data.WeaponProficiencies.AddRange(GetStringList(row, "WeaponProficiencies", "weapon_proficiencies", "weaponProficiencies"));
+            data.ToolProficiencies.AddRange(GetStringList(row, "ToolProficiencies", "tool_proficiencies", "toolProficiencies"));
             return data;
         }
 
@@ -440,7 +443,6 @@ namespace GameLogic
                 AsiAvailable = GetBool(row, "AsiAvailable", "asi_available", "asiAvailable"),
                 AsiRuleId = GetString(row, "AsiRuleId", "asi_rule_id", "asiRuleId"),
                 SubclassFeature = GetBool(row, "SubclassFeature", "subclass_feature", "subclassFeature"),
-                SubclassChoiceGroupId = GetString(row, "SubclassChoiceGroupId", "subclass_choice_group_id", "subclassChoiceGroupId"),
                 Note = GetString(row, "Note", "note")
             };
             data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds"));
@@ -526,6 +528,7 @@ namespace GameLogic
                 MinSelect = GetInt(row, "MinSelect", "min_select", "minSelect"),
                 MaxSelect = GetInt(row, "MaxSelect", "max_select", "maxSelect"),
                 OptionFilter = GetString(row, "OptionFilter", "option_filter", "optionFilter"),
+                SelectionMode = GetString(row, "SelectionMode", "selection_mode", "selectionMode"),
                 Description = GetString(row, "Description", "description")
             };
         }
@@ -832,6 +835,36 @@ namespace GameLogic
             {
                 EnumType = GetString(row, "EnumType", "enum_type", "enumType"),
                 Value = GetString(row, "Value", "value"),
+                Description = GetString(row, "Description", "description")
+            };
+        }
+
+        private static DndToolDefineData CreateDndToolDefine(object row)
+        {
+            return new DndToolDefineData
+            {
+                ToolId = GetString(row, "ToolId", "tool_id", "toolId"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                Name = GetString(row, "Name", "name"),
+                ToolCategory = GetString(row, "ToolCategory", "tool_category", "toolCategory"),
+                EnglishName = GetString(row, "EnglishName", "english_name", "englishName"),
+                PriceGp = GetFloat(row, "PriceGp", "price_gp", "priceGp"),
+                Weight = GetFloat(row, "Weight", "weight"),
+                SourceBook = GetString(row, "SourceBook", "source_book", "sourceBook"),
+                SourcePage = GetString(row, "SourcePage", "source_page", "sourcePage"),
+                Description = GetString(row, "Description", "description")
+            };
+        }
+
+        private static DndLanguageDefineData CreateDndLanguageDefine(object row)
+        {
+            return new DndLanguageDefineData
+            {
+                LanguageId = GetString(row, "LanguageId", "language_id", "languageId"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                Name = GetString(row, "Name", "name"),
+                EnglishName = GetString(row, "EnglishName", "english_name", "englishName"),
+                LanguageCategory = GetString(row, "LanguageCategory", "language_category", "languageCategory"),
                 Description = GetString(row, "Description", "description")
             };
         }

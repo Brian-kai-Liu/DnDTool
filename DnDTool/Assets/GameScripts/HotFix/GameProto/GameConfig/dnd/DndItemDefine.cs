@@ -10,11 +10,14 @@
 using Luban;
 using Newtonsoft.Json.Linq;
 
+
+
 namespace GameConfig.dnd
 {
+
 public sealed partial class DndItemDefine : Luban.BeanBase
 {
-    public DndItemDefine(JToken _buf)
+    public DndItemDefine(JToken _buf) 
     {
         JObject _obj = _buf as JObject;
         ItemId = (string)_obj.GetValue("item_id");
@@ -44,7 +47,7 @@ public sealed partial class DndItemDefine : Luban.BeanBase
         WeaponRangeType = (string)_obj.GetValue("weapon_range_type");
         DamageDice = (string)_obj.GetValue("damage_dice");
         DamageType = (string)_obj.GetValue("damage_type");
-        { var __json0 = _obj.GetValue("weapon_properties"); WeaponProperties = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0; __v0 = (string)__e0; WeaponProperties.Add(__v0); } }
+        { var __json0 = _obj.GetValue("weapon_properties"); WeaponProperties = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  WeaponProperties.Add(__v0); }   }
         NormalRange = (int)_obj.GetValue("normal_range");
         LongRange = (int)_obj.GetValue("long_range");
         TwoHandDamageDice = (string)_obj.GetValue("two_hand_damage_dice");
@@ -52,7 +55,7 @@ public sealed partial class DndItemDefine : Luban.BeanBase
         Consumable = (bool)_obj.GetValue("consumable");
         Charges = (int)_obj.GetValue("charges");
         ConsumeOnUse = (bool)_obj.GetValue("consume_on_use");
-        { var __json1 = _obj.GetValue("effect_ids"); EffectIds = new System.Collections.Generic.List<string>((__json1 as JArray).Count); foreach(JToken __e1 in __json1) { string __v1; __v1 = (string)__e1; EffectIds.Add(__v1); } }
+        { var __json0 = _obj.GetValue("effect_ids"); EffectIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  EffectIds.Add(__v0); }   }
         EffectApplyCondition = (string)_obj.GetValue("effect_apply_condition");
     }
 
@@ -61,49 +64,205 @@ public sealed partial class DndItemDefine : Luban.BeanBase
         return new dnd.DndItemDefine(_buf);
     }
 
+    /// <summary>
+    /// 物品唯一ID。
+    /// </summary>
     public readonly string ItemId;
+    /// <summary>
+    /// 来源规则包ID。
+    /// </summary>
     public readonly string PackageId;
+    /// <summary>
+    /// 物品显示名称。
+    /// </summary>
     public readonly string Name;
+    /// <summary>
+    /// 物品类型，例如 armor / shield / weapon / tool / consumable / wondrous_item。
+    /// </summary>
     public readonly string ItemType;
+    /// <summary>
+    /// 稀有度。
+    /// </summary>
     public readonly string Rarity;
+    /// <summary>
+    /// 物品描述文本。
+    /// </summary>
     public readonly string Description;
+    /// <summary>
+    /// 来源书籍。
+    /// </summary>
     public readonly string SourceBook;
+    /// <summary>
+    /// 来源页码。
+    /// </summary>
     public readonly string SourcePage;
+    /// <summary>
+    /// 是否可堆叠。
+    /// </summary>
     public readonly bool Stackable;
+    /// <summary>
+    /// 最大堆叠数量。
+    /// </summary>
     public readonly int MaxStack;
+    /// <summary>
+    /// 单件重量。
+    /// </summary>
     public readonly float Weight;
+    /// <summary>
+    /// 金币价格。
+    /// </summary>
     public readonly int PriceGp;
+    /// <summary>
+    /// 是否可装备。
+    /// </summary>
     public readonly bool IsEquippable;
+    /// <summary>
+    /// 默认数量。
+    /// </summary>
     public readonly int DefaultQuantity;
+    /// <summary>
+    /// 装备栏位，例如 armor / shield / main_hand / ring。
+    /// </summary>
     public readonly string EquipmentSlot;
+    /// <summary>
+    /// 是否需要同调。
+    /// </summary>
     public readonly bool RequiresAttunement;
+    /// <summary>
+    /// 默认是否已装备。
+    /// </summary>
     public readonly bool DefaultEquipped;
+    /// <summary>
+    /// 护甲类型：none / light / medium / heavy。
+    /// </summary>
     public readonly string ArmorCategory;
+    /// <summary>
+    /// 护甲或盾牌自身提供的AC。
+    /// </summary>
     public readonly int ArmorBaseAc;
+    /// <summary>
+    /// 额外AC加值。
+    /// </summary>
     public readonly int AcBonus;
+    /// <summary>
+    /// 最大敏捷调整值；0 表示不添加敏捷或无上限由类型决定。
+    /// </summary>
     public readonly int MaxDexBonus;
+    /// <summary>
+    /// 力量需求。
+    /// </summary>
     public readonly int StrengthRequirement;
+    /// <summary>
+    /// 是否造成隐匿劣势。
+    /// </summary>
     public readonly bool StealthDisadvantage;
+    /// <summary>
+    /// 武器分类：simple / martial。
+    /// </summary>
     public readonly string WeaponCategory;
+    /// <summary>
+    /// 武器距离类型：melee / ranged。
+    /// </summary>
     public readonly string WeaponRangeType;
+    /// <summary>
+    /// 伤害骰。
+    /// </summary>
     public readonly string DamageDice;
+    /// <summary>
+    /// 伤害类型。
+    /// </summary>
     public readonly string DamageType;
+    /// <summary>
+    /// 武器属性列表。
+    /// </summary>
     public readonly System.Collections.Generic.List<string> WeaponProperties;
+    /// <summary>
+    /// 普通射程。
+    /// </summary>
     public readonly int NormalRange;
+    /// <summary>
+    /// 长射程。
+    /// </summary>
     public readonly int LongRange;
+    /// <summary>
+    /// 两手使用伤害骰。
+    /// </summary>
     public readonly string TwoHandDamageDice;
+    /// <summary>
+    /// 工具分类。
+    /// </summary>
     public readonly string ToolCategory;
+    /// <summary>
+    /// 是否为消耗品。
+    /// </summary>
     public readonly bool Consumable;
+    /// <summary>
+    /// 充能次数。
+    /// </summary>
     public readonly int Charges;
+    /// <summary>
+    /// 使用后是否消耗。
+    /// </summary>
     public readonly bool ConsumeOnUse;
+    /// <summary>
+    /// 关联 TbFeatureEffect.effect_id 列表。
+    /// </summary>
     public readonly System.Collections.Generic.List<string> EffectIds;
+    /// <summary>
+    /// 物品效果生效条件。
+    /// </summary>
     public readonly string EffectApplyCondition;
 
-    public const int __ID__ = -1198945517;
+
+    public const int __ID__ = -995448460;
     public override int GetTypeId() => __ID__;
 
-    public void ResolveRef(Tables tables)
+    public  void ResolveRef(Tables tables)
     {
+    }
+
+    public override string ToString()
+    {
+        return "{ "
+        + "itemId:" + ItemId + ","
+        + "packageId:" + PackageId + ","
+        + "name:" + Name + ","
+        + "itemType:" + ItemType + ","
+        + "rarity:" + Rarity + ","
+        + "description:" + Description + ","
+        + "sourceBook:" + SourceBook + ","
+        + "sourcePage:" + SourcePage + ","
+        + "stackable:" + Stackable + ","
+        + "maxStack:" + MaxStack + ","
+        + "weight:" + Weight + ","
+        + "priceGp:" + PriceGp + ","
+        + "isEquippable:" + IsEquippable + ","
+        + "defaultQuantity:" + DefaultQuantity + ","
+        + "equipmentSlot:" + EquipmentSlot + ","
+        + "requiresAttunement:" + RequiresAttunement + ","
+        + "defaultEquipped:" + DefaultEquipped + ","
+        + "armorCategory:" + ArmorCategory + ","
+        + "armorBaseAc:" + ArmorBaseAc + ","
+        + "acBonus:" + AcBonus + ","
+        + "maxDexBonus:" + MaxDexBonus + ","
+        + "strengthRequirement:" + StrengthRequirement + ","
+        + "stealthDisadvantage:" + StealthDisadvantage + ","
+        + "weaponCategory:" + WeaponCategory + ","
+        + "weaponRangeType:" + WeaponRangeType + ","
+        + "damageDice:" + DamageDice + ","
+        + "damageType:" + DamageType + ","
+        + "weaponProperties:" + Luban.StringUtil.CollectionToString(WeaponProperties) + ","
+        + "normalRange:" + NormalRange + ","
+        + "longRange:" + LongRange + ","
+        + "twoHandDamageDice:" + TwoHandDamageDice + ","
+        + "toolCategory:" + ToolCategory + ","
+        + "consumable:" + Consumable + ","
+        + "charges:" + Charges + ","
+        + "consumeOnUse:" + ConsumeOnUse + ","
+        + "effectIds:" + Luban.StringUtil.CollectionToString(EffectIds) + ","
+        + "effectApplyCondition:" + EffectApplyCondition + ","
+        + "}";
     }
 }
 }
+

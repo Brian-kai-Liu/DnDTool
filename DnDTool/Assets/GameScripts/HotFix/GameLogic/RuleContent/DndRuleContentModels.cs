@@ -49,6 +49,10 @@ namespace GameLogic
 
         public List<DndItemDefineData> Items { get; } = new List<DndItemDefineData>();
 
+        public List<DndToolDefineData> Tools { get; } = new List<DndToolDefineData>();
+
+        public List<DndLanguageDefineData> Languages { get; } = new List<DndLanguageDefineData>();
+
         public List<DndEnumListData> EnumLists { get; } = new List<DndEnumListData>();
 
         public List<DndAlignmentData> Alignments { get; } = new List<DndAlignmentData>();
@@ -99,6 +103,8 @@ namespace GameLogic
 
         public List<string> WeaponProficiencies { get; } = new List<string>();
 
+        public List<string> ToolProficiencies { get; } = new List<string>();
+
         public string SpellcastingAbility { get; set; } = string.Empty;
 
         public string SpellSlotProgressionId { get; set; } = string.Empty;
@@ -143,8 +149,6 @@ namespace GameLogic
         public string AsiRuleId { get; set; } = string.Empty;
 
         public bool SubclassFeature { get; set; }
-
-        public string SubclassChoiceGroupId { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
     }
@@ -246,6 +250,8 @@ namespace GameLogic
         public int MaxSelect { get; set; }
 
         public string OptionFilter { get; set; } = string.Empty;
+
+        public string SelectionMode { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
     }
@@ -510,6 +516,44 @@ namespace GameLogic
         public List<string> EffectIds { get; } = new List<string>();
 
         public string EffectApplyCondition { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndToolDefineData
+    {
+        public string ToolId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public string ToolCategory { get; set; } = string.Empty;
+
+        public string EnglishName { get; set; } = string.Empty;
+
+        public float PriceGp { get; set; }
+
+        public float Weight { get; set; }
+
+        public string SourceBook { get; set; } = string.Empty;
+
+        public string SourcePage { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndLanguageDefineData
+    {
+        public string LanguageId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public string EnglishName { get; set; } = string.Empty;
+
+        public string LanguageCategory { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
     }
 
     internal sealed class DndEnumListData

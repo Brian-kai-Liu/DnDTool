@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using TMPro;
 using TEngine;
@@ -105,7 +104,7 @@ namespace GameLogic
 
         private readonly List<CharacterItemEffectSaveData> m_customEffects = new List<CharacterItemEffectSaveData>();
         private readonly List<GameObject> m_characterPickerItems = new List<GameObject>();
-        private List<CharacterCardDraftSaveData> m_characterPickerCharacters = new List<CharacterCardDraftSaveData>();
+        private List<ItemEditorCharacterPickerEntry> m_characterPickerCharacters = new List<ItemEditorCharacterPickerEntry>();
         private int m_selectedCharacterPickerIndex = -1;
 
         protected override void ScriptGenerator()
@@ -215,7 +214,7 @@ namespace GameLogic
                 return;
             }
 
-            if (!DndRuleContentService.Instance.TryGetItem(sourceItemId, out DndItemDefineData ruleItem))
+            if (!ItemEditorApplicationService.Instance.TryGetRuleItem(sourceItemId, out ItemEditorRuleItemViewState ruleItem))
             {
                 Log.Warning($"ItemInfoEditorUI: rule item not found: {sourceItemId}");
                 return;
@@ -274,13 +273,15 @@ namespace GameLogic
 
         private void SaveItem()
         {
-            LocalCustomItemSaveData item = new LocalCustomItemSaveData
+            string customItemId = EnsureCustomItemId();
+            CharacterOperationResult result = ItemEditorApplicationService.Instance.SaveCustomItem(customItemId, BuildItemData());
+            if (!result.Success)
             {
-                CustomItemId = EnsureCustomItemId()
-            };
-            item.Item = BuildItemData();
-            LocalCustomItemRepository.Upsert(item);
-            Log.Info($"ItemInfoEditorUI: saved custom item {item.CustomItemId}");
+                Log.Warning($"ItemInfoEditorUI: save custom item failed. {result.Message}");
+                return;
+            }
+
+            Log.Info($"ItemInfoEditorUI: saved custom item {customItemId}");
         }
 
         private void AddToCharacter()
@@ -297,13 +298,7 @@ namespace GameLogic
                 return;
             }
 
-            CharacterCardLibrarySaveData library = CharacterCardLocalRepository.Load();
-            m_characterPickerCharacters = library?.Characters != null
-                ? library.Characters
-                    .Where(character => character != null && !string.IsNullOrWhiteSpace(character.CharacterId))
-                    .Select(CharacterCardLocalRepository.Normalize)
-                    .ToList()
-                : new List<CharacterCardDraftSaveData>();
+            m_characterPickerCharacters = ItemEditorApplicationService.Instance.LoadCharacterPickerEntries();
             m_selectedCharacterPickerIndex = m_characterPickerCharacters.Count > 0 ? 0 : -1;
             RefreshCharacterPickerItems();
             SetActive(m_panelCharacterPicker.gameObject, true);
@@ -322,38 +317,22 @@ namespace GameLogic
                 return;
             }
 
-            LocalCustomItemSaveData customItem = new LocalCustomItemSaveData
+            ItemEditorCharacterPickerEntry character = m_characterPickerCharacters[m_selectedCharacterPickerIndex];
+            ItemEditorAddItemResult result = ItemEditorApplicationService.Instance.AddCustomItemToCharacter(
+                character.CharacterId,
+                EnsureCustomItemId(),
+                BuildItemData(),
+                Math.Max(1, ParseInt(m_inputQuantity, 1)));
+            if (!result.Success)
             {
-                CustomItemId = EnsureCustomItemId(),
-                Item = BuildItemData()
-            };
-            LocalCustomItemRepository.Upsert(customItem);
-            if (!LocalCustomItemRepository.TryGetItem(customItem.CustomItemId, out LocalCustomItemSaveData normalizedItem))
-            {
-                Log.Warning("ItemInfoEditorUI: saved custom item cannot be loaded.");
+                Log.Warning($"ItemInfoEditorUI: add item to character failed. {result.Message}");
+                SetText(m_tmpCharacterPickerMessage, result.Message);
                 return;
             }
 
-            CharacterEquipmentItemSaveData characterItem = LocalCustomItemRepository.CreateCharacterItemSnapshot(
-                normalizedItem,
-                Math.Max(1, ParseInt(m_inputQuantity, 1)));
-
-            CharacterCardDraftSaveData character = CharacterCardLocalRepository.Normalize(m_characterPickerCharacters[m_selectedCharacterPickerIndex]);
-            if (character.Equipment == null)
-            {
-                character.Equipment = new CharacterEquipmentSetSaveData();
-            }
-
-            if (character.Equipment.InventoryItems == null)
-            {
-                character.Equipment.InventoryItems = new List<CharacterEquipmentItemSaveData>();
-            }
-
-            character.Equipment.InventoryItems.Add(characterItem);
-            CharacterCardLocalRepository.Upsert(character);
-            SetText(m_tmpCharacterPickerMessage, $"已加入 {character.CharacterName} 的背包");
+            SetText(m_tmpCharacterPickerMessage, $"已加入 {result.CharacterName} 的背包");
             HideCharacterPicker();
-            Log.Info($"ItemInfoEditorUI: added item {characterItem.ItemName} to character {character.CharacterName}.");
+            Log.Info($"ItemInfoEditorUI: added item {result.ItemName} to character {result.CharacterName}.");
         }
 
         private void RefreshCharacterPickerItems()
@@ -369,7 +348,7 @@ namespace GameLogic
                     continue;
                 }
 
-                CharacterCardDraftSaveData character = m_characterPickerCharacters[index];
+                ItemEditorCharacterPickerEntry character = m_characterPickerCharacters[index];
                 SetCharacterPickerItem(item, character, index == m_selectedCharacterPickerIndex);
                 BindCharacterPickerItem(item, index);
             }
@@ -393,7 +372,7 @@ namespace GameLogic
             }
         }
 
-        private void SetCharacterPickerItem(GameObject item, CharacterCardDraftSaveData character, bool selected)
+        private void SetCharacterPickerItem(GameObject item, ItemEditorCharacterPickerEntry character, bool selected)
         {
             if (item == null)
             {
@@ -405,8 +384,8 @@ namespace GameLogic
             TMP_Text markText = item.transform.Find("m_tmpCharacterPickerSelectedMark")?.GetComponent<TMP_Text>();
             Image background = item.GetComponent<Image>();
 
-            SetText(nameText, string.IsNullOrWhiteSpace(character.CharacterName) ? character.CharacterId : character.CharacterName);
-            SetText(summaryText, BuildCharacterPickerSummary(character));
+            SetText(nameText, character.CharacterName);
+            SetText(summaryText, character.Summary);
             SetText(markText, selected ? "已选择" : string.Empty);
             if (background != null)
             {
@@ -428,65 +407,6 @@ namespace GameLogic
                 m_selectedCharacterPickerIndex = index;
                 RefreshCharacterPickerItems();
             });
-        }
-
-        private static string BuildCharacterPickerSummary(CharacterCardDraftSaveData character)
-        {
-            if (character == null)
-            {
-                return string.Empty;
-            }
-
-            string race = FirstNonEmpty(character.RaceId, "未选择种族");
-            string classText = BuildCharacterClassSummary(character);
-            return $"{race} / {classText} / Lv{Math.Max(1, character.Level)}";
-        }
-
-        private static string BuildCharacterClassSummary(CharacterCardDraftSaveData character)
-        {
-            if (character?.ClassProgresses == null || character.ClassProgresses.Count == 0)
-            {
-                return FirstNonEmpty(character?.ClassId, "未选择职业");
-            }
-
-            StringBuilder builder = new StringBuilder();
-            for (int index = 0; index < character.ClassProgresses.Count; index++)
-            {
-                CharacterClassProgressSaveData progress = character.ClassProgresses[index];
-                if (progress == null || string.IsNullOrWhiteSpace(progress.ClassId))
-                {
-                    continue;
-                }
-
-                if (builder.Length > 0)
-                {
-                    builder.Append(" / ");
-                }
-
-                builder.Append(progress.ClassId);
-                builder.Append(" Lv");
-                builder.Append(Math.Max(1, progress.Level));
-            }
-
-            return builder.Length > 0 ? builder.ToString() : FirstNonEmpty(character.ClassId, "未选择职业");
-        }
-
-        private static string FirstNonEmpty(params string[] values)
-        {
-            if (values == null)
-            {
-                return string.Empty;
-            }
-
-            for (int index = 0; index < values.Length; index++)
-            {
-                if (!string.IsNullOrWhiteSpace(values[index]))
-                {
-                    return values[index].Trim();
-                }
-            }
-
-            return string.Empty;
         }
 
         private CharacterEquipmentItemSaveData BuildItemData()

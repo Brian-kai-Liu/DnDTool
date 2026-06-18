@@ -21,6 +21,7 @@
       "简易武器",
       "军用武器"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
     "description": "高生命骰与狂暴核心的前线职业；具体特性效果按 PHB 条目结构化整理。"
@@ -48,6 +49,9 @@
       "刺剑",
       "短剑"
     ],
+    "tool_proficiencies": [
+      "choice_bard_musical_instrument"
+    ],
     "spellcasting_ability": "魅力",
     "spell_slot_progression_id": "bard_spell_slots",
     "description": "以魅力施法、激励和技能泛用性为核心的全能支援职业。"
@@ -73,6 +77,7 @@
     "weapon_proficiencies": [
       "简易武器"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "感知",
     "spell_slot_progression_id": "cleric_spell_slots",
     "description": "以感知施展神术，可通过领域获得额外能力和领域法术。"
@@ -107,6 +112,9 @@
       "投石索",
       "矛"
     ],
+    "tool_proficiencies": [
+      "herbalism_kit"
+    ],
     "spellcasting_ability": "感知",
     "spell_slot_progression_id": "druid_spell_slots",
     "description": "以感知施展自然神术，可通过荒野形态和结社能力变化定位。"
@@ -135,6 +143,7 @@
       "简易武器",
       "军用武器"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
     "description": "泛用武装战斗职业，可通过战斗风格和武术范型定制定位。"
@@ -157,6 +166,9 @@
     "weapon_proficiencies": [
       "简易武器",
       "短剑"
+    ],
+    "tool_proficiencies": [
+      "choice_monk_artisan_or_musical_tool"
     ],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
@@ -186,6 +198,7 @@
       "简易武器",
       "军用武器"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "魅力",
     "spell_slot_progression_id": "paladin_spell_slots",
     "description": "以魅力施展誓言神术，并结合重甲、武器与圣疗能力。"
@@ -213,6 +226,7 @@
       "简易武器",
       "军用武器"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "感知",
     "spell_slot_progression_id": "ranger_spell_slots",
     "description": "以探索、追踪、武器战斗和感知施法结合的野外职业。"
@@ -240,6 +254,9 @@
       "刺剑",
       "短剑"
     ],
+    "tool_proficiencies": [
+      "thieves_tools"
+    ],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
     "description": "高技能、偷袭、机动与隐秘行动职业。"
@@ -265,6 +282,7 @@
       "长棍",
       "轻弩"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "魅力",
     "spell_slot_progression_id": "sorcerer_spell_slots",
     "description": "以内在魔力和超魔法调整施法的魅力施法者。"
@@ -288,6 +306,7 @@
     "weapon_proficiencies": [
       "简易武器"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "魅力",
     "spell_slot_progression_id": "warlock_spell_slots",
     "description": "以契约魔法、魔能祈唤和宗主恩赐为核心的魅力施法者。"
@@ -313,6 +332,7 @@
       "长棍",
       "轻弩"
     ],
+    "tool_proficiencies": [],
     "spellcasting_ability": "智力",
     "spell_slot_progression_id": "wizard_spell_slots",
     "description": "以智力、法术书和奥术传统为核心的准备施法者。"

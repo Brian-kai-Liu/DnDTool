@@ -6,8 +6,8 @@
     "size": "中型",
     "speed": 25,
     "language_ids": [
-      "通用语",
-      "矮人语"
+      "common",
+      "dwarvish"
     ],
     "main_feature_ids": [
       "feature_race_dwarf_hill_ability_constitution_2",
@@ -27,8 +27,8 @@
     "size": "中型",
     "speed": 30,
     "language_ids": [
-      "通用语",
-      "精灵语"
+      "common",
+      "elvish"
     ],
     "main_feature_ids": [
       "feature_race_elf_high_ability_dexterity_2",
@@ -47,8 +47,8 @@
     "size": "小型",
     "speed": 25,
     "language_ids": [
-      "通用语",
-      "半身人语"
+      "common",
+      "halfling"
     ],
     "main_feature_ids": [
       "feature_race_halfling_lightfoot_ability_dexterity_2",
@@ -66,7 +66,7 @@
     "size": "中型",
     "speed": 30,
     "language_ids": [
-      "通用语"
+      "common"
     ],
     "main_feature_ids": [
       "feature_race_human_ability_all_1",
@@ -84,8 +84,8 @@
     "size": "中型",
     "speed": 30,
     "language_ids": [
-      "通用语",
-      "龙语"
+      "common",
+      "draconic"
     ],
     "main_feature_ids": [
       "feature_race_dragonborn_ability_strength_2",
@@ -104,8 +104,8 @@
     "size": "小型",
     "speed": 25,
     "language_ids": [
-      "通用语",
-      "侏儒语"
+      "common",
+      "gnomish"
     ],
     "main_feature_ids": [
       "feature_race_gnome_forest_ability_intelligence_2",
@@ -122,8 +122,8 @@
     "size": "中型",
     "speed": 30,
     "language_ids": [
-      "通用语",
-      "精灵语"
+      "common",
+      "elvish"
     ],
     "main_feature_ids": [
       "feature_race_half_elf_ability_charisma_2",
@@ -145,8 +145,8 @@
     "size": "中型",
     "speed": 30,
     "language_ids": [
-      "通用语",
-      "兽人语"
+      "common",
+      "orc"
     ],
     "main_feature_ids": [
       "feature_race_half_orc_ability_strength_2",
@@ -166,8 +166,8 @@
     "size": "中型",
     "speed": 30,
     "language_ids": [
-      "通用语",
-      "炼狱语"
+      "common",
+      "infernal"
     ],
     "main_feature_ids": [
       "feature_race_tiefling_ability_intelligence_1",

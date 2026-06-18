@@ -1,7 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using TMPro;
 using TEngine;
 using UnityEngine;
@@ -10,381 +8,1481 @@ using Log = TEngine.Log;
 
 namespace GameLogic
 {
+    internal readonly struct CharacterCreationSkillDisplayBinding
+    {
+        public readonly string SkillId;
+        public readonly string DisplayName;
+        public readonly AbilityKind Ability;
+        public readonly string ItemName;
+        public readonly string LabelName;
+        public readonly string BonusName;
+
+        public CharacterCreationSkillDisplayBinding(string skillId, string displayName, AbilityKind ability, string itemName, string labelName, string bonusName)
+        {
+            SkillId = skillId;
+            DisplayName = displayName;
+            Ability = ability;
+            ItemName = itemName;
+            LabelName = labelName;
+            BonusName = bonusName;
+        }
+    }
+
     [Window(UILayer.UI, location: "CharacterCreationUI", fullScreen: true)]
     internal sealed class CharacterCreationUI : UIWindow
     {
-        private readonly struct DropdownOption
-        {
-            public readonly string Value;
-            public readonly string Label;
-
-            public DropdownOption(string value, string label)
-            {
-                Value = value ?? string.Empty;
-                Label = label ?? string.Empty;
-            }
-        }
-
-        private static readonly DropdownOption[] HpModeOptions =
-        {
-            new DropdownOption(CharacterHpModeIds.Custom, "自定义"),
-            new DropdownOption(CharacterHpModeIds.Average, "均值"),
-            new DropdownOption(CharacterHpModeIds.Rolled, "掷骰")
-        };
-
         private Button m_btnBack;
-        private Button m_btnSaveDraft;
-        private Button m_btnImportPortrait;
-        private TMP_InputField m_inputCharacterName;
-        private TMP_InputField m_inputAge;
-        private TMP_InputField m_inputHeight;
-        private TMP_InputField m_inputGender;
-        private TMP_InputField m_inputExperience;
-        private TMP_InputField m_inputLevel;
+        private Button m_btnConfirmDraft;
+        private Button m_btnSave;
+        private Button m_btnPanelClass;
+        private Button m_btnPanelRace;
+        private Button m_btnPanelBackground;
+        private Button m_btnPanelAlignment;
+        private Button m_btnAbilityGeneration;
+        private Button m_btnSectionInventory;
+        private Button m_btnSectionSkills;
+        private Button m_btnSectionEquipmentTools;
+        private Button m_btnSectionClass;
+        private Button m_btnSectionRace;
+        private Button m_btnSectionOtherFeatures;
+        private Button m_btnStrengthIncrease;
+        private Button m_btnStrengthDecrease;
+        private Button m_btnDexterityIncrease;
+        private Button m_btnDexterityDecrease;
+        private Button m_btnConstitutionIncrease;
+        private Button m_btnConstitutionDecrease;
+        private Button m_btnIntelligenceIncrease;
+        private Button m_btnIntelligenceDecrease;
+        private Button m_btnWisdomIncrease;
+        private Button m_btnWisdomDecrease;
+        private Button m_btnCharismaIncrease;
+        private Button m_btnCharismaDecrease;
+        private RectTransform m_rectInfoListContent;
+        private RectTransform m_rectSelectionListContent;
+        private GameObject m_goClassTemplate;
+        private GameObject m_goRaceTemplate;
+        private GameObject m_goBackgroundTemplate;
+        private GameObject m_goAlignmentTemplate;
+        private RectTransform m_rectEquipmentToolContent;
+        private GameObject m_goEquipmentToolTemplate;
+        private RectTransform m_rectClassFeatureContent;
+        private GameObject m_goClassFeatureTemplate;
+        private RectTransform m_rectRaceFeatureContent;
+        private GameObject m_goRaceFeatureTemplate;
+        private RectTransform m_rectSkillProficiencies;
+        private RectTransform m_rectInventoryContent;
+        private RectTransform m_rectOtherFeatureContent;
+        private TMP_Text m_tmpHitDiceDie;
+        private TMP_Text m_tmpHitDiceRemaining;
+        private TMP_Text m_tmpSpeed;
+        private TMP_Text m_tmpAc;
+        private TMP_Text m_tmpInitiative;
+        private TMP_Text m_tmpProficiencyBonus;
+        private TMP_Text m_tmpPassivePerception;
+        private TMP_Text m_tmpDc;
+        private TMP_Text m_tmpSpellAttackBonus;
+        private TMP_Text m_tmpDetailClass;
+        private TMP_Text m_tmpDetailRace;
+        private TMP_Text m_tmpDetailBackground;
+        private TMP_Text m_tmpDetailAlignment;
+        private TMP_Text m_tmpSkillsLabel;
+        private TMP_Text m_tmpEquipmentToolsLabel;
+        private TMP_Text m_tmpClassFeatureClassName;
+        private TMP_Text m_tmpClassFeatureSubclassName;
+        private TMP_Text m_tmpClassLevel;
+        private TMP_Text m_tmpRaceFeatureRaceName;
+        private TMP_Text m_tmpRaceFeatureSubRaceName;
+        private TMP_Text m_tmpFeatureDetailTitle;
+        private TMP_Text m_tmpFeatureDetailDescription;
+        private TMP_Text m_tmpStrength;
+        private TMP_Text m_tmpDexterity;
+        private TMP_Text m_tmpConstitution;
+        private TMP_Text m_tmpIntelligence;
+        private TMP_Text m_tmpWisdom;
+        private TMP_Text m_tmpCharisma;
+        private TMP_Text m_tmpStrengthModifier;
+        private TMP_Text m_tmpDexterityModifier;
+        private TMP_Text m_tmpConstitutionModifier;
+        private TMP_Text m_tmpIntelligenceModifier;
+        private TMP_Text m_tmpWisdomModifier;
+        private TMP_Text m_tmpCharismaModifier;
         private TMP_InputField m_inputStrength;
         private TMP_InputField m_inputDexterity;
         private TMP_InputField m_inputConstitution;
         private TMP_InputField m_inputIntelligence;
         private TMP_InputField m_inputWisdom;
         private TMP_InputField m_inputCharisma;
-        private TMP_InputField m_inputMaxHp;
-        private TMP_InputField m_inputCurrentHp;
-        private TMP_InputField m_inputTemporaryHp;
-        private TMP_Dropdown m_dropdownAlignment;
-        private TMP_Dropdown m_dropdownRace;
-        private TMP_Dropdown m_dropdownBackground;
-        private TMP_Dropdown m_dropdownClass;
-        private TMP_Dropdown m_dropdownHpMode;
-        private Image m_imgPreviewPortrait;
-        private GameObject m_goPreviewPortraitPlaceholder;
-        private TMP_Text m_tmpPreviewName;
-        private TMP_Text m_tmpPreviewRace;
-        private TMP_Text m_tmpPreviewClass;
-        private TMP_Text m_tmpPreviewLevel;
-        private TMP_Text m_tmpPreviewHp;
-        private TMP_Text m_tmpPreviewAbilities;
-        private TMP_Text m_tmpCreationMessage;
+        private readonly TMP_Text[] m_tmpSkillBonuses = new TMP_Text[18];
+        private readonly Image[] m_imgSkillBackgrounds = new Image[18];
+        private readonly Color[] m_defaultSkillBackgroundColors = new Color[18];
+        private readonly CanvasGroup[] m_canvasSkillItems = new CanvasGroup[18];
+        private readonly Button[] m_btnSkillItems = new Button[18];
+        private readonly Button[] m_btnAbilityItems = new Button[6];
+        private TMP_InputField m_inputCharacterName;
+        private TMP_InputField m_inputLevel;
+        private bool m_isUpdatingLevelInput;
+        private string m_pendingAbilityGenerationMethodId = string.Empty;
 
-        private readonly List<DropdownOption> m_alignmentOptions = new List<DropdownOption>();
-        private readonly List<DropdownOption> m_raceOptions = new List<DropdownOption>();
-        private readonly List<DropdownOption> m_backgroundOptions = new List<DropdownOption>();
-        private readonly List<DropdownOption> m_classOptions = new List<DropdownOption>();
-        private string m_previewImagePath = string.Empty;
-        private Texture2D m_loadedPortraitTexture;
-        private Sprite m_loadedPortraitSprite;
+        private const int MinCharacterLevel = 1;
+        private const int MaxCharacterLevel = 20;
+        private const int BaseAbilityScore = 10;
+        private const float SectionButtonMinHeight = 60f;
+        private const float SkillProficientAlpha = 1f;
+        private const float SkillNotProficientAlpha = 0.5f;
+        private static readonly Color SkillChoiceCandidateBackgroundColor = new Color(1f, 0.92f, 0.55f, 1f);
+        private static readonly CharacterCreationSkillDisplayBinding[] SkillDisplayBindings =
+        {
+            new CharacterCreationSkillDisplayBinding("athletics", "运动", AbilityKind.Strength, "m_itemSkillAthletics", "m_tmpSkillAthleticsLabel", "m_tmpSkillAthleticsBonus"),
+            new CharacterCreationSkillDisplayBinding("acrobatics", "体操", AbilityKind.Dexterity, "m_itemSkillAcrobatics", "m_tmpSkillAcrobaticsLabel", "m_tmpSkillAcrobaticsBonus"),
+            new CharacterCreationSkillDisplayBinding("sleight_of_hand", "巧手", AbilityKind.Dexterity, "m_itemSkillSleightOfHand", "m_tmpSkillSleightOfHandLabel", "m_tmpSkillSleightOfHandBonus"),
+            new CharacterCreationSkillDisplayBinding("stealth", "隐匿", AbilityKind.Dexterity, "m_itemSkillStealth", "m_tmpSkillStealthLabel", "m_tmpSkillStealthBonus"),
+            new CharacterCreationSkillDisplayBinding("arcana", "奥秘", AbilityKind.Intelligence, "m_itemSkillArcana", "m_tmpSkillArcanaLabel", "m_tmpSkillArcanaBonus"),
+            new CharacterCreationSkillDisplayBinding("history", "历史", AbilityKind.Intelligence, "m_itemSkillHistory", "m_tmpSkillHistoryLabel", "m_tmpSkillHistoryBonus"),
+            new CharacterCreationSkillDisplayBinding("investigation", "调查", AbilityKind.Intelligence, "m_itemSkillInvestigation", "m_tmpSkillInvestigationLabel", "m_tmpSkillInvestigationBonus"),
+            new CharacterCreationSkillDisplayBinding("nature", "自然", AbilityKind.Intelligence, "m_itemSkillNature", "m_tmpSkillNatureLabel", "m_tmpSkillNatureBonus"),
+            new CharacterCreationSkillDisplayBinding("religion", "宗教", AbilityKind.Intelligence, "m_itemSkillReligion", "m_tmpSkillReligionLabel", "m_tmpSkillReligionBonus"),
+            new CharacterCreationSkillDisplayBinding("animal_handling", "驯兽", AbilityKind.Wisdom, "m_itemSkillAnimalHandling", "m_tmpSkillAnimalHandlingLabel", "m_tmpSkillAnimalHandlingBonus"),
+            new CharacterCreationSkillDisplayBinding("insight", "洞悉", AbilityKind.Wisdom, "m_itemSkillInsight", "m_tmpSkillInsightLabel", "m_tmpSkillInsightBonus"),
+            new CharacterCreationSkillDisplayBinding("medicine", "医药", AbilityKind.Wisdom, "m_itemSkillMedicine", "m_tmpSkillMedicineLabel", "m_tmpSkillMedicineBonus"),
+            new CharacterCreationSkillDisplayBinding("perception", "察觉", AbilityKind.Wisdom, "m_itemSkillPerception", "m_tmpSkillPerceptionLabel", "m_tmpSkillPerceptionBonus"),
+            new CharacterCreationSkillDisplayBinding("survival", "求生", AbilityKind.Wisdom, "m_itemSkillSurvival", "m_tmpSkillSurvivalLabel", "m_tmpSkillSurvivalBonus"),
+            new CharacterCreationSkillDisplayBinding("deception", "欺瞒", AbilityKind.Charisma, "m_itemSkillDeception", "m_tmpSkillDeceptionLabel", "m_tmpSkillDeceptionBonus"),
+            new CharacterCreationSkillDisplayBinding("intimidation", "威吓", AbilityKind.Charisma, "m_itemSkillIntimidation", "m_tmpSkillIntimidationLabel", "m_tmpSkillIntimidationBonus"),
+            new CharacterCreationSkillDisplayBinding("performance", "表演", AbilityKind.Charisma, "m_itemSkillPerformance", "m_tmpSkillPerformanceLabel", "m_tmpSkillPerformanceBonus"),
+            new CharacterCreationSkillDisplayBinding("persuasion", "游说", AbilityKind.Charisma, "m_itemSkillPersuasion", "m_tmpSkillPersuasionLabel", "m_tmpSkillPersuasionBonus")
+        };
+
+        private readonly List<CharacterCreationClassCardView> m_classCards = new List<CharacterCreationClassCardView>();
+        private readonly List<CharacterCreationRaceCardView> m_raceCards = new List<CharacterCreationRaceCardView>();
+        private readonly List<CharacterCreationBackgroundCardView> m_backgroundCards = new List<CharacterCreationBackgroundCardView>();
+        private readonly List<CharacterCreationAlignmentCardView> m_alignmentCards = new List<CharacterCreationAlignmentCardView>();
+        private readonly List<CharacterCreationSelectionOptionCardView> m_selectionOptionCards = new List<CharacterCreationSelectionOptionCardView>();
+        private readonly List<CharacterCreationLabelItemView> m_equipmentToolItems = new List<CharacterCreationLabelItemView>();
+        private readonly List<CharacterCreationLabelItemView> m_classFeatureItems = new List<CharacterCreationLabelItemView>();
+        private readonly List<CharacterCreationLabelItemView> m_raceFeatureItems = new List<CharacterCreationLabelItemView>();
+        private readonly Dictionary<string, string> m_toolChoiceGroupIdByLabel = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private List<CharacterCreationSkillChoiceState> m_skillChoiceStates => CharacterCreationSessionService.Instance.SkillChoiceStates;
+        private List<CharacterCreationToolChoiceState> m_toolChoiceStates => CharacterCreationSessionService.Instance.ToolChoiceStates;
+        private List<CharacterCreationFeatureChoiceState> m_featureChoiceStates => CharacterCreationSessionService.Instance.FeatureChoiceStates;
+        private string SelectedClassId
+        {
+            get => CharacterCreationSessionService.Instance.CurrentState?.Character?.ClassId ?? string.Empty;
+            set => CharacterCreationSessionService.Instance.SetSelectedClass(value ?? string.Empty);
+        }
+
+        private string SelectedRaceId
+        {
+            get => CharacterCreationSessionService.Instance.CurrentState?.Character?.RaceId ?? string.Empty;
+            set => CharacterCreationSessionService.Instance.SetSelectedRace(value ?? string.Empty);
+        }
+
+        private string SelectedBackgroundId
+        {
+            get => CharacterCreationSessionService.Instance.CurrentState?.Character?.BackgroundId ?? string.Empty;
+            set => CharacterCreationSessionService.Instance.SetSelectedBackground(value ?? string.Empty);
+        }
+
+        private string SelectedAlignmentId
+        {
+            get => CharacterCreationSessionService.Instance.CurrentState?.Character?.Alignment ?? string.Empty;
+            set => CharacterCreationSessionService.Instance.SetSelectedAlignment(value ?? string.Empty);
+        }
+        private CharacterCreationToolChoiceState m_activeToolChoiceState
+        {
+            get => CharacterCreationSessionService.Instance.ActiveToolChoiceState;
+            set
+            {
+                if (value == null)
+                {
+                    CharacterCreationSessionService.Instance.ClearActiveChoice();
+                }
+                else
+                {
+                    CharacterCreationSessionService.Instance.SetActiveToolChoice(value);
+                }
+            }
+        }
+
+        private CharacterCreationFeatureChoiceState m_activeFeatureChoiceState
+        {
+            get => CharacterCreationSessionService.Instance.ActiveFeatureChoiceState;
+            set
+            {
+                if (value == null)
+                {
+                    CharacterCreationSessionService.Instance.ClearActiveChoice();
+                }
+                else
+                {
+                    CharacterCreationSessionService.Instance.SetActiveFeatureChoice(value);
+                }
+            }
+        }
 
         protected override void ScriptGenerator()
         {
+            CharacterCreationSessionService.Instance.BeginNewDraft();
             BindControls();
-            InitializeDropdowns();
-            BindEvents();
-            InitializeDefaults();
-            RefreshPreview();
+            BindButtons();
+            BindLevelInput();
+            HideRightPanelTemplates();
+            ClearSelectionList();
+            RebuildSkillChoiceStates();
+            RefreshCreationView();
         }
 
         private void BindControls()
         {
             m_btnBack = FindChildComponent<Button>("m_btnBack");
-            m_btnSaveDraft = FindChildComponent<Button>("m_btnSaveDraft");
-            m_btnImportPortrait = FindChildComponent<Button>("m_btnImportPortrait");
+            m_btnConfirmDraft = FindChildComponent<Button>("m_btnComfirmDraft");
+            m_btnSave = FindChildComponent<Button>("m_btnSave");
+            m_btnPanelClass = FindChildComponent<Button>("m_panelClass");
+            m_btnPanelRace = FindChildComponent<Button>("m_panelRace");
+            m_btnPanelBackground = FindChildComponent<Button>("m_panelBackground");
+            m_btnPanelAlignment = FindChildComponent<Button>("m_panelAlignment");
+            m_btnAbilityGeneration = FindChildComponent<Button>("m_btnAbilityGeneration");
+            m_btnSectionInventory = FindChildButton("m_sectionInventory");
+            m_btnSectionSkills = FindChildButton("m_sectionSkills");
+            m_btnSectionEquipmentTools = FindChildButton("m_sectionEquipmentTools");
+            m_btnSectionClass = FindChildButton("m_sectionClass");
+            m_btnSectionRace = FindChildButton("m_sectionRace");
+            m_btnSectionOtherFeatures = FindChildButton("m_sectionOtherFeatures");
+            m_btnStrengthIncrease = FindChildComponent<Button>("m_btnStrengthIncrease");
+            m_btnStrengthDecrease = FindChildComponent<Button>("m_btnStrengthDecrease");
+            m_btnDexterityIncrease = FindChildComponent<Button>("m_btnDexterityIncrease");
+            m_btnDexterityDecrease = FindChildComponent<Button>("m_btnDexterityDecrease");
+            m_btnConstitutionIncrease = FindChildComponent<Button>("m_btnConstitutionIncrease");
+            m_btnConstitutionDecrease = FindChildComponent<Button>("m_btnConstitutionDecrease");
+            m_btnIntelligenceIncrease = FindChildComponent<Button>("m_btnIntelligenceIncrease");
+            m_btnIntelligenceDecrease = FindChildComponent<Button>("m_btnIntelligenceDecrease");
+            m_btnWisdomIncrease = FindChildComponent<Button>("m_btnWisdomIncrease");
+            m_btnWisdomDecrease = FindChildComponent<Button>("m_btnWisdomDecrease");
+            m_btnCharismaIncrease = FindChildComponent<Button>("m_btnCharismaIncrease");
+            m_btnCharismaDecrease = FindChildComponent<Button>("m_btnCharismaDecrease");
+            m_rectInfoListContent = FindScrollContent("m_scrollInfoList");
+            m_rectSelectionListContent = FindScrollContent("m_scrollSelectionList");
+            m_goClassTemplate = FindChildComponent<RectTransform>("m_itemClassTemplate")?.gameObject;
+            m_goRaceTemplate = FindChildComponent<RectTransform>("m_itemRaceTemplate")?.gameObject;
+            m_goBackgroundTemplate = FindChildComponent<RectTransform>("m_itemBackgroundTemplate")?.gameObject;
+            m_goAlignmentTemplate = FindChildComponent<RectTransform>("m_itemAlignmentTemplate")?.gameObject;
+            m_rectEquipmentToolContent = FindChildComponent<RectTransform>("m_rectEquipmentToolContent");
+            m_goEquipmentToolTemplate = FindChildComponent<RectTransform>("m_itemEquipmentToolTemplate")?.gameObject;
+            m_rectClassFeatureContent = FindChildComponent<RectTransform>("m_rectClassFeatureContent");
+            m_goClassFeatureTemplate = FindChildComponent<RectTransform>("m_itemClassFeatureTemplate")?.gameObject;
+            m_rectRaceFeatureContent = FindChildComponent<RectTransform>("m_rectRaceFeatureContent");
+            m_goRaceFeatureTemplate = FindChildComponent<RectTransform>("m_itemRaceFeatureTemplate")?.gameObject;
+            m_rectSkillProficiencies = FindChildComponent<RectTransform>("m_gridSkillProficiencies");
+            m_rectInventoryContent = FindChildComponent<RectTransform>("m_rectInventoryContent");
+            m_rectOtherFeatureContent = FindChildComponent<RectTransform>("m_rectOtherFeatureContent");
+            BindSkillItems();
+            BindAbilityItems();
+            m_tmpHitDiceDie = FindChildComponent<TMP_Text>("m_tmpHitDiceDie");
+            m_tmpHitDiceRemaining = FindChildComponent<TMP_Text>("m_tmpHitDiceRemaining");
+            m_tmpSpeed = FindChildComponent<TMP_Text>("m_tmpSpeed");
+            m_tmpAc = FindChildComponent<TMP_Text>("m_tmpAc");
+            m_tmpInitiative = FindChildComponent<TMP_Text>("m_tmpInitiative");
+            m_tmpProficiencyBonus = FindChildComponent<TMP_Text>("m_tmpProficiencyBonus");
+            m_tmpPassivePerception = FindChildComponent<TMP_Text>("m_tmpPassivePerception");
+            m_tmpDc = FindChildComponent<TMP_Text>("m_tmpDc");
+            m_tmpSpellAttackBonus = FindChildComponent<TMP_Text>("m_tmpSpellAttackBonus");
+            m_tmpDetailClass = FindChildComponent<TMP_Text>("m_tmpDetailClass");
+            m_tmpDetailRace = FindChildComponent<TMP_Text>("m_tmpDetailRace");
+            m_tmpDetailBackground = FindChildComponent<TMP_Text>("m_tmpDetailBackground");
+            m_tmpDetailAlignment = FindChildComponent<TMP_Text>("m_tmpDetailAlignment");
+            m_tmpSkillsLabel = FindChildComponent<TMP_Text>("m_tmpSkillsLabel");
+            m_tmpEquipmentToolsLabel = FindChildComponent<TMP_Text>("m_tmpEquipmentToolsLabel");
+            m_tmpClassFeatureClassName = FindChildComponent<TMP_Text>("m_tmpClassFeatureClassName");
+            m_tmpClassFeatureSubclassName = FindChildComponent<TMP_Text>("m_tmpClassFeatureSubclassName");
+            m_tmpClassLevel = FindChildComponent<TMP_Text>("m_tmpClassLevel");
+            m_tmpRaceFeatureRaceName = FindChildComponent<TMP_Text>("m_tmpRaceFeatureRaceName");
+            m_tmpRaceFeatureSubRaceName = FindChildComponent<TMP_Text>("m_tmpRaceFeatureSubRaceName");
+            m_tmpFeatureDetailTitle = FindChildComponent<TMP_Text>("m_tmpFeatureDetailTitle");
+            m_tmpFeatureDetailDescription = FindChildComponent<TMP_Text>("m_tmpFeatureDetailDescription");
+            m_tmpStrength = FindChildComponent<TMP_Text>("m_tmpStrength");
+            m_tmpDexterity = FindChildComponent<TMP_Text>("m_tmpDexterity");
+            m_tmpConstitution = FindChildComponent<TMP_Text>("m_tmpConstitution");
+            m_tmpIntelligence = FindChildComponent<TMP_Text>("m_tmpIntelligence");
+            m_tmpWisdom = FindChildComponent<TMP_Text>("m_tmpWisdom");
+            m_tmpCharisma = FindChildComponent<TMP_Text>("m_tmpCharisma");
+            m_tmpStrengthModifier = FindChildComponent<TMP_Text>("m_tmpStrengthModifier");
+            m_tmpDexterityModifier = FindChildComponent<TMP_Text>("m_tmpDexterityModifier");
+            m_tmpConstitutionModifier = FindChildComponent<TMP_Text>("m_tmpConstitutionModifier");
+            m_tmpIntelligenceModifier = FindChildComponent<TMP_Text>("m_tmpIntelligenceModifier");
+            m_tmpWisdomModifier = FindChildComponent<TMP_Text>("m_tmpWisdomModifier");
+            m_tmpCharismaModifier = FindChildComponent<TMP_Text>("m_tmpCharismaModifier");
+            BindAbilityScoreInputs();
             m_inputCharacterName = FindChildComponent<TMP_InputField>("m_inputCharacterName");
-            m_inputAge = FindChildComponent<TMP_InputField>("m_inputAge");
-            m_inputHeight = FindChildComponent<TMP_InputField>("m_inputHeight");
-            m_inputGender = FindChildComponent<TMP_InputField>("m_inputGender");
-            m_inputExperience = FindChildComponent<TMP_InputField>("m_inputExperience");
-            m_inputLevel = FindChildComponent<TMP_InputField>("m_inputLevel");
-            m_inputStrength = FindChildComponent<TMP_InputField>("m_inputStrength");
-            m_inputDexterity = FindChildComponent<TMP_InputField>("m_inputDexterity");
-            m_inputConstitution = FindChildComponent<TMP_InputField>("m_inputConstitution");
-            m_inputIntelligence = FindChildComponent<TMP_InputField>("m_inputIntelligence");
-            m_inputWisdom = FindChildComponent<TMP_InputField>("m_inputWisdom");
-            m_inputCharisma = FindChildComponent<TMP_InputField>("m_inputCharisma");
-            m_inputMaxHp = FindChildComponent<TMP_InputField>("m_inputMaxHp");
-            m_inputCurrentHp = FindChildComponent<TMP_InputField>("m_inputCurrentHp");
-            m_inputTemporaryHp = FindChildComponent<TMP_InputField>("m_inputTemporaryHp");
-            m_dropdownAlignment = FindChildComponent<TMP_Dropdown>("m_dropdownAlignment");
-            m_dropdownRace = FindChildComponent<TMP_Dropdown>("m_dropdownRace");
-            m_dropdownBackground = FindChildComponent<TMP_Dropdown>("m_dropdownBackground");
-            m_dropdownClass = FindChildComponent<TMP_Dropdown>("m_dropdownClass");
-            m_dropdownHpMode = FindChildComponent<TMP_Dropdown>("m_dropdownHpMode");
-            m_imgPreviewPortrait = FindChildComponent<Image>("m_imgPreviewPortrait");
-            m_goPreviewPortraitPlaceholder = FindChildComponent<RectTransform>("m_tmpPreviewPortraitPlaceholder")?.gameObject;
-            m_tmpPreviewName = FindChildComponent<TMP_Text>("m_tmpPreviewName");
-            m_tmpPreviewRace = FindChildComponent<TMP_Text>("m_tmpPreviewRace");
-            m_tmpPreviewClass = FindChildComponent<TMP_Text>("m_tmpPreviewClass");
-            m_tmpPreviewLevel = FindChildComponent<TMP_Text>("m_tmpPreviewLevel");
-            m_tmpPreviewHp = FindChildComponent<TMP_Text>("m_tmpPreviewHp");
-            m_tmpPreviewAbilities = FindChildComponent<TMP_Text>("m_tmpPreviewAbilities");
-            m_tmpCreationMessage = FindChildComponent<TMP_Text>("m_tmpCreationMessage");
+            m_inputLevel = FindChildComponent<TMP_InputField>("m_tmpLevel");
         }
 
-        private void InitializeDropdowns()
+        private void BindSkillItems()
         {
-            m_alignmentOptions.Clear();
-            m_raceOptions.Clear();
-            m_backgroundOptions.Clear();
-            m_classOptions.Clear();
-
-            m_alignmentOptions.Add(new DropdownOption(string.Empty, "请选择阵营"));
-            IReadOnlyList<DndAlignmentData> alignments = DndRuleContentService.Instance.Alignments;
-            for (int index = 0; index < alignments.Count; index++)
+            for (int index = 0; index < SkillDisplayBindings.Length; index++)
             {
-                DndAlignmentData data = alignments[index];
-                m_alignmentOptions.Add(new DropdownOption(data.AlignmentId, FirstNonEmpty(data.Name, data.AlignmentId)));
+                CharacterCreationSkillDisplayBinding binding = SkillDisplayBindings[index];
+                RectTransform item = FindChildComponent<RectTransform>(binding.ItemName);
+                m_tmpSkillBonuses[index] = FindChildComponent<TMP_Text>(binding.BonusName);
+                m_imgSkillBackgrounds[index] = item != null ? item.GetComponent<Image>() : null;
+                m_defaultSkillBackgroundColors[index] = m_imgSkillBackgrounds[index] != null ? m_imgSkillBackgrounds[index].color : Color.white;
+                if (item != null)
+                {
+                    CanvasGroup canvasGroup = item.GetComponent<CanvasGroup>();
+                    if (canvasGroup == null)
+                    {
+                        canvasGroup = item.gameObject.AddComponent<CanvasGroup>();
+                    }
+
+                    m_canvasSkillItems[index] = canvasGroup;
+                    Button button = item.GetComponent<Button>();
+                    if (button == null)
+                    {
+                        button = item.gameObject.AddComponent<Button>();
+                    }
+
+                    button.transition = Selectable.Transition.None;
+                    int capturedIndex = index;
+                    button.onClick.RemoveAllListeners();
+                    button.onClick.AddListener(() => OnClickSkillItem(capturedIndex));
+                    m_btnSkillItems[index] = button;
+                }
             }
 
-            m_raceOptions.Add(new DropdownOption(string.Empty, "请选择种族"));
-            IReadOnlyList<DndRaceDefineData> races = DndRuleContentService.Instance.Races;
-            for (int index = 0; index < races.Count; index++)
-            {
-                DndRaceDefineData data = races[index];
-                m_raceOptions.Add(new DropdownOption(data.RaceId, FirstNonEmpty(data.Name, data.RaceId)));
-            }
-
-            m_backgroundOptions.Add(new DropdownOption(string.Empty, "请选择背景"));
-            IReadOnlyList<DndBackgroundDefineData> backgrounds = DndRuleContentService.Instance.Backgrounds;
-            for (int index = 0; index < backgrounds.Count; index++)
-            {
-                DndBackgroundDefineData data = backgrounds[index];
-                m_backgroundOptions.Add(new DropdownOption(data.BackgroundId, FirstNonEmpty(data.Name, data.BackgroundId)));
-            }
-
-            m_classOptions.Add(new DropdownOption(string.Empty, "请选择职业"));
-            IReadOnlyList<DndClassDefineData> classes = DndRuleContentService.Instance.Classes;
-            for (int index = 0; index < classes.Count; index++)
-            {
-                DndClassDefineData data = classes[index];
-                m_classOptions.Add(new DropdownOption(data.ClassId, FirstNonEmpty(data.Name, data.ClassId)));
-            }
-
-            SetupDropdown(m_dropdownAlignment, m_alignmentOptions);
-            SetupDropdown(m_dropdownRace, m_raceOptions);
-            SetupDropdown(m_dropdownBackground, m_backgroundOptions);
-            SetupDropdown(m_dropdownClass, m_classOptions);
-            SetupDropdown(m_dropdownHpMode, HpModeOptions);
+            SetActive(m_rectSkillProficiencies != null ? m_rectSkillProficiencies.gameObject : null, true);
         }
 
-        private void BindEvents()
+        private void BindAbilityItems()
+        {
+            BindAbilityItem(0, "m_abilityStrength", "Strength");
+            BindAbilityItem(1, "m_abilityDexterity", "Dexterity");
+            BindAbilityItem(2, "m_abilityConstitution", "Constitution");
+            BindAbilityItem(3, "m_abilityIntelligence", "Intelligence");
+            BindAbilityItem(4, "m_abilityWisdom", "Wisdom");
+            BindAbilityItem(5, "m_abilityCharisma", "Charisma");
+        }
+
+        private void BindAbilityItem(int index, string itemName, string abilityId)
+        {
+            RectTransform item = FindChildComponent<RectTransform>(itemName);
+            if (item == null || index < 0 || index >= m_btnAbilityItems.Length)
+            {
+                return;
+            }
+
+            Button button = item.GetComponent<Button>();
+            if (button == null)
+            {
+                button = item.gameObject.AddComponent<Button>();
+            }
+
+            button.transition = Selectable.Transition.None;
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => OnClickAbilityItem(abilityId));
+            m_btnAbilityItems[index] = button;
+        }
+
+        private void BindAbilityScoreInputs()
+        {
+            m_inputStrength = BindAbilityScoreInput(m_tmpStrength, "Strength");
+            m_inputDexterity = BindAbilityScoreInput(m_tmpDexterity, "Dexterity");
+            m_inputConstitution = BindAbilityScoreInput(m_tmpConstitution, "Constitution");
+            m_inputIntelligence = BindAbilityScoreInput(m_tmpIntelligence, "Intelligence");
+            m_inputWisdom = BindAbilityScoreInput(m_tmpWisdom, "Wisdom");
+            m_inputCharisma = BindAbilityScoreInput(m_tmpCharisma, "Charisma");
+        }
+
+        private TMP_InputField BindAbilityScoreInput(TMP_Text scoreText, string abilityId)
+        {
+            if (scoreText == null)
+            {
+                return null;
+            }
+
+            TMP_InputField input = scoreText.GetComponent<TMP_InputField>();
+            if (input == null)
+            {
+                Log.Warning($"CharacterCreationUI ability score input is missing TMP_InputField: {scoreText.name}");
+                return null;
+            }
+
+            if (input.textComponent == null)
+            {
+                input.textComponent = scoreText;
+            }
+
+            if (input.textViewport == null)
+            {
+                input.textViewport = input.textComponent != null ? input.textComponent.rectTransform : scoreText.rectTransform;
+            }
+
+            input.contentType = TMP_InputField.ContentType.IntegerNumber;
+            input.lineType = TMP_InputField.LineType.SingleLine;
+            input.characterLimit = 2;
+            input.interactable = false;
+            input.onEndEdit.RemoveAllListeners();
+            input.onEndEdit.AddListener(value => OnAbilityScoreInputEndEdit(abilityId, value));
+            return input;
+        }
+
+        private void BindButtons()
         {
             BindButton(m_btnBack, ReturnToCharacterManagement);
-            BindButton(m_btnSaveDraft, SaveDraft);
-            BindButton(m_btnImportPortrait, ImportPortrait);
-            BindInput(m_inputCharacterName, RefreshPreview);
-            BindInput(m_inputExperience, RefreshPreview);
-            BindInput(m_inputLevel, RefreshPreview);
-            BindInput(m_inputStrength, RefreshPreview);
-            BindInput(m_inputDexterity, RefreshPreview);
-            BindInput(m_inputConstitution, RefreshPreview);
-            BindInput(m_inputIntelligence, RefreshPreview);
-            BindInput(m_inputWisdom, RefreshPreview);
-            BindInput(m_inputCharisma, RefreshPreview);
-            BindInput(m_inputMaxHp, RefreshPreview);
-            BindInput(m_inputCurrentHp, RefreshPreview);
-            BindInput(m_inputTemporaryHp, RefreshPreview);
-            BindDropdown(m_dropdownRace, RefreshPreview);
-            BindDropdown(m_dropdownBackground, RefreshPreview);
-            BindDropdown(m_dropdownClass, RefreshPreview);
-            BindDropdown(m_dropdownAlignment, RefreshPreview);
-            BindDropdown(m_dropdownHpMode, RefreshPreview);
+            BindButton(m_btnSave, SaveDraft);
+            BindButton(m_btnConfirmDraft, ConfirmCurrentRightPanelSelection);
+            BindButton(m_btnPanelClass, ShowClassOptions);
+            BindButton(m_btnPanelRace, ShowRaceOptions);
+            BindButton(m_btnPanelBackground, ShowBackgroundOptions);
+            BindButton(m_btnPanelAlignment, ShowAlignmentOptions);
+            BindButton(m_btnAbilityGeneration, OnClickAbilityGenerationButton);
+            BindButton(m_btnSectionInventory, () => ToggleRectActive(m_rectInventoryContent));
+            BindButton(m_btnSectionSkills, () => ToggleRectActive(m_rectSkillProficiencies));
+            BindButton(m_btnSectionEquipmentTools, () => ToggleRectActive(m_rectEquipmentToolContent));
+            BindButton(m_btnSectionClass, () => ToggleRectActive(m_rectClassFeatureContent));
+            BindButton(m_btnSectionRace, () => ToggleRectActive(m_rectRaceFeatureContent));
+            BindButton(m_btnSectionOtherFeatures, () => ToggleRectActive(m_rectOtherFeatureContent));
+            BindButton(m_btnStrengthIncrease, () => ChangeAbilityScore("Strength", 1));
+            BindButton(m_btnStrengthDecrease, () => ChangeAbilityScore("Strength", -1));
+            BindButton(m_btnDexterityIncrease, () => ChangeAbilityScore("Dexterity", 1));
+            BindButton(m_btnDexterityDecrease, () => ChangeAbilityScore("Dexterity", -1));
+            BindButton(m_btnConstitutionIncrease, () => ChangeAbilityScore("Constitution", 1));
+            BindButton(m_btnConstitutionDecrease, () => ChangeAbilityScore("Constitution", -1));
+            BindButton(m_btnIntelligenceIncrease, () => ChangeAbilityScore("Intelligence", 1));
+            BindButton(m_btnIntelligenceDecrease, () => ChangeAbilityScore("Intelligence", -1));
+            BindButton(m_btnWisdomIncrease, () => ChangeAbilityScore("Wisdom", 1));
+            BindButton(m_btnWisdomDecrease, () => ChangeAbilityScore("Wisdom", -1));
+            BindButton(m_btnCharismaIncrease, () => ChangeAbilityScore("Charisma", 1));
+            BindButton(m_btnCharismaDecrease, () => ChangeAbilityScore("Charisma", -1));
         }
 
-        private void InitializeDefaults()
+        private void BindLevelInput()
         {
-            SetInputText(m_inputLevel, "1");
-            SetInputText(m_inputExperience, "0");
-            SetInputText(m_inputStrength, "10");
-            SetInputText(m_inputDexterity, "10");
-            SetInputText(m_inputConstitution, "10");
-            SetInputText(m_inputIntelligence, "10");
-            SetInputText(m_inputWisdom, "10");
-            SetInputText(m_inputCharisma, "10");
-            SetInputText(m_inputMaxHp, "0");
-            SetInputText(m_inputCurrentHp, "0");
-            SetInputText(m_inputTemporaryHp, "0");
-            SetText(m_tmpCreationMessage, string.Empty);
+            if (m_inputLevel == null)
+            {
+                return;
+            }
+
+            m_inputLevel.contentType = TMP_InputField.ContentType.IntegerNumber;
+            m_inputLevel.lineType = TMP_InputField.LineType.SingleLine;
+            m_inputLevel.characterLimit = 2;
+            if (string.IsNullOrWhiteSpace(m_inputLevel.text))
+            {
+                m_inputLevel.SetTextWithoutNotify(MinCharacterLevel.ToString());
+            }
+
+            m_inputLevel.onValueChanged.RemoveAllListeners();
+            m_inputLevel.onEndEdit.RemoveAllListeners();
+            m_inputLevel.onValueChanged.AddListener(OnLevelInputChanged);
+            m_inputLevel.onEndEdit.AddListener(OnLevelInputEndEdit);
         }
 
-        private void RefreshPreview()
+        private void OnLevelInputChanged(string value)
         {
-            string characterName = GetInputText(m_inputCharacterName);
-            int level = Math.Max(1, ParseInt(m_inputLevel, 1));
-            int maxHp = Math.Max(0, ParseInt(m_inputMaxHp, 0));
-            int currentHp = CharacterCardManagementUI.NormalizeCurrentHp(ParseInt(m_inputCurrentHp, maxHp), maxHp);
-            int tempHp = Math.Max(0, ParseInt(m_inputTemporaryHp, 0));
+            if (m_isUpdatingLevelInput || m_inputLevel == null)
+            {
+                return;
+            }
 
-            SetText(m_tmpPreviewName, string.IsNullOrWhiteSpace(characterName) ? "未命名角色" : characterName);
-            SetText(m_tmpPreviewRace, $"种族：{GetSelectedLabel(m_raceOptions, m_dropdownRace, "-")}");
-            SetText(m_tmpPreviewClass, $"职业：{GetSelectedLabel(m_classOptions, m_dropdownClass, "-")}");
-            SetText(m_tmpPreviewLevel, $"等级：{level}");
-            SetText(m_tmpPreviewHp, tempHp > 0 ? $"HP：{currentHp}/{maxHp} +{tempHp}" : $"HP：{currentHp}/{maxHp}");
-            SetText(
-                m_tmpPreviewAbilities,
-                $"属性：{ParseInt(m_inputStrength, 10)} / {ParseInt(m_inputDexterity, 10)} / {ParseInt(m_inputConstitution, 10)} / {ParseInt(m_inputIntelligence, 10)} / {ParseInt(m_inputWisdom, 10)} / {ParseInt(m_inputCharisma, 10)}");
+            string digits = KeepDigitsOnly(value);
+            if (digits == value)
+            {
+                return;
+            }
+
+            m_isUpdatingLevelInput = true;
+            m_inputLevel.SetTextWithoutNotify(digits);
+            m_isUpdatingLevelInput = false;
+        }
+
+        private void OnLevelInputEndEdit(string value)
+        {
+            if (m_inputLevel == null)
+            {
+                return;
+            }
+
+            int level = ParseLevel(value);
+            m_inputLevel.SetTextWithoutNotify(level.ToString());
+            CharacterCreationSessionService.Instance.SetLevel(level);
+            RebuildFeatureChoiceStates();
+            RefreshCreationView();
+        }
+
+        private void ShowClassOptions()
+        {
+            if (m_rectInfoListContent == null || m_goClassTemplate == null)
+            {
+                Log.Warning("CharacterCreationUI: class option list binding is missing.");
+                return;
+            }
+
+            HideRightPanelTemplates();
+            List<CharacterCreationOptionViewState> options = CharacterCreationRuleService.Instance.GetClassOptions();
+            EnsureClassCardCount(options.Count);
+
+            for (int index = 0; index < m_classCards.Count; index++)
+            {
+                CharacterCreationClassCardView card = m_classCards[index];
+                bool active = index < options.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationOptionViewState option = options[index];
+                string classId = option?.Id ?? string.Empty;
+                card.Bind(
+                    classId,
+                    option?.Name ?? string.Empty,
+                    string.Equals(SelectedClassId, classId, StringComparison.OrdinalIgnoreCase),
+                    OnClickClassCard);
+            }
+        }
+
+        private void ShowRaceOptions()
+        {
+            if (m_rectInfoListContent == null || m_goRaceTemplate == null)
+            {
+                Log.Warning("CharacterCreationUI: race option list binding is missing.");
+                return;
+            }
+
+            HideRightPanelTemplates();
+            List<CharacterCreationOptionViewState> options = CharacterCreationRuleService.Instance.GetRaceOptions();
+            EnsureRaceCardCount(options.Count);
+
+            for (int index = 0; index < m_raceCards.Count; index++)
+            {
+                CharacterCreationRaceCardView card = m_raceCards[index];
+                bool active = index < options.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationOptionViewState option = options[index];
+                string raceId = option?.Id ?? string.Empty;
+                card.Bind(
+                    raceId,
+                    option?.Name ?? string.Empty,
+                    string.Equals(SelectedRaceId, raceId, StringComparison.OrdinalIgnoreCase),
+                    OnClickRaceCard);
+            }
+        }
+
+        private void ShowBackgroundOptions()
+        {
+            if (m_rectInfoListContent == null || m_goBackgroundTemplate == null)
+            {
+                Log.Warning("CharacterCreationUI: background option list binding is missing.");
+                return;
+            }
+
+            HideRightPanelTemplates();
+            List<CharacterCreationOptionViewState> options = CharacterCreationRuleService.Instance.GetBackgroundOptions();
+            EnsureBackgroundCardCount(options.Count);
+
+            for (int index = 0; index < m_backgroundCards.Count; index++)
+            {
+                CharacterCreationBackgroundCardView card = m_backgroundCards[index];
+                bool active = index < options.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationOptionViewState option = options[index];
+                string backgroundId = option?.Id ?? string.Empty;
+                card.Bind(
+                    backgroundId,
+                    option?.Name ?? string.Empty,
+                    string.Equals(SelectedBackgroundId, backgroundId, StringComparison.OrdinalIgnoreCase),
+                    OnClickBackgroundCard);
+            }
+        }
+
+        private void ShowAlignmentOptions()
+        {
+            if (m_rectInfoListContent == null || m_goAlignmentTemplate == null)
+            {
+                Log.Warning("CharacterCreationUI: alignment option list binding is missing.");
+                return;
+            }
+
+            HideRightPanelTemplates();
+            List<CharacterCreationOptionViewState> options = CharacterCreationRuleService.Instance.GetAlignmentOptions();
+            EnsureAlignmentCardCount(options.Count);
+
+            for (int index = 0; index < m_alignmentCards.Count; index++)
+            {
+                CharacterCreationAlignmentCardView card = m_alignmentCards[index];
+                bool active = index < options.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationOptionViewState option = options[index];
+                string alignmentId = option?.Id ?? string.Empty;
+                card.Bind(
+                    alignmentId,
+                    option?.Name ?? string.Empty,
+                    string.Equals(SelectedAlignmentId, alignmentId, StringComparison.OrdinalIgnoreCase),
+                    OnClickAlignmentCard);
+            }
+        }
+
+
+        private CharacterCreationToolChoiceState TryCreateToolChoiceState(string label)
+        {
+            if (string.IsNullOrWhiteSpace(label))
+            {
+                return null;
+            }
+
+            string trimmedLabel = label.Trim();
+            if (m_toolChoiceGroupIdByLabel.TryGetValue(trimmedLabel, out string mappedChoiceGroupId)
+                && CharacterCreationRuleService.Instance.TryGetToolChoiceGroup(mappedChoiceGroupId, out DndChoiceGroupData choiceGroup))
+            {
+                DndRaceDefineData raceData = null;
+                DndBackgroundDefineData backgroundData = null;
+                TryGetSelectedRace(out raceData);
+                if (!string.IsNullOrWhiteSpace(SelectedBackgroundId))
+                {
+                    TryGetBackground(SelectedBackgroundId, out backgroundData);
+                }
+
+                return TryCreateStructuredToolChoiceState(
+                    choiceGroup,
+                    trimmedLabel,
+                    CharacterCreationRuleService.Instance.GetToolChoiceSourceType(choiceGroup.ChoiceGroupId, raceData, backgroundData),
+                    CharacterCreationRuleService.Instance.GetToolChoiceSourceId(choiceGroup.ChoiceGroupId, SelectedClassId, raceData, backgroundData));
+            }
+
+            return null;
+        }
+
+        private CharacterCreationToolChoiceState TryCreateStructuredToolChoiceState(DndChoiceGroupData choiceGroup, string label, string sourceType, string sourceId)
+        {
+            return CharacterCreationSessionService.Instance.CreateOrRefreshToolChoiceState(
+                choiceGroup,
+                label,
+                sourceType,
+                sourceId,
+                CharacterCreationRuleService.Instance.ResolveToolIdFromChoiceOption);
+        }
+
+        private void EnsureClassCardCount(int count)
+        {
+            if (m_rectInfoListContent == null || m_goClassTemplate == null)
+            {
+                return;
+            }
+
+            while (m_classCards.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goClassTemplate, m_rectInfoListContent);
+                itemObject.name = $"m_itemClass_{m_classCards.Count + 1}";
+                itemObject.SetActive(true);
+                m_classCards.Add(CharacterCreationClassCardView.Bind(itemObject));
+            }
+        }
+
+        private void EnsureRaceCardCount(int count)
+        {
+            if (m_rectInfoListContent == null || m_goRaceTemplate == null)
+            {
+                return;
+            }
+
+            while (m_raceCards.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goRaceTemplate, m_rectInfoListContent);
+                itemObject.name = $"m_itemRace_{m_raceCards.Count + 1}";
+                itemObject.SetActive(true);
+                m_raceCards.Add(CharacterCreationRaceCardView.Bind(itemObject));
+            }
+        }
+
+        private void EnsureBackgroundCardCount(int count)
+        {
+            if (m_rectInfoListContent == null || m_goBackgroundTemplate == null)
+            {
+                return;
+            }
+
+            while (m_backgroundCards.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goBackgroundTemplate, m_rectInfoListContent);
+                itemObject.name = $"m_itemBackground_{m_backgroundCards.Count + 1}";
+                itemObject.SetActive(true);
+                m_backgroundCards.Add(CharacterCreationBackgroundCardView.Bind(itemObject));
+            }
+        }
+
+        private void EnsureAlignmentCardCount(int count)
+        {
+            if (m_rectInfoListContent == null || m_goAlignmentTemplate == null)
+            {
+                return;
+            }
+
+            while (m_alignmentCards.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goAlignmentTemplate, m_rectInfoListContent);
+                itemObject.name = $"m_itemAlignment_{m_alignmentCards.Count + 1}";
+                itemObject.SetActive(true);
+                m_alignmentCards.Add(CharacterCreationAlignmentCardView.Bind(itemObject));
+            }
+        }
+
+
+        private void EnsureSelectionOptionCardCount(int count)
+        {
+            if (m_rectSelectionListContent == null)
+            {
+                return;
+            }
+
+            GameObject template = GetSelectionOptionTemplate();
+            if (template == null)
+            {
+                return;
+            }
+
+            while (m_selectionOptionCards.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(template, m_rectSelectionListContent);
+                itemObject.name = $"m_itemSelectionOption_{m_selectionOptionCards.Count + 1}";
+                itemObject.SetActive(true);
+                m_selectionOptionCards.Add(CharacterCreationSelectionOptionCardView.Bind(itemObject));
+            }
+        }
+
+        private GameObject GetSelectionOptionTemplate()
+        {
+            if (m_rectSelectionListContent == null)
+            {
+                return null;
+            }
+
+            if (m_selectionOptionCards.Count > 0)
+            {
+                return m_selectionOptionCards[0].Root;
+            }
+
+            for (int index = 0; index < m_rectSelectionListContent.childCount; index++)
+            {
+                Transform child = m_rectSelectionListContent.GetChild(index);
+                if (child != null && !child.name.StartsWith("m_itemSelectionOption_", StringComparison.Ordinal))
+                {
+                    return child.gameObject;
+                }
+            }
+
+            return null;
+        }
+
+        private void ClearSelectionList()
+        {
+            m_activeToolChoiceState = null;
+            m_activeFeatureChoiceState = null;
+            m_pendingAbilityGenerationMethodId = string.Empty;
+            if (m_rectSelectionListContent == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < m_selectionOptionCards.Count; index++)
+            {
+                m_selectionOptionCards[index].SetActive(false);
+            }
+
+            for (int index = 0; index < m_rectSelectionListContent.childCount; index++)
+            {
+                Transform child = m_rectSelectionListContent.GetChild(index);
+                if (child != null)
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void OnClickClassCard(string classId)
+        {
+            if (string.IsNullOrWhiteSpace(classId))
+            {
+                return;
+            }
+
+            CharacterCreationSessionService.Instance.ToggleSelectedClass(classId);
+
+            RemoveToolChoiceStatesBySource("Class");
+            RemoveFeatureChoiceStatesBySource("Class");
+            ClearSelectionList();
+            RebuildSkillChoiceStates();
+            RefreshCreationView();
+            ShowClassOptions();
+        }
+
+        private void OnClickRaceCard(string raceId)
+        {
+            if (string.IsNullOrWhiteSpace(raceId))
+            {
+                return;
+            }
+
+            CharacterCreationSessionService.Instance.ToggleSelectedRace(raceId);
+
+            RemoveToolChoiceStatesBySource("Race");
+            RemoveFeatureChoiceStatesBySource("Race");
+            SyncSelectedRaceRuleState();
+            ClearSelectionList();
+            RebuildSkillChoiceStates();
+            RefreshCreationView();
+            ShowRaceOptions();
+        }
+
+        private void OnClickBackgroundCard(string backgroundId)
+        {
+            if (string.IsNullOrWhiteSpace(backgroundId))
+            {
+                return;
+            }
+
+            CharacterCreationSessionService.Instance.ToggleSelectedBackground(backgroundId);
+
+            RemoveToolChoiceStatesBySource("Background");
+            ClearSelectionList();
+            RebuildSkillChoiceStates();
+            RefreshCreationView();
+            ShowBackgroundOptions();
+        }
+
+        private void OnClickAlignmentCard(string alignmentId)
+        {
+            if (string.IsNullOrWhiteSpace(alignmentId))
+            {
+                return;
+            }
+
+            CharacterCreationSessionService.Instance.ToggleSelectedAlignment(alignmentId);
+
+            RefreshCreationView();
+            ShowAlignmentOptions();
+        }
+
+        private void ShowToolSelectionOptions(CharacterCreationToolChoiceState state)
+        {
+            if (state == null)
+            {
+                ClearSelectionList();
+                return;
+            }
+
+            m_activeFeatureChoiceState = null;
+            m_activeToolChoiceState = state;
+            EnsureSelectionOptionCardCount(state.OptionToolIds.Count);
+
+            for (int index = 0; index < m_selectionOptionCards.Count; index++)
+            {
+                CharacterCreationSelectionOptionCardView card = m_selectionOptionCards[index];
+                bool active = index < state.OptionToolIds.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                string toolId = state.OptionToolIds[index];
+                string label = CharacterCreationEquipmentToolDisplayService.Instance.GetToolDisplayName(toolId);
+                card.Bind(label, ContainsExactId(state.PendingToolIds, toolId), () => OnClickToolSelectionOption(toolId));
+            }
+        }
+
+        private void ShowFeatureSelectionOptions(CharacterCreationFeatureChoiceState state)
+        {
+            if (state == null)
+            {
+                ClearSelectionList();
+                return;
+            }
+
+            m_activeToolChoiceState = null;
+            m_activeFeatureChoiceState = state;
+            if (state.PendingOptionIds.Count == 0 && state.SelectedOptionIds.Count > 0)
+            {
+                for (int index = 0; index < state.SelectedOptionIds.Count; index++)
+                {
+                    AppendUniqueExactValue(state.PendingOptionIds, state.SelectedOptionIds[index]);
+                }
+            }
+
+            EnsureSelectionOptionCardCount(state.OptionIds.Count);
+
+            for (int index = 0; index < m_selectionOptionCards.Count; index++)
+            {
+                CharacterCreationSelectionOptionCardView card = m_selectionOptionCards[index];
+                bool active = index < state.OptionIds.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                string optionId = state.OptionIds[index];
+                string label = CharacterCreationFeatureDisplayService.Instance.GetChoiceOptionDisplayName(state.ChoiceGroupId, optionId);
+                card.Bind(label, ContainsExactId(state.PendingOptionIds, optionId), () => OnClickFeatureSelectionOption(optionId));
+            }
+        }
+
+        private void OnClickAbilityGenerationButton()
+        {
+            m_pendingAbilityGenerationMethodId = string.Empty;
+            ShowAbilityGenerationMethodOptions();
+        }
+
+        private void ShowAbilityGenerationMethodOptions()
+        {
+            m_activeToolChoiceState = null;
+            m_activeFeatureChoiceState = null;
+            List<CharacterCreationAbilityGenerationMethodViewState> methods = CharacterCreationSessionService.Instance.GetAbilityGenerationMethods();
+            EnsureSelectionOptionCardCount(methods.Count);
+
+            for (int index = 0; index < m_selectionOptionCards.Count; index++)
+            {
+                CharacterCreationSelectionOptionCardView card = m_selectionOptionCards[index];
+                bool active = index < methods.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationAbilityGenerationMethodViewState method = methods[index];
+                card.Bind(method.Name, string.Equals(m_pendingAbilityGenerationMethodId, method.MethodId, StringComparison.OrdinalIgnoreCase), () => OnClickAbilityGenerationMethod(method.MethodId));
+            }
+        }
+
+        private void ShowGeneratedAbilityScoreOptions()
+        {
+            m_activeToolChoiceState = null;
+            m_activeFeatureChoiceState = null;
+            m_pendingAbilityGenerationMethodId = string.Empty;
+            List<CharacterCreationGeneratedAbilityScoreViewState> options = CharacterCreationSessionService.Instance.BuildGeneratedAbilityScoreOptions();
+            EnsureSelectionOptionCardCount(options.Count);
+
+            for (int index = 0; index < m_selectionOptionCards.Count; index++)
+            {
+                CharacterCreationSelectionOptionCardView card = m_selectionOptionCards[index];
+                bool active = index < options.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationGeneratedAbilityScoreViewState option = options[index];
+                string label = option.IsAssigned ? $"{option.Label} 已分配" : option.Label;
+                card.Bind(label, option.IsSelected || option.IsAssigned, () => OnClickGeneratedAbilityScore(option.ScoreId));
+            }
+        }
+
+        private void OnClickAbilityGenerationMethod(string methodId)
+        {
+            m_pendingAbilityGenerationMethodId = string.Equals(m_pendingAbilityGenerationMethodId, methodId, StringComparison.OrdinalIgnoreCase)
+                ? string.Empty
+                : methodId?.Trim() ?? string.Empty;
+            ShowAbilityGenerationMethodOptions();
+        }
+
+        private void OnClickGeneratedAbilityScore(string scoreId)
+        {
+            if (CharacterCreationSessionService.Instance.SelectGeneratedAbilityScore(scoreId))
+            {
+                RefreshCreationView();
+                ShowGeneratedAbilityScoreOptions();
+            }
+        }
+
+        private void OnClickAbilityItem(string abilityId)
+        {
+            if (CharacterCreationSessionService.Instance.AssignPendingGeneratedAbilityScore(abilityId))
+            {
+                RefreshCreationView();
+                ShowGeneratedAbilityScoreOptions();
+            }
+        }
+
+        private void OnAbilityScoreInputEndEdit(string abilityId, string value)
+        {
+            if (!int.TryParse(KeepDigitsOnly(value), out int score))
+            {
+                RefreshCreationView();
+                return;
+            }
+
+            if (CharacterCreationSessionService.Instance.SetManualAbilityScore(abilityId, score))
+            {
+                RefreshCreationView();
+            }
+        }
+
+        private void OnClickToolSelectionOption(string toolId)
+        {
+            CharacterCreationToolChoiceState state = m_activeToolChoiceState;
+            if (state == null || string.IsNullOrWhiteSpace(toolId))
+            {
+                return;
+            }
+
+            CharacterCreationSessionService.Instance.TogglePendingToolChoice(toolId);
+            ShowToolSelectionOptions(state);
+        }
+
+        private void OnClickFeatureSelectionOption(string optionId)
+        {
+            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            if (state == null || string.IsNullOrWhiteSpace(optionId))
+            {
+                return;
+            }
+
+            CharacterCreationSessionService.Instance.TogglePendingFeatureChoice(optionId);
+            ShowFeatureSelectionOptions(state);
+        }
+
+        private void ConfirmCurrentRightPanelSelection()
+        {
+            if (!string.IsNullOrWhiteSpace(m_pendingAbilityGenerationMethodId))
+            {
+                if (!CharacterCreationSessionService.Instance.StartAbilityGeneration(m_pendingAbilityGenerationMethodId))
+                {
+                    return;
+                }
+
+                RefreshCreationView();
+                SetActive(m_btnAbilityGeneration != null ? m_btnAbilityGeneration.gameObject : null, false);
+                if (CharacterCreationSessionService.Instance.BuildGeneratedAbilityScoreOptions().Count > 0)
+                {
+                    ShowGeneratedAbilityScoreOptions();
+                }
+                else
+                {
+                    ClearSelectionList();
+                    HideRightPanelTemplates();
+                }
+
+                return;
+            }
+
+            if (CharacterCreationSessionService.Instance.IsAbilityGenerationAssignmentComplete())
+            {
+                ClearSelectionList();
+                HideRightPanelTemplates();
+                RefreshCreationView();
+                return;
+            }
+
+            if (m_activeFeatureChoiceState != null)
+            {
+                if (!ConfirmFeatureSelection(m_activeFeatureChoiceState))
+                {
+                    return;
+                }
+
+                RefreshCreationView();
+                HideRightPanelTemplates();
+                ClearSelectionList();
+                return;
+            }
+
+            if (m_activeToolChoiceState == null)
+            {
+                return;
+            }
+
+            CharacterCreationToolChoiceState state = m_activeToolChoiceState;
+            CharacterCreationSessionService.Instance.ConfirmActiveToolChoice();
+
+            RefreshCreationView();
+            HideRightPanelTemplates();
+            ClearSelectionList();
+        }
+
+        private bool ConfirmFeatureSelection(CharacterCreationFeatureChoiceState state)
+        {
+            if (state == null)
+            {
+                return false;
+            }
+
+            bool confirmed = CharacterCreationSessionService.Instance.ConfirmFeatureChoice(state);
+            if (!confirmed)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void RefreshCreationView()
+        {
+            int level = ParseLevel(m_inputLevel != null ? m_inputLevel.text : string.Empty);
+            CharacterCreationViewState state = CharacterCreationViewStateService.Instance.BuildCurrentViewState(level);
+            ApplyCreationViewState(state);
+        }
+
+        private void ApplyCreationViewState(CharacterCreationViewState state)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            SetText(m_tmpDetailClass, state.ClassSummary);
+            SetText(m_tmpDetailRace, state.RaceSummary);
+            SetText(m_tmpDetailBackground, state.BackgroundSummary);
+            SetText(m_tmpDetailAlignment, state.AlignmentSummary);
+            SetText(m_tmpHitDiceDie, state.HitDiceCountText);
+            SetText(m_tmpHitDiceRemaining, state.HitDiceDieText);
+            SetText(m_tmpSpeed, state.SpeedText);
+            SetText(m_tmpAc, state.ArmorClassText);
+            SetText(m_tmpInitiative, state.InitiativeText);
+            SetText(m_tmpProficiencyBonus, state.ProficiencyBonusText);
+            SetText(m_tmpPassivePerception, state.PassivePerceptionText);
+            SetText(m_tmpDc, state.SpellSaveDcText);
+            SetText(m_tmpSpellAttackBonus, state.SpellAttackBonusText);
+            SetText(m_tmpSkillsLabel, state.SkillsSummary);
+            SetText(m_tmpEquipmentToolsLabel, state.EquipmentToolsSummary);
+            SetText(m_tmpClassFeatureClassName, state.ClassFeatureClassName);
+            SetText(m_tmpClassFeatureSubclassName, state.ClassFeatureSubclassName);
+            SetText(m_tmpClassLevel, state.ClassLevelText);
+            SetText(m_tmpRaceFeatureRaceName, state.RaceFeatureRaceName);
+            SetText(m_tmpRaceFeatureSubRaceName, state.RaceFeatureSubRaceName);
+
+            ApplyAbilityViewStates(state.Abilities);
+            ApplySkillViewStates(state.Skills);
+            ApplyEquipmentToolViewState(state.EquipmentTools);
+            RefreshClassFeatureItems(state.ClassFeatures);
+            RefreshRaceFeatureItems(state.RaceFeatures);
+        }
+
+        private void ApplyAbilityViewStates(IReadOnlyList<CharacterCreationAbilityViewState> abilities)
+        {
+            ApplyAbilityViewState(abilities, "Strength", m_tmpStrength, m_tmpStrengthModifier, m_btnStrengthIncrease, m_btnStrengthDecrease, m_inputStrength);
+            ApplyAbilityViewState(abilities, "Dexterity", m_tmpDexterity, m_tmpDexterityModifier, m_btnDexterityIncrease, m_btnDexterityDecrease, m_inputDexterity);
+            ApplyAbilityViewState(abilities, "Constitution", m_tmpConstitution, m_tmpConstitutionModifier, m_btnConstitutionIncrease, m_btnConstitutionDecrease, m_inputConstitution);
+            ApplyAbilityViewState(abilities, "Intelligence", m_tmpIntelligence, m_tmpIntelligenceModifier, m_btnIntelligenceIncrease, m_btnIntelligenceDecrease, m_inputIntelligence);
+            ApplyAbilityViewState(abilities, "Wisdom", m_tmpWisdom, m_tmpWisdomModifier, m_btnWisdomIncrease, m_btnWisdomDecrease, m_inputWisdom);
+            ApplyAbilityViewState(abilities, "Charisma", m_tmpCharisma, m_tmpCharismaModifier, m_btnCharismaIncrease, m_btnCharismaDecrease, m_inputCharisma);
+        }
+
+        private void ApplyAbilityViewState(
+            IReadOnlyList<CharacterCreationAbilityViewState> abilities,
+            string abilityId,
+            TMP_Text scoreText,
+            TMP_Text modifierText,
+            Button increaseButton,
+            Button decreaseButton,
+            TMP_InputField scoreInput)
+        {
+            CharacterCreationAbilityViewState state = FindAbilityViewState(abilities, abilityId);
+            if (state == null)
+            {
+                return;
+            }
+
+            string scoreValue = state.Score.ToString();
+            if (scoreInput != null)
+            {
+                scoreInput.SetTextWithoutNotify(scoreValue);
+                scoreInput.interactable = state.CanManualInput;
+            }
+            else
+            {
+                SetText(scoreText, scoreValue);
+            }
+
+            SetText(modifierText, state.ModifierText);
+            SetActive(increaseButton != null ? increaseButton.gameObject : null, state.CanIncrease);
+            SetActive(decreaseButton != null ? decreaseButton.gameObject : null, state.CanDecrease);
+        }
+
+        private static CharacterCreationAbilityViewState FindAbilityViewState(IReadOnlyList<CharacterCreationAbilityViewState> abilities, string abilityId)
+        {
+            if (abilities == null || string.IsNullOrWhiteSpace(abilityId))
+            {
+                return null;
+            }
+
+            for (int index = 0; index < abilities.Count; index++)
+            {
+                CharacterCreationAbilityViewState state = abilities[index];
+                if (state != null && string.Equals(state.AbilityId, abilityId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return state;
+                }
+            }
+
+            return null;
+        }
+
+        private void ApplySkillViewStates(IReadOnlyList<CharacterCreationSkillViewState> skills)
+        {
+            for (int index = 0; index < SkillDisplayBindings.Length; index++)
+            {
+                CharacterCreationSkillViewState state = index < (skills?.Count ?? 0) ? skills[index] : null;
+                if (state == null)
+                {
+                    continue;
+                }
+
+                SetText(m_tmpSkillBonuses[index], state.BonusText);
+                SetSkillBackground(index, state.HasProficiency, state.IsChoiceCandidate);
+            }
+        }
+
+        private void ApplyEquipmentToolViewState(CharacterCreationEquipmentToolDisplayState state)
+        {
+            m_toolChoiceGroupIdByLabel.Clear();
+            if (state != null)
+            {
+                foreach (KeyValuePair<string, string> pair in state.ChoiceGroupIdByLabel)
+                {
+                    m_toolChoiceGroupIdByLabel[pair.Key] = pair.Value;
+                }
+            }
+
+            IReadOnlyList<string> labels = state != null ? state.Labels : Array.Empty<string>();
+            RefreshEquipmentToolItems(labels);
+        }
+
+        private void RefreshSkillPanel()
+        {
+            SetActive(m_rectSkillProficiencies != null ? m_rectSkillProficiencies.gameObject : null, true);
+            CharacterCreationViewState state = CharacterCreationViewStateService.Instance.BuildCurrentViewState(ParseLevel(m_inputLevel != null ? m_inputLevel.text : string.Empty));
+            ApplySkillViewStates(state.Skills);
+        }
+
+        private List<string> BuildCurrentSkillProficiencyIds()
+        {
+            return CharacterCreationSessionService.Instance.BuildCurrentSkillProficiencyIds(BuildFixedSkillProficiencyIds());
+        }
+
+        private void RebuildSkillChoiceStates()
+        {
+            DndClassDefineData classData = null;
+            DndRaceDefineData raceData = null;
+            DndBackgroundDefineData backgroundData = null;
+            TryGetSelectedClass(out classData);
+            TryGetSelectedRace(out raceData);
+            if (!string.IsNullOrWhiteSpace(SelectedBackgroundId))
+            {
+                TryGetBackground(SelectedBackgroundId, out backgroundData);
+            }
+
+            CharacterCreationSessionService.Instance.RebuildSkillChoiceStatesForCurrentSelection(classData, raceData, backgroundData);
+        }
+
+        private void SyncSelectedRaceRuleState()
+        {
+            if (TryGetSelectedRace(out DndRaceDefineData raceData))
+            {
+                RebuildRaceAbilityBonuses(raceData);
+                RebuildFeatureChoiceStates();
+            }
+            else
+            {
+                CharacterCreationSessionService.Instance.ClearRaceAbilityChoiceState();
+                RebuildFeatureChoiceStates();
+            }
+        }
+
+        private List<string> BuildFixedSkillProficiencyIds()
+        {
+            DndRaceDefineData raceData = null;
+            DndBackgroundDefineData backgroundData = null;
+            TryGetSelectedRace(out raceData);
+            if (!string.IsNullOrWhiteSpace(SelectedBackgroundId))
+            {
+                TryGetBackground(SelectedBackgroundId, out backgroundData);
+            }
+
+            return CharacterCreationRuleService.Instance.BuildFixedSkillProficiencyIds(raceData, backgroundData);
+        }
+
+        private static bool TryGetBackground(string backgroundId, out DndBackgroundDefineData backgroundData)
+        {
+            return CharacterCreationRuleService.Instance.TryGetBackground(backgroundId, out backgroundData);
+        }
+
+        private void SetSkillBackground(int index, bool hasProficiency, bool isChoiceCandidate)
+        {
+            if (index < 0 || index >= m_imgSkillBackgrounds.Length)
+            {
+                return;
+            }
+
+            Image image = m_imgSkillBackgrounds[index];
+            if (image != null)
+            {
+                image.color = isChoiceCandidate ? SkillChoiceCandidateBackgroundColor : m_defaultSkillBackgroundColors[index];
+            }
+
+            CanvasGroup canvasGroup = m_canvasSkillItems[index];
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = hasProficiency ? SkillProficientAlpha : SkillNotProficientAlpha;
+            }
+        }
+
+        private void OnClickSkillItem(int index)
+        {
+            if (index < 0 || index >= SkillDisplayBindings.Length)
+            {
+                return;
+            }
+
+            string skillId = SkillDisplayBindings[index].SkillId;
+            if (CharacterCreationSessionService.Instance.TrySelectSkill(skillId, BuildCurrentSkillProficiencyIds()))
+            {
+                RefreshCreationView();
+            }
+        }
+
+        private bool IsSkillChoiceCandidate(string skillId)
+        {
+            return CharacterCreationSessionService.Instance.IsSkillChoiceCandidate(skillId, BuildCurrentSkillProficiencyIds());
+        }
+
+        private void RemoveToolChoiceStatesBySource(string sourceType)
+        {
+            CharacterCreationSessionService.Instance.RemoveToolChoiceStatesBySource(sourceType);
+        }
+
+        private void RefreshEquipmentToolItems(IReadOnlyList<string> labels)
+        {
+            RefreshLabelItems(m_equipmentToolItems, m_rectEquipmentToolContent, m_goEquipmentToolTemplate, labels, "m_itemEquipmentTool_", "m_tmpEquipmentToolLabel");
+            BindEquipmentToolItemChoices(labels);
+        }
+
+        private void BindEquipmentToolItemChoices(IReadOnlyList<string> labels)
+        {
+            if (labels == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < m_equipmentToolItems.Count; index++)
+            {
+                CharacterCreationLabelItemView item = m_equipmentToolItems[index];
+                if (item == null)
+                {
+                    continue;
+                }
+
+                if (index >= labels.Count)
+                {
+                    item.BindClick(null, false);
+                    item.SetAlpha(SkillProficientAlpha);
+                    continue;
+                }
+
+                string label = labels[index];
+                CharacterCreationToolChoiceState state = TryCreateToolChoiceState(label);
+                if (state == null)
+                {
+                    item.BindClick(null, false);
+                    item.SetAlpha(SkillProficientAlpha);
+                }
+                else
+                {
+                    item.BindClick(() => ShowToolSelectionOptions(state), true);
+                    item.SetAlpha(SkillNotProficientAlpha);
+                }
+            }
+        }
+
+        private void RefreshClassFeatureItems(IReadOnlyList<CharacterCreationFeatureDisplayEntry> entries)
+        {
+            RefreshFeatureLabelItems(m_classFeatureItems, m_rectClassFeatureContent, m_goClassFeatureTemplate, entries, "m_itemClassFeature_", "m_tmpClassFeatureTitle");
+        }
+
+        private void RefreshRaceFeatureItems(IReadOnlyList<CharacterCreationFeatureDisplayEntry> entries)
+        {
+            RefreshFeatureLabelItems(m_raceFeatureItems, m_rectRaceFeatureContent, m_goRaceFeatureTemplate, entries, "m_itemRaceFeature_", "m_tmpRaceFeatureTitle");
+        }
+
+        private void HideRightPanelTemplates()
+        {
+            if (m_rectInfoListContent == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < m_rectInfoListContent.childCount; index++)
+            {
+                Transform child = m_rectInfoListContent.GetChild(index);
+                if (child == null)
+                {
+                    continue;
+                }
+
+                bool isGeneratedClassCard = child.name.StartsWith("m_itemClass_", StringComparison.Ordinal);
+                bool isGeneratedRaceCard = child.name.StartsWith("m_itemRace_", StringComparison.Ordinal);
+                bool isGeneratedBackgroundCard = child.name.StartsWith("m_itemBackground_", StringComparison.Ordinal);
+                bool isGeneratedAlignmentCard = child.name.StartsWith("m_itemAlignment_", StringComparison.Ordinal);
+                if (!isGeneratedClassCard && !isGeneratedRaceCard && !isGeneratedBackgroundCard && !isGeneratedAlignmentCard)
+                {
+                    child.gameObject.SetActive(false);
+                }
+                else
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
         }
 
         private void SaveDraft()
         {
-            CharacterCardDraftSaveData character = new CharacterCardDraftSaveData
+            CharacterCreationDraftInput input = BuildCreationDraftInput();
+            CharacterOperationResult result = CharacterApplicationService.Instance.SaveCreationDraft(input);
+            if (!result.Success)
             {
-                CharacterName = GetInputText(m_inputCharacterName),
-                Alignment = GetSelectedValue(m_alignmentOptions, m_dropdownAlignment),
-                RaceId = GetSelectedValue(m_raceOptions, m_dropdownRace),
-                ClassId = GetSelectedValue(m_classOptions, m_dropdownClass),
-                BackgroundId = GetSelectedValue(m_backgroundOptions, m_dropdownBackground),
-                PreviewImagePath = m_previewImagePath,
-                Level = Math.Max(1, ParseInt(m_inputLevel, 1)),
-                Experience = Math.Max(0, ParseInt(m_inputExperience, 0)),
-                HpModeId = GetSelectedValue(HpModeOptions, m_dropdownHpMode),
-                MaxHp = Math.Max(0, ParseInt(m_inputMaxHp, 0)),
-                CurrentHp = ParseInt(m_inputCurrentHp, -1),
-                TemporaryHp = Math.Max(0, ParseInt(m_inputTemporaryHp, 0)),
-                IsCompleted = false
-            };
-
-            character.IdentityProfile.Age = GetInputText(m_inputAge);
-            character.IdentityProfile.Height = GetInputText(m_inputHeight);
-            character.IdentityProfile.Gender = GetInputText(m_inputGender);
-            character.RuntimeSnapshot.Strength = ParseInt(m_inputStrength, 10);
-            character.RuntimeSnapshot.Dexterity = ParseInt(m_inputDexterity, 10);
-            character.RuntimeSnapshot.Constitution = ParseInt(m_inputConstitution, 10);
-            character.RuntimeSnapshot.Intelligence = ParseInt(m_inputIntelligence, 10);
-            character.RuntimeSnapshot.Wisdom = ParseInt(m_inputWisdom, 10);
-            character.RuntimeSnapshot.Charisma = ParseInt(m_inputCharisma, 10);
-
-            if (!string.IsNullOrWhiteSpace(character.ClassId))
-            {
-                character.ClassProgresses.Add(new CharacterClassProgressSaveData
-                {
-                    ClassId = character.ClassId,
-                    Level = character.Level
-                });
+                Log.Warning(string.IsNullOrWhiteSpace(result.Message) ? "角色保存失败。" : result.Message);
+                return;
             }
 
-            CharacterCardLocalRepository.Upsert(character);
-            SetText(m_tmpCreationMessage, "角色草稿已保存");
             ReturnToCharacterManagement();
         }
 
-        private void ImportPortrait()
+        private CharacterCreationDraftInput BuildCreationDraftInput()
         {
-#if UNITY_EDITOR
-            string path = UnityEditor.EditorUtility.OpenFilePanel("选择角色形象", string.Empty, "png,jpg,jpeg");
-            if (string.IsNullOrWhiteSpace(path))
+            int level = ParseLevel(m_inputLevel != null ? m_inputLevel.text : string.Empty);
+            CharacterCreationFormInput form = new CharacterCreationFormInput
             {
-                return;
-            }
+                CharacterName = m_inputCharacterName != null ? m_inputCharacterName.text.Trim() : string.Empty,
+                RaceId = SelectedRaceId,
+                ClassId = SelectedClassId,
+                BackgroundId = SelectedBackgroundId,
+                AlignmentId = SelectedAlignmentId,
+                Level = level,
+                Speed = CharacterCreationViewStateService.Instance.GetSelectedRaceSpeed(),
+                BaseAbilityScore = BaseAbilityScore,
+                FixedSkillProficiencyIds = CharacterCreationViewStateService.Instance.BuildFixedSkillProficiencyIds(),
+                FixedToolProficiencyIds = CharacterCreationViewStateService.Instance.BuildFixedToolProficiencyIds()
+            };
 
-            m_previewImagePath = path;
-            ApplyPortrait(path);
-            RefreshPreview();
-#else
-            Log.Warning("CharacterCreationUI: runtime image import requires a platform file picker.");
-            SetText(m_tmpCreationMessage, "当前运行环境暂未接入图片选择器");
-#endif
-        }
-
-        private void ApplyPortrait(string path)
-        {
-            if (m_imgPreviewPortrait == null || string.IsNullOrWhiteSpace(path) || !File.Exists(path))
-            {
-                return;
-            }
-
-            try
-            {
-                byte[] bytes = File.ReadAllBytes(path);
-                Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if (!texture.LoadImage(bytes))
-                {
-                    UnityEngine.Object.Destroy(texture);
-                    return;
-                }
-
-                if (m_loadedPortraitSprite != null)
-                {
-                    UnityEngine.Object.Destroy(m_loadedPortraitSprite);
-                    m_loadedPortraitSprite = null;
-                }
-
-                if (m_loadedPortraitTexture != null)
-                {
-                    UnityEngine.Object.Destroy(m_loadedPortraitTexture);
-                }
-
-                m_loadedPortraitTexture = texture;
-                m_loadedPortraitSprite = Sprite.Create(
-                    texture,
-                    new Rect(0, 0, texture.width, texture.height),
-                    new Vector2(0.5f, 0.5f));
-                m_imgPreviewPortrait.sprite = m_loadedPortraitSprite;
-                m_imgPreviewPortrait.preserveAspect = true;
-                SetActive(m_goPreviewPortraitPlaceholder, false);
-            }
-            catch (Exception exception)
-            {
-                Log.Warning($"CharacterCreationUI: failed to load portrait. {exception.Message}");
-            }
+            return CharacterCreationSessionService.Instance.BuildDraftInput(form);
         }
 
         private void ReturnToCharacterManagement()
         {
             GameModule.UI.CloseUI<CharacterCreationUI>();
             GameModule.UI.ShowUIAsync<CharacterCardManagementUI>();
-        }
-
-        private static void SetupDropdown(TMP_Dropdown dropdown, IReadOnlyList<DropdownOption> options)
-        {
-            if (dropdown == null)
-            {
-                return;
-            }
-
-            dropdown.ClearOptions();
-            List<TMP_Dropdown.OptionData> optionData = new List<TMP_Dropdown.OptionData>();
-            if (options != null)
-            {
-                for (int index = 0; index < options.Count; index++)
-                {
-                    optionData.Add(new TMP_Dropdown.OptionData(options[index].Label));
-                }
-            }
-
-            dropdown.AddOptions(optionData);
-            dropdown.SetValueWithoutNotify(0);
-            dropdown.RefreshShownValue();
-        }
-
-        private static void BindButton(Button button, Action action)
-        {
-            if (button == null)
-            {
-                return;
-            }
-
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => action?.Invoke());
-        }
-
-        private static void BindInput(TMP_InputField input, Action action)
-        {
-            if (input == null)
-            {
-                return;
-            }
-
-            input.onValueChanged.RemoveAllListeners();
-            input.onValueChanged.AddListener(_ => action?.Invoke());
-        }
-
-        private static void BindDropdown(TMP_Dropdown dropdown, Action action)
-        {
-            if (dropdown == null)
-            {
-                return;
-            }
-
-            dropdown.onValueChanged.RemoveAllListeners();
-            dropdown.onValueChanged.AddListener(_ => action?.Invoke());
         }
 
         private T FindChildComponent<T>(string childName) where T : Component
@@ -402,40 +1500,132 @@ namespace GameLogic
             return null;
         }
 
-        private static string GetInputText(TMP_InputField input)
+        private Button FindChildButton(string childName)
         {
-            return input != null ? input.text?.Trim() ?? string.Empty : string.Empty;
+            RectTransform rectTransform = FindChildComponent<RectTransform>(childName);
+            if (rectTransform == null)
+            {
+                return null;
+            }
+
+            Button button = rectTransform.GetComponent<Button>();
+            if (button == null)
+            {
+                button = rectTransform.gameObject.AddComponent<Button>();
+            }
+
+            button.transition = Selectable.Transition.None;
+            button.interactable = true;
+            EnsureButtonRaycastTarget(button);
+            EnsureMinLayoutHeight(rectTransform, SectionButtonMinHeight);
+            return button;
         }
 
-        private static void SetInputText(TMP_InputField input, string value)
+        private RectTransform FindScrollContent(string scrollName)
         {
-            input?.SetTextWithoutNotify(value ?? string.Empty);
+            ScrollRect scrollRect = FindChildComponent<ScrollRect>(scrollName);
+            return scrollRect != null ? scrollRect.content : null;
         }
 
-        private static int ParseInt(TMP_InputField input, int fallback)
+        private static string KeepDigitsOnly(string value)
         {
-            string text = GetInputText(input);
-            return int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out int value) ? value : fallback;
-        }
-
-        private static string GetSelectedValue(IReadOnlyList<DropdownOption> options, TMP_Dropdown dropdown)
-        {
-            if (options == null || dropdown == null || dropdown.value < 0 || dropdown.value >= options.Count)
+            if (string.IsNullOrEmpty(value))
             {
                 return string.Empty;
             }
 
-            return options[dropdown.value].Value;
-        }
-
-        private static string GetSelectedLabel(IReadOnlyList<DropdownOption> options, TMP_Dropdown dropdown, string emptyText)
-        {
-            if (options == null || dropdown == null || dropdown.value <= 0 || dropdown.value >= options.Count)
+            char[] buffer = new char[value.Length];
+            int length = 0;
+            for (int index = 0; index < value.Length; index++)
             {
-                return emptyText ?? string.Empty;
+                char character = value[index];
+                if (character >= '0' && character <= '9')
+                {
+                    buffer[length] = character;
+                    length++;
+                }
             }
 
-            return options[dropdown.value].Label;
+            return new string(buffer, 0, length);
+        }
+
+        private static int ParseLevel(string value)
+        {
+            int level;
+            if (!int.TryParse(KeepDigitsOnly(value), out level))
+            {
+                level = MinCharacterLevel;
+            }
+
+            return Mathf.Clamp(level, MinCharacterLevel, MaxCharacterLevel);
+        }
+
+        private static void BindButton(Button button, Action action)
+        {
+            if (button == null)
+            {
+                return;
+            }
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => action?.Invoke());
+        }
+
+        private static void ToggleRectActive(RectTransform target)
+        {
+            if (target == null)
+            {
+                return;
+            }
+
+            GameObject targetObject = target.gameObject;
+            targetObject.SetActive(!targetObject.activeSelf);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(target.parent as RectTransform);
+        }
+
+        private static void EnsureButtonRaycastTarget(Button button)
+        {
+            if (button == null)
+            {
+                return;
+            }
+
+            Graphic graphic = button.targetGraphic != null ? button.targetGraphic : button.GetComponent<Graphic>();
+            if (graphic == null)
+            {
+                Image image = button.gameObject.AddComponent<Image>();
+                image.color = new Color(1f, 1f, 1f, 0f);
+                image.raycastTarget = true;
+                button.targetGraphic = image;
+                return;
+            }
+
+            graphic.raycastTarget = true;
+            button.targetGraphic = graphic;
+        }
+
+        private static void EnsureMinLayoutHeight(RectTransform rectTransform, float minHeight)
+        {
+            if (rectTransform == null || rectTransform.rect.height > 0f)
+            {
+                return;
+            }
+
+            LayoutElement layoutElement = rectTransform.GetComponent<LayoutElement>();
+            if (layoutElement == null)
+            {
+                layoutElement = rectTransform.gameObject.AddComponent<LayoutElement>();
+            }
+
+            if (layoutElement.minHeight < minHeight)
+            {
+                layoutElement.minHeight = minHeight;
+            }
+
+            if (layoutElement.preferredHeight < minHeight)
+            {
+                layoutElement.preferredHeight = minHeight;
+            }
         }
 
         private static string FirstNonEmpty(string first, string second)
@@ -451,11 +1641,703 @@ namespace GameLogic
             }
         }
 
+        private static void AppendPrefixedLabels(List<string> labels, string prefix, IReadOnlyList<string> values)
+        {
+            if (labels == null || values == null || values.Count == 0)
+            {
+                return;
+            }
+
+            for (int index = 0; index < values.Count; index++)
+            {
+                string value = values[index];
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    labels.Add($"{prefix}：{value.Trim()}");
+                }
+            }
+        }
+
+        private bool TryGetSelectedRace(out DndRaceDefineData raceData)
+        {
+            return CharacterCreationRuleService.Instance.TryGetRace(SelectedRaceId, out raceData);
+        }
+
+        private void RebuildRaceAbilityBonuses(DndRaceDefineData raceData)
+        {
+            CharacterCreationRuleService.Instance.ConfigureRaceAbilityChoice(raceData);
+        }
+
+        private bool TryGetSelectedClass(out DndClassDefineData classData)
+        {
+            classData = null;
+            return !string.IsNullOrWhiteSpace(SelectedClassId)
+                && CharacterCreationRuleService.Instance.TryGetClass(SelectedClassId, out classData);
+        }
+
+        private void ChangeAbilityScore(string abilityId, int delta)
+        {
+            if (CharacterCreationSessionService.Instance.ChangeAbilityScore(abilityId, delta))
+            {
+                RefreshCreationView();
+            }
+        }
+
+        private static string FormatSigned(int value)
+        {
+            return CharacterCreationCalculationService.Instance.FormatSigned(value);
+        }
+
+        private static bool ContainsExactId(IReadOnlyList<string> values, string id)
+        {
+            if (values == null || string.IsNullOrWhiteSpace(id))
+            {
+                return false;
+            }
+
+            string normalized = id.Trim();
+            for (int index = 0; index < values.Count; index++)
+            {
+                if (string.Equals(values[index]?.Trim(), normalized, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static void AppendUniqueExactValue(List<string> target, string value)
+        {
+            if (target == null || string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
+
+            if (!ContainsExactId(target, value))
+            {
+                target.Add(value.Trim());
+            }
+        }
+
+        private CharacterCreationFeatureChoiceState TryGetNextPendingFeatureChoiceState(CharacterCreationFeatureDisplayEntry entry)
+        {
+            if (entry == null)
+            {
+                return null;
+            }
+
+            if (entry.IsChoiceOptionDisplay)
+            {
+                return null;
+            }
+
+            if (entry.ChoiceGroupIds.Count == 0)
+            {
+                return null;
+            }
+
+            CharacterCreationFeatureChoiceState state = CharacterCreationSessionService.Instance.FindOrCreateFeatureChoiceState(
+                entry.ChoiceGroupIds,
+                entry.SourceType,
+                entry.SourceId,
+                entry.Level);
+            return state != null && !CharacterCreationFeatureDisplayService.Instance.IsFeatureChoiceCompleted(state) ? state : null;
+        }
+
+        private string GetSelectedSubclassDisplayName(string classId)
+        {
+            if (string.IsNullOrWhiteSpace(classId))
+            {
+                return string.Empty;
+            }
+
+            for (int index = 0; index < m_featureChoiceStates.Count; index++)
+            {
+                CharacterCreationFeatureChoiceState state = m_featureChoiceStates[index];
+                if (state == null
+                    || !string.Equals(state.SourceType, "Class", StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(state.ClassId, classId, StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(state.ChoiceType, "Subclass", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                return CharacterCreationFeatureDisplayService.Instance.GetSelectedFeatureChoiceDisplayName(state);
+            }
+
+            return string.Empty;
+        }
+
+        private void RebuildFeatureChoiceStates()
+        {
+            DndClassDefineData classData = null;
+            DndRaceDefineData raceData = null;
+            TryGetSelectedClass(out classData);
+            TryGetSelectedRace(out raceData);
+            int level = ParseLevel(m_inputLevel != null ? m_inputLevel.text : string.Empty);
+            CharacterCreationSessionService.Instance.RebuildFeatureChoiceStatesForCurrentSelection(classData, raceData, level);
+        }
+
+        private CharacterCreationFeatureChoiceState TryCreateFeatureChoiceState(CharacterCreationFeatureDisplayEntry entry)
+        {
+            if (entry == null)
+            {
+                return null;
+            }
+
+            return CharacterCreationSessionService.Instance.FindOrCreateFeatureChoiceState(
+                entry.ChoiceGroupIds,
+                entry.SourceType,
+                entry.SourceId,
+                entry.Level);
+        }
+
+        private CharacterCreationFeatureChoiceState FindFeatureChoiceState(string choiceGroupId)
+        {
+            return CharacterCreationSessionService.Instance.FindFeatureChoiceState(choiceGroupId);
+        }
+
+        private void RemoveFeatureChoiceStatesBySource(string sourceType)
+        {
+            CharacterCreationSessionService.Instance.RemoveFeatureChoiceStatesBySource(sourceType);
+        }
+
+        private static string NormalizeSkillId(string value)
+        {
+            string normalized = value?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalized))
+            {
+                return string.Empty;
+            }
+
+            normalized = normalized.Replace(" ", "_").Replace("-", "_").ToLowerInvariant();
+            for (int index = 0; index < SkillDisplayBindings.Length; index++)
+            {
+                CharacterCreationSkillDisplayBinding binding = SkillDisplayBindings[index];
+                if (string.Equals(normalized, binding.SkillId, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(value.Trim(), binding.DisplayName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return binding.SkillId;
+                }
+            }
+
+            return normalized;
+        }
+
+        private static void AppendUniqueValues(List<string> target, IReadOnlyList<string> values)
+        {
+            if (target == null || values == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < values.Count; index++)
+            {
+                string value = values[index];
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    continue;
+                }
+
+                bool exists = false;
+                for (int targetIndex = 0; targetIndex < target.Count; targetIndex++)
+                {
+                    if (string.Equals(target[targetIndex], value, StringComparison.OrdinalIgnoreCase))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists)
+                {
+                    target.Add(value.Trim());
+                }
+            }
+        }
+
         private static void SetActive(GameObject target, bool active)
         {
             if (target != null && target.activeSelf != active)
             {
                 target.SetActive(active);
+            }
+        }
+
+        private static void RefreshLabelItems(
+            List<CharacterCreationLabelItemView> itemViews,
+            RectTransform content,
+            GameObject template,
+            IReadOnlyList<string> labels,
+            string generatedNamePrefix,
+            string labelChildName)
+        {
+            if (itemViews == null || content == null || template == null)
+            {
+                return;
+            }
+
+            int count = labels?.Count ?? 0;
+            while (itemViews.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(template, content);
+                itemObject.name = $"{generatedNamePrefix}{itemViews.Count + 1}";
+                itemObject.SetActive(true);
+                itemViews.Add(CharacterCreationLabelItemView.Bind(itemObject, labelChildName));
+            }
+
+            if (template.activeSelf)
+            {
+                template.SetActive(false);
+            }
+
+            for (int index = 0; index < itemViews.Count; index++)
+            {
+                bool active = index < count;
+                itemViews[index].SetActive(active);
+                if (active)
+                {
+                    itemViews[index].SetLabel(labels[index]);
+                }
+            }
+        }
+
+        private void RefreshFeatureLabelItems(
+            List<CharacterCreationLabelItemView> itemViews,
+            RectTransform content,
+            GameObject template,
+            IReadOnlyList<CharacterCreationFeatureDisplayEntry> entries,
+            string generatedNamePrefix,
+            string labelChildName)
+        {
+            if (itemViews == null || content == null || template == null)
+            {
+                return;
+            }
+
+            int count = entries?.Count ?? 0;
+            while (itemViews.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(template, content);
+                itemObject.name = $"{generatedNamePrefix}{itemViews.Count + 1}";
+                itemObject.SetActive(true);
+                itemViews.Add(CharacterCreationLabelItemView.Bind(itemObject, labelChildName));
+            }
+
+            if (template.activeSelf)
+            {
+                template.SetActive(false);
+            }
+
+            for (int index = 0; index < itemViews.Count; index++)
+            {
+                CharacterCreationLabelItemView itemView = itemViews[index];
+                bool active = index < count;
+                itemView.SetActive(active);
+                if (!active)
+                {
+                    itemView.BindClick(null, false);
+                    itemView.SetAlpha(SkillProficientAlpha);
+                    continue;
+                }
+
+                CharacterCreationFeatureDisplayEntry entry = entries[index];
+                itemView.SetLabel(CharacterCreationFeatureDisplayService.Instance.BuildFeatureEntryDisplayTitle(entry));
+                itemView.SetAlpha(SkillProficientAlpha);
+                CharacterCreationFeatureDisplayEntry capturedEntry = entry;
+                itemView.BindClick(() => OnClickFeatureEntry(capturedEntry), true);
+            }
+        }
+
+        private void OnClickFeatureEntry(CharacterCreationFeatureDisplayEntry entry)
+        {
+            if (entry == null)
+            {
+                return;
+            }
+
+            ShowFeatureDetail(entry);
+            CharacterCreationFeatureChoiceState state = TryGetNextPendingFeatureChoiceState(entry);
+            if (state != null)
+            {
+                ShowFeatureSelectionOptions(state);
+            }
+            else
+            {
+                ClearSelectionList();
+            }
+        }
+
+        private void ShowFeatureDetail(CharacterCreationFeatureDisplayEntry entry)
+        {
+            if (entry == null)
+            {
+                return;
+            }
+
+            SetText(m_tmpFeatureDetailTitle, CharacterCreationFeatureDisplayService.Instance.BuildFeatureEntryDisplayTitle(entry));
+            SetText(m_tmpFeatureDetailDescription, CharacterCreationFeatureDisplayService.Instance.BuildFeatureEntryDisplayDescription(entry));
+        }
+
+        private sealed class CharacterCreationLabelItemView
+        {
+            private readonly GameObject m_root;
+            private readonly Button m_button;
+            private readonly CanvasGroup m_canvasGroup;
+            private readonly TMP_Text m_label;
+
+            private CharacterCreationLabelItemView(GameObject root, Button button, CanvasGroup canvasGroup, TMP_Text label)
+            {
+                m_root = root;
+                m_button = button;
+                m_canvasGroup = canvasGroup;
+                m_label = label;
+            }
+
+            public static CharacterCreationLabelItemView Bind(GameObject root, string labelChildName)
+            {
+                Button button = null;
+                CanvasGroup canvasGroup = null;
+                TMP_Text label = null;
+                if (root != null)
+                {
+                    button = root.GetComponent<Button>();
+                    if (button == null)
+                    {
+                        button = root.AddComponent<Button>();
+                    }
+
+                    button.transition = Selectable.Transition.None;
+                    canvasGroup = root.GetComponent<CanvasGroup>();
+                    if (canvasGroup == null)
+                    {
+                        canvasGroup = root.AddComponent<CanvasGroup>();
+                    }
+
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+                    Transform labelTransform = root.transform.Find(labelChildName);
+                    label = labelTransform != null ? labelTransform.GetComponent<TMP_Text>() : null;
+                }
+
+                return new CharacterCreationLabelItemView(root, button, canvasGroup, label);
+            }
+
+            public void SetLabel(string value)
+            {
+                SetText(m_label, value);
+            }
+
+            public void BindClick(Action onClick, bool interactable)
+            {
+                if (m_button == null)
+                {
+                    return;
+                }
+
+                m_button.onClick.RemoveAllListeners();
+                m_button.interactable = interactable;
+                if (onClick != null)
+                {
+                    m_button.onClick.AddListener(() => onClick.Invoke());
+                }
+            }
+
+            public void SetAlpha(float alpha)
+            {
+                if (m_canvasGroup != null)
+                {
+                    m_canvasGroup.alpha = Mathf.Clamp01(alpha);
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                if (m_root != null && m_root.activeSelf != active)
+                {
+                    m_root.SetActive(active);
+                }
+            }
+        }
+
+        private sealed class CharacterCreationSelectionOptionCardView
+        {
+            private readonly GameObject m_root;
+            private readonly Button m_button;
+            private readonly GameObject m_selectedMark;
+            private readonly TMP_Text m_nameText;
+
+            public GameObject Root => m_root;
+
+            private CharacterCreationSelectionOptionCardView(GameObject root, Button button, GameObject selectedMark, TMP_Text nameText)
+            {
+                m_root = root;
+                m_button = button;
+                m_selectedMark = selectedMark;
+                m_nameText = nameText;
+            }
+
+            public static CharacterCreationSelectionOptionCardView Bind(GameObject root)
+            {
+                Button button = root != null ? root.GetComponent<Button>() : null;
+                GameObject selectedMark = null;
+                TMP_Text nameText = null;
+
+                if (root != null)
+                {
+                    Transform[] children = root.GetComponentsInChildren<Transform>(true);
+                    for (int index = 0; index < children.Length; index++)
+                    {
+                        Transform child = children[index];
+                        if (child == null)
+                        {
+                            continue;
+                        }
+
+                        if (selectedMark == null
+                            && (child.name == "\u9009\u4e2d\u72b6\u6001"
+                                || child.name == "m_imgSelectedMark"
+                                || child.name.IndexOf("Selected", StringComparison.OrdinalIgnoreCase) >= 0))
+                        {
+                            selectedMark = child.gameObject;
+                        }
+
+                        if (nameText == null)
+                        {
+                            nameText = child.GetComponent<TMP_Text>();
+                        }
+                    }
+                }
+
+                return new CharacterCreationSelectionOptionCardView(root, button, selectedMark, nameText);
+            }
+
+            public void Bind(string label, bool selected, Action onClick)
+            {
+                SetText(m_nameText, label);
+                CharacterCreationUI.SetActive(m_selectedMark, selected);
+
+                if (m_button != null)
+                {
+                    m_button.onClick.RemoveAllListeners();
+                    if (onClick != null)
+                    {
+                        m_button.onClick.AddListener(() => onClick.Invoke());
+                    }
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                if (m_root != null && m_root.activeSelf != active)
+                {
+                    m_root.SetActive(active);
+                }
+            }
+        }
+
+        private sealed class CharacterCreationClassCardView
+        {
+            private readonly GameObject m_root;
+            private readonly Button m_button;
+            private readonly GameObject m_selectedMark;
+            private readonly TMP_Text m_classNameText;
+            private string m_classId = string.Empty;
+
+            private CharacterCreationClassCardView(GameObject root, Button button, GameObject selectedMark, TMP_Text classNameText)
+            {
+                m_root = root;
+                m_button = button;
+                m_selectedMark = selectedMark;
+                m_classNameText = classNameText;
+            }
+
+            public static CharacterCreationClassCardView Bind(GameObject root)
+            {
+                Button button = root != null ? root.GetComponent<Button>() : null;
+                GameObject selectedMark = root != null ? root.transform.Find("m_imgSelectedMark")?.gameObject : null;
+                TMP_Text classNameText = root != null ? root.transform.Find("m_panelCardName/m_tmpClassName")?.GetComponent<TMP_Text>() : null;
+                return new CharacterCreationClassCardView(root, button, selectedMark, classNameText);
+            }
+
+            public void Bind(string classId, string className, bool selected, Action<string> onClick)
+            {
+                m_classId = classId ?? string.Empty;
+                SetText(m_classNameText, className);
+                SetActive(m_selectedMark, selected);
+
+                if (m_button != null)
+                {
+                    m_button.onClick.RemoveAllListeners();
+                    m_button.onClick.AddListener(() => onClick?.Invoke(m_classId));
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                SetActive(m_root, active);
+            }
+
+            private static void SetActive(GameObject target, bool active)
+            {
+                if (target != null && target.activeSelf != active)
+                {
+                    target.SetActive(active);
+                }
+            }
+        }
+
+        private sealed class CharacterCreationRaceCardView
+        {
+            private readonly GameObject m_root;
+            private readonly Button m_button;
+            private readonly GameObject m_selectedMark;
+            private readonly TMP_Text m_raceNameText;
+            private string m_raceId = string.Empty;
+
+            private CharacterCreationRaceCardView(GameObject root, Button button, GameObject selectedMark, TMP_Text raceNameText)
+            {
+                m_root = root;
+                m_button = button;
+                m_selectedMark = selectedMark;
+                m_raceNameText = raceNameText;
+            }
+
+            public static CharacterCreationRaceCardView Bind(GameObject root)
+            {
+                Button button = root != null ? root.GetComponent<Button>() : null;
+                GameObject selectedMark = root != null ? root.transform.Find("m_imgRaceSelectedMark")?.gameObject : null;
+                TMP_Text raceNameText = root != null ? root.transform.Find("m_panelCardName/m_tmpRaceName")?.GetComponent<TMP_Text>() : null;
+                return new CharacterCreationRaceCardView(root, button, selectedMark, raceNameText);
+            }
+
+            public void Bind(string raceId, string raceName, bool selected, Action<string> onClick)
+            {
+                m_raceId = raceId ?? string.Empty;
+                SetText(m_raceNameText, raceName);
+                SetActive(m_selectedMark, selected);
+
+                if (m_button != null)
+                {
+                    m_button.onClick.RemoveAllListeners();
+                    m_button.onClick.AddListener(() => onClick?.Invoke(m_raceId));
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                SetActive(m_root, active);
+            }
+
+            private static void SetActive(GameObject target, bool active)
+            {
+                if (target != null && target.activeSelf != active)
+                {
+                    target.SetActive(active);
+                }
+            }
+        }
+
+        private sealed class CharacterCreationBackgroundCardView
+        {
+            private readonly GameObject m_root;
+            private readonly Button m_button;
+            private readonly GameObject m_selectedMark;
+            private readonly TMP_Text m_backgroundNameText;
+            private string m_backgroundId = string.Empty;
+
+            private CharacterCreationBackgroundCardView(GameObject root, Button button, GameObject selectedMark, TMP_Text backgroundNameText)
+            {
+                m_root = root;
+                m_button = button;
+                m_selectedMark = selectedMark;
+                m_backgroundNameText = backgroundNameText;
+            }
+
+            public static CharacterCreationBackgroundCardView Bind(GameObject root)
+            {
+                Button button = root != null ? root.GetComponent<Button>() : null;
+                GameObject selectedMark = root != null ? root.transform.Find("m_imgBackgroundSelectedMark")?.gameObject : null;
+                TMP_Text backgroundNameText = root != null ? root.transform.Find("m_panelCardName/m_tmpBackgroundName")?.GetComponent<TMP_Text>() : null;
+                return new CharacterCreationBackgroundCardView(root, button, selectedMark, backgroundNameText);
+            }
+
+            public void Bind(string backgroundId, string backgroundName, bool selected, Action<string> onClick)
+            {
+                m_backgroundId = backgroundId ?? string.Empty;
+                SetText(m_backgroundNameText, backgroundName);
+                SetActive(m_selectedMark, selected);
+
+                if (m_button != null)
+                {
+                    m_button.onClick.RemoveAllListeners();
+                    m_button.onClick.AddListener(() => onClick?.Invoke(m_backgroundId));
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                SetActive(m_root, active);
+            }
+
+            private static void SetActive(GameObject target, bool active)
+            {
+                if (target != null && target.activeSelf != active)
+                {
+                    target.SetActive(active);
+                }
+            }
+        }
+
+        private sealed class CharacterCreationAlignmentCardView
+        {
+            private readonly GameObject m_root;
+            private readonly Button m_button;
+            private readonly GameObject m_selectedMark;
+            private readonly TMP_Text m_alignmentNameText;
+            private string m_alignmentId = string.Empty;
+
+            private CharacterCreationAlignmentCardView(GameObject root, Button button, GameObject selectedMark, TMP_Text alignmentNameText)
+            {
+                m_root = root;
+                m_button = button;
+                m_selectedMark = selectedMark;
+                m_alignmentNameText = alignmentNameText;
+            }
+
+            public static CharacterCreationAlignmentCardView Bind(GameObject root)
+            {
+                Button button = root != null ? root.GetComponent<Button>() : null;
+                GameObject selectedMark = root != null ? root.transform.Find("m_imgAlignmentSelectedMark")?.gameObject : null;
+                TMP_Text alignmentNameText = root != null ? root.transform.Find("m_panelCardName/m_tmpAlignmentName")?.GetComponent<TMP_Text>() : null;
+                return new CharacterCreationAlignmentCardView(root, button, selectedMark, alignmentNameText);
+            }
+
+            public void Bind(string alignmentId, string alignmentName, bool selected, Action<string> onClick)
+            {
+                m_alignmentId = alignmentId ?? string.Empty;
+                SetText(m_alignmentNameText, alignmentName);
+                SetActive(m_selectedMark, selected);
+
+                if (m_button != null)
+                {
+                    m_button.onClick.RemoveAllListeners();
+                    m_button.onClick.AddListener(() => onClick?.Invoke(m_alignmentId));
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                SetActive(m_root, active);
+            }
+
+            private static void SetActive(GameObject target, bool active)
+            {
+                if (target != null && target.activeSelf != active)
+                {
+                    target.SetActive(active);
+                }
             }
         }
     }

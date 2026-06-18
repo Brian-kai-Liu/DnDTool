@@ -17,12 +17,29 @@ namespace GameLogic
         private readonly Dictionary<string, DndSkillDefineData> m_skillById = new Dictionary<string, DndSkillDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndSpellDefineData> m_spellById = new Dictionary<string, DndSpellDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndItemDefineData> m_itemById = new Dictionary<string, DndItemDefineData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndToolDefineData> m_toolById = new Dictionary<string, DndToolDefineData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndLanguageDefineData> m_languageById = new Dictionary<string, DndLanguageDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndAlignmentData> m_alignmentById = new Dictionary<string, DndAlignmentData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndRaceMainDefineData> m_raceMainById = new Dictionary<string, DndRaceMainDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndRaceSubDefineData> m_raceSubById = new Dictionary<string, DndRaceSubDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndLevelProgressionData>> m_classProgressionsByClassId = new Dictionary<string, List<DndLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndSubclassLevelProgressionData>> m_subclassProgressionsBySubclassId = new Dictionary<string, List<DndSubclassLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndClassSpellListData>> m_classSpellListsByClassId = new Dictionary<string, List<DndClassSpellListData>>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, string[]> ClassSkillListByClassId = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["barbarian"] = new[] { "animal_handling", "athletics", "intimidation", "nature", "perception", "survival" },
+            ["bard"] = new[] { "acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival" },
+            ["cleric"] = new[] { "history", "insight", "medicine", "persuasion", "religion" },
+            ["druid"] = new[] { "arcana", "animal_handling", "insight", "medicine", "nature", "perception", "religion", "survival" },
+            ["fighter"] = new[] { "acrobatics", "animal_handling", "athletics", "history", "insight", "intimidation", "perception", "survival" },
+            ["monk"] = new[] { "acrobatics", "athletics", "history", "insight", "religion", "stealth" },
+            ["paladin"] = new[] { "athletics", "insight", "intimidation", "medicine", "persuasion", "religion" },
+            ["ranger"] = new[] { "animal_handling", "athletics", "insight", "investigation", "nature", "perception", "stealth", "survival" },
+            ["rogue"] = new[] { "acrobatics", "athletics", "deception", "insight", "intimidation", "investigation", "perception", "performance", "persuasion", "sleight_of_hand", "stealth" },
+            ["sorcerer"] = new[] { "arcana", "deception", "insight", "intimidation", "persuasion", "religion" },
+            ["warlock"] = new[] { "arcana", "deception", "history", "intimidation", "investigation", "nature", "religion" },
+            ["wizard"] = new[] { "arcana", "history", "insight", "investigation", "medicine", "religion" }
+        };
 
         private DndRuleContentLibraryData m_library = new DndRuleContentLibraryData();
         private bool m_loaded;
@@ -63,6 +80,10 @@ namespace GameLogic
         public IReadOnlyList<DndSkillDefineData> Skills => GetLibrary().Skills;
 
         public IReadOnlyList<DndItemDefineData> Items => GetLibrary().Items;
+
+        public IReadOnlyList<DndToolDefineData> Tools => GetLibrary().Tools;
+
+        public IReadOnlyList<DndLanguageDefineData> Languages => GetLibrary().Languages;
 
         public bool HasLoadedContent()
         {
@@ -134,6 +155,18 @@ namespace GameLogic
         {
             GetLibrary();
             return m_itemById.TryGetValue(itemId ?? string.Empty, out item);
+        }
+
+        public bool TryGetTool(string toolId, out DndToolDefineData tool)
+        {
+            GetLibrary();
+            return m_toolById.TryGetValue(toolId ?? string.Empty, out tool);
+        }
+
+        public bool TryGetLanguage(string languageId, out DndLanguageDefineData language)
+        {
+            GetLibrary();
+            return m_languageById.TryGetValue(languageId ?? string.Empty, out language);
         }
 
         public bool TryGetChoiceGroup(string choiceGroupId, out DndChoiceGroupData choiceGroup)
@@ -297,6 +330,8 @@ namespace GameLogic
             m_skillById.Clear();
             m_spellById.Clear();
             m_itemById.Clear();
+            m_toolById.Clear();
+            m_languageById.Clear();
             m_alignmentById.Clear();
             m_raceMainById.Clear();
             m_raceSubById.Clear();
@@ -395,6 +430,24 @@ namespace GameLogic
                 if (!string.IsNullOrWhiteSpace(item.ItemId))
                 {
                     m_itemById[item.ItemId] = item;
+                }
+            }
+
+            for (int index = 0; index < m_library.Tools.Count; index++)
+            {
+                DndToolDefineData tool = m_library.Tools[index];
+                if (!string.IsNullOrWhiteSpace(tool.ToolId))
+                {
+                    m_toolById[tool.ToolId] = tool;
+                }
+            }
+
+            for (int index = 0; index < m_library.Languages.Count; index++)
+            {
+                DndLanguageDefineData language = m_library.Languages[index];
+                if (!string.IsNullOrWhiteSpace(language.LanguageId))
+                {
+                    m_languageById[language.LanguageId] = language;
                 }
             }
 
@@ -510,6 +563,30 @@ namespace GameLogic
                 return false;
             }
 
+            if (TryGetClassSkillListFilter(choiceGroup.OptionFilter, out string classId))
+            {
+                options = BuildClassSkillChoiceOptions(choiceGroupId, classId);
+                return options.Count > 0;
+            }
+
+            if (TryGetToolCategoryFilter(choiceGroup.OptionFilter, out List<string> toolCategories))
+            {
+                options = BuildToolChoiceOptions(choiceGroupId, toolCategories);
+                return options.Count > 0;
+            }
+
+            if (IsLanguageChoiceFilter(choiceGroup.OptionFilter))
+            {
+                options = BuildLanguageChoiceOptions(choiceGroupId);
+                return options.Count > 0;
+            }
+
+            if (IsWizardCantripChoiceFilter(choiceGroup.OptionFilter))
+            {
+                options = BuildWizardCantripChoiceOptions(choiceGroupId);
+                return options.Count > 0;
+            }
+
             if (!IsSkillChoiceFilter(choiceGroup.OptionFilter))
             {
                 return false;
@@ -538,6 +615,190 @@ namespace GameLogic
             return options.Count > 0;
         }
 
+        private List<DndChoiceOptionData> BuildToolChoiceOptions(string choiceGroupId, IReadOnlyList<string> toolCategories)
+        {
+            List<DndChoiceOptionData> options = new List<DndChoiceOptionData>();
+            if (toolCategories == null || toolCategories.Count == 0)
+            {
+                return options;
+            }
+
+            for (int index = 0; index < m_library.Tools.Count; index++)
+            {
+                DndToolDefineData tool = m_library.Tools[index];
+                if (tool == null
+                    || string.IsNullOrWhiteSpace(tool.ToolId)
+                    || !ContainsToolCategory(toolCategories, tool.ToolCategory))
+                {
+                    continue;
+                }
+
+                options.Add(new DndChoiceOptionData
+                {
+                    ChoiceGroupId = choiceGroupId,
+                    OptionId = tool.ToolId,
+                    Name = string.IsNullOrWhiteSpace(tool.Name) ? tool.ToolId : tool.Name,
+                    Description = tool.Description
+                });
+            }
+
+            return options;
+        }
+
+        private List<DndChoiceOptionData> BuildLanguageChoiceOptions(string choiceGroupId)
+        {
+            List<DndChoiceOptionData> options = new List<DndChoiceOptionData>();
+            for (int index = 0; index < m_library.Languages.Count; index++)
+            {
+                DndLanguageDefineData language = m_library.Languages[index];
+                if (language == null || string.IsNullOrWhiteSpace(language.LanguageId))
+                {
+                    continue;
+                }
+
+                options.Add(new DndChoiceOptionData
+                {
+                    ChoiceGroupId = choiceGroupId,
+                    OptionId = language.LanguageId,
+                    Name = string.IsNullOrWhiteSpace(language.Name) ? language.LanguageId : language.Name,
+                    Description = language.Description
+                });
+            }
+
+            return options;
+        }
+
+        private List<DndChoiceOptionData> BuildWizardCantripChoiceOptions(string choiceGroupId)
+        {
+            List<DndChoiceOptionData> options = new List<DndChoiceOptionData>();
+            IReadOnlyList<DndClassSpellListData> spellList = GetClassSpellList("wizard");
+            HashSet<string> addedSpellIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            for (int index = 0; index < spellList.Count; index++)
+            {
+                DndClassSpellListData classSpell = spellList[index];
+                if (classSpell == null
+                    || string.IsNullOrWhiteSpace(classSpell.SpellId)
+                    || !IsWizardCantripSpell(classSpell))
+                {
+                    continue;
+                }
+
+                string spellId = classSpell.SpellId.Trim();
+                if (!addedSpellIds.Add(spellId))
+                {
+                    continue;
+                }
+
+                TryGetSpell(spellId, out DndSpellDefineData spell);
+                options.Add(new DndChoiceOptionData
+                {
+                    ChoiceGroupId = choiceGroupId,
+                    OptionId = spellId,
+                    Name = spell != null && !string.IsNullOrWhiteSpace(spell.Name) ? spell.Name : spellId,
+                    Description = spell != null ? spell.Description : string.Empty
+                });
+            }
+
+            return options;
+        }
+
+        private List<DndChoiceOptionData> BuildClassSkillChoiceOptions(string choiceGroupId, string classId)
+        {
+            List<DndChoiceOptionData> options = new List<DndChoiceOptionData>();
+            if (string.IsNullOrWhiteSpace(classId) || !ClassSkillListByClassId.TryGetValue(classId, out string[] skillIds))
+            {
+                return options;
+            }
+
+            for (int index = 0; index < skillIds.Length; index++)
+            {
+                string skillId = skillIds[index];
+                if (string.IsNullOrWhiteSpace(skillId))
+                {
+                    continue;
+                }
+
+                TryGetSkill(skillId, out DndSkillDefineData skill);
+                options.Add(new DndChoiceOptionData
+                {
+                    ChoiceGroupId = choiceGroupId,
+                    OptionId = skillId,
+                    Name = skill != null && !string.IsNullOrWhiteSpace(skill.Name) ? skill.Name : skillId,
+                    Description = skill != null ? skill.Description : string.Empty
+                });
+            }
+
+            return options;
+        }
+
+        private static bool TryGetClassSkillListFilter(string optionFilter, out string classId)
+        {
+            classId = string.Empty;
+            if (string.IsNullOrWhiteSpace(optionFilter))
+            {
+                return false;
+            }
+
+            string normalized = optionFilter.Trim();
+            const string suffix = ":classSkillList";
+            if (!normalized.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            classId = normalized.Substring(0, normalized.Length - suffix.Length).Trim();
+            return !string.IsNullOrWhiteSpace(classId);
+        }
+
+        private static bool TryGetToolCategoryFilter(string optionFilter, out List<string> categories)
+        {
+            categories = null;
+            if (string.IsNullOrWhiteSpace(optionFilter))
+            {
+                return false;
+            }
+
+            string normalized = optionFilter.Trim();
+            const string prefix = "ToolCategory:";
+            if (!normalized.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            categories = new List<string>();
+            string value = normalized.Substring(prefix.Length);
+            string[] parts = value.Split(new[] { '|', ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int index = 0; index < parts.Length; index++)
+            {
+                string category = parts[index].Trim();
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    categories.Add(category);
+                }
+            }
+
+            return categories.Count > 0;
+        }
+
+        private static bool ContainsToolCategory(IReadOnlyList<string> categories, string toolCategory)
+        {
+            if (categories == null || string.IsNullOrWhiteSpace(toolCategory))
+            {
+                return false;
+            }
+
+            for (int index = 0; index < categories.Count; index++)
+            {
+                if (string.Equals(categories[index], toolCategory, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static bool IsSkillChoiceFilter(string optionFilter)
         {
             if (string.IsNullOrWhiteSpace(optionFilter))
@@ -549,6 +810,44 @@ namespace GameLogic
             return string.Equals(normalized, "TbSkillDefine:all", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalized, "Skill:all", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalized, "AnySkill", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsLanguageChoiceFilter(string optionFilter)
+        {
+            if (string.IsNullOrWhiteSpace(optionFilter))
+            {
+                return false;
+            }
+
+            string normalized = optionFilter.Trim();
+            return string.Equals(normalized, "TbDndLanguageDefine:all", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Language:all", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AnyLanguage", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsWizardCantripChoiceFilter(string optionFilter)
+        {
+            return string.Equals(optionFilter?.Trim(), "WizardCantrip", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsWizardCantripSpell(DndClassSpellListData classSpell)
+        {
+            if (classSpell == null)
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(classSpell.Note) && classSpell.Note.IndexOf("戏法", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+
+            if (TryGetSpell(classSpell.SpellId, out DndSpellDefineData spell))
+            {
+                return spell != null && spell.Level == 0;
+            }
+
+            return false;
         }
     }
 }

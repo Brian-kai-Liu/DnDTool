@@ -7,6 +7,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "职业获得属性值提升时，如果启用可选规则可改选专长。"
   },
   {
@@ -17,6 +18,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
     "description": "通用技能选择占位。"
   },
   {
@@ -27,6 +29,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "AnyLanguage",
+    "selection_mode": "Distinct",
     "description": "通用语言选择占位。"
   },
   {
@@ -37,6 +40,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "PHBFeat",
+    "selection_mode": "Distinct",
     "description": "从 PHB 专长表中选择一个专长。"
   },
   {
@@ -47,6 +51,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "barbarian:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -54,9 +59,10 @@
     "package_id": "phb_5e_zh_user",
     "name": "吟游诗人技能熟练选择",
     "choice_type": "Skill",
-    "min_select": 2,
-    "max_select": 2,
+    "min_select": 3,
+    "max_select": 3,
     "option_filter": "bard:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -67,6 +73,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "cleric:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -77,6 +84,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "druid:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -87,6 +95,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "fighter:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -97,6 +106,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "monk:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -107,6 +117,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "paladin:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -117,6 +128,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "ranger:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -127,6 +139,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "rogue:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -137,6 +150,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "sorcerer:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -147,6 +161,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "warlock:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -157,6 +172,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "wizard:classSkillList",
+    "selection_mode": "Distinct",
     "description": ""
   },
   {
@@ -167,6 +183,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "野蛮人达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -177,6 +194,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "吟游诗人达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -187,6 +205,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "牧师达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -197,6 +216,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "德鲁伊达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -207,6 +227,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "战士达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -217,6 +238,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "武僧达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -227,6 +249,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "圣武士达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -237,6 +260,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "游侠达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -247,6 +271,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "游荡者达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -257,6 +282,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "术士达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -267,6 +293,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "邪术师达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -277,6 +304,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "法师达到子职业解锁等级时，从本职业子职业列表中选择一个。"
   },
   {
@@ -287,6 +315,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "战士 1 级时选择一个战斗风格。"
   },
   {
@@ -297,6 +326,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "圣武士 2 级时选择一个战斗风格。"
   },
   {
@@ -307,6 +337,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "游侠 2 级时选择一个战斗风格。"
   },
   {
@@ -317,6 +348,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
     "description": "从已熟练技能中选择两项获得专精；当前表仅记录选择入口。"
   },
   {
@@ -327,6 +359,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
     "description": "从已熟练技能或盗贼工具中选择两项获得专精；当前表仅记录技能选择入口。"
   },
   {
@@ -337,6 +370,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "矮人选择一种工具熟练项。"
   },
   {
@@ -347,6 +381,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "龙裔选择一种龙族血脉。"
   },
   {
@@ -357,6 +392,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "WizardCantrip",
+    "selection_mode": "Distinct",
     "description": "从法师戏法中选择一个。"
   },
   {
@@ -367,6 +403,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "AnyLanguage",
+    "selection_mode": "Distinct",
     "description": "选择一种额外语言。"
   },
   {
@@ -377,6 +414,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "从力量、敏捷、体质、智力、感知中选择两项各 +1。"
   },
   {
@@ -387,6 +425,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
     "description": "选择两项技能熟练。"
   },
   {
@@ -397,6 +436,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "AnyLanguage",
+    "selection_mode": "Distinct",
     "description": "选择一种额外语言。"
   },
   {
@@ -407,6 +447,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "AnyLanguage",
+    "selection_mode": "Distinct",
     "description": "选择一种额外语言。"
   },
   {
@@ -417,6 +458,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "战士选择一个战斗风格。"
   },
   {
@@ -427,6 +469,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "圣武士选择一个战斗风格。"
   },
   {
@@ -437,6 +480,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "游侠选择一个战斗风格。"
   },
   {
@@ -447,6 +491,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "选择一个宿敌类别。"
   },
   {
@@ -457,6 +502,7 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "选择一个熟悉地形。"
   },
   {
@@ -467,6 +513,7 @@
     "min_select": 2,
     "max_select": 2,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "第 3 级选择两项魔法超能。"
   },
   {
@@ -477,6 +524,62 @@
     "min_select": 1,
     "max_select": 1,
     "option_filter": "",
+    "selection_mode": "Distinct",
     "description": "第 3 级选择一项契约恩赐。"
+  },
+  {
+    "choice_group_id": "choice_bard_musical_instrument",
+    "package_id": "phb_5e_zh_user",
+    "name": "吟游诗人乐器熟练选择",
+    "choice_type": "Tool",
+    "min_select": 3,
+    "max_select": 3,
+    "option_filter": "ToolCategory:musical_instrument",
+    "selection_mode": "Distinct",
+    "description": "吟游诗人选择三种乐器熟练项。"
+  },
+  {
+    "choice_group_id": "choice_monk_artisan_or_musical_tool",
+    "package_id": "phb_5e_zh_user",
+    "name": "武僧工具熟练选择",
+    "choice_type": "Tool",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "ToolCategory:artisan_tools|musical_instrument",
+    "selection_mode": "Distinct",
+    "description": "武僧选择一种工匠工具或一种乐器熟练项。"
+  },
+  {
+    "choice_group_id": "choice_artisan_tool_one",
+    "package_id": "phb_5e_zh_user",
+    "name": "任选一种工匠工具",
+    "choice_type": "Tool",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "ToolCategory:artisan_tools",
+    "selection_mode": "Distinct",
+    "description": "选择一种工匠工具熟练项。"
+  },
+  {
+    "choice_group_id": "choice_gaming_set_one",
+    "package_id": "phb_5e_zh_user",
+    "name": "任选一种赌具",
+    "choice_type": "Tool",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "ToolCategory:gaming_set",
+    "selection_mode": "Distinct",
+    "description": "选择一种赌具熟练项。"
+  },
+  {
+    "choice_group_id": "choice_musical_instrument_one",
+    "package_id": "phb_5e_zh_user",
+    "name": "任选一种乐器",
+    "choice_type": "Tool",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "ToolCategory:musical_instrument",
+    "selection_mode": "Distinct",
+    "description": "选择一种乐器熟练项。"
   }
 ]

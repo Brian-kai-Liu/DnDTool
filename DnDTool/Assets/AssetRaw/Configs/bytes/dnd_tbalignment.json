@@ -1,0 +1,47 @@
+[
+  {
+    "alignment_id": "lawful_good",
+    "name": "守序善良",
+    "description": "奉公守法，重视善意与正义。"
+  },
+  {
+    "alignment_id": "neutral_good",
+    "name": "中立善良",
+    "description": "行善但不受教条束缚。"
+  },
+  {
+    "alignment_id": "chaotic_good",
+    "name": "混乱善良",
+    "description": "向善但更看重自由与个人判断。"
+  },
+  {
+    "alignment_id": "lawful_neutral",
+    "name": "守序中立",
+    "description": "重视秩序、传统与责任。"
+  },
+  {
+    "alignment_id": "true_neutral",
+    "name": "绝对中立",
+    "description": "不过度偏向任何一端。"
+  },
+  {
+    "alignment_id": "chaotic_neutral",
+    "name": "混乱中立",
+    "description": "重视自由，不爱被规则束缚。"
+  },
+  {
+    "alignment_id": "lawful_evil",
+    "name": "守序邪恶",
+    "description": "有组织、有计划地追逐私利。"
+  },
+  {
+    "alignment_id": "neutral_evil",
+    "name": "中立邪恶",
+    "description": "为自身利益行事，不择手段。"
+  },
+  {
+    "alignment_id": "chaotic_evil",
+    "name": "混乱邪恶",
+    "description": "为欲望和破坏行事，难以预测。"
+  }
+]

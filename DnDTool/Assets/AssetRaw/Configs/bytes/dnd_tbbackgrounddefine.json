@@ -4,13 +4,13 @@
     "package_id": "phb_5e_zh_user",
     "name": "侍僧",
     "skill_proficiencies": [
-      "洞悉",
-      "宗教"
+      "insight",
+      "religion"
     ],
     "tool_proficiencies": [],
     "language_ids": [
-      "自选",
-      "自选"
+      "choice_language_any",
+      "choice_language_any"
     ],
     "feature_ids": [
       "feature_background_acolyte"
@@ -23,12 +23,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "骗子",
     "skill_proficiencies": [
-      "欺瞒",
-      "巧手"
+      "deception",
+      "sleight_of_hand"
     ],
     "tool_proficiencies": [
-      "易容工具",
-      "文书伪造工具"
+      "disguise_kit",
+      "forgery_kit"
     ],
     "language_ids": [],
     "feature_ids": [
@@ -42,12 +42,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "罪犯",
     "skill_proficiencies": [
-      "欺瞒",
-      "隐匿"
+      "deception",
+      "stealth"
     ],
     "tool_proficiencies": [
-      "赌具",
-      "盗贼工具"
+      "choice_gaming_set_one",
+      "thieves_tools"
     ],
     "language_ids": [],
     "feature_ids": [
@@ -61,12 +61,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "艺人",
     "skill_proficiencies": [
-      "体操",
-      "表演"
+      "acrobatics",
+      "performance"
     ],
     "tool_proficiencies": [
-      "易容工具",
-      "乐器"
+      "disguise_kit",
+      "choice_musical_instrument_one"
     ],
     "language_ids": [],
     "feature_ids": [
@@ -80,12 +80,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "平民英雄",
     "skill_proficiencies": [
-      "驯兽",
-      "求生"
+      "animal_handling",
+      "survival"
     ],
     "tool_proficiencies": [
-      "工匠工具",
-      "载具（陆运）"
+      "choice_artisan_tool_one",
+      "vehicles_land"
     ],
     "language_ids": [],
     "feature_ids": [
@@ -99,14 +99,14 @@
     "package_id": "phb_5e_zh_user",
     "name": "公会工匠",
     "skill_proficiencies": [
-      "洞悉",
-      "游说"
+      "insight",
+      "persuasion"
     ],
     "tool_proficiencies": [
-      "工匠工具"
+      "choice_artisan_tool_one"
     ],
     "language_ids": [
-      "自选"
+      "choice_language_any"
     ],
     "feature_ids": [
       "feature_background_guild_artisan"
@@ -119,14 +119,14 @@
     "package_id": "phb_5e_zh_user",
     "name": "隐士",
     "skill_proficiencies": [
-      "医药",
-      "宗教"
+      "medicine",
+      "religion"
     ],
     "tool_proficiencies": [
-      "草药工具"
+      "herbalism_kit"
     ],
     "language_ids": [
-      "自选"
+      "choice_language_any"
     ],
     "feature_ids": [
       "feature_background_hermit"
@@ -139,14 +139,14 @@
     "package_id": "phb_5e_zh_user",
     "name": "贵族",
     "skill_proficiencies": [
-      "历史",
-      "游说"
+      "history",
+      "persuasion"
     ],
     "tool_proficiencies": [
-      "赌具"
+      "choice_gaming_set_one"
     ],
     "language_ids": [
-      "自选"
+      "choice_language_any"
     ],
     "feature_ids": [
       "feature_background_noble"
@@ -159,14 +159,14 @@
     "package_id": "phb_5e_zh_user",
     "name": "化外之民",
     "skill_proficiencies": [
-      "运动",
-      "求生"
+      "athletics",
+      "survival"
     ],
     "tool_proficiencies": [
-      "乐器"
+      "choice_musical_instrument_one"
     ],
     "language_ids": [
-      "自选"
+      "choice_language_any"
     ],
     "feature_ids": [
       "feature_background_outlander"
@@ -179,13 +179,13 @@
     "package_id": "phb_5e_zh_user",
     "name": "贤者",
     "skill_proficiencies": [
-      "奥秘",
-      "历史"
+      "arcana",
+      "history"
     ],
     "tool_proficiencies": [],
     "language_ids": [
-      "自选",
-      "自选"
+      "choice_language_any",
+      "choice_language_any"
     ],
     "feature_ids": [
       "feature_background_sage"
@@ -198,12 +198,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "水手",
     "skill_proficiencies": [
-      "运动",
-      "察觉"
+      "athletics",
+      "perception"
     ],
     "tool_proficiencies": [
-      "领航工具",
-      "载具（水运）"
+      "navigator_tools",
+      "vehicles_water"
     ],
     "language_ids": [],
     "feature_ids": [
@@ -217,12 +217,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "士兵",
     "skill_proficiencies": [
-      "运动",
-      "威吓"
+      "athletics",
+      "intimidation"
     ],
     "tool_proficiencies": [
-      "赌具",
-      "载具（陆运）"
+      "choice_gaming_set_one",
+      "vehicles_land"
     ],
     "language_ids": [],
     "feature_ids": [
@@ -236,12 +236,12 @@
     "package_id": "phb_5e_zh_user",
     "name": "流浪儿",
     "skill_proficiencies": [
-      "巧手",
-      "隐匿"
+      "sleight_of_hand",
+      "stealth"
     ],
     "tool_proficiencies": [
-      "易容工具",
-      "盗贼工具"
+      "disguise_kit",
+      "thieves_tools"
     ],
     "language_ids": [],
     "feature_ids": [

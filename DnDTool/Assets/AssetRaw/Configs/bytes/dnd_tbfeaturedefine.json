@@ -58,7 +58,9 @@
     "feature_type": "Class",
     "source_ref": "barbarian:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_barbarian"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -227,7 +229,9 @@
     "feature_type": "Class",
     "source_ref": "bard:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_bard"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -318,7 +322,9 @@
     "feature_type": "Class",
     "source_ref": "cleric:1",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_cleric"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -409,7 +415,9 @@
     "feature_type": "Class",
     "source_ref": "druid:2",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_druid"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -643,7 +651,9 @@
     "feature_type": "Class",
     "source_ref": "monk:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_monk"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -877,7 +887,9 @@
     "feature_type": "Class",
     "source_ref": "paladin:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_paladin"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -1020,7 +1032,9 @@
     "feature_type": "Class",
     "source_ref": "ranger:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_ranger"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -1176,7 +1190,9 @@
     "feature_type": "Class",
     "source_ref": "rogue:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_rogue"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -1293,7 +1309,9 @@
     "feature_type": "Class",
     "source_ref": "sorcerer:1",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_sorcerer"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -1345,7 +1363,9 @@
     "feature_type": "Class",
     "source_ref": "warlock:1",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_warlock"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -1488,7 +1508,9 @@
     "feature_type": "Class",
     "source_ref": "wizard:2",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_subclass_wizard"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
