@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -201,9 +200,7 @@ namespace GameLogic
 
             ApplyChapterStructureChange(() =>
             {
-                ChapterListItemData chapter = CreateChapterItemData();
-                int insertIndex = Mathf.Clamp(m_chapterItems.Count, 0, m_chapterItems.Count);
-                m_chapterItems.Insert(insertIndex, chapter);
+                ChapterEditorStructureService.AddChapter(m_chapterItems, ref m_nextChapterId);
             });
         }
 
@@ -433,35 +430,13 @@ namespace GameLogic
 
             if (m_chapterItems.Count == 0)
             {
-                m_selectedChapterId = -1;
+                m_selectedChapterId = ChapterEditorStructureService.ResolveSelectedChapterId(m_chapterItems, m_selectedChapterId);
                 RefreshChapterList(false);
             }
             else
             {
                 RefreshChapterList(false);
             }
-        }
-
-        private ChapterListItemData CreateChapterItemData()
-        {
-            return new ChapterListItemData
-            {
-                Id = m_nextChapterId++,
-                Name = string.Empty,
-                Goal = string.Empty,
-                Content = string.Empty,
-                DmNote = string.Empty,
-                TerrainTag = string.Empty,
-                TerrainSubTag = string.Empty,
-                AddMapHint = string.Empty,
-                CreatureInfo = string.Empty,
-                MapGridState = new ChapterMapGridStateData(),
-                GridCells = new List<ChapterGridCellData>(),
-                Events = new List<ChapterGridEventData>(),
-                EventBindings = new List<ChapterEventBindingData>(),
-                Creatures = new List<ChapterCreatureData>(),
-                CreatureInstances = new List<ChapterCreatureInstanceData>(),
-            };
         }
 
         private void RefreshChapterList(bool syncInputsBeforeRefresh = true)
@@ -576,7 +551,7 @@ namespace GameLogic
                 return;
             }
 
-            ApplyChapterStructureChange(() => MoveChapterItem(fromIndex, toIndex));
+            ApplyChapterStructureChange(() => ChapterEditorStructureService.MoveChapter(m_chapterItems, fromIndex, toIndex));
         }
 
         private void OnChapterItemDragPreviewChanged(int fromIndex, int toIndex)
@@ -696,13 +671,6 @@ namespace GameLogic
             SaveChapterEditorState();
         }
 
-        private void MoveChapterItem(int fromIndex, int toIndex)
-        {
-            ChapterListItemData movedChapter = m_chapterItems[fromIndex];
-            m_chapterItems.RemoveAt(fromIndex);
-            m_chapterItems.Insert(toIndex, movedChapter);
-        }
-
         private int GetSelectedChapterIndex()
         {
             return GetChapterIndexById(m_selectedChapterId);
@@ -710,20 +678,7 @@ namespace GameLogic
 
         private int GetChapterIndexById(int chapterId)
         {
-            if (chapterId < 0)
-            {
-                return -1;
-            }
-
-            for (int index = 0; index < m_chapterItems.Count; index++)
-            {
-                if (m_chapterItems[index].Id == chapterId)
-                {
-                    return index;
-                }
-            }
-
-            return -1;
+            return ChapterEditorStructureService.FindChapterIndexById(m_chapterItems, chapterId);
         }
 
         private void UpdateChapterActionButtons()
@@ -754,19 +709,7 @@ namespace GameLogic
 
             ApplyChapterStructureChange(() =>
             {
-                bool isDeletedChapterSelected = m_selectedChapterId == chapterId;
-                m_chapterItems.RemoveAt(chapterIndex);
-                if (m_chapterItems.Count == 0)
-                {
-                    m_selectedChapterId = -1;
-                    return;
-                }
-
-                if (isDeletedChapterSelected)
-                {
-                    int nextSelectedIndex = Mathf.Clamp(chapterIndex, 0, m_chapterItems.Count - 1);
-                    m_selectedChapterId = m_chapterItems[nextSelectedIndex].Id;
-                }
+                ChapterEditorStructureService.DeleteChapter(m_chapterItems, chapterId, ref m_selectedChapterId);
             });
         }
 
@@ -1263,7 +1206,7 @@ namespace GameLogic
             ChapterGridEventData existingEventData = null;
             if (coordinates.Count == 1)
             {
-                ChapterEventCollectionUtility.TryGetEventData(selectedChapter.Events, selectedChapter.EventBindings, coordinates[0], out existingEventData);
+                ChapterEditorBoardService.TryGetEventData(selectedChapter, coordinates[0], out existingEventData);
             }
 
             OpenChapterEventPopup(selectedChapter, coordinates, existingEventData);
@@ -1324,26 +1267,10 @@ namespace GameLogic
             }
 
             ChapterListItemData chapter = m_chapterItems[chapterIndex];
-            chapter.GridCells ??= new List<ChapterGridCellData>();
-            chapter.Events ??= new List<ChapterGridEventData>();
-            chapter.EventBindings ??= new List<ChapterEventBindingData>();
-
-            bool updatedExistingSingleEvent = false;
-            if (coordinates.Count == 1
-                && ChapterEventCollectionUtility.TryGetEventData(chapter.Events, chapter.EventBindings, coordinates[0], out ChapterGridEventData existingEventData)
-                && !string.IsNullOrWhiteSpace(existingEventData?.EventId)
-                && string.Equals(existingEventData.EventId, eventData.EventId, StringComparison.Ordinal))
+            if (!ChapterEditorBoardService.ConfirmGridEvent(chapter, coordinates, eventData))
             {
-                ChapterEventCollectionUtility.UpsertEventDefinition(chapter.Events, eventData);
-                updatedExistingSingleEvent = true;
+                return;
             }
-
-            if (!updatedExistingSingleEvent)
-            {
-                ChapterEventCollectionUtility.AssignEventToCoordinates(chapter.Events, chapter.EventBindings, coordinates, eventData);
-            }
-
-            ChapterGridCellCollectionUtility.ClearSelectedMarks(chapter.GridCells, coordinates);
 
             if (chapterId == m_selectedChapterId)
             {
@@ -1368,19 +1295,13 @@ namespace GameLogic
             }
 
             ChapterListItemData chapter = m_chapterItems[chapterIndex];
-            chapter.GridCells ??= new List<ChapterGridCellData>();
-            chapter.Events ??= new List<ChapterGridEventData>();
-            chapter.EventBindings ??= new List<ChapterEventBindingData>();
-
-            int removedCount = ChapterEventCollectionUtility.RemoveEventsAtCoordinates(chapter.Events, chapter.EventBindings, coordinates);
+            int removedCount = ChapterEditorBoardService.DeleteGridEvents(chapter, coordinates);
 
             if (removedCount <= 0)
             {
                 ShowSaveFeedbackAsync("No event was found on the selected grid cells.", false).Forget();
                 return;
             }
-
-            ChapterGridCellCollectionUtility.ClearSelectedMarks(chapter.GridCells, coordinates);
 
             if (chapterId == m_selectedChapterId)
             {
@@ -1389,24 +1310,6 @@ namespace GameLogic
 
             SaveChapterEditorState();
             ShowSaveFeedbackAsync(removedCount > 1 ? $"Removed events from {removedCount} grid cells." : "Event removed.", true).Forget();
-        }
-
-        private static bool HasGridEventAtAnyCoordinate(List<ChapterEventBindingData> eventBindings, List<ChapterGridCoordinate> coordinates)
-        {
-            if (eventBindings == null || coordinates == null)
-            {
-                return false;
-            }
-
-            for (int index = 0; index < coordinates.Count; index++)
-            {
-                if (ChapterEventCollectionUtility.HasEventAtCoordinate(eventBindings, coordinates[index]))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private void AppendRuntimeCreature(ChapterCreatureData creatureData)
@@ -1680,7 +1583,7 @@ namespace GameLogic
             byte[] imageBytes;
             try
             {
-                imageBytes = await UniTask.RunOnThreadPool(() => File.ReadAllBytes(previewPath));
+                imageBytes = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.ReadFileBytes(previewPath));
             }
             catch (Exception exception)
             {
@@ -1919,10 +1822,8 @@ namespace GameLogic
                 return;
             }
 
-            selectedChapter.GridCells ??= new List<ChapterGridCellData>();
-            int markedCellCount = ChapterGridCellCollectionUtility.ApplyMarkTypeToCellsBySourceMark(
-                selectedChapter.GridCells,
-                ChapterGridCellMarkType.Selected,
+            int markedCellCount = ChapterEditorBoardService.ApplyTerrainMarkToSelectedCells(
+                selectedChapter,
                 ChapterGridCellMarkType.DifficultTerrain);
             if (markedCellCount <= 0)
             {
@@ -1946,10 +1847,8 @@ namespace GameLogic
                 return;
             }
 
-            selectedChapter.GridCells ??= new List<ChapterGridCellData>();
-            int markedCellCount = ChapterGridCellCollectionUtility.ApplyMarkTypeToCellsBySourceMark(
-                selectedChapter.GridCells,
-                ChapterGridCellMarkType.Selected,
+            int markedCellCount = ChapterEditorBoardService.ApplyTerrainMarkToSelectedCells(
+                selectedChapter,
                 ChapterGridCellMarkType.ImpassableTerrain);
             if (markedCellCount <= 0)
             {
@@ -1973,8 +1872,7 @@ namespace GameLogic
                 return;
             }
 
-            selectedChapter.GridCells ??= new List<ChapterGridCellData>();
-            int removedCount = ChapterGridCellCollectionUtility.ClearMarksAtSelectedCoordinates(selectedChapter.GridCells);
+            int removedCount = ChapterEditorBoardService.ClearTerrainMarksAtSelectedCells(selectedChapter);
             if (removedCount <= 0)
             {
                 return;
@@ -1992,29 +1890,28 @@ namespace GameLogic
                 return;
             }
 
-            if (!File.Exists(sourceFilePath))
+            if (!ChapterEditorPersistenceService.FileExists(sourceFilePath))
             {
                 Log.Error($"章节地图文件不存在: {sourceFilePath}");
                 return;
             }
 
             string oldPath = chapter.MapImagePath;
-            string extension = Path.GetExtension(sourceFilePath);
-            string targetDirectory = GetChapterMapStorageDirectory();
-            string targetFileName = $"chapter_{chapter.Id}_{DateTime.Now:yyyyMMddHHmmssfff}{extension}";
-            string targetFilePath = Path.Combine(targetDirectory, targetFileName);
+            string targetFilePath;
 
             try
             {
-                await UniTask.RunOnThreadPool(() =>
-                {
-                    Directory.CreateDirectory(targetDirectory);
-                    File.Copy(sourceFilePath, targetFilePath, true);
-                });
+                targetFilePath = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.StoreChapterMapImage(sourceFilePath, chapter.Id));
             }
             catch (Exception exception)
             {
                 Log.Error($"复制章节地图失败: {exception.Message}");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(targetFilePath))
+            {
+                Log.Error($"复制章节地图失败: {sourceFilePath}");
                 return;
             }
 
@@ -2031,7 +1928,7 @@ namespace GameLogic
         private void RefreshChapterMapPreview(ChapterListItemData chapter, bool forceReload = false)
         {
             bool hasSelectedChapter = chapter != null;
-            bool hasMap = hasSelectedChapter && !string.IsNullOrWhiteSpace(chapter.MapImagePath) && File.Exists(chapter.MapImagePath);
+            bool hasMap = hasSelectedChapter && ChapterEditorPersistenceService.FileExists(chapter.MapImagePath);
 
             if (m_rectMapPreview != null)
             {
@@ -2101,7 +1998,7 @@ namespace GameLogic
             if (m_textAddMapHint != null)
             {
                 m_textAddMapHint.text = hasMap
-                    ? Path.GetFileName(chapter.MapImagePath)
+                    ? ChapterEditorPersistenceService.GetDisplayFileName(chapter.MapImagePath)
                     : m_defaultAddMapHintText;
             }
 
@@ -2147,7 +2044,7 @@ namespace GameLogic
             byte[] imageBytes;
             try
             {
-                imageBytes = await UniTask.RunOnThreadPool(() => File.ReadAllBytes(mapImagePath));
+                imageBytes = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.ReadFileBytes(mapImagePath));
             }
             catch (Exception exception)
             {
@@ -3075,7 +2972,7 @@ namespace GameLogic
                 return;
             }
 
-            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
+            ChapterCreatureInstanceData creatureInstance = ChapterEditorBoardService.FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
             if (creatureInstance == null)
             {
                 HideCreatureInstanceActionPanel();
@@ -3184,7 +3081,7 @@ namespace GameLogic
         private void OnClickEditSelectedCreatureInstance()
         {
             ChapterListItemData selectedChapter = GetSelectedChapterData();
-            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
+            ChapterCreatureInstanceData creatureInstance = ChapterEditorBoardService.FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
             if (creatureInstance == null)
             {
                 return;
@@ -3208,21 +3105,12 @@ namespace GameLogic
             }
 
             ChapterListItemData selectedChapter = GetSelectedChapterData();
-            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, instanceId);
-            if (creatureInstance == null)
+            if (!ChapterEditorBoardService.UpdateCreatureInstanceRuntimeSheet(selectedChapter, instanceId, updatedData, out string normalizedInstanceId))
             {
                 return;
             }
 
-            string existingRuntimeCreatureId = creatureInstance.RuntimeSheet?.CreatureId ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(updatedData.CreatureId))
-            {
-                updatedData.CreatureId = existingRuntimeCreatureId;
-            }
-
-            creatureInstance.RuntimeSheet = ChapterCreatureDataStructureUtility.CloneCreatureData(updatedData);
-            ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(creatureInstance);
-            m_selectedCreatureInstanceId = creatureInstance.InstanceId ?? string.Empty;
+            m_selectedCreatureInstanceId = normalizedInstanceId;
             RefreshGridSelectionHighlights();
             bool saved = SaveChapterEditorState();
             ShowSaveFeedbackAsync(saved ? "Creature instance updated." : "Failed to update creature instance.", saved).Forget();
@@ -3231,43 +3119,30 @@ namespace GameLogic
         private void OnClickToggleSelectedCreatureInstanceActive()
         {
             ChapterListItemData selectedChapter = GetSelectedChapterData();
-            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_selectedCreatureInstanceId);
-            if (creatureInstance == null)
+            if (!ChapterEditorBoardService.ToggleCreatureInstanceActive(selectedChapter, m_selectedCreatureInstanceId, out bool isActive))
             {
                 return;
             }
 
-            creatureInstance.IsActive = !creatureInstance.IsActive;
             RefreshGridSelectionHighlights();
             bool saved = SaveChapterEditorState();
             ShowSaveFeedbackAsync(saved
-                ? (creatureInstance.IsActive ? "Creature shown." : "Creature hidden.")
+                ? (isActive ? "Creature shown." : "Creature hidden.")
                 : "Failed to save creature visibility.", saved).Forget();
         }
 
         private void OnClickDeleteSelectedCreatureInstance()
         {
             ChapterListItemData selectedChapter = GetSelectedChapterData();
-            if (selectedChapter?.CreatureInstances == null)
+            if (!ChapterEditorBoardService.DeleteCreatureInstance(selectedChapter, m_selectedCreatureInstanceId))
             {
                 return;
             }
 
-            for (int index = selectedChapter.CreatureInstances.Count - 1; index >= 0; index--)
-            {
-                ChapterCreatureInstanceData creatureInstance = selectedChapter.CreatureInstances[index];
-                if (creatureInstance == null || !string.Equals(creatureInstance.InstanceId, m_selectedCreatureInstanceId, StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
-                selectedChapter.CreatureInstances.RemoveAt(index);
-                m_selectedCreatureInstanceId = string.Empty;
-                RefreshGridSelectionHighlights();
-                bool saved = SaveChapterEditorState();
-                ShowSaveFeedbackAsync(saved ? "Creature removed." : "Failed to remove creature.", saved).Forget();
-                return;
-            }
+            m_selectedCreatureInstanceId = string.Empty;
+            RefreshGridSelectionHighlights();
+            bool saved = SaveChapterEditorState();
+            ShowSaveFeedbackAsync(saved ? "Creature removed." : "Failed to remove creature.", saved).Forget();
         }
 
         private bool TryGetCreatureInstanceAtLocalPoint(Vector2 localPoint, bool includeInactive, out ChapterCreatureInstanceData creatureInstance)
@@ -3298,25 +3173,6 @@ namespace GameLogic
             }
 
             return false;
-        }
-
-        private ChapterCreatureInstanceData FindCreatureInstanceById(List<ChapterCreatureInstanceData> sourceInstances, string instanceId)
-        {
-            if (sourceInstances == null || string.IsNullOrWhiteSpace(instanceId))
-            {
-                return null;
-            }
-
-            for (int index = 0; index < sourceInstances.Count; index++)
-            {
-                ChapterCreatureInstanceData creatureInstance = sourceInstances[index];
-                if (creatureInstance != null && string.Equals(creatureInstance.InstanceId, instanceId, StringComparison.Ordinal))
-                {
-                    return creatureInstance;
-                }
-            }
-
-            return null;
         }
 
         private void BringGridEventMarkersToFront()
@@ -4052,15 +3908,14 @@ namespace GameLogic
                 return;
             }
 
-            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter.CreatureInstances, draggingInstanceId);
-            if (creatureInstance != null
-                && TryGetMouseLocalPointInMapPreview(out Vector2 localPoint)
+            if (TryGetMouseLocalPointInMapPreview(out Vector2 localPoint)
                 && TryGetGridCellCoordinateFromLocalPoint(localPoint, out ChapterGridCoordinate gridCoordinate))
             {
-                creatureInstance.Placement ??= new ChapterCreatureInstancePlacementData();
-                creatureInstance.Placement.AnchorCell = gridCoordinate;
-                bool saved = SaveChapterEditorState();
-                ShowSaveFeedbackAsync(saved ? "Creature repositioned." : "Creature moved, but save failed.", saved).Forget();
+                if (ChapterEditorBoardService.MoveCreatureInstance(selectedChapter, draggingInstanceId, gridCoordinate))
+                {
+                    bool saved = SaveChapterEditorState();
+                    ShowSaveFeedbackAsync(saved ? "Creature repositioned." : "Creature moved, but save failed.", saved).Forget();
+                }
             }
 
             RefreshGridSelectionHighlights();
@@ -4171,9 +4026,7 @@ namespace GameLogic
                 return;
             }
 
-            selectedChapter.GridCells ??= new List<ChapterGridCellData>();
-
-            ChapterGridCellCollectionUtility.ToggleSelectedCell(selectedChapter.GridCells, m_gridCellSelectionMouseDownCoordinate);
+            ChapterEditorBoardService.ToggleSelectedGridCell(selectedChapter, m_gridCellSelectionMouseDownCoordinate);
 
             RefreshGridSelectionHighlights();
             SaveChapterEditorState();
@@ -4203,31 +4056,13 @@ namespace GameLogic
                 return;
             }
 
-            selectedChapter.GridCells ??= new List<ChapterGridCellData>();
-            ChapterEventCollectionUtility.TryGetEventData(selectedChapter.Events, selectedChapter.EventBindings, m_gridCellEventPopupMouseDownCoordinate, out ChapterGridEventData existingEventData);
+            ChapterEditorBoardService.TryGetEventData(selectedChapter, m_gridCellEventPopupMouseDownCoordinate, out ChapterGridEventData existingEventData);
             OpenChapterEventPopup(selectedChapter, new List<ChapterGridCoordinate> { m_gridCellEventPopupMouseDownCoordinate }, existingEventData);
         }
 
         private static bool TryGetSelectedGridCoordinates(ChapterListItemData chapter, out List<ChapterGridCoordinate> coordinates)
         {
-            coordinates = new List<ChapterGridCoordinate>();
-            List<ChapterGridCellData> selectedCells = ChapterGridCellCollectionUtility.GetCellsByMarkType(chapter?.GridCells, ChapterGridCellMarkType.Selected);
-            if (selectedCells.Count <= 0)
-            {
-                return false;
-            }
-
-            for (int index = 0; index < selectedCells.Count; index++)
-            {
-                if (selectedCells[index] == null)
-                {
-                    continue;
-                }
-
-                coordinates.Add(selectedCells[index].Coordinate);
-            }
-
-            return coordinates.Count > 0;
+            return ChapterEditorBoardService.TryGetSelectedGridCoordinates(chapter, out coordinates);
         }
 
         private bool CanHandleGridCellSelection()
@@ -4268,7 +4103,7 @@ namespace GameLogic
             bool hasSelectedEventCells = false;
             if (hasSelectedChapter && TryGetSelectedGridCoordinates(selectedChapter, out List<ChapterGridCoordinate> coordinates))
             {
-                hasSelectedEventCells = HasGridEventAtAnyCoordinate(selectedChapter.EventBindings, coordinates);
+                hasSelectedEventCells = ChapterEditorBoardService.HasGridEventAtAnyCoordinate(selectedChapter.EventBindings, coordinates);
             }
 
             if (m_btnOpenCheckPopup != null)
@@ -4565,8 +4400,11 @@ namespace GameLogic
                 return false;
             }
 
-            selectedChapter.CreatureInstances ??= new List<ChapterCreatureInstanceData>();
-            selectedChapter.CreatureInstances.Add(CreateCreatureInstanceFromTemplate(m_draggingCreatureTemplate, gridCoordinate));
+            if (!ChapterEditorBoardService.DeployCreatureInstance(selectedChapter, m_draggingCreatureTemplate, gridCoordinate))
+            {
+                return false;
+            }
+
             RefreshGridSelectionHighlights();
             return true;
         }
@@ -4629,24 +4467,6 @@ namespace GameLogic
                 && TryGetCreatureInstanceAtLocalPoint(localPoint, includeInactive: true, out _);
         }
 
-        private static ChapterCreatureInstanceData CreateCreatureInstanceFromTemplate(ChapterCreatureData creatureTemplate, ChapterGridCoordinate gridCoordinate)
-        {
-            ChapterCreatureData normalizedTemplate = ChapterCreatureDataStructureUtility.CloneCreatureData(creatureTemplate);
-            return ChapterCreatureDataStructureUtility.NormalizeCreatureInstanceData(new ChapterCreatureInstanceData
-            {
-                SourceCreatureId = normalizedTemplate?.CreatureId ?? string.Empty,
-                IsActive = true,
-                Placement = new ChapterCreatureInstancePlacementData
-                {
-                    AnchorCell = gridCoordinate,
-                    PreviewScale = 1f,
-                    SnapToGrid = true,
-                },
-                RuntimeSheet = normalizedTemplate,
-                DmNote = string.Empty,
-            });
-        }
-
         private static Rect GetCreatureTokenRect(ChapterMapGridMetrics metrics, ChapterCreatureInstanceData creatureInstance)
         {
             if (creatureInstance == null)
@@ -4702,7 +4522,7 @@ namespace GameLogic
             }
 
             ChapterListItemData selectedChapter = GetSelectedChapterData();
-            ChapterCreatureInstanceData creatureInstance = FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_draggingCreatureInstanceId);
+            ChapterCreatureInstanceData creatureInstance = ChapterEditorBoardService.FindCreatureInstanceById(selectedChapter?.CreatureInstances, m_draggingCreatureInstanceId);
             UpdateCreaturePlacementPreview(Input.mousePosition, creatureInstance?.RuntimeSheet, creatureInstance?.Placement?.PreviewScale ?? 1f);
         }
 
@@ -4835,11 +4655,6 @@ namespace GameLogic
             m_btnUploadMapRect.sizeDelta = new Vector2(196f, 52f);
         }
 
-        private static string GetChapterMapStorageDirectory()
-        {
-            return Path.Combine(Application.persistentDataPath, "ChapterMaps");
-        }
-
         private static string GetChapterEditorSaveFilePath()
         {
             return ChapterEditorPersistenceService.GetSaveFilePath(ChapterEditorSaveFileName);
@@ -4912,7 +4727,7 @@ namespace GameLogic
         private void LoadChapterEditorState()
         {
             string filePath = GetChapterEditorSaveFilePath();
-            if (!File.Exists(filePath))
+            if (!ChapterEditorPersistenceService.FileExists(filePath))
             {
                 return;
             }
@@ -4929,17 +4744,8 @@ namespace GameLogic
                 m_chapterItems.AddRange(ChapterEditorPersistenceService.BuildRuntimeChapters(saveData.Chapters));
 
                 m_selectedChapterId = saveData.SelectedChapterId;
-                int maxChapterId = 0;
-                for (int index = 0; index < m_chapterItems.Count; index++)
-                {
-                    maxChapterId = Mathf.Max(maxChapterId, m_chapterItems[index].Id);
-                }
-
-                m_nextChapterId = Mathf.Max(saveData.NextChapterId, maxChapterId + 1, 1);
-                if (GetChapterIndexById(m_selectedChapterId) < 0)
-                {
-                    m_selectedChapterId = m_chapterItems.Count > 0 ? m_chapterItems[0].Id : -1;
-                }
+                m_nextChapterId = ChapterEditorStructureService.ResolveNextChapterId(m_chapterItems, saveData.NextChapterId);
+                m_selectedChapterId = ChapterEditorStructureService.ResolveSelectedChapterId(m_chapterItems, m_selectedChapterId);
             }
             catch (Exception exception)
             {
@@ -4958,22 +4764,14 @@ namespace GameLogic
 
         private static void TryDeleteManagedMapFile(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
-            {
-                return;
-            }
-
-            string storageDirectory = GetChapterMapStorageDirectory();
-            string normalizedFilePath = Path.GetFullPath(filePath);
-            string normalizedStorageDirectory = Path.GetFullPath(storageDirectory);
-            if (!normalizedFilePath.StartsWith(normalizedStorageDirectory, StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(filePath) || !ChapterEditorPersistenceService.FileExists(filePath))
             {
                 return;
             }
 
             try
             {
-                File.Delete(normalizedFilePath);
+                ChapterEditorPersistenceService.TryDeleteManagedChapterMapFile(filePath);
             }
             catch (Exception exception)
             {

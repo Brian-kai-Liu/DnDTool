@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System;
-using TEngine;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -10,75 +8,63 @@ namespace GameLogic
     {
         public static string GetSaveFilePath(string fileName)
         {
-            return Path.Combine(UnityEngine.Application.persistentDataPath, "ChapterEditor", fileName);
+            return ModuleAuthoringRepository.GetChapterEditorSaveFilePath(fileName);
         }
 
         public static string GetCreaturePreviewDirectoryPath()
         {
-            return Path.Combine(UnityEngine.Application.persistentDataPath, "ChapterCreaturePreviews");
+            return ModuleAuthoringRepository.GetCreaturePreviewDirectoryPath();
+        }
+
+        public static string GetChapterMapDirectoryPath()
+        {
+            return ModuleAuthoringRepository.GetChapterMapDirectoryPath();
         }
 
         public static string ResolveCreaturePreviewPath(string previewImageFileName)
         {
-            if (string.IsNullOrWhiteSpace(previewImageFileName))
-            {
-                return string.Empty;
-            }
-
-            if (Path.IsPathRooted(previewImageFileName))
-            {
-                return File.Exists(previewImageFileName) ? previewImageFileName : string.Empty;
-            }
-
-            string resolvedPath = Path.Combine(GetCreaturePreviewDirectoryPath(), previewImageFileName);
-            return File.Exists(resolvedPath) ? resolvedPath : string.Empty;
+            return ModuleAuthoringRepository.ResolveCreaturePreviewPath(previewImageFileName);
         }
 
         public static string StoreCreaturePreviewImage(string sourceFilePath)
         {
-            if (string.IsNullOrWhiteSpace(sourceFilePath) || !File.Exists(sourceFilePath))
-            {
-                return string.Empty;
-            }
+            return ModuleAuthoringRepository.StoreCreaturePreviewImage(sourceFilePath);
+        }
 
-            string sourceFullPath = Path.GetFullPath(sourceFilePath);
-            string targetDirectoryPath = GetCreaturePreviewDirectoryPath();
-            Directory.CreateDirectory(targetDirectoryPath);
+        public static string StoreChapterMapImage(string sourceFilePath, int chapterId)
+        {
+            return ModuleAuthoringRepository.StoreChapterMapImage(sourceFilePath, chapterId);
+        }
 
-            string targetDirectoryFullPath = Path.GetFullPath(targetDirectoryPath);
-            if (sourceFullPath.StartsWith(targetDirectoryFullPath, StringComparison.OrdinalIgnoreCase))
-            {
-                return Path.GetFileName(sourceFullPath);
-            }
+        public static bool FileExists(string filePath)
+        {
+            return ModuleAuthoringRepository.FileExists(filePath);
+        }
 
-            string extension = Path.GetExtension(sourceFullPath);
-            string targetFileName = $"creature_{DateTime.Now:yyyyMMddHHmmssfff}{extension}";
-            string targetFilePath = Path.Combine(targetDirectoryPath, targetFileName);
-            File.Copy(sourceFullPath, targetFilePath, true);
-            return targetFileName;
+        public static string GetDisplayFileName(string filePath)
+        {
+            return ModuleAuthoringRepository.GetDisplayFileName(filePath);
+        }
+
+        public static byte[] ReadFileBytes(string filePath)
+        {
+            return ModuleAuthoringRepository.ReadFileBytes(filePath);
+        }
+
+        public static bool TryDeleteManagedChapterMapFile(string filePath)
+        {
+            return ModuleAuthoringRepository.TryDeleteManagedChapterMapFile(filePath);
         }
 
         public static ChapterEditorSaveData Load(string filePath)
         {
-            if (!File.Exists(filePath))
-            {
-                return null;
-            }
-
-            string json = File.ReadAllText(filePath);
-            ChapterEditorLegacySaveData legacySaveData = Utility.Json.ToObject<ChapterEditorLegacySaveData>(json);
+            ChapterEditorLegacySaveData legacySaveData = ModuleAuthoringRepository.LoadJson<ChapterEditorLegacySaveData>(filePath);
             return ToCurrentSaveData(legacySaveData);
         }
 
         public static void Save(string filePath, ChapterEditorSaveData saveData)
         {
-            string directoryPath = Path.GetDirectoryName(filePath);
-            if (!string.IsNullOrEmpty(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-
-            File.WriteAllText(filePath, Utility.Json.ToJson(saveData));
+            ModuleAuthoringRepository.SaveJson(filePath, saveData);
         }
 
         private static ChapterEditorSaveData ToCurrentSaveData(ChapterEditorLegacySaveData saveData)

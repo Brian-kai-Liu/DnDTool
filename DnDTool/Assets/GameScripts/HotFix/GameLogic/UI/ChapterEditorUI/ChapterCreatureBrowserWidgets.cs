@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -261,7 +260,7 @@ namespace GameLogic
             byte[] imageBytes;
             try
             {
-                imageBytes = await UniTask.RunOnThreadPool(() => File.ReadAllBytes(previewPath));
+                imageBytes = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.ReadFileBytes(previewPath));
             }
             catch (Exception exception)
             {
@@ -469,7 +468,7 @@ namespace GameLogic
             byte[] imageBytes;
             try
             {
-                imageBytes = await UniTask.RunOnThreadPool(() => File.ReadAllBytes(previewPath));
+                imageBytes = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.ReadFileBytes(previewPath));
             }
             catch (Exception exception)
             {
