@@ -36,6 +36,11 @@ namespace GameLogic
             return ModuleAuthoringRepository.StoreChapterMapImage(sourceFilePath, chapterId);
         }
 
+        public static string StoreChapterMapImage(string sourceFilePath, int chapterId, string targetDirectoryPath)
+        {
+            return ModuleAuthoringRepository.StoreChapterMapImage(sourceFilePath, chapterId, targetDirectoryPath);
+        }
+
         public static bool FileExists(string filePath)
         {
             return ModuleAuthoringRepository.FileExists(filePath);

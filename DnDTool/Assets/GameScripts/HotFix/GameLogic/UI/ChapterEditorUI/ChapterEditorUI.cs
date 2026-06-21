@@ -1897,11 +1897,12 @@ namespace GameLogic
             }
 
             string oldPath = chapter.MapImagePath;
+            string targetDirectoryPath = ChapterEditorPersistenceService.GetChapterMapDirectoryPath();
             string targetFilePath;
 
             try
             {
-                targetFilePath = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.StoreChapterMapImage(sourceFilePath, chapter.Id));
+                targetFilePath = await UniTask.RunOnThreadPool(() => ChapterEditorPersistenceService.StoreChapterMapImage(sourceFilePath, chapter.Id, targetDirectoryPath));
             }
             catch (Exception exception)
             {

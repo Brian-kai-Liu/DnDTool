@@ -49,10 +49,15 @@ namespace GameLogic
 
         public static string StoreChapterMapImage(string sourceFilePath, int chapterId)
         {
-            string storedFileName = StoreManagedImage(sourceFilePath, GetChapterMapDirectoryPath(), $"chapter_{chapterId}");
+            return StoreChapterMapImage(sourceFilePath, chapterId, GetChapterMapDirectoryPath());
+        }
+
+        public static string StoreChapterMapImage(string sourceFilePath, int chapterId, string targetDirectoryPath)
+        {
+            string storedFileName = StoreManagedImage(sourceFilePath, targetDirectoryPath, $"chapter_{chapterId}");
             return string.IsNullOrWhiteSpace(storedFileName)
                 ? string.Empty
-                : Path.Combine(GetChapterMapDirectoryPath(), storedFileName);
+                : Path.Combine(targetDirectoryPath, storedFileName);
         }
 
         public static bool FileExists(string filePath)
