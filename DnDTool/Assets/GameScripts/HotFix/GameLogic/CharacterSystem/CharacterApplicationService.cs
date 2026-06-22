@@ -52,6 +52,10 @@ namespace GameLogic
                 ClassProgresses = CloneClassProgresses(request.ClassProgresses),
                 ChoiceSelections = CloneChoiceSelections(request.ChoiceSelections)
             };
+            character.HpModeId = CharacterHpModeIds.Normalize(character.RuntimeSnapshot.HpModeId);
+            character.MaxHp = Math.Max(0, character.RuntimeSnapshot.MaxHp);
+            character.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.RuntimeSnapshot.CurrentHp, character.MaxHp);
+            character.TemporaryHp = Math.Max(0, character.RuntimeSnapshot.TemporaryHp);
 
             return CharacterCardLocalRepository.Normalize(character);
         }
@@ -73,7 +77,13 @@ namespace GameLogic
                 ChoiceSelections = BuildCreationChoiceSelections(input)
             };
 
-            return BuildSaveData(request);
+            CharacterCardDraftSaveData character = BuildSaveData(request);
+            character.HpModeId = CharacterHpModeIds.Normalize(input.HpModeId);
+            character.MaxHp = Math.Max(0, input.MaxHp);
+            character.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(input.CurrentHp, character.MaxHp);
+            character.TemporaryHp = Math.Max(0, input.TemporaryHp);
+            character.HpRolls = CloneHpRolls(input.HpRolls);
+            return CharacterCardLocalRepository.Normalize(character);
         }
 
         public CharacterOperationResult Save(CharacterCardDraftSaveData character)
@@ -209,6 +219,7 @@ namespace GameLogic
         {
             return new CharacterRuntimeSnapshotData
             {
+                Level = Math.Max(1, input.Level),
                 Strength = input.Strength,
                 Dexterity = input.Dexterity,
                 Constitution = input.Constitution,
@@ -216,6 +227,10 @@ namespace GameLogic
                 Wisdom = input.Wisdom,
                 Charisma = input.Charisma,
                 Speed = Math.Max(0, input.Speed),
+                HpModeId = CharacterHpModeIds.Normalize(input.HpModeId),
+                MaxHp = Math.Max(0, input.MaxHp),
+                CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(input.CurrentHp, input.MaxHp),
+                TemporaryHp = Math.Max(0, input.TemporaryHp),
                 SkillProficiencyIds = CloneStringList(input.SkillProficiencyIds),
                 ToolProficiencyIds = CloneStringList(input.ToolProficiencyIds)
             };
@@ -403,6 +418,36 @@ namespace GameLogic
                 {
                     result.Add(value.Trim());
                 }
+            }
+
+            return result;
+        }
+
+        private static List<CharacterHpRollSaveData> CloneHpRolls(List<CharacterHpRollSaveData> source)
+        {
+            List<CharacterHpRollSaveData> result = new List<CharacterHpRollSaveData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                CharacterHpRollSaveData roll = source[index];
+                if (roll == null)
+                {
+                    continue;
+                }
+
+                result.Add(new CharacterHpRollSaveData
+                {
+                    Level = Math.Max(1, roll.Level),
+                    ClassId = roll.ClassId?.Trim() ?? string.Empty,
+                    HitDie = Math.Max(0, roll.HitDie),
+                    RollValue = Math.Max(0, roll.RollValue),
+                    ConstitutionModifier = roll.ConstitutionModifier,
+                    HpGain = Math.Max(0, roll.HpGain)
+                });
             }
 
             return result;

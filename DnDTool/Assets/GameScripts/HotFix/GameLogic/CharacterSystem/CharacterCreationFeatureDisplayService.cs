@@ -125,6 +125,11 @@ namespace GameLogic
                 return entry.Title;
             }
 
+            if (TryBuildAdvancementChoiceTitle(state, out string advancementTitle))
+            {
+                return advancementTitle;
+            }
+
             string selectedTitle = BuildSelectedFeatureChoiceTitle(state);
             return string.IsNullOrWhiteSpace(selectedTitle)
                 ? entry.Title
@@ -152,6 +157,11 @@ namespace GameLogic
             if (!IsFeatureChoiceCompleted(state))
             {
                 return entry.Description;
+            }
+
+            if (TryBuildAdvancementChoiceDescription(state, out string advancementDescription))
+            {
+                return advancementDescription;
             }
 
             string description = BuildSelectedFeatureChoiceDescription(state);
@@ -491,7 +501,7 @@ namespace GameLogic
                 }
             }
 
-            return string.Join("、", names);
+            return string.Join("/", names);
         }
 
         private string GetFeatureChoiceOptionDisplayName(CharacterCreationFeatureChoiceState state, string optionId)
@@ -580,6 +590,103 @@ namespace GameLogic
             }
 
             return string.Join("\n", descriptions);
+        }
+
+        private bool TryBuildAdvancementChoiceTitle(CharacterCreationFeatureChoiceState state, out string title)
+        {
+            title = string.Empty;
+            if (!IsAdvancementOptionChoice(state) || state.SelectedOptionIds.Count == 0)
+            {
+                return false;
+            }
+
+            string parentTitle = GetFeatureChoiceOptionDisplayName(state, state.SelectedOptionIds[0]);
+            CharacterCreationFeatureChoiceState followupState = TryGetAdvancementFollowupChoiceState(state);
+            if (!IsFeatureChoiceCompleted(followupState))
+            {
+                title = parentTitle;
+                return !string.IsNullOrWhiteSpace(title);
+            }
+
+            string followupTitle = BuildSelectedFeatureChoiceTitle(followupState);
+            title = string.IsNullOrWhiteSpace(followupTitle)
+                ? parentTitle
+                : $"{parentTitle}-{followupTitle}";
+            return !string.IsNullOrWhiteSpace(title);
+        }
+
+        private bool TryBuildAdvancementChoiceDescription(CharacterCreationFeatureChoiceState state, out string description)
+        {
+            description = string.Empty;
+            if (!IsAdvancementOptionChoice(state) || state.SelectedOptionIds.Count == 0)
+            {
+                return false;
+            }
+
+            CharacterCreationFeatureChoiceState followupState = TryGetAdvancementFollowupChoiceState(state);
+            if (IsFeatureChoiceCompleted(followupState))
+            {
+                description = BuildSelectedFeatureChoiceDescription(followupState);
+            }
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                description = GetChoiceOptionDescription(state.ChoiceGroupId, state.SelectedOptionIds[0]);
+            }
+
+            return !string.IsNullOrWhiteSpace(description);
+        }
+
+        private static bool IsAdvancementOptionChoice(CharacterCreationFeatureChoiceState state)
+        {
+            return state != null
+                && (string.Equals(state.ChoiceType, "AdvancementOption", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(state.ChoiceType, "FeatOrAbilityScore", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static CharacterCreationFeatureChoiceState TryGetAdvancementFollowupChoiceState(CharacterCreationFeatureChoiceState state)
+        {
+            if (!IsAdvancementOptionChoice(state) || state.SelectedOptionIds.Count == 0)
+            {
+                return null;
+            }
+
+            string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(state.ChoiceGroupId, state.SelectedOptionIds[0]);
+            return string.IsNullOrWhiteSpace(followupChoiceGroupId)
+                ? null
+                : CharacterCreationSessionService.Instance.FindFeatureChoiceState(followupChoiceGroupId);
+        }
+
+        private static string ResolveAdvancementFollowupChoiceGroupId(string parentChoiceGroupId, string optionId)
+        {
+            string normalized = optionId?.Trim() ?? string.Empty;
+            if (DndRuleContentService.Instance.TryGetChoiceGroup(parentChoiceGroupId, out DndChoiceGroupData parentGroup)
+                && parentGroup?.NextChoiceGroupIds != null
+                && parentGroup.NextChoiceGroupIds.Count > 0)
+            {
+                if (string.Equals(normalized, "option_asi", StringComparison.OrdinalIgnoreCase))
+                {
+                    return parentGroup.NextChoiceGroupIds[0]?.Trim() ?? string.Empty;
+                }
+
+                if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase)
+                    && parentGroup.NextChoiceGroupIds.Count > 1)
+                {
+                    return parentGroup.NextChoiceGroupIds[1]?.Trim() ?? string.Empty;
+                }
+            }
+
+            if (string.Equals(normalized, "option_asi", StringComparison.OrdinalIgnoreCase))
+            {
+                return "choice_asi_attributes";
+            }
+
+            if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase))
+            {
+                return "choice_feat_any";
+            }
+
+            return string.Empty;
         }
 
         private static CharacterCreationFeatureDisplayEntry CreateFeatureEntry(

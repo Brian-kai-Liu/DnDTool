@@ -47,6 +47,7 @@ namespace GameLogic
             FillSkillStates(state, raceData, backgroundData, normalizedLevel);
             FillPassivePerceptionState(state);
             FillCombatOverviewState(state, character, normalizedLevel);
+            FillCurrencyState(state, character);
             FillEquipmentToolState(state, classData, raceData, backgroundData);
             return state;
         }
@@ -151,6 +152,13 @@ namespace GameLogic
             List<string> fixedSkillIds = CharacterCreationRuleService.Instance.BuildFixedSkillProficiencyIds(raceData, backgroundData);
             List<string> proficiencyIds = CharacterCreationSessionService.Instance.BuildCurrentSkillProficiencyIds(fixedSkillIds);
             CharacterCardDraftSaveData character = CharacterCreationSessionService.Instance.CurrentState?.Character;
+            CharacterCardDraftSaveData previewCharacter = BuildPreviewCharacter(character, level);
+            CharacterRuntimeSnapshotData snapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(previewCharacter);
+            if (snapshot?.SkillProficiencyIds != null)
+            {
+                proficiencyIds = snapshot.SkillProficiencyIds;
+            }
+
             TryGetClassLevelProficiencyBonus(character?.ClassId, level, out int proficiencyBonus);
 
             AppendSkillState(state, proficiencyIds, proficiencyBonus, "athletics", "运动", AbilityKind.Strength);
@@ -252,10 +260,25 @@ namespace GameLogic
             CharacterCardDraftSaveData previewCharacter = BuildPreviewCharacter(character, level);
             CharacterRuntimeSnapshotData snapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(previewCharacter);
             CharacterCombatOverviewViewState overview = CharacterDetailCalculationService.Instance.BuildCombatOverview(previewCharacter, snapshot);
+            CharacterHpDisplayViewState hp = CharacterDetailCalculationService.Instance.BuildHpDisplay(snapshot);
 
             state.ArmorClassText = overview.ArmorClass > 0 ? overview.ArmorClass.ToString() : "-";
             state.InitiativeText = CharacterCreationCalculationService.Instance.FormatSigned(overview.InitiativeBonus);
+            state.CurrentHpText = hp.MaxHp > 0 ? hp.CurrentHp.ToString() : "-";
+            state.MaxHpText = hp.MaxHp > 0 ? hp.MaxHp.ToString() : "-";
+            state.TemporaryHpText = hp.TemporaryHp > 0 ? hp.TemporaryHp.ToString() : "0";
+            state.ShouldShowHitPointGenerationButton = hp.MaxHp <= 0;
             FillSpellcastingCombatText(state, previewCharacter, snapshot, level);
+        }
+
+        private static void FillCurrencyState(CharacterCreationViewState state, CharacterCardDraftSaveData character)
+        {
+            CharacterCurrencySaveData currency = CharacterCurrencySaveData.Clone(character?.Currency);
+            state.CopperText = currency.Copper.ToString();
+            state.SilverText = currency.Silver.ToString();
+            state.ElectrumText = currency.Electrum.ToString();
+            state.GoldText = currency.Gold.ToString();
+            state.PlatinumText = currency.Platinum.ToString();
         }
 
         private static CharacterCardDraftSaveData BuildPreviewCharacter(CharacterCardDraftSaveData source, int level)
@@ -286,6 +309,12 @@ namespace GameLogic
                 FeatId = source.FeatId?.Trim() ?? string.Empty,
                 SpellId = source.SpellId?.Trim() ?? string.Empty,
                 Level = Math.Max(1, level),
+                HpModeId = CharacterHpModeIds.Normalize(source.HpModeId),
+                MaxHp = Math.Max(0, source.MaxHp),
+                CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(source.CurrentHp, source.MaxHp),
+                TemporaryHp = Math.Max(0, source.TemporaryHp),
+                ManualHp = Math.Max(0, source.ManualHp),
+                HpRolls = CharacterHpRollSaveDataCloneList(source.HpRolls),
                 Equipment = CharacterEquipmentSetSaveData.Clone(source.Equipment),
                 Resources = CharacterResourceSaveData.CloneList(source.Resources),
                 Conditions = CharacterConditionStateSaveData.CloneList(source.Conditions),
@@ -311,6 +340,10 @@ namespace GameLogic
             snapshot.RaceId = raceId;
             snapshot.BackgroundId = backgroundId;
             snapshot.Speed = raceData?.Speed ?? snapshot.Speed;
+            snapshot.HpModeId = preview.HpModeId;
+            snapshot.MaxHp = preview.MaxHp;
+            snapshot.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(preview.CurrentHp, preview.MaxHp);
+            snapshot.TemporaryHp = preview.TemporaryHp;
             snapshot.Strength = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Strength", BaseAbilityScore);
             snapshot.Dexterity = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Dexterity", BaseAbilityScore);
             snapshot.Constitution = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Constitution", BaseAbilityScore);
@@ -321,6 +354,36 @@ namespace GameLogic
             snapshot.ToolProficiencyIds = CharacterCreationSessionService.Instance.BuildCurrentToolProficiencyIds(fixedToolIds);
             preview.RuntimeSnapshot = snapshot;
             return preview;
+        }
+
+        private static List<CharacterHpRollSaveData> CharacterHpRollSaveDataCloneList(List<CharacterHpRollSaveData> source)
+        {
+            List<CharacterHpRollSaveData> result = new List<CharacterHpRollSaveData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                CharacterHpRollSaveData roll = source[index];
+                if (roll == null)
+                {
+                    continue;
+                }
+
+                result.Add(new CharacterHpRollSaveData
+                {
+                    Level = Math.Max(1, roll.Level),
+                    ClassId = roll.ClassId?.Trim() ?? string.Empty,
+                    HitDie = Math.Max(0, roll.HitDie),
+                    RollValue = Math.Max(0, roll.RollValue),
+                    ConstitutionModifier = roll.ConstitutionModifier,
+                    HpGain = Math.Max(0, roll.HpGain)
+                });
+            }
+
+            return result;
         }
 
         private static List<CharacterChoiceSelectionSaveData> BuildPreviewChoiceSelections(string classId)

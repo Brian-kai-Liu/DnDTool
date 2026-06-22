@@ -515,9 +515,7 @@
     "feature_ids": [
       "feature_feat_skilled"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
+    "effect_ids": [],
     "choice_group_ids": [],
     "description": "获得任意三个技能或工具熟练。"
   },

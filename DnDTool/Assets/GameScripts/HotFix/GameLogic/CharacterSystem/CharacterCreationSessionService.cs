@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 
 namespace GameLogic
 {
@@ -19,7 +21,7 @@ namespace GameLogic
         private CharacterDraftState m_state = new CharacterDraftState();
         private CharacterCreationToolChoiceState m_activeToolChoiceState;
         private CharacterCreationFeatureChoiceState m_activeFeatureChoiceState;
-        private readonly Random m_random = new Random();
+        private readonly System.Random m_random = new System.Random();
 
         private CharacterCreationSessionService()
         {
@@ -58,6 +60,7 @@ namespace GameLogic
         {
             EnsureState();
             m_state.Character.ClassId = classId?.Trim() ?? string.Empty;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
             m_state.IsDirty = true;
         }
 
@@ -126,6 +129,7 @@ namespace GameLogic
         {
             EnsureState();
             m_state.Character.Level = Math.Max(1, level);
+            RefreshDerivedStatsAfterAbilityScoresChanged();
             m_state.IsDirty = true;
         }
 
@@ -159,6 +163,11 @@ namespace GameLogic
             return FindChoiceState(FeatureChoiceStates, choiceGroupId);
         }
 
+        public CharacterCreationFeatureChoiceState GetActiveFeatureChoiceState()
+        {
+            return m_activeFeatureChoiceState;
+        }
+
         public void SetActiveToolChoice(CharacterCreationToolChoiceState state)
         {
             m_activeFeatureChoiceState = null;
@@ -188,6 +197,31 @@ namespace GameLogic
             };
         }
 
+        public List<CharacterCreationHitPointGenerationMethodViewState> GetHitPointGenerationMethods()
+        {
+            return new List<CharacterCreationHitPointGenerationMethodViewState>
+            {
+                new CharacterCreationHitPointGenerationMethodViewState { MethodId = CharacterHpModeIds.Rolled, Name = "生命值掷骰" },
+                new CharacterCreationHitPointGenerationMethodViewState { MethodId = CharacterHpModeIds.Average, Name = "生命值均值" }
+            };
+        }
+
+        public bool GenerateHitPoints(string hpModeId, int level)
+        {
+            EnsureState();
+            CharacterCardDraftSaveData character = m_state.Character;
+            string normalizedMode = CharacterHpModeIds.Normalize(hpModeId);
+            if (string.Equals(normalizedMode, CharacterHpModeIds.Custom, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            character.HpModeId = normalizedMode;
+            character.Level = Math.Max(1, level);
+            character.ManualHp = 0;
+            return SyncHitPointsForCurrentLevel();
+        }
+
         public bool StartAbilityGeneration(string methodId)
         {
             string normalized = methodId?.Trim() ?? string.Empty;
@@ -204,14 +238,7 @@ namespace GameLogic
             }
             else if (string.Equals(normalized, "roll_4d6_drop_lowest", StringComparison.OrdinalIgnoreCase))
             {
-                for (int index = 0; index < 6; index++)
-                {
-                    AbilityGenerationState.Scores.Add(new CharacterCreationGeneratedAbilityScoreState
-                    {
-                        ScoreId = $"score_{index + 1}",
-                        Value = RollFourD6DropLowest()
-                    });
-                }
+                AddGeneratedAbilityScores(RollBestAbilityScoreSet());
             }
             else if (string.Equals(normalized, AbilityGenerationMethodPointBuy, StringComparison.OrdinalIgnoreCase))
             {
@@ -279,6 +306,7 @@ namespace GameLogic
                 }
 
                 m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
                 return true;
             }
 
@@ -310,6 +338,7 @@ namespace GameLogic
             pendingScore.AssignedAbilityId = normalizedAbilityId;
             AbilityGenerationState.PendingScoreId = string.Empty;
             m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
             return true;
         }
 
@@ -339,6 +368,11 @@ namespace GameLogic
 
         public bool ChangeAbilityScore(string abilityId, int delta)
         {
+            if (TryChangeActiveAbilityScoreFeatureChoice(abilityId, delta))
+            {
+                return true;
+            }
+
             if (IsPointBuyMode())
             {
                 return ChangePointBuyAbilityScore(abilityId, delta);
@@ -362,6 +396,7 @@ namespace GameLogic
 
             AbilityGenerationState.ManualScores[normalized] = Math.Max(ManualMinScore, Math.Min(ManualMaxScore, score));
             m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
             return true;
         }
 
@@ -391,7 +426,15 @@ namespace GameLogic
                 return false;
             }
 
-            TogglePendingValue(state.PendingOptionIds, optionId, state.MaxSelect);
+            if (IsRepeatableAbilityScoreChoice(state))
+            {
+                ToggleRepeatableAbilityScoreChoice(state, optionId);
+            }
+            else
+            {
+                TogglePendingValue(state.PendingOptionIds, optionId, state.MaxSelect);
+            }
+
             m_state.IsDirty = true;
             return true;
         }
@@ -423,9 +466,55 @@ namespace GameLogic
             }
 
             state.SelectedOptionIds.Clear();
-            AppendUniqueValues(state.SelectedOptionIds, state.PendingOptionIds);
+            if (IsRepeatableAbilityScoreChoice(state))
+            {
+                AppendValues(state.SelectedOptionIds, state.PendingOptionIds);
+            }
+            else
+            {
+                AppendUniqueValues(state.SelectedOptionIds, state.PendingOptionIds);
+            }
+
             m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
             return true;
+        }
+
+        public CharacterCreationFeatureChoiceState StartFollowupFeatureChoice(CharacterCreationFeatureChoiceState completedState)
+        {
+            if (completedState == null
+                || completedState.SelectedOptionIds.Count == 0
+                || !DndRuleContentService.Instance.TryGetChoiceGroup(completedState.ChoiceGroupId, out DndChoiceGroupData parentGroup)
+                || parentGroup == null
+                || !IsAdvancementOptionChoiceType(parentGroup.ChoiceType))
+            {
+                return null;
+            }
+
+            string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(parentGroup, completedState.SelectedOptionIds[0]);
+            if (string.IsNullOrWhiteSpace(followupChoiceGroupId)
+                || !TryGetSelectableFeatureChoiceGroup(followupChoiceGroupId, out DndChoiceGroupData followupGroup))
+            {
+                return null;
+            }
+
+            CharacterCreationFeatureChoiceState followupState = FindFeatureChoiceState(followupChoiceGroupId);
+            if (followupState == null)
+            {
+                followupState = BuildFeatureChoiceState(
+                    followupGroup,
+                    completedState.SourceType,
+                    completedState.SourceId,
+                    completedState.Level);
+                followupState.ClassId = completedState.ClassId;
+                if (followupState.OptionIds.Count > 0)
+                {
+                    FeatureChoiceStates.Add(followupState);
+                }
+            }
+
+            SetActiveFeatureChoice(followupState);
+            return followupState != null && followupState.OptionIds.Count > 0 ? followupState : null;
         }
 
         public CharacterCreationToolChoiceState CreateOrRefreshToolChoiceState(
@@ -728,6 +817,7 @@ namespace GameLogic
             form ??= new CharacterCreationFormInput();
             int baseAbilityScore = form.BaseAbilityScore > 0 ? form.BaseAbilityScore : 10;
             string classId = form.ClassId?.Trim() ?? string.Empty;
+            CharacterCardDraftSaveData character = m_state?.Character ?? new CharacterCardDraftSaveData();
 
             return new CharacterCreationDraftInput
             {
@@ -745,6 +835,11 @@ namespace GameLogic
                 Intelligence = GetCurrentAbilityScore("Intelligence", baseAbilityScore),
                 Wisdom = GetCurrentAbilityScore("Wisdom", baseAbilityScore),
                 Charisma = GetCurrentAbilityScore("Charisma", baseAbilityScore),
+                HpModeId = CharacterHpModeIds.Normalize(character.HpModeId),
+                MaxHp = Math.Max(0, character.MaxHp),
+                CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.CurrentHp, character.MaxHp),
+                TemporaryHp = Math.Max(0, character.TemporaryHp),
+                HpRolls = CloneHpRolls(character.HpRolls),
                 SkillProficiencyIds = BuildCurrentSkillProficiencyIds(form.FixedSkillProficiencyIds),
                 ToolProficiencyIds = BuildCurrentToolProficiencyIds(form.FixedToolProficiencyIds),
                 RaceAbilityChoices = BuildRaceAbilityChoiceInputs(),
@@ -977,14 +1072,20 @@ namespace GameLogic
                 for (int optionIndex = 0; optionIndex < options.Count; optionIndex++)
                 {
                     string skillId = NormalizeSkillId(FirstNonEmpty(options[optionIndex]?.OptionId, options[optionIndex]?.Name));
-                    if (!string.IsNullOrWhiteSpace(skillId) && !ContainsNormalizedSkillId(fixedSkillIds, skillId))
+                    if (string.IsNullOrWhiteSpace(skillId))
+                    {
+                        continue;
+                    }
+
+                    AppendUniqueNormalizedSkillId(state.OptionSkillIds, skillId);
+                    if (!ContainsNormalizedSkillId(fixedSkillIds, skillId))
                     {
                         AppendUniqueNormalizedSkillId(state.CandidateSkillIds, skillId);
                     }
                 }
 
                 RestoreSkillChoiceSelections(previousStates, state);
-                if (state.CandidateSkillIds.Count > 0 && state.MaxSelect > 0)
+                if (state.OptionSkillIds.Count > 0 && state.MaxSelect > 0)
                 {
                     SkillChoiceStates.Add(state);
                 }
@@ -1009,7 +1110,7 @@ namespace GameLogic
                 for (int skillIndex = 0; skillIndex < previous.SelectedSkillIds.Count; skillIndex++)
                 {
                     string skillId = previous.SelectedSkillIds[skillIndex];
-                    if (ContainsNormalizedSkillId(state.CandidateSkillIds, skillId)
+                    if (ContainsNormalizedSkillId(state.OptionSkillIds, skillId)
                         && state.SelectedSkillIds.Count < state.MaxSelect)
                     {
                         AppendUniqueNormalizedSkillId(state.SelectedSkillIds, skillId);
@@ -1089,8 +1190,16 @@ namespace GameLogic
                     string optionId = previous.SelectedOptionIds[optionIndex];
                     if (ContainsExactValue(state.OptionIds, optionId) && (state.MaxSelect <= 0 || state.SelectedOptionIds.Count < state.MaxSelect))
                     {
-                        AppendUniqueExactValue(state.SelectedOptionIds, optionId);
-                        AppendUniqueExactValue(state.PendingOptionIds, optionId);
+                        if (IsRepeatableAbilityScoreChoice(state))
+                        {
+                            state.SelectedOptionIds.Add(optionId.Trim());
+                            state.PendingOptionIds.Add(optionId.Trim());
+                        }
+                        else
+                        {
+                            AppendUniqueExactValue(state.SelectedOptionIds, optionId);
+                            AppendUniqueExactValue(state.PendingOptionIds, optionId);
+                        }
                     }
                 }
 
@@ -1127,7 +1236,6 @@ namespace GameLogic
             choiceGroup = null;
             if (string.IsNullOrWhiteSpace(choiceGroupId)
                 || !DndRuleContentService.Instance.TryGetChoiceGroup(choiceGroupId, out choiceGroup)
-                || string.Equals(choiceGroup.ChoiceType, "AbilityScore", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(choiceGroup.ChoiceType, "Skill", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(choiceGroup.ChoiceType, "Tool", StringComparison.OrdinalIgnoreCase))
             {
@@ -1135,6 +1243,43 @@ namespace GameLogic
             }
 
             return true;
+        }
+
+        private static string ResolveAdvancementFollowupChoiceGroupId(DndChoiceGroupData parentGroup, string optionId)
+        {
+            string normalized = optionId?.Trim() ?? string.Empty;
+            if (parentGroup?.NextChoiceGroupIds != null && parentGroup.NextChoiceGroupIds.Count > 0)
+            {
+                if (string.Equals(normalized, "option_asi", StringComparison.OrdinalIgnoreCase)
+                    && parentGroup.NextChoiceGroupIds.Count > 0)
+                {
+                    return parentGroup.NextChoiceGroupIds[0]?.Trim() ?? string.Empty;
+                }
+
+                if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase)
+                    && parentGroup.NextChoiceGroupIds.Count > 1)
+                {
+                    return parentGroup.NextChoiceGroupIds[1]?.Trim() ?? string.Empty;
+                }
+            }
+
+            if (string.Equals(normalized, "option_asi", StringComparison.OrdinalIgnoreCase))
+            {
+                return "choice_asi_attributes";
+            }
+
+            if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase))
+            {
+                return "choice_feat_any";
+            }
+
+            return string.Empty;
+        }
+
+        private static bool IsAdvancementOptionChoiceType(string choiceType)
+        {
+            return string.Equals(choiceType, "AdvancementOption", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(choiceType, "FeatOrAbilityScore", StringComparison.OrdinalIgnoreCase);
         }
 
         public void RemoveToolChoiceStatesBySource(string sourceType)
@@ -1165,6 +1310,7 @@ namespace GameLogic
             RaceAbilityChoiceState.SelectionMode = string.Empty;
             RaceAbilityChoiceState.SourceRaceId = string.Empty;
             RaceAbilityChoiceState.MaxSelect = 0;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
         }
 
         public void ConfigureRaceAbilityChoice(
@@ -1183,6 +1329,7 @@ namespace GameLogic
             CopyAbilityBonuses(RaceAbilityChoiceState.FixedAbilityBonuses, fixedAbilityBonuses);
             CopyAbilityOptions(RaceAbilityChoiceState.OptionIdByAbility, optionIdByAbility);
             m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
         }
 
         public bool ChangeRaceSelectedAbilityBonus(string abilityId, int delta)
@@ -1206,6 +1353,7 @@ namespace GameLogic
 
                 RaceAbilityChoiceState.SelectedAbilityBonuses[normalized] = current + 1;
                 m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
                 return true;
             }
 
@@ -1226,6 +1374,7 @@ namespace GameLogic
                 }
 
                 m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
                 return true;
             }
 
@@ -1242,6 +1391,11 @@ namespace GameLogic
 
         public bool CanIncreaseRaceAbility(string abilityId)
         {
+            if (CanIncreaseActiveAbilityScoreFeatureChoice(abilityId))
+            {
+                return true;
+            }
+
             if (IsPointBuyMode())
             {
                 return CanIncreasePointBuyAbility(abilityId);
@@ -1258,6 +1412,11 @@ namespace GameLogic
 
         public bool CanDecreaseRaceAbility(string abilityId)
         {
+            if (CanDecreaseActiveAbilityScoreFeatureChoice(abilityId))
+            {
+                return true;
+            }
+
             if (IsPointBuyMode())
             {
                 return CanDecreasePointBuyAbility(abilityId);
@@ -1401,6 +1560,202 @@ namespace GameLogic
             }
 
             values.Add(normalized);
+        }
+
+        private static bool IsRepeatableAbilityScoreChoice(CharacterCreationFeatureChoiceState state)
+        {
+            if (state == null
+                || !string.Equals(state.ChoiceType, "AbilityScore", StringComparison.OrdinalIgnoreCase)
+                || string.IsNullOrWhiteSpace(state.ChoiceGroupId)
+                || !DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                || choiceGroup == null)
+            {
+                return false;
+            }
+
+            return string.Equals(choiceGroup.SelectionMode, "Repeatable", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void ToggleRepeatableAbilityScoreChoice(CharacterCreationFeatureChoiceState state, string optionId)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(optionId))
+            {
+                return;
+            }
+
+            string normalized = optionId.Trim();
+            int existingCount = CountExactValues(state.PendingOptionIds, normalized);
+            if (existingCount > 0 && (state.MaxSelect <= 0 || state.PendingOptionIds.Count >= state.MaxSelect))
+            {
+                RemoveLastExactValue(state.PendingOptionIds, normalized);
+                return;
+            }
+
+            if (state.MaxSelect > 0 && state.PendingOptionIds.Count >= state.MaxSelect)
+            {
+                return;
+            }
+
+            int maxPerOption = 0;
+            int targetCap = 0;
+            if (DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                && choiceGroup != null)
+            {
+                maxPerOption = choiceGroup.MaxValuePerOption;
+                targetCap = choiceGroup.TargetValueCap;
+            }
+
+            if (maxPerOption > 0 && existingCount >= maxPerOption)
+            {
+                RemoveLastExactValue(state.PendingOptionIds, normalized);
+                return;
+            }
+
+            if (targetCap > 0 && Instance.GetCurrentAbilityScore(normalized, 10) + existingCount >= targetCap)
+            {
+                return;
+            }
+
+            state.PendingOptionIds.Add(normalized);
+        }
+
+        private bool TryChangeActiveAbilityScoreFeatureChoice(string abilityId, int delta)
+        {
+            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            if (!IsRepeatableAbilityScoreChoice(state))
+            {
+                return false;
+            }
+
+            string normalized = NormalizeAbilityId(abilityId);
+            if (string.IsNullOrWhiteSpace(normalized) || !ContainsExactValue(state.OptionIds, normalized))
+            {
+                return false;
+            }
+
+            if (delta > 0)
+            {
+                if (!CanIncreaseActiveAbilityScoreFeatureChoice(normalized))
+                {
+                    return false;
+                }
+
+                state.PendingOptionIds.Add(normalized);
+                m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
+                return true;
+            }
+
+            if (delta < 0)
+            {
+                if (!CanDecreaseActiveAbilityScoreFeatureChoice(normalized))
+                {
+                    return false;
+                }
+
+                RemoveLastExactValue(state.PendingOptionIds, normalized);
+                m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CanIncreaseActiveAbilityScoreFeatureChoice(string abilityId)
+        {
+            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            if (!IsRepeatableAbilityScoreChoice(state))
+            {
+                return false;
+            }
+
+            string normalized = NormalizeAbilityId(abilityId);
+            if (string.IsNullOrWhiteSpace(normalized)
+                || !ContainsExactValue(state.OptionIds, normalized)
+                || (state.MaxSelect > 0 && state.PendingOptionIds.Count >= state.MaxSelect))
+            {
+                return false;
+            }
+
+            int existingCount = CountExactValues(state.PendingOptionIds, normalized);
+            int maxPerOption = 0;
+            int targetCap = 0;
+            if (DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                && choiceGroup != null)
+            {
+                maxPerOption = choiceGroup.MaxValuePerOption;
+                targetCap = choiceGroup.TargetValueCap;
+            }
+
+            if (maxPerOption > 0 && existingCount >= maxPerOption)
+            {
+                return false;
+            }
+
+            return targetCap <= 0 || GetCurrentAbilityScore(normalized, 10) + existingCount < targetCap;
+        }
+
+        private bool CanDecreaseActiveAbilityScoreFeatureChoice(string abilityId)
+        {
+            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            string normalized = NormalizeAbilityId(abilityId);
+            return IsRepeatableAbilityScoreChoice(state)
+                && !string.IsNullOrWhiteSpace(normalized)
+                && CountExactValues(state.PendingOptionIds, normalized) > 0;
+        }
+
+        private static int CountExactValues(IReadOnlyList<string> values, string value)
+        {
+            int count = 0;
+            if (values == null || string.IsNullOrWhiteSpace(value))
+            {
+                return count;
+            }
+
+            for (int index = 0; index < values.Count; index++)
+            {
+                if (string.Equals(values[index], value, StringComparison.OrdinalIgnoreCase))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static void RemoveLastExactValue(List<string> values, string value)
+        {
+            if (values == null || string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
+
+            for (int index = values.Count - 1; index >= 0; index--)
+            {
+                if (string.Equals(values[index], value, StringComparison.OrdinalIgnoreCase))
+                {
+                    values.RemoveAt(index);
+                    return;
+                }
+            }
+        }
+
+        private static void AppendValues(List<string> target, List<string> source)
+        {
+            if (target == null || source == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                string value = source[index]?.Trim() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    target.Add(value);
+                }
+            }
         }
 
         private static void AppendUniqueValues(List<string> target, List<string> source)
@@ -1670,6 +2025,7 @@ namespace GameLogic
 
             AbilityGenerationState.PointBuyScores[normalized] = next;
             m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
             return true;
         }
 
@@ -1756,6 +2112,307 @@ namespace GameLogic
             }
 
             return total - lowest;
+        }
+
+        private List<int> RollBestAbilityScoreSet()
+        {
+            List<int> bestScores = null;
+            int bestTotal = -1;
+            for (int setIndex = 0; setIndex < 3; setIndex++)
+            {
+                List<int> scores = RollAbilityScoreSet();
+                int total = SumValues(scores);
+                if (bestScores == null || total > bestTotal)
+                {
+                    bestScores = scores;
+                    bestTotal = total;
+                }
+            }
+
+            return bestScores ?? new List<int>();
+        }
+
+        private List<int> RollAbilityScoreSet()
+        {
+            List<int> scores = new List<int>();
+            for (int index = 0; index < 6; index++)
+            {
+                scores.Add(RollFourD6DropLowest());
+            }
+
+            return scores;
+        }
+
+        private static int SumValues(IReadOnlyList<int> values)
+        {
+            int total = 0;
+            if (values == null)
+            {
+                return total;
+            }
+
+            for (int index = 0; index < values.Count; index++)
+            {
+                total += values[index];
+            }
+
+            return total;
+        }
+
+        private static int CalculateAverageHitDieGain(int hitDie)
+        {
+            return hitDie > 0 ? hitDie / 2 + 1 : 1;
+        }
+
+        private void RefreshDerivedStatsAfterAbilityScoresChanged()
+        {
+            SyncHitPointsForCurrentLevel();
+        }
+
+        private bool SyncHitPointsForCurrentLevel()
+        {
+            EnsureState();
+            CharacterCardDraftSaveData character = m_state.Character;
+            if (character == null || string.IsNullOrWhiteSpace(character.ClassId))
+            {
+                return false;
+            }
+
+            string hpModeId = CharacterHpModeIds.Normalize(character.HpModeId);
+            if (string.Equals(hpModeId, CharacterHpModeIds.Custom, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (!DndRuleContentService.Instance.TryGetClass(character.ClassId, out DndClassDefineData classData)
+                || classData == null
+                || classData.HitDie <= 0)
+            {
+                return false;
+            }
+
+            int level = Math.Max(1, character.Level);
+            int hitDie = Math.Max(1, classData.HitDie);
+            int constitutionModifier = CharacterCreationCalculationService.Instance.CalculateAbilityModifier(GetCurrentAbilityScore("Constitution", 10));
+            List<CharacterHpRollSaveData> rolls = BuildHitPointRollsForLevel(
+                character.HpRolls,
+                character.ClassId,
+                hpModeId,
+                level,
+                hitDie,
+                constitutionModifier);
+
+            int maxHp = 0;
+            for (int index = 0; index < rolls.Count; index++)
+            {
+                maxHp += Math.Max(0, rolls[index].HpGain);
+            }
+
+            int manualHpBonus = Math.Max(0, character.ManualHp);
+            CharacterRuntimeSnapshotData hpBonusSnapshot = BuildHitPointBonusSnapshot(character);
+            int maxHpBonus = CharacterDetailCalculationService.Instance.CalculateCharacterAndItemEffectBonus(character, hpBonusSnapshot, "MaxHpBonus", "MaxHp", "HP", "HitPoints");
+            int hitPointBonus = CharacterDetailCalculationService.Instance.CalculateCharacterAndItemEffectBonus(character, hpBonusSnapshot, "HitPointBonus", "MaxHp", "HP", "HitPoints");
+            int hpBonus = CharacterDetailCalculationService.Instance.CalculateCharacterAndItemEffectBonus(character, hpBonusSnapshot, "HPBonus", "MaxHp", "HP", "HitPoints");
+            int totalBonus = manualHpBonus + maxHpBonus + hitPointBonus + hpBonus;
+            maxHp = Math.Max(1, maxHp + totalBonus);
+            character.HpModeId = hpModeId;
+            character.HpRolls = rolls;
+            character.MaxHp = maxHp;
+            character.CurrentHp = maxHp;
+            character.TemporaryHp = Math.Max(0, character.TemporaryHp);
+            m_state.IsDirty = true;
+            LogHitPointBreakdown(character, classData, rolls, manualHpBonus, maxHpBonus, hitPointBonus, hpBonus, maxHp);
+            return true;
+        }
+
+        private List<CharacterHpRollSaveData> BuildHitPointRollsForLevel(
+            List<CharacterHpRollSaveData> existingRolls,
+            string classId,
+            string hpModeId,
+            int level,
+            int hitDie,
+            int constitutionModifier)
+        {
+            List<CharacterHpRollSaveData> result = new List<CharacterHpRollSaveData>();
+            string normalizedClassId = classId?.Trim() ?? string.Empty;
+            for (int currentLevel = 1; currentLevel <= level; currentLevel++)
+            {
+                CharacterHpRollSaveData existingRoll = FindHpRoll(existingRolls, currentLevel);
+                int rollValue = ResolveHitPointRollValue(existingRoll, hpModeId, currentLevel, hitDie);
+                int hpGain = Math.Max(1, rollValue + constitutionModifier);
+                result.Add(new CharacterHpRollSaveData
+                {
+                    Level = currentLevel,
+                    ClassId = normalizedClassId,
+                    HitDie = hitDie,
+                    RollValue = rollValue,
+                    ConstitutionModifier = constitutionModifier,
+                    HpGain = hpGain
+                });
+            }
+
+            return result;
+        }
+
+        private int ResolveHitPointRollValue(CharacterHpRollSaveData existingRoll, string hpModeId, int level, int hitDie)
+        {
+            if (level <= 1)
+            {
+                return hitDie;
+            }
+
+            if (string.Equals(hpModeId, CharacterHpModeIds.Average, StringComparison.OrdinalIgnoreCase))
+            {
+                return CalculateAverageHitDieGain(hitDie);
+            }
+
+            if (existingRoll != null && existingRoll.RollValue > 0)
+            {
+                return Math.Max(1, Math.Min(hitDie, existingRoll.RollValue));
+            }
+
+            return m_random.Next(1, hitDie + 1);
+        }
+
+        private static CharacterHpRollSaveData FindHpRoll(List<CharacterHpRollSaveData> rolls, int level)
+        {
+            if (rolls == null)
+            {
+                return null;
+            }
+
+            for (int index = 0; index < rolls.Count; index++)
+            {
+                CharacterHpRollSaveData roll = rolls[index];
+                if (roll != null && roll.Level == level)
+                {
+                    return roll;
+                }
+            }
+
+            return null;
+        }
+
+        private int CalculateHitPointBonus(CharacterCardDraftSaveData character)
+        {
+            if (character == null)
+            {
+                return 0;
+            }
+
+            CharacterRuntimeSnapshotData snapshot = BuildHitPointBonusSnapshot(character);
+
+            int bonus = Math.Max(0, character.ManualHp);
+            bonus += CharacterDetailCalculationService.Instance.CalculateCharacterAndItemEffectBonus(character, snapshot, "MaxHpBonus", "MaxHp", "HP", "HitPoints");
+            bonus += CharacterDetailCalculationService.Instance.CalculateCharacterAndItemEffectBonus(character, snapshot, "HitPointBonus", "MaxHp", "HP", "HitPoints");
+            bonus += CharacterDetailCalculationService.Instance.CalculateCharacterAndItemEffectBonus(character, snapshot, "HPBonus", "MaxHp", "HP", "HitPoints");
+            return bonus;
+        }
+
+        private CharacterRuntimeSnapshotData BuildHitPointBonusSnapshot(CharacterCardDraftSaveData character)
+        {
+            CharacterRuntimeSnapshotData snapshot = CharacterRuntimeSnapshotData.Clone(character?.RuntimeSnapshot);
+            snapshot.Level = Math.Max(1, character?.Level ?? 1);
+            snapshot.Strength = GetCurrentAbilityScore("Strength", 10);
+            snapshot.Dexterity = GetCurrentAbilityScore("Dexterity", 10);
+            snapshot.Constitution = GetCurrentAbilityScore("Constitution", 10);
+            snapshot.Intelligence = GetCurrentAbilityScore("Intelligence", 10);
+            snapshot.Wisdom = GetCurrentAbilityScore("Wisdom", 10);
+            snapshot.Charisma = GetCurrentAbilityScore("Charisma", 10);
+            return snapshot;
+        }
+
+        private void LogHitPointBreakdown(
+            CharacterCardDraftSaveData character,
+            DndClassDefineData classData,
+            IReadOnlyList<CharacterHpRollSaveData> rolls,
+            int manualHpBonus,
+            int maxHpBonus,
+            int hitPointBonus,
+            int hpBonus,
+            int finalMaxHp)
+        {
+            int rollTotal = 0;
+            StringBuilder builder = new StringBuilder();
+            builder.Append("[CharacterCreationUI] 生命值变化 ");
+            builder.Append("角色=");
+            builder.Append(string.IsNullOrWhiteSpace(character?.CharacterName) ? "(未命名)" : character.CharacterName.Trim());
+            builder.Append(", 职业=");
+            builder.Append(classData != null && !string.IsNullOrWhiteSpace(classData.Name) ? classData.Name.Trim() : character?.ClassId ?? string.Empty);
+            builder.Append(", 等级=");
+            builder.Append(Math.Max(1, character?.Level ?? 1));
+            builder.Append(", 模式=");
+            builder.Append(CharacterHpModeIds.Normalize(character?.HpModeId));
+            builder.AppendLine();
+
+            if (rolls != null)
+            {
+                for (int index = 0; index < rolls.Count; index++)
+                {
+                    CharacterHpRollSaveData roll = rolls[index];
+                    if (roll == null)
+                    {
+                        continue;
+                    }
+
+                    rollTotal += Math.Max(0, roll.HpGain);
+                    builder.Append("  Lv");
+                    builder.Append(Math.Max(1, roll.Level));
+                    builder.Append(": d");
+                    builder.Append(Math.Max(0, roll.HitDie));
+                    builder.Append("=");
+                    builder.Append(Math.Max(0, roll.RollValue));
+                    builder.Append(" + 体质调整值=");
+                    builder.Append(roll.ConstitutionModifier);
+                    builder.Append(" => ");
+                    builder.Append(Math.Max(0, roll.HpGain));
+                    builder.AppendLine();
+                }
+            }
+
+            builder.Append("  等级生命小计=");
+            builder.Append(rollTotal);
+            builder.Append(", 手动加值=");
+            builder.Append(manualHpBonus);
+            builder.Append(", MaxHpBonus=");
+            builder.Append(maxHpBonus);
+            builder.Append(", HitPointBonus=");
+            builder.Append(hitPointBonus);
+            builder.Append(", HPBonus=");
+            builder.Append(hpBonus);
+            builder.Append(", 最终MaxHp=");
+            builder.Append(finalMaxHp);
+            Debug.Log(builder.ToString());
+        }
+
+        private static List<CharacterHpRollSaveData> CloneHpRolls(List<CharacterHpRollSaveData> source)
+        {
+            List<CharacterHpRollSaveData> result = new List<CharacterHpRollSaveData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                CharacterHpRollSaveData roll = source[index];
+                if (roll == null)
+                {
+                    continue;
+                }
+
+                result.Add(new CharacterHpRollSaveData
+                {
+                    Level = Math.Max(1, roll.Level),
+                    ClassId = roll.ClassId?.Trim() ?? string.Empty,
+                    HitDie = Math.Max(0, roll.HitDie),
+                    RollValue = Math.Max(0, roll.RollValue),
+                    ConstitutionModifier = roll.ConstitutionModifier,
+                    HpGain = Math.Max(0, roll.HpGain)
+                });
+            }
+
+            return result;
         }
 
         private CharacterCreationGeneratedAbilityScoreState FindGeneratedAbilityScore(string scoreId)

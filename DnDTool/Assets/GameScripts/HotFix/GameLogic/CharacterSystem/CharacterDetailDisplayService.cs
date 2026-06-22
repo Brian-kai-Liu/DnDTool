@@ -550,6 +550,21 @@ namespace GameLogic
                     continue;
                 }
 
+                if (TryBuildAdvancementSelectionDisplay(selection, option, choiceSelections, out string advancementSuffix, out string advancementDescription))
+                {
+                    if (!string.IsNullOrWhiteSpace(advancementSuffix))
+                    {
+                        suffixes.Add(advancementSuffix);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(advancementDescription))
+                    {
+                        descriptions.Add(advancementDescription);
+                    }
+
+                    continue;
+                }
+
                 string suffix = BuildChoiceOptionDisplayName(option);
                 if (!string.IsNullOrWhiteSpace(suffix))
                 {
@@ -619,6 +634,149 @@ namespace GameLogic
             }
 
             return selection.Level <= 0 || selection.Level == level;
+        }
+
+        private static bool TryBuildAdvancementSelectionDisplay(
+            CharacterChoiceSelectionSaveData parentSelection,
+            DndChoiceOptionData parentOption,
+            IReadOnlyList<CharacterChoiceSelectionSaveData> choiceSelections,
+            out string suffix,
+            out string description)
+        {
+            suffix = string.Empty;
+            description = string.Empty;
+            if (parentSelection == null
+                || parentOption == null
+                || choiceSelections == null
+                || !DndRuleContentService.Instance.TryGetChoiceGroup(parentSelection.ChoiceGroupId, out DndChoiceGroupData parentGroup)
+                || parentGroup == null
+                || !IsAdvancementOptionChoiceType(parentGroup.ChoiceType))
+            {
+                return false;
+            }
+
+            string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(parentGroup, parentSelection.OptionId);
+            if (string.IsNullOrWhiteSpace(followupChoiceGroupId))
+            {
+                return false;
+            }
+
+            List<string> suffixes = new List<string>();
+            List<string> descriptions = new List<string>();
+            for (int index = 0; index < choiceSelections.Count; index++)
+            {
+                CharacterChoiceSelectionSaveData selection = choiceSelections[index];
+                if (!MatchesFollowupChoiceSelection(parentSelection, followupChoiceGroupId, selection))
+                {
+                    continue;
+                }
+
+                DndChoiceOptionData option = FindChoiceOption(selection.ChoiceGroupId, selection.OptionId);
+                string optionName = BuildChoiceOptionDisplayName(option);
+                if (string.IsNullOrWhiteSpace(optionName))
+                {
+                    optionName = selection.OptionId?.Trim() ?? string.Empty;
+                }
+
+                if (!string.IsNullOrWhiteSpace(optionName))
+                {
+                    suffixes.Add(optionName);
+                }
+
+                string optionDescription = BuildChoiceOptionDescription(option);
+                if (!string.IsNullOrWhiteSpace(optionDescription))
+                {
+                    descriptions.Add(optionDescription);
+                }
+            }
+
+            string parentName = BuildChoiceOptionDisplayName(parentOption);
+            if (suffixes.Count > 0)
+            {
+                suffix = string.IsNullOrWhiteSpace(parentName)
+                    ? string.Join("/", suffixes)
+                    : $"{parentName}-{string.Join("/", suffixes)}";
+            }
+            else
+            {
+                suffix = parentName;
+            }
+
+            description = descriptions.Count > 0
+                ? string.Join("\n", descriptions)
+                : BuildChoiceOptionDescription(parentOption);
+            return !string.IsNullOrWhiteSpace(suffix) || !string.IsNullOrWhiteSpace(description);
+        }
+
+        private static bool MatchesFollowupChoiceSelection(
+            CharacterChoiceSelectionSaveData parentSelection,
+            string followupChoiceGroupId,
+            CharacterChoiceSelectionSaveData selection)
+        {
+            if (parentSelection == null
+                || selection == null
+                || string.IsNullOrWhiteSpace(followupChoiceGroupId)
+                || string.IsNullOrWhiteSpace(selection.ChoiceGroupId)
+                || !string.Equals(selection.ChoiceGroupId.Trim(), followupChoiceGroupId.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(parentSelection.SourceType)
+                && !string.Equals(parentSelection.SourceType.Trim(), selection.SourceType?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(parentSelection.SourceId)
+                && !string.Equals(parentSelection.SourceId.Trim(), selection.SourceId?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(parentSelection.ClassId)
+                && !string.Equals(parentSelection.ClassId.Trim(), selection.ClassId?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return parentSelection.Level <= 0 || selection.Level <= 0 || parentSelection.Level == selection.Level;
+        }
+
+        private static bool IsAdvancementOptionChoiceType(string choiceType)
+        {
+            return string.Equals(choiceType, "AdvancementOption", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(choiceType, "FeatOrAbilityScore", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string ResolveAdvancementFollowupChoiceGroupId(DndChoiceGroupData parentGroup, string optionId)
+        {
+            string normalized = optionId?.Trim() ?? string.Empty;
+            if (parentGroup?.NextChoiceGroupIds != null && parentGroup.NextChoiceGroupIds.Count > 0)
+            {
+                if (string.Equals(normalized, "option_asi", StringComparison.OrdinalIgnoreCase))
+                {
+                    return parentGroup.NextChoiceGroupIds[0]?.Trim() ?? string.Empty;
+                }
+
+                if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase)
+                    && parentGroup.NextChoiceGroupIds.Count > 1)
+                {
+                    return parentGroup.NextChoiceGroupIds[1]?.Trim() ?? string.Empty;
+                }
+            }
+
+            if (string.Equals(normalized, "option_asi", StringComparison.OrdinalIgnoreCase))
+            {
+                return "choice_asi_attributes";
+            }
+
+            if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase))
+            {
+                return "choice_feat_any";
+            }
+
+            return string.Empty;
         }
 
         private static bool MatchesGeneralFeatureChoiceSelection(

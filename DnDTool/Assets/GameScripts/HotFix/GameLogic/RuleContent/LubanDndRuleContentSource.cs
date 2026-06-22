@@ -519,7 +519,7 @@ namespace GameLogic
 
         private static DndChoiceGroupData CreateChoiceGroup(object row)
         {
-            return new DndChoiceGroupData
+            DndChoiceGroupData data = new DndChoiceGroupData
             {
                 ChoiceGroupId = GetString(row, "ChoiceGroupId", "choice_group_id", "choiceGroupId"),
                 PackageId = GetString(row, "PackageId", "package_id", "packageId"),
@@ -529,8 +529,18 @@ namespace GameLogic
                 MaxSelect = GetInt(row, "MaxSelect", "max_select", "maxSelect"),
                 OptionFilter = GetString(row, "OptionFilter", "option_filter", "optionFilter"),
                 SelectionMode = GetString(row, "SelectionMode", "selection_mode", "selectionMode"),
+                ValuePerSelection = GetInt(row, "ValuePerSelection", "value_per_selection", "valuePerSelection"),
+                MaxValuePerOption = GetInt(row, "MaxValuePerOption", "max_value_per_option", "maxValuePerOption"),
+                TargetValueCap = GetInt(row, "TargetValueCap", "target_value_cap", "targetValueCap"),
+                TargetValueFloor = GetInt(row, "TargetValueFloor", "target_value_floor", "targetValueFloor"),
+                SelectionValueMode = GetString(row, "SelectionValueMode", "selection_value_mode", "selectionValueMode"),
+                ResultValueType = GetString(row, "ResultValueType", "result_value_type", "resultValueType"),
+                ResultStorage = GetString(row, "ResultStorage", "result_storage", "resultStorage"),
+                UiMode = GetString(row, "UiMode", "ui_mode", "uiMode"),
                 Description = GetString(row, "Description", "description")
             };
+            data.NextChoiceGroupIds.AddRange(GetStringList(row, "NextChoiceGroupIds", "next_choice_group_ids", "nextChoiceGroupIds"));
+            return data;
         }
 
         private static DndChoiceOptionData CreateChoiceOption(object row)

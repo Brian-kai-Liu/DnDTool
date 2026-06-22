@@ -1820,7 +1820,7 @@
     "prerequisite_ids": [],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_skill_perception"
     ],
     "description": "获得察觉技能熟练。"
   },
@@ -1937,7 +1937,7 @@
     "prerequisite_ids": [],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_skill_perception"
     ],
     "description": "获得察觉技能熟练。"
   },
@@ -2054,7 +2054,7 @@
     "prerequisite_ids": [],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_skill_perception"
     ],
     "description": "获得察觉技能熟练。"
   },
@@ -2665,7 +2665,7 @@
     "prerequisite_ids": [],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_skill_intimidation"
     ],
     "description": "获得威吓技能熟练。"
   },
@@ -3381,13 +3381,13 @@
     "package_id": "phb_5e_zh_user",
     "name": "技能专家",
     "feature_type": "Feat",
-    "source_ref": "skilled",
+    "source_ref": "feat:skilled",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_feat_skilled_skill"
     ],
-    "description": "获得任意三个技能或工具熟练。"
+    "effect_ids": [],
+    "description": "获得任意三项技能或工具熟练。当前结构化为三项技能熟练选择；工具熟练可由后续工具选择组补足。"
   },
   {
     "feature_id": "feature_feat_skulker",
@@ -4352,10 +4352,10 @@
     "feature_type": "Subclass",
     "source_ref": "subclass_bard_lore:3",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_lore_bonus_skill"
     ],
+    "effect_ids": [],
     "description": "额外熟练项。"
   },
   {
@@ -4469,10 +4469,10 @@
     "feature_type": "Subclass",
     "source_ref": "subclass_cleric_knowledge:1",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_cleric_knowledge_blessings_skill"
     ],
+    "effect_ids": [],
     "description": "知识祝福。"
   },
   {
@@ -4729,10 +4729,10 @@
     "feature_type": "Subclass",
     "source_ref": "subclass_cleric_nature:1",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_cleric_nature_acolyte_skill"
     ],
+    "effect_ids": [],
     "description": "自然侍僧。"
   },
   {
@@ -6932,5 +6932,32 @@
       "effect_manual_resolve"
     ],
     "description": "变化大师。"
+  },
+  {
+    "feature_id": "feature_warlock_invocation_beguiling_influence",
+    "package_id": "phb_5e_zh_user",
+    "name": "迷人影响",
+    "feature_type": "Class",
+    "source_ref": "warlock_invocation",
+    "prerequisite_ids": [],
+    "choice_group_ids": [],
+    "effect_ids": [
+      "effect_skill_deception",
+      "effect_skill_persuasion"
+    ],
+    "description": "获得欺瞒和游说技能熟练。"
+  },
+  {
+    "feature_id": "feature_race_human_variant_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "技能",
+    "feature_type": "Race",
+    "source_ref": "human_variant",
+    "prerequisite_ids": [],
+    "choice_group_ids": [
+      "choice_variant_human_skill"
+    ],
+    "effect_ids": [],
+    "description": "变体人类选择一项技能熟练。"
   }
 ]

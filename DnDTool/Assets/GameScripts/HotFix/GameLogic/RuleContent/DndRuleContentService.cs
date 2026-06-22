@@ -12,6 +12,7 @@ namespace GameLogic
         private readonly Dictionary<string, DndFeatureDefineData> m_featureById = new Dictionary<string, DndFeatureDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndFeatureEffectData> m_featureEffectById = new Dictionary<string, DndFeatureEffectData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndFeatureEffectConditionData> m_featureEffectConditionById = new Dictionary<string, DndFeatureEffectConditionData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndFeatDefineData> m_featById = new Dictionary<string, DndFeatDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndChoiceGroupData> m_choiceGroupById = new Dictionary<string, DndChoiceGroupData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndChoiceOptionData>> m_choiceOptionsByGroupId = new Dictionary<string, List<DndChoiceOptionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndSkillDefineData> m_skillById = new Dictionary<string, DndSkillDefineData>(StringComparer.OrdinalIgnoreCase);
@@ -151,6 +152,12 @@ namespace GameLogic
             return m_spellById.TryGetValue(spellId ?? string.Empty, out spell);
         }
 
+        public bool TryGetFeat(string featId, out DndFeatDefineData feat)
+        {
+            GetLibrary();
+            return m_featById.TryGetValue(featId ?? string.Empty, out feat);
+        }
+
         public bool TryGetItem(string itemId, out DndItemDefineData item)
         {
             GetLibrary();
@@ -172,13 +179,20 @@ namespace GameLogic
         public bool TryGetChoiceGroup(string choiceGroupId, out DndChoiceGroupData choiceGroup)
         {
             GetLibrary();
-            return m_choiceGroupById.TryGetValue(choiceGroupId ?? string.Empty, out choiceGroup);
+            string normalized = choiceGroupId?.Trim() ?? string.Empty;
+            if (m_choiceGroupById.TryGetValue(normalized, out choiceGroup))
+            {
+                return true;
+            }
+
+            choiceGroup = CreateBuiltInChoiceGroup(normalized);
+            return choiceGroup != null;
         }
 
         public IReadOnlyList<DndChoiceOptionData> GetChoiceOptions(string choiceGroupId)
         {
             GetLibrary();
-            string key = choiceGroupId ?? string.Empty;
+            string key = choiceGroupId?.Trim() ?? string.Empty;
             if (m_choiceOptionsByGroupId.TryGetValue(key, out List<DndChoiceOptionData> options) && options.Count > 0)
             {
                 return options;
@@ -325,6 +339,7 @@ namespace GameLogic
             m_featureById.Clear();
             m_featureEffectById.Clear();
             m_featureEffectConditionById.Clear();
+            m_featById.Clear();
             m_choiceGroupById.Clear();
             m_choiceOptionsByGroupId.Clear();
             m_skillById.Clear();
@@ -377,6 +392,15 @@ namespace GameLogic
                 if (!string.IsNullOrWhiteSpace(condition.ConditionId))
                 {
                     m_featureEffectConditionById[condition.ConditionId] = condition;
+                }
+            }
+
+            for (int index = 0; index < m_library.Feats.Count; index++)
+            {
+                DndFeatDefineData feat = m_library.Feats[index];
+                if (!string.IsNullOrWhiteSpace(feat.FeatId))
+                {
+                    m_featById[feat.FeatId] = feat;
                 }
             }
 
@@ -558,7 +582,7 @@ namespace GameLogic
         private bool TryBuildDynamicChoiceOptions(string choiceGroupId, out List<DndChoiceOptionData> options)
         {
             options = null;
-            if (string.IsNullOrWhiteSpace(choiceGroupId) || !m_choiceGroupById.TryGetValue(choiceGroupId, out DndChoiceGroupData choiceGroup))
+            if (string.IsNullOrWhiteSpace(choiceGroupId) || !TryGetChoiceGroup(choiceGroupId, out DndChoiceGroupData choiceGroup))
             {
                 return false;
             }
@@ -587,6 +611,18 @@ namespace GameLogic
                 return options.Count > 0;
             }
 
+            if (IsAbilityChoiceFilter(choiceGroup.OptionFilter))
+            {
+                options = BuildAbilityChoiceOptions(choiceGroupId);
+                return options.Count > 0;
+            }
+
+            if (IsFeatChoiceFilter(choiceGroup.OptionFilter))
+            {
+                options = BuildFeatChoiceOptions(choiceGroupId);
+                return options.Count > 0;
+            }
+
             if (!IsSkillChoiceFilter(choiceGroup.OptionFilter))
             {
                 return false;
@@ -608,11 +644,93 @@ namespace GameLogic
                     Name = string.IsNullOrWhiteSpace(skill.Name) ? skill.SkillId : skill.Name,
                     Description = string.IsNullOrWhiteSpace(skill.AbilityId)
                         ? skill.Description
-                        : $"{skill.AbilityId}。{skill.Description}"
+                        : $"{skill.AbilityId}: {skill.Description}"
                 });
             }
 
             return options.Count > 0;
+        }
+
+        private static DndChoiceGroupData CreateBuiltInChoiceGroup(string choiceGroupId)
+        {
+            if (string.IsNullOrWhiteSpace(choiceGroupId))
+            {
+                return null;
+            }
+
+            if (string.Equals(choiceGroupId, "choice_asi_attributes", StringComparison.OrdinalIgnoreCase))
+            {
+                return new DndChoiceGroupData
+                {
+                    ChoiceGroupId = "choice_asi_attributes",
+                    PackageId = "built_in",
+                    Name = "\u5C5E\u6027\u503C\u63D0\u5347",
+                    ChoiceType = "AbilityScore",
+                    MinSelect = 2,
+                    MaxSelect = 2,
+                    OptionFilter = "AnyAbility",
+                    SelectionMode = "Repeatable",
+                    ValuePerSelection = 1,
+                    MaxValuePerOption = 2,
+                    TargetValueCap = 20,
+                    UiMode = "AbilityStepper",
+                    Description = "\u9009\u62E9\u4E24\u6B21\u5C5E\u6027\u503C\u63D0\u5347\uFF0C\u53EF\u540C\u4E00\u5C5E\u6027\u63D0\u53472\u70B9\u6216\u4E24\u9879\u5C5E\u6027\u54041\u70B9\u3002"
+                };
+            }
+
+            if (string.Equals(choiceGroupId, "choice_feat_any", StringComparison.OrdinalIgnoreCase))
+            {
+                return new DndChoiceGroupData
+                {
+                    ChoiceGroupId = "choice_feat_any",
+                    PackageId = "built_in",
+                    Name = "\u9009\u62E9\u4E13\u957F",
+                    ChoiceType = "Feat",
+                    MinSelect = 1,
+                    MaxSelect = 1,
+                    OptionFilter = "AnyFeat",
+                    SelectionMode = "Distinct",
+                    Description = "\u4ECE\u6240\u6709\u4E13\u957F\u4E2D\u9009\u62E9\u4E00\u9879\u3002"
+                };
+            }
+
+            return null;
+        }
+
+        private static List<DndChoiceOptionData> BuildAbilityChoiceOptions(string choiceGroupId)
+        {
+            return new List<DndChoiceOptionData>
+            {
+                new DndChoiceOptionData { ChoiceGroupId = choiceGroupId, OptionId = "Strength", Name = "\u529B\u91CF", Description = "\u63D0\u5347\u529B\u91CF\u5C5E\u6027\u3002" },
+                new DndChoiceOptionData { ChoiceGroupId = choiceGroupId, OptionId = "Dexterity", Name = "\u654F\u6377", Description = "\u63D0\u5347\u654F\u6377\u5C5E\u6027\u3002" },
+                new DndChoiceOptionData { ChoiceGroupId = choiceGroupId, OptionId = "Constitution", Name = "\u4F53\u8D28", Description = "\u63D0\u5347\u4F53\u8D28\u5C5E\u6027\u3002" },
+                new DndChoiceOptionData { ChoiceGroupId = choiceGroupId, OptionId = "Intelligence", Name = "\u667A\u529B", Description = "\u63D0\u5347\u667A\u529B\u5C5E\u6027\u3002" },
+                new DndChoiceOptionData { ChoiceGroupId = choiceGroupId, OptionId = "Wisdom", Name = "\u611F\u77E5", Description = "\u63D0\u5347\u611F\u77E5\u5C5E\u6027\u3002" },
+                new DndChoiceOptionData { ChoiceGroupId = choiceGroupId, OptionId = "Charisma", Name = "\u9B45\u529B", Description = "\u63D0\u5347\u9B45\u529B\u5C5E\u6027\u3002" }
+            };
+        }
+
+        private List<DndChoiceOptionData> BuildFeatChoiceOptions(string choiceGroupId)
+        {
+            List<DndChoiceOptionData> options = new List<DndChoiceOptionData>();
+            for (int index = 0; index < m_library.Feats.Count; index++)
+            {
+                DndFeatDefineData feat = m_library.Feats[index];
+                if (feat == null || string.IsNullOrWhiteSpace(feat.FeatId))
+                {
+                    continue;
+                }
+
+                options.Add(new DndChoiceOptionData
+                {
+                    ChoiceGroupId = choiceGroupId,
+                    OptionId = feat.FeatId,
+                    Name = string.IsNullOrWhiteSpace(feat.Name) ? feat.FeatId : feat.Name,
+                    Description = feat.Description
+                });
+            }
+
+            return options;
         }
 
         private List<DndChoiceOptionData> BuildToolChoiceOptions(string choiceGroupId, IReadOnlyList<string> toolCategories)
@@ -828,6 +946,22 @@ namespace GameLogic
         private static bool IsWizardCantripChoiceFilter(string optionFilter)
         {
             return string.Equals(optionFilter?.Trim(), "WizardCantrip", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsAbilityChoiceFilter(string optionFilter)
+        {
+            string normalized = optionFilter?.Trim() ?? string.Empty;
+            return string.Equals(normalized, "TbAbilityDefine:all", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AbilityScore:all", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AnyAbility", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsFeatChoiceFilter(string optionFilter)
+        {
+            string normalized = optionFilter?.Trim() ?? string.Empty;
+            return string.Equals(normalized, "TbFeatDefine:all", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Feat:all", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AnyFeat", StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsWizardCantripSpell(DndClassSpellListData classSpell)

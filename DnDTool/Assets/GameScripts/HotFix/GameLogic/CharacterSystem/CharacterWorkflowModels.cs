@@ -80,6 +80,11 @@ namespace GameLogic
         public int Intelligence { get; set; } = 10;
         public int Wisdom { get; set; } = 10;
         public int Charisma { get; set; } = 10;
+        public string HpModeId { get; set; } = CharacterHpModeIds.Custom;
+        public int MaxHp { get; set; }
+        public int CurrentHp { get; set; } = -1;
+        public int TemporaryHp { get; set; }
+        public List<CharacterHpRollSaveData> HpRolls { get; set; } = new List<CharacterHpRollSaveData>();
         public List<string> SkillProficiencyIds { get; set; } = new List<string>();
         public List<string> ToolProficiencyIds { get; set; } = new List<string>();
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; set; } = new List<CharacterChoiceSelectionSaveData>();
@@ -146,6 +151,7 @@ namespace GameLogic
         public string SourceType = string.Empty;
         public string SourceId = string.Empty;
         public int MaxSelect;
+        public readonly List<string> OptionSkillIds = new List<string>();
         public readonly List<string> CandidateSkillIds = new List<string>();
         public readonly List<string> SelectedSkillIds = new List<string>();
     }
@@ -224,6 +230,12 @@ namespace GameLogic
         public bool IsAssigned { get; set; }
     }
 
+    internal sealed class CharacterCreationHitPointGenerationMethodViewState
+    {
+        public string MethodId { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+    }
+
     internal sealed class CharacterCreationSkillChoiceSource
     {
         public string SourceType { get; set; } = string.Empty;
@@ -283,6 +295,15 @@ namespace GameLogic
         public string AlignmentSummary { get; set; } = string.Empty;
         public string HitDiceCountText { get; set; } = string.Empty;
         public string HitDiceDieText { get; set; } = string.Empty;
+        public string CurrentHpText { get; set; } = string.Empty;
+        public string MaxHpText { get; set; } = string.Empty;
+        public string TemporaryHpText { get; set; } = string.Empty;
+        public bool ShouldShowHitPointGenerationButton { get; set; } = true;
+        public string CopperText { get; set; } = string.Empty;
+        public string SilverText { get; set; } = string.Empty;
+        public string ElectrumText { get; set; } = string.Empty;
+        public string GoldText { get; set; } = string.Empty;
+        public string PlatinumText { get; set; } = string.Empty;
         public string SpeedText { get; set; } = string.Empty;
         public string ArmorClassText { get; set; } = string.Empty;
         public string InitiativeText { get; set; } = string.Empty;

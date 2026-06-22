@@ -1630,5 +1630,75 @@
     ],
     "grant_effect_ids": [],
     "description": "获得影之书并选择额外戏法。"
+  },
+  {
+    "choice_group_id": "choice_cleric_knowledge_blessings_skill",
+    "option_id": "arcana",
+    "name": "奥秘",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_arcana"
+    ],
+    "description": "获得奥秘技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_knowledge_blessings_skill",
+    "option_id": "history",
+    "name": "历史",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_history"
+    ],
+    "description": "获得历史技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_knowledge_blessings_skill",
+    "option_id": "nature",
+    "name": "自然",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_nature"
+    ],
+    "description": "获得自然技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_knowledge_blessings_skill",
+    "option_id": "religion",
+    "name": "宗教",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_religion"
+    ],
+    "description": "获得宗教技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_nature_acolyte_skill",
+    "option_id": "animal_handling",
+    "name": "驯兽",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_animal_handling"
+    ],
+    "description": "获得驯兽技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_nature_acolyte_skill",
+    "option_id": "nature",
+    "name": "自然",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_nature"
+    ],
+    "description": "获得自然技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_nature_acolyte_skill",
+    "option_id": "survival",
+    "name": "求生",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_skill_survival"
+    ],
+    "description": "获得求生技能熟练。"
   }
 ]

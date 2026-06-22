@@ -125,8 +125,8 @@
     "package_id": "phb_5e_zh_user",
     "name": "游侠技能熟练选择",
     "choice_type": "Skill",
-    "min_select": 2,
-    "max_select": 2,
+    "min_select": 3,
+    "max_select": 3,
     "option_filter": "ranger:classSkillList",
     "selection_mode": "Distinct",
     "description": ""
@@ -136,8 +136,8 @@
     "package_id": "phb_5e_zh_user",
     "name": "游荡者技能熟练选择",
     "choice_type": "Skill",
-    "min_select": 2,
-    "max_select": 2,
+    "min_select": 4,
+    "max_select": 4,
     "option_filter": "rogue:classSkillList",
     "selection_mode": "Distinct",
     "description": ""
@@ -581,5 +581,60 @@
     "option_filter": "ToolCategory:musical_instrument",
     "selection_mode": "Distinct",
     "description": "选择一种乐器熟练项。"
+  },
+  {
+    "choice_group_id": "choice_lore_bonus_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "逸闻学院额外技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 3,
+    "max_select": 3,
+    "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
+    "description": "额外熟练项：选择三项技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_knowledge_blessings_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "知识祝福技能选择",
+    "choice_type": "Skill",
+    "min_select": 2,
+    "max_select": 2,
+    "option_filter": "",
+    "selection_mode": "Distinct",
+    "description": "从奥秘、历史、自然、宗教中选择两项技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_cleric_nature_acolyte_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "自然侍僧技能选择",
+    "choice_type": "Skill",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "",
+    "selection_mode": "Distinct",
+    "description": "从驯兽、自然、求生中选择一项技能熟练。"
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "技能专家技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 3,
+    "max_select": 3,
+    "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
+    "description": "选择三项技能熟练。工具熟练可由后续工具选择组扩展。"
+  },
+  {
+    "choice_group_id": "choice_variant_human_skill",
+    "package_id": "phb_5e_zh_user",
+    "name": "变体人类技能熟练选择",
+    "choice_type": "Skill",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnySkill",
+    "selection_mode": "Distinct",
+    "description": "选择一项技能熟练。"
   }
 ]

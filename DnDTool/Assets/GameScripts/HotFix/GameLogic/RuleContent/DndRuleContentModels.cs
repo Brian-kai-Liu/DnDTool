@@ -253,6 +253,24 @@ namespace GameLogic
 
         public string SelectionMode { get; set; } = string.Empty;
 
+        public int ValuePerSelection { get; set; }
+
+        public int MaxValuePerOption { get; set; }
+
+        public int TargetValueCap { get; set; }
+
+        public int TargetValueFloor { get; set; }
+
+        public string SelectionValueMode { get; set; } = string.Empty;
+
+        public string ResultValueType { get; set; } = string.Empty;
+
+        public string ResultStorage { get; set; } = string.Empty;
+
+        public List<string> NextChoiceGroupIds { get; } = new List<string>();
+
+        public string UiMode { get; set; } = string.Empty;
+
         public string Description { get; set; } = string.Empty;
     }
 

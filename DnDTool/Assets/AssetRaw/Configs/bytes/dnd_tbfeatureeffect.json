@@ -934,5 +934,95 @@
     "condition": "",
     "stacking_rule": "Unique",
     "manual_note": "奥法骑士使用智力作为施法属性。"
+  },
+  {
+    "effect_id": "effect_skill_perception",
+    "effect_type": "SkillProficiency",
+    "target": "perception",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得察觉技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_intimidation",
+    "effect_type": "SkillProficiency",
+    "target": "intimidation",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得威吓技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_deception",
+    "effect_type": "SkillProficiency",
+    "target": "deception",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得欺瞒技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_persuasion",
+    "effect_type": "SkillProficiency",
+    "target": "persuasion",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得游说技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_arcana",
+    "effect_type": "SkillProficiency",
+    "target": "arcana",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得奥秘技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_history",
+    "effect_type": "SkillProficiency",
+    "target": "history",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得历史技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_nature",
+    "effect_type": "SkillProficiency",
+    "target": "nature",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得自然技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_religion",
+    "effect_type": "SkillProficiency",
+    "target": "religion",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得宗教技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_animal_handling",
+    "effect_type": "SkillProficiency",
+    "target": "animal_handling",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得驯兽技能熟练。"
+  },
+  {
+    "effect_id": "effect_skill_survival",
+    "effect_type": "SkillProficiency",
+    "target": "survival",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": "获得求生技能熟练。"
   }
 ]

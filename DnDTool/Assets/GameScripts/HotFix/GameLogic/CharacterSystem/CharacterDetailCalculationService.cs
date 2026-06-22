@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace GameLogic
@@ -42,6 +42,8 @@ namespace GameLogic
             DndClassDefineData classData = FindClass(character.ClassId);
             DndRaceDefineData raceData = FindRace(character.RaceId);
             DndBackgroundDefineData backgroundData = FindBackground(character.BackgroundId);
+            ApplyChoiceAbilityScoreIncreases(character.ChoiceSelections, snapshot);
+            ApplyCharacterSkillProficiencyEffects(character, snapshot);
             AppendUniqueValues(snapshot.SkillProficiencyIds, backgroundData?.SkillProficiencies);
             AppendSkillSummaryValues(snapshot.SkillProficiencyIds, snapshot.Skills);
             AppendEquipmentSummaryValues(snapshot.ArmorProficiencyIds, snapshot.ArmorProficiencies);
@@ -113,6 +115,7 @@ namespace GameLogic
                 List<string> languages = new List<string>();
                 AppendUniqueValues(languages, raceData?.LanguageIds);
                 AppendUniqueValues(languages, backgroundData?.LanguageIds);
+                AppendChoiceLanguageIds(languages, character.ChoiceSelections);
                 snapshot.Languages = FormatLanguageList(languages);
             }
 
@@ -553,6 +556,22 @@ namespace GameLogic
             }
         }
 
+        private void ApplyCharacterSkillProficiencyEffects(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
+        {
+            if (character == null || snapshot == null)
+            {
+                return;
+            }
+
+            ApplyCharacterEffects(character, effect =>
+            {
+                if (effect != null && string.Equals(effect.EffectType, "SkillProficiency", StringComparison.OrdinalIgnoreCase))
+                {
+                    AppendSkillSummaryValues(snapshot.SkillProficiencyIds, effect.Target);
+                }
+            });
+        }
+
         private static void AppendUniqueValues(List<string> target, IReadOnlyList<string> values)
         {
             if (target == null || values == null)
@@ -578,6 +597,25 @@ namespace GameLogic
             {
                 target.Add(normalized);
             }
+        }
+
+        private static bool ContainsExactString(IReadOnlyList<string> values, string value)
+        {
+            if (values == null || string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            string normalized = value.Trim();
+            for (int index = 0; index < values.Count; index++)
+            {
+                if (string.Equals(values[index]?.Trim(), normalized, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void AppendSkillSummaryValues(List<string> target, string summary)
@@ -621,6 +659,71 @@ namespace GameLogic
         private static string[] SplitSummary(string summary)
         {
             return summary.Split(new[] { ',', '\uFF0C', ';', '\uFF1B', '/', '\u3001', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private static void ApplyChoiceAbilityScoreIncreases(IReadOnlyList<CharacterChoiceSelectionSaveData> choiceSelections, CharacterRuntimeSnapshotData snapshot)
+        {
+            if (choiceSelections == null || snapshot == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < choiceSelections.Count; index++)
+            {
+                CharacterChoiceSelectionSaveData selection = choiceSelections[index];
+                if (selection == null
+                    || string.IsNullOrWhiteSpace(selection.ChoiceGroupId)
+                    || string.IsNullOrWhiteSpace(selection.OptionId)
+                    || !DndRuleContentService.Instance.TryGetChoiceGroup(selection.ChoiceGroupId.Trim(), out DndChoiceGroupData choiceGroup)
+                    || choiceGroup == null
+                    || !IsAbilityScoreChoiceGroup(choiceGroup))
+                {
+                    continue;
+                }
+
+                int value = choiceGroup.ValuePerSelection != 0 ? choiceGroup.ValuePerSelection : 1;
+                AddAbilityScoreValue(snapshot, selection.OptionId, value, choiceGroup.TargetValueCap);
+            }
+        }
+
+        private static void AddAbilityScoreValue(CharacterRuntimeSnapshotData snapshot, string abilityId, int value, int cap)
+        {
+            if (snapshot == null || string.IsNullOrWhiteSpace(abilityId) || value == 0)
+            {
+                return;
+            }
+
+            string normalized = NormalizeAbilityId(abilityId);
+            if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Strength = AddCappedValue(snapshot.Strength, value, cap);
+            }
+            else if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Dexterity = AddCappedValue(snapshot.Dexterity, value, cap);
+            }
+            else if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Constitution = AddCappedValue(snapshot.Constitution, value, cap);
+            }
+            else if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Intelligence = AddCappedValue(snapshot.Intelligence, value, cap);
+            }
+            else if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Wisdom = AddCappedValue(snapshot.Wisdom, value, cap);
+            }
+            else if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Charisma = AddCappedValue(snapshot.Charisma, value, cap);
+            }
+        }
+
+        private static int AddCappedValue(int current, int value, int cap)
+        {
+            int next = current + value;
+            return cap > 0 ? Math.Min(cap, next) : next;
         }
 
         private static string FormatList(IReadOnlyList<string> values)
@@ -670,6 +773,34 @@ namespace GameLogic
             }
 
             return labels.Count > 0 ? string.Join(" / ", labels) : string.Empty;
+        }
+
+        private static void AppendChoiceLanguageIds(List<string> target, IReadOnlyList<CharacterChoiceSelectionSaveData> choiceSelections)
+        {
+            if (target == null || choiceSelections == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < choiceSelections.Count; index++)
+            {
+                CharacterChoiceSelectionSaveData selection = choiceSelections[index];
+                if (selection == null
+                    || string.IsNullOrWhiteSpace(selection.ChoiceGroupId)
+                    || string.IsNullOrWhiteSpace(selection.OptionId))
+                {
+                    continue;
+                }
+
+                if (!DndRuleContentService.Instance.TryGetChoiceGroup(selection.ChoiceGroupId.Trim(), out DndChoiceGroupData choiceGroup)
+                    || choiceGroup == null
+                    || !string.Equals(choiceGroup.ChoiceType, "Language", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                AppendUniqueValue(target, selection.OptionId.Trim());
+            }
         }
 
         private static string JoinNonEmpty(params string[] values)
@@ -852,7 +983,7 @@ namespace GameLogic
         {
             string normalized = target?.Trim() ?? string.Empty;
             if (string.Equals(normalized, "All", StringComparison.OrdinalIgnoreCase)
-                || normalized == "全部")
+                || normalized == "\u5168\u90E8")
             {
                 snapshot.Strength += value;
                 snapshot.Dexterity += value;
@@ -863,27 +994,28 @@ namespace GameLogic
                 return;
             }
 
-            if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase) || normalized == "力量")
+            normalized = NormalizeAbilityId(normalized);
+            if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Strength += value;
             }
-            else if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase) || normalized == "敏捷")
+            else if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Dexterity += value;
             }
-            else if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase) || normalized == "体质")
+            else if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Constitution += value;
             }
-            else if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase) || normalized == "智力")
+            else if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Intelligence += value;
             }
-            else if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase) || normalized == "感知")
+            else if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Wisdom += value;
             }
-            else if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase) || normalized == "魅力")
+            else if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Charisma += value;
             }
@@ -993,7 +1125,7 @@ namespace GameLogic
                 return 10;
             }
 
-            CharacterSkillBonusViewState perception = BuildSkillBonus(character, snapshot, "perception", "察觉", AbilityKind.Wisdom);
+            CharacterSkillBonusViewState perception = BuildSkillBonus(character, snapshot, "perception", "瀵熻", AbilityKind.Wisdom);
             return 10 + perception.Bonus;
         }
 
@@ -1403,6 +1535,16 @@ namespace GameLogic
                     continue;
                 }
 
+
+                if (DndRuleContentService.Instance.TryGetChoiceGroup(selection.ChoiceGroupId.Trim(), out DndChoiceGroupData choiceGroup)
+                    && choiceGroup != null
+                    && IsFeatChoiceGroup(choiceGroup)
+                    && TryResolveFeatFromSelection(selection, out DndFeatDefineData feat)
+                    && feat != null)
+                {
+                    ApplyEffects(feat.EffectIds, action);
+                    ApplyFeatureEffects(feat.FeatureIds, action);
+                }
                 IReadOnlyList<DndChoiceOptionData> options = DndRuleContentService.Instance.GetChoiceOptions(selection.ChoiceGroupId.Trim());
                 for (int optionIndex = 0; optionIndex < options.Count; optionIndex++)
                 {
@@ -1417,6 +1559,63 @@ namespace GameLogic
                     break;
                 }
             }
+        }
+
+        private static bool IsAbilityScoreChoiceGroup(DndChoiceGroupData choiceGroup)
+        {
+            return choiceGroup != null
+                && (string.Equals(choiceGroup.ChoiceType, "AbilityScore", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(choiceGroup.ChoiceGroupId, "choice_asi_attributes", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static bool IsFeatChoiceGroup(DndChoiceGroupData choiceGroup)
+        {
+            return choiceGroup != null
+                && (string.Equals(choiceGroup.ChoiceType, "Feat", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat_any", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static bool TryResolveFeatFromSelection(CharacterChoiceSelectionSaveData selection, out DndFeatDefineData feat)
+        {
+            feat = null;
+            if (selection == null || string.IsNullOrWhiteSpace(selection.OptionId))
+            {
+                return false;
+            }
+
+            string optionId = selection.OptionId.Trim();
+            if (DndRuleContentService.Instance.TryGetFeat(optionId, out feat))
+            {
+                return true;
+            }
+
+            DndChoiceOptionData option = FindChoiceOption(selection.ChoiceGroupId, optionId);
+            if (option?.GrantFeatureIds == null || option.GrantFeatureIds.Count == 0)
+            {
+                return false;
+            }
+
+            IReadOnlyList<DndFeatDefineData> feats = DndRuleContentService.Instance.Feats;
+            for (int featIndex = 0; featIndex < feats.Count; featIndex++)
+            {
+                DndFeatDefineData candidate = feats[featIndex];
+                if (candidate?.FeatureIds == null)
+                {
+                    continue;
+                }
+
+                for (int featureIndex = 0; featureIndex < option.GrantFeatureIds.Count; featureIndex++)
+                {
+                    if (ContainsExactString(candidate.FeatureIds, option.GrantFeatureIds[featureIndex]))
+                    {
+                        feat = candidate;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static bool IsEffectMatch(string actualEffectType, string actualTarget, string expectedEffectType, IReadOnlyList<string> expectedTargets)
@@ -1512,38 +1711,73 @@ namespace GameLogic
                 return 0;
             }
 
-            string normalized = abilityId.Trim();
-            if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase) || normalized == "力量")
+            string normalized = NormalizeAbilityId(abilityId);
+            if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase))
             {
                 return snapshot.Strength;
             }
 
-            if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase) || normalized == "敏捷")
+            if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase))
             {
                 return snapshot.Dexterity;
             }
 
-            if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase) || normalized == "体质")
+            if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase))
             {
                 return snapshot.Constitution;
             }
 
-            if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase) || normalized == "智力")
+            if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase))
             {
                 return snapshot.Intelligence;
             }
 
-            if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase) || normalized == "感知")
+            if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase))
             {
                 return snapshot.Wisdom;
             }
 
-            if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase) || normalized == "魅力")
+            if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase))
             {
                 return snapshot.Charisma;
             }
 
             return 0;
+        }
+
+        private static string NormalizeAbilityId(string value)
+        {
+            string normalized = value?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalized))
+            {
+                return string.Empty;
+            }
+
+            switch (normalized.ToLowerInvariant())
+            {
+                case "str":
+                case "strength":
+                    return "Strength";
+                case "dex":
+                case "dexterity":
+                    return "Dexterity";
+                case "con":
+                case "constitution":
+                    return "Constitution";
+                case "int":
+                case "intelligence":
+                    return "Intelligence";
+                case "wis":
+                case "wisdom":
+                    return "Wisdom";
+                case "cha":
+                case "charisma":
+                    return "Charisma";
+                case "all":
+                    return "All";
+                default:
+                    return normalized;
+            }
         }
 
         private static DndClassDefineData FindClass(string classId)
@@ -1668,7 +1902,11 @@ namespace GameLogic
                 return string.Empty;
             }
 
-            normalized = normalized.Replace("技能：", string.Empty).Replace("技能:", string.Empty).Trim();
+            normalized = normalized
+                .Replace("Skill:", string.Empty)
+                .Replace("\u6280\u80FD\uFF1A", string.Empty)
+                .Replace("\u6280\u80FD:", string.Empty)
+                .Trim();
 
             if (DndRuleContentService.Instance.TryGetSkill(normalized, out DndSkillDefineData directSkill))
             {

@@ -39,6 +39,7 @@ namespace GameLogic
         private Button m_btnPanelBackground;
         private Button m_btnPanelAlignment;
         private Button m_btnAbilityGeneration;
+        private Button m_btnGenerateHitPoints;
         private Button m_btnSectionInventory;
         private Button m_btnSectionSkills;
         private Button m_btnSectionEquipmentTools;
@@ -74,6 +75,14 @@ namespace GameLogic
         private RectTransform m_rectOtherFeatureContent;
         private TMP_Text m_tmpHitDiceDie;
         private TMP_Text m_tmpHitDiceRemaining;
+        private TMP_Text m_tmpCurrentHp;
+        private TMP_Text m_tmpMaxHp;
+        private TMP_Text m_tmpTempHp;
+        private TMP_Text m_tmpCopper;
+        private TMP_Text m_tmpSilver;
+        private TMP_Text m_tmpElectrum;
+        private TMP_Text m_tmpGold;
+        private TMP_Text m_tmpPlatinum;
         private TMP_Text m_tmpSpeed;
         private TMP_Text m_tmpAc;
         private TMP_Text m_tmpInitiative;
@@ -122,6 +131,7 @@ namespace GameLogic
         private TMP_InputField m_inputLevel;
         private bool m_isUpdatingLevelInput;
         private string m_pendingAbilityGenerationMethodId = string.Empty;
+        private string m_pendingHitPointGenerationMethodId = string.Empty;
 
         private const int MinCharacterLevel = 1;
         private const int MaxCharacterLevel = 20;
@@ -241,6 +251,7 @@ namespace GameLogic
             m_btnPanelBackground = FindChildComponent<Button>("m_panelBackground");
             m_btnPanelAlignment = FindChildComponent<Button>("m_panelAlignment");
             m_btnAbilityGeneration = FindChildComponent<Button>("m_btnAbilityGeneration");
+            m_btnGenerateHitPoints = FindChildComponent<Button>("m_btnGenerateHitPoints");
             m_btnSectionInventory = FindChildButton("m_sectionInventory");
             m_btnSectionSkills = FindChildButton("m_sectionSkills");
             m_btnSectionEquipmentTools = FindChildButton("m_sectionEquipmentTools");
@@ -278,6 +289,14 @@ namespace GameLogic
             BindAbilityItems();
             m_tmpHitDiceDie = FindChildComponent<TMP_Text>("m_tmpHitDiceDie");
             m_tmpHitDiceRemaining = FindChildComponent<TMP_Text>("m_tmpHitDiceRemaining");
+            m_tmpCurrentHp = FindChildComponent<TMP_Text>("m_tmpCurrentHp");
+            m_tmpMaxHp = FindChildComponent<TMP_Text>("m_tmpMaxHp");
+            m_tmpTempHp = FindChildComponent<TMP_Text>("m_tmpTempHp");
+            m_tmpCopper = FindChildComponent<TMP_Text>("m_tmpCopper");
+            m_tmpSilver = FindChildComponent<TMP_Text>("m_tmpSilver");
+            m_tmpElectrum = FindChildComponent<TMP_Text>("m_tmpElectrum");
+            m_tmpGold = FindChildComponent<TMP_Text>("m_tmpGold");
+            m_tmpPlatinum = FindChildComponent<TMP_Text>("m_tmpPlatinum");
             m_tmpSpeed = FindChildComponent<TMP_Text>("m_tmpSpeed");
             m_tmpAc = FindChildComponent<TMP_Text>("m_tmpAc");
             m_tmpInitiative = FindChildComponent<TMP_Text>("m_tmpInitiative");
@@ -433,6 +452,7 @@ namespace GameLogic
             BindButton(m_btnPanelBackground, ShowBackgroundOptions);
             BindButton(m_btnPanelAlignment, ShowAlignmentOptions);
             BindButton(m_btnAbilityGeneration, OnClickAbilityGenerationButton);
+            BindButton(m_btnGenerateHitPoints, OnClickHitPointGenerationButton);
             BindButton(m_btnSectionInventory, () => ToggleRectActive(m_rectInventoryContent));
             BindButton(m_btnSectionSkills, () => ToggleRectActive(m_rectSkillProficiencies));
             BindButton(m_btnSectionEquipmentTools, () => ToggleRectActive(m_rectEquipmentToolContent));
@@ -790,6 +810,7 @@ namespace GameLogic
             m_activeToolChoiceState = null;
             m_activeFeatureChoiceState = null;
             m_pendingAbilityGenerationMethodId = string.Empty;
+            m_pendingHitPointGenerationMethodId = string.Empty;
             if (m_rectSelectionListContent == null)
             {
                 return;
@@ -916,7 +937,14 @@ namespace GameLogic
             {
                 for (int index = 0; index < state.SelectedOptionIds.Count; index++)
                 {
-                    AppendUniqueExactValue(state.PendingOptionIds, state.SelectedOptionIds[index]);
+                    if (string.Equals(state.ChoiceType, "AbilityScore", StringComparison.OrdinalIgnoreCase))
+                    {
+                        state.PendingOptionIds.Add(state.SelectedOptionIds[index]);
+                    }
+                    else
+                    {
+                        AppendUniqueExactValue(state.PendingOptionIds, state.SelectedOptionIds[index]);
+                    }
                 }
             }
 
@@ -933,14 +961,21 @@ namespace GameLogic
                 }
 
                 string optionId = state.OptionIds[index];
+                int pendingCount = CountExactId(state.PendingOptionIds, optionId);
                 string label = CharacterCreationFeatureDisplayService.Instance.GetChoiceOptionDisplayName(state.ChoiceGroupId, optionId);
-                card.Bind(label, ContainsExactId(state.PendingOptionIds, optionId), () => OnClickFeatureSelectionOption(optionId));
+                if (pendingCount > 1)
+                {
+                    label = $"{label} x{pendingCount}";
+                }
+
+                card.Bind(label, pendingCount > 0, () => OnClickFeatureSelectionOption(optionId));
             }
         }
 
         private void OnClickAbilityGenerationButton()
         {
             m_pendingAbilityGenerationMethodId = string.Empty;
+            m_pendingHitPointGenerationMethodId = string.Empty;
             ShowAbilityGenerationMethodOptions();
         }
 
@@ -948,6 +983,7 @@ namespace GameLogic
         {
             m_activeToolChoiceState = null;
             m_activeFeatureChoiceState = null;
+            m_pendingHitPointGenerationMethodId = string.Empty;
             List<CharacterCreationAbilityGenerationMethodViewState> methods = CharacterCreationSessionService.Instance.GetAbilityGenerationMethods();
             EnsureSelectionOptionCardCount(methods.Count);
 
@@ -963,6 +999,35 @@ namespace GameLogic
 
                 CharacterCreationAbilityGenerationMethodViewState method = methods[index];
                 card.Bind(method.Name, string.Equals(m_pendingAbilityGenerationMethodId, method.MethodId, StringComparison.OrdinalIgnoreCase), () => OnClickAbilityGenerationMethod(method.MethodId));
+            }
+        }
+
+        private void OnClickHitPointGenerationButton()
+        {
+            m_pendingHitPointGenerationMethodId = string.Empty;
+            ShowHitPointGenerationMethodOptions();
+        }
+
+        private void ShowHitPointGenerationMethodOptions()
+        {
+            m_activeToolChoiceState = null;
+            m_activeFeatureChoiceState = null;
+            m_pendingAbilityGenerationMethodId = string.Empty;
+            List<CharacterCreationHitPointGenerationMethodViewState> methods = CharacterCreationSessionService.Instance.GetHitPointGenerationMethods();
+            EnsureSelectionOptionCardCount(methods.Count);
+
+            for (int index = 0; index < m_selectionOptionCards.Count; index++)
+            {
+                CharacterCreationSelectionOptionCardView card = m_selectionOptionCards[index];
+                bool active = index < methods.Count;
+                card.SetActive(active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                CharacterCreationHitPointGenerationMethodViewState method = methods[index];
+                card.Bind(method.Name, string.Equals(m_pendingHitPointGenerationMethodId, method.MethodId, StringComparison.OrdinalIgnoreCase), () => OnClickHitPointGenerationMethod(method.MethodId));
             }
         }
 
@@ -992,10 +1057,20 @@ namespace GameLogic
 
         private void OnClickAbilityGenerationMethod(string methodId)
         {
+            m_pendingHitPointGenerationMethodId = string.Empty;
             m_pendingAbilityGenerationMethodId = string.Equals(m_pendingAbilityGenerationMethodId, methodId, StringComparison.OrdinalIgnoreCase)
                 ? string.Empty
                 : methodId?.Trim() ?? string.Empty;
             ShowAbilityGenerationMethodOptions();
+        }
+
+        private void OnClickHitPointGenerationMethod(string methodId)
+        {
+            m_pendingAbilityGenerationMethodId = string.Empty;
+            m_pendingHitPointGenerationMethodId = string.Equals(m_pendingHitPointGenerationMethodId, methodId, StringComparison.OrdinalIgnoreCase)
+                ? string.Empty
+                : methodId?.Trim() ?? string.Empty;
+            ShowHitPointGenerationMethodOptions();
         }
 
         private void OnClickGeneratedAbilityScore(string scoreId)
@@ -1009,6 +1084,17 @@ namespace GameLogic
 
         private void OnClickAbilityItem(string abilityId)
         {
+            if (CharacterCreationSessionService.Instance.ChangeAbilityScore(abilityId, 1))
+            {
+                RefreshCreationView();
+                if (m_activeFeatureChoiceState != null)
+                {
+                    ShowFeatureSelectionOptions(m_activeFeatureChoiceState);
+                }
+
+                return;
+            }
+
             if (CharacterCreationSessionService.Instance.AssignPendingGeneratedAbilityScore(abilityId))
             {
                 RefreshCreationView();
@@ -1056,6 +1142,20 @@ namespace GameLogic
 
         private void ConfirmCurrentRightPanelSelection()
         {
+            if (!string.IsNullOrWhiteSpace(m_pendingHitPointGenerationMethodId))
+            {
+                int level = ParseLevel(m_inputLevel != null ? m_inputLevel.text : string.Empty);
+                if (!CharacterCreationSessionService.Instance.GenerateHitPoints(m_pendingHitPointGenerationMethodId, level))
+                {
+                    return;
+                }
+
+                ClearSelectionList();
+                HideRightPanelTemplates();
+                RefreshCreationView();
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(m_pendingAbilityGenerationMethodId))
             {
                 if (!CharacterCreationSessionService.Instance.StartAbilityGeneration(m_pendingAbilityGenerationMethodId))
@@ -1094,8 +1194,17 @@ namespace GameLogic
                 }
 
                 RefreshCreationView();
-                HideRightPanelTemplates();
-                ClearSelectionList();
+                CharacterCreationFeatureChoiceState followupState = CharacterCreationSessionService.Instance.GetActiveFeatureChoiceState();
+                if (followupState != null && followupState.SelectedOptionIds.Count == 0)
+                {
+                    ShowFeatureSelectionOptions(followupState);
+                }
+                else
+                {
+                    HideRightPanelTemplates();
+                    ClearSelectionList();
+                }
+
                 return;
             }
 
@@ -1125,6 +1234,7 @@ namespace GameLogic
                 return false;
             }
 
+            CharacterCreationSessionService.Instance.StartFollowupFeatureChoice(state);
             return true;
         }
 
@@ -1148,6 +1258,15 @@ namespace GameLogic
             SetText(m_tmpDetailAlignment, state.AlignmentSummary);
             SetText(m_tmpHitDiceDie, state.HitDiceCountText);
             SetText(m_tmpHitDiceRemaining, state.HitDiceDieText);
+            SetText(m_tmpCurrentHp, state.CurrentHpText);
+            SetText(m_tmpMaxHp, state.MaxHpText);
+            SetText(m_tmpTempHp, state.TemporaryHpText);
+            SetActive(m_btnGenerateHitPoints != null ? m_btnGenerateHitPoints.gameObject : null, state.ShouldShowHitPointGenerationButton);
+            SetText(m_tmpCopper, state.CopperText);
+            SetText(m_tmpSilver, state.SilverText);
+            SetText(m_tmpElectrum, state.ElectrumText);
+            SetText(m_tmpGold, state.GoldText);
+            SetText(m_tmpPlatinum, state.PlatinumText);
             SetText(m_tmpSpeed, state.SpeedText);
             SetText(m_tmpAc, state.ArmorClassText);
             SetText(m_tmpInitiative, state.InitiativeText);
@@ -1680,6 +1799,10 @@ namespace GameLogic
             if (CharacterCreationSessionService.Instance.ChangeAbilityScore(abilityId, delta))
             {
                 RefreshCreationView();
+                if (m_activeFeatureChoiceState != null)
+                {
+                    ShowFeatureSelectionOptions(m_activeFeatureChoiceState);
+                }
             }
         }
 
@@ -1690,9 +1813,15 @@ namespace GameLogic
 
         private static bool ContainsExactId(IReadOnlyList<string> values, string id)
         {
+            return CountExactId(values, id) > 0;
+        }
+
+        private static int CountExactId(IReadOnlyList<string> values, string id)
+        {
+            int count = 0;
             if (values == null || string.IsNullOrWhiteSpace(id))
             {
-                return false;
+                return count;
             }
 
             string normalized = id.Trim();
@@ -1700,11 +1829,11 @@ namespace GameLogic
             {
                 if (string.Equals(values[index]?.Trim(), normalized, StringComparison.OrdinalIgnoreCase))
                 {
-                    return true;
+                    count++;
                 }
             }
 
-            return false;
+            return count;
         }
 
         private static void AppendUniqueExactValue(List<string> target, string value)
