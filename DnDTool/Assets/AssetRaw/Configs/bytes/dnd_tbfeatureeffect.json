@@ -6,7 +6,7 @@
     "value": "",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "复杂特性保留为人工结算；后续可继续拆成更细结构化效果。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_enable_spellcasting",
@@ -15,7 +15,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "启用职业施法字段；法术位和准备/已知数量由职业成长表处理。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_extra_attack",
@@ -33,7 +33,7 @@
     "value": "Unarmored",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "无甲防御等AC公式由角色卡计算模块后续接入。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_manual_combat_resource",
@@ -42,7 +42,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "狂暴、气、引导神力等资源第一版由人工或职业成长规则处理。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_alert",
@@ -51,12 +51,12 @@
     "value": "5",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "另含免疫突袭和隐藏攻击者优势限制。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_ability_choice",
     "effect_type": "AbilityScoreBonus",
-    "target": "力量或敏捷",
+    "target": "StrengthOrDexterity",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -65,7 +65,7 @@
   {
     "effect_id": "effect_feat_ability_cha",
     "effect_type": "AbilityScoreBonus",
-    "target": "魅力",
+    "target": "Charisma",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -74,7 +74,7 @@
   {
     "effect_id": "effect_feat_ability_con",
     "effect_type": "AbilityScoreBonus",
-    "target": "体质",
+    "target": "Constitution",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -83,7 +83,7 @@
   {
     "effect_id": "effect_feat_ability_int",
     "effect_type": "AbilityScoreBonus",
-    "target": "智力",
+    "target": "Intelligence",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -92,38 +92,38 @@
   {
     "effect_id": "effect_feat_armor_light",
     "effect_type": "ArmorProficiency",
-    "target": "轻甲",
+    "target": "LightArmor",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "另含力量或敏捷+1选择。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_armor_medium",
     "effect_type": "ArmorProficiency",
-    "target": "中甲;盾牌",
+    "target": "MediumArmor;Shield",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "另含力量或敏捷+1选择。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_armor_heavy",
     "effect_type": "ArmorProficiency",
-    "target": "重甲",
+    "target": "HeavyArmor",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "另含力量+1。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_language",
     "effect_type": "Language",
-    "target": "自选",
+    "target": "Any",
     "value": "3",
     "condition": "",
     "stacking_rule": "Stack",
-    "manual_note": "另含智力+1和密码能力。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_speed",
@@ -132,7 +132,7 @@
     "value": "10",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "另含困难地形和借机攻击相关效果。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_feat_hp",
@@ -146,11 +146,11 @@
   {
     "effect_id": "effect_dwarf_ability",
     "effect_type": "AbilityScoreBonus",
-    "target": "体质",
+    "target": "Constitution",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "体质+2"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_elf_drow_darkvision",
@@ -164,7 +164,7 @@
   {
     "effect_id": "effect_human_ability",
     "effect_type": "AbilityScoreBonus",
-    "target": "全部",
+    "target": "All",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
@@ -173,7 +173,7 @@
   {
     "effect_id": "effect_half_elf_ability",
     "effect_type": "AbilityScoreBonus",
-    "target": "魅力",
+    "target": "Charisma",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
@@ -182,7 +182,7 @@
   {
     "effect_id": "effect_tiefling_ability",
     "effect_type": "AbilityScoreBonus",
-    "target": "智力",
+    "target": "Intelligence",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
@@ -191,92 +191,92 @@
   {
     "effect_id": "effect_dwarf_mountain_strength_2",
     "effect_type": "AbilityScoreBonus",
-    "target": "力量",
+    "target": "Strength",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "力量+2"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_elf_high_intelligence_1",
     "effect_type": "AbilityScoreBonus",
-    "target": "智力",
+    "target": "Intelligence",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "智力+1"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_gnome_forest_dexterity_1",
     "effect_type": "AbilityScoreBonus",
-    "target": "敏捷",
+    "target": "Dexterity",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "敏捷+1"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_tiefling_charisma_2",
     "effect_type": "AbilityScoreBonus",
-    "target": "魅力",
+    "target": "Charisma",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "魅力+2"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_ability_strength_2",
     "effect_type": "AbilityScoreBonus",
-    "target": "力量",
+    "target": "Strength",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "力量+2"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_ability_dexterity_2",
     "effect_type": "AbilityScoreBonus",
-    "target": "敏捷",
+    "target": "Dexterity",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "敏捷+2"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_ability_constitution_1",
     "effect_type": "AbilityScoreBonus",
-    "target": "体质",
+    "target": "Constitution",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "体质+1"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_ability_intelligence_2",
     "effect_type": "AbilityScoreBonus",
-    "target": "智力",
+    "target": "Intelligence",
     "value": "2",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "智力+2"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_ability_wisdom_1",
     "effect_type": "AbilityScoreBonus",
-    "target": "感知",
+    "target": "Wisdom",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "感知+1"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_ability_charisma_1",
     "effect_type": "AbilityScoreBonus",
-    "target": "魅力",
+    "target": "Charisma",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Stack",
-    "manual_note": "魅力+1"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_race_darkvision_60",
@@ -285,12 +285,12 @@
     "value": "60",
     "condition": "",
     "stacking_rule": "Highest",
-    "manual_note": "黑暗视觉60尺"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_tool_smith",
     "effect_type": "ToolProficiency",
-    "target": "铁匠工具",
+    "target": "smiths_tools",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
@@ -299,7 +299,7 @@
   {
     "effect_id": "effect_dwarf_tool_brewer",
     "effect_type": "ToolProficiency",
-    "target": "酿酒工具",
+    "target": "brewers_supplies",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
@@ -308,7 +308,7 @@
   {
     "effect_id": "effect_dwarf_tool_mason",
     "effect_type": "ToolProficiency",
-    "target": "石匠工具",
+    "target": "masons_tools",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
@@ -317,7 +317,7 @@
   {
     "effect_id": "effect_half_elf_ability_str",
     "effect_type": "AbilityScoreBonus",
-    "target": "力量",
+    "target": "Strength",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -326,7 +326,7 @@
   {
     "effect_id": "effect_half_elf_ability_dex",
     "effect_type": "AbilityScoreBonus",
-    "target": "敏捷",
+    "target": "Dexterity",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -335,7 +335,7 @@
   {
     "effect_id": "effect_half_elf_ability_con",
     "effect_type": "AbilityScoreBonus",
-    "target": "体质",
+    "target": "Constitution",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -344,7 +344,7 @@
   {
     "effect_id": "effect_half_elf_ability_int",
     "effect_type": "AbilityScoreBonus",
-    "target": "智力",
+    "target": "Intelligence",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -353,7 +353,7 @@
   {
     "effect_id": "effect_half_elf_ability_wis",
     "effect_type": "AbilityScoreBonus",
-    "target": "感知",
+    "target": "Wisdom",
     "value": "1",
     "condition": "max20",
     "stacking_rule": "Unique",
@@ -366,7 +366,7 @@
     "value": "Line;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_blue",
@@ -375,7 +375,7 @@
     "value": "Line;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_brass",
@@ -384,7 +384,7 @@
     "value": "Line;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_bronze",
@@ -393,7 +393,7 @@
     "value": "Line;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_copper",
@@ -402,7 +402,7 @@
     "value": "Line;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_gold",
@@ -411,7 +411,7 @@
     "value": "Cone;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_green",
@@ -420,7 +420,7 @@
     "value": "Cone;Constitution",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_red",
@@ -429,7 +429,7 @@
     "value": "Cone;Dexterity",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_silver",
@@ -438,7 +438,7 @@
     "value": "Cone;Constitution",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dragonborn_ancestry_white",
@@ -447,7 +447,7 @@
     "value": "Cone;Constitution",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "需要吐息武器与伤害抗性系统读取该血脉参数。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighting_style_archery",
@@ -456,7 +456,7 @@
     "value": "2",
     "condition": "RangedWeapon",
     "stacking_rule": "Unique",
-    "manual_note": "使用远程武器进行攻击检定时具有 +2 的加值。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighting_style_defense",
@@ -465,7 +465,7 @@
     "value": "1",
     "condition": "WearingArmor",
     "stacking_rule": "Unique",
-    "manual_note": "穿着护甲时 AC 具有 +1 的加值。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighting_style_dueling",
@@ -474,7 +474,7 @@
     "value": "2",
     "condition": "OneHandedMeleeNoOtherWeapon",
     "stacking_rule": "Unique",
-    "manual_note": "单手持用近战武器且另一只手未持武器时，该武器伤害具有 +2 的加值。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighting_style_great_weapon_fighting",
@@ -483,7 +483,7 @@
     "value": "1;2",
     "condition": "GreatWeaponFighting",
     "stacking_rule": "Unique",
-    "manual_note": "双手持用或两用近战武器时，伤害骰掷出 1 或 2 可重掷一次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighting_style_protection",
@@ -492,7 +492,7 @@
     "value": "DisadvantageAttackAgainstAdjacentAlly",
     "condition": "ShieldAndAdjacentAlly",
     "stacking_rule": "Unique",
-    "manual_note": "持盾时可用反应让攻击邻近盟友的攻击检定具有劣势。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighting_style_two_weapon_fighting",
@@ -501,7 +501,7 @@
     "value": "AbilityModifier",
     "condition": "TwoWeaponFighting",
     "stacking_rule": "Unique",
-    "manual_note": "进行双武器战斗时，可将属性调整值加入第二次攻击的伤害。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_aberration",
@@ -510,7 +510,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：异怪。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_beast",
@@ -519,7 +519,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：野兽。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_celestial",
@@ -528,7 +528,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：天界生物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_construct",
@@ -537,7 +537,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：构装生物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_dragon",
@@ -546,7 +546,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：龙。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_elemental",
@@ -555,7 +555,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：元素生物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_fey",
@@ -564,7 +564,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：精类生物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_fiend",
@@ -573,7 +573,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：邪魔。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_giant",
@@ -582,7 +582,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：巨人。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_humanoid",
@@ -591,7 +591,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：类人生物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_monstrosity",
@@ -600,7 +600,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：怪兽。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_ooze",
@@ -609,7 +609,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：泥怪。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_plant",
@@ -618,7 +618,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：植物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_favored_enemy_undead",
@@ -627,7 +627,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "宿敌类别：不死生物。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_arctic",
@@ -636,7 +636,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：极地。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_coast",
@@ -645,7 +645,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：海岸。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_desert",
@@ -654,7 +654,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：沙漠。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_forest",
@@ -663,7 +663,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：森林。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_grassland",
@@ -672,7 +672,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：草原。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_mountain",
@@ -681,7 +681,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：山地。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_swamp",
@@ -690,7 +690,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：沼泽。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_ranger_natural_explorer_underdark",
@@ -699,7 +699,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "熟悉地形：幽暗地域。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_careful_spell",
@@ -708,7 +708,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "保护部分生物免受你法术豁免失败影响。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_distant_spell",
@@ -717,7 +717,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "延长法术射程。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_empowered_spell",
@@ -726,7 +726,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "重掷部分法术伤害骰。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_extended_spell",
@@ -735,7 +735,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "延长法术持续时间。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_heightened_spell",
@@ -744,7 +744,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "使目标对法术的首次豁免具有劣势。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_quickened_spell",
@@ -753,7 +753,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "将施法时间为 1 动作的法术改为附赠动作施放。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_subtle_spell",
@@ -762,7 +762,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "施法时不需要姿势或言语成分。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_sorcerer_metamagic_twinned_spell",
@@ -771,7 +771,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "让符合条件的单体法术额外指定第二个目标。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_warlock_pact_boon_chain",
@@ -780,7 +780,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得特殊魔宠并可施展寻找魔宠。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_warlock_pact_boon_blade",
@@ -789,7 +789,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "可以创造或绑定一把契约武器。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_warlock_pact_boon_tome",
@@ -798,7 +798,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得影之书并选择额外戏法。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_dwarven_resilience_poison_save",
@@ -807,7 +807,7 @@
     "value": "Advantage",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "对抗毒素的豁免具有优势。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_dwarven_resilience_poison_resistance",
@@ -816,16 +816,16 @@
     "value": "Resistance",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得毒素伤害抗性。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_dwarven_combat_training_weapon_proficiency",
     "effect_type": "WeaponProficiency",
-    "target": "战斧;手斧;轻锤;战锤",
+    "target": "Battleaxe;Handaxe;LightHammer;Warhammer",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得战斧、手斧、轻锤和战锤熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_stonecunning_history_check",
@@ -834,7 +834,7 @@
     "value": "2",
     "condition": "StoneworkOrigin",
     "stacking_rule": "Highest",
-    "manual_note": "判断石制品来源时，历史检定视为具有双倍熟练加值。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_hill_dwarven_toughness",
@@ -843,16 +843,16 @@
     "value": "level",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "每等级生命值上限额外 +1。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_dwarf_mountain_armor_training",
     "effect_type": "ArmorProficiency",
-    "target": "轻甲;中甲",
+    "target": "LightArmor;MediumArmor",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得轻甲和中甲熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_second_wind",
@@ -861,7 +861,7 @@
     "value": "1",
     "condition": "ShortRest",
     "stacking_rule": "Unique",
-    "manual_note": "短休或长休恢复；可用附赠动作恢复 1d10 + 战士等级生命值。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_action_surge_1",
@@ -870,7 +870,7 @@
     "value": "1",
     "condition": "ShortRest",
     "stacking_rule": "Highest",
-    "manual_note": "短休或长休恢复；自己回合可额外获得一次动作。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_action_surge_2",
@@ -879,7 +879,7 @@
     "value": "2",
     "condition": "ShortRest",
     "stacking_rule": "Highest",
-    "manual_note": "动作如潮使用次数提高到 2 次；同一回合仍只能使用一次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_extra_attack_2",
@@ -888,7 +888,7 @@
     "value": "2",
     "condition": "AttackAction",
     "stacking_rule": "Highest",
-    "manual_note": "执行攻击动作时可攻击 2 次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_extra_attack_3",
@@ -897,7 +897,7 @@
     "value": "3",
     "condition": "AttackAction",
     "stacking_rule": "Highest",
-    "manual_note": "执行攻击动作时可攻击 3 次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_extra_attack_4",
@@ -906,7 +906,7 @@
     "value": "4",
     "condition": "AttackAction",
     "stacking_rule": "Highest",
-    "manual_note": "执行攻击动作时可攻击 4 次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_indomitable_1",
@@ -915,7 +915,7 @@
     "value": "1",
     "condition": "LongRest",
     "stacking_rule": "Highest",
-    "manual_note": "长休恢复；豁免失败时可重掷一次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_fighter_indomitable_3",
@@ -924,16 +924,16 @@
     "value": "3",
     "condition": "LongRest",
     "stacking_rule": "Highest",
-    "manual_note": "不屈使用次数提高到 3 次。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_eldritch_knight_spellcasting_ability",
     "effect_type": "SpellcastingAbility",
-    "target": "智力",
-    "value": "智力",
+    "target": "Intelligence",
+    "value": "Intelligence",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "奥法骑士使用智力作为施法属性。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_perception",
@@ -942,7 +942,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得察觉技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_intimidation",
@@ -951,7 +951,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得威吓技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_deception",
@@ -960,7 +960,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得欺瞒技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_persuasion",
@@ -969,7 +969,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得游说技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_arcana",
@@ -978,7 +978,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得奥秘技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_history",
@@ -987,7 +987,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得历史技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_nature",
@@ -996,7 +996,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得自然技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_religion",
@@ -1005,7 +1005,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得宗教技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_animal_handling",
@@ -1014,7 +1014,7 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得驯兽技能熟练。"
+    "manual_note": ""
   },
   {
     "effect_id": "effect_skill_survival",
@@ -1023,6 +1023,6 @@
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
-    "manual_note": "获得求生技能熟练。"
+    "manual_note": ""
   }
 ]

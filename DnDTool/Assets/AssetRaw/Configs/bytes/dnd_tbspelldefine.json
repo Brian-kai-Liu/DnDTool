@@ -2,7 +2,7 @@
   {
     "spell_id": "spell_message",
     "package_id": "phb_5e_zh_user",
-    "name": "传讯术",
+    "name": "Spell Message",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -22,7 +22,7 @@
   {
     "spell_id": "spell_minor_illusion",
     "package_id": "phb_5e_zh_user",
-    "name": "次级幻影",
+    "name": "Spell Minor Illusion",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -42,7 +42,7 @@
   {
     "spell_id": "spell_druidcraft",
     "package_id": "phb_5e_zh_user",
-    "name": "德鲁伊伎俩",
+    "name": "Spell Druidcraft",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -62,7 +62,7 @@
   {
     "spell_id": "spell_shocking_grasp",
     "package_id": "phb_5e_zh_user",
-    "name": "电爪",
+    "name": "Spell Shocking Grasp",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -82,7 +82,7 @@
   {
     "spell_id": "spell_chill_touch",
     "package_id": "phb_5e_zh_user",
-    "name": "冻寒之触",
+    "name": "Spell Chill Touch",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -102,7 +102,7 @@
   {
     "spell_id": "spell_poison_spray",
     "package_id": "phb_5e_zh_user",
-    "name": "毒气喷溅",
+    "name": "Spell Poison Spray",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -122,7 +122,7 @@
   {
     "spell_id": "spell_vicious_mockery",
     "package_id": "phb_5e_zh_user",
-    "name": "恶言相加",
+    "name": "Spell Vicious Mockery",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -142,7 +142,7 @@
   {
     "spell_id": "spell_mage_hand",
     "package_id": "phb_5e_zh_user",
-    "name": "法师之手",
+    "name": "Spell Mage Hand",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -162,7 +162,7 @@
   {
     "spell_id": "spell_light",
     "package_id": "phb_5e_zh_user",
-    "name": "光亮术",
+    "name": "Spell Light",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -182,7 +182,7 @@
   {
     "spell_id": "spell_fire_bolt",
     "package_id": "phb_5e_zh_user",
-    "name": "火焰箭",
+    "name": "Spell Fire Bolt",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -202,7 +202,7 @@
   {
     "spell_id": "spell_blade_ward",
     "package_id": "phb_5e_zh_user",
-    "name": "剑刃防护",
+    "name": "Spell Blade Ward",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -222,7 +222,7 @@
   {
     "spell_id": "spell_friends",
     "package_id": "phb_5e_zh_user",
-    "name": "交友术",
+    "name": "Spell Friends",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -242,7 +242,7 @@
   {
     "spell_id": "spell_thorn_whip",
     "package_id": "phb_5e_zh_user",
-    "name": "荆棘之鞭",
+    "name": "Spell Thorn Whip",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -262,7 +262,7 @@
   {
     "spell_id": "spell_true_strike",
     "package_id": "phb_5e_zh_user",
-    "name": "克敌机先",
+    "name": "Spell True Strike",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -282,7 +282,7 @@
   {
     "spell_id": "spell_ray_of_frost",
     "package_id": "phb_5e_zh_user",
-    "name": "冷冻射线",
+    "name": "Spell Ray Of Frost",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -302,7 +302,7 @@
   {
     "spell_id": "spell_prestidigitation",
     "package_id": "phb_5e_zh_user",
-    "name": "魔法伎俩",
+    "name": "Spell Prestidigitation",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -322,7 +322,7 @@
   {
     "spell_id": "spell_eldritch_blast",
     "package_id": "phb_5e_zh_user",
-    "name": "魔能爆",
+    "name": "Spell Eldritch Blast",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -342,7 +342,7 @@
   {
     "spell_id": "spell_thaumaturgy",
     "package_id": "phb_5e_zh_user",
-    "name": "奇术",
+    "name": "Spell Thaumaturgy",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -362,7 +362,7 @@
   {
     "spell_id": "spell_produce_flame",
     "package_id": "phb_5e_zh_user",
-    "name": "燃火术",
+    "name": "Spell Produce Flame",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -382,7 +382,7 @@
   {
     "spell_id": "spell_guidance",
     "package_id": "phb_5e_zh_user",
-    "name": "神导术",
+    "name": "Spell Guidance",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -402,7 +402,7 @@
   {
     "spell_id": "spell_sacred_flame",
     "package_id": "phb_5e_zh_user",
-    "name": "圣火术",
+    "name": "Spell Sacred Flame",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -422,7 +422,7 @@
   {
     "spell_id": "spell_acid_splash",
     "package_id": "phb_5e_zh_user",
-    "name": "酸液飞溅",
+    "name": "Spell Acid Splash",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -442,7 +442,7 @@
   {
     "spell_id": "spell_resistance",
     "package_id": "phb_5e_zh_user",
-    "name": "提升抗性",
+    "name": "Spell Resistance",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -462,7 +462,7 @@
   {
     "spell_id": "spell_spare_the_dying",
     "package_id": "phb_5e_zh_user",
-    "name": "维生术",
+    "name": "Spell Spare The Dying",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -482,7 +482,7 @@
   {
     "spell_id": "spell_dancing_lights",
     "package_id": "phb_5e_zh_user",
-    "name": "舞光术",
+    "name": "Spell Dancing Lights",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -502,7 +502,7 @@
   {
     "spell_id": "spell_shillelagh",
     "package_id": "phb_5e_zh_user",
-    "name": "橡棍术",
+    "name": "Spell Shillelagh",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -522,7 +522,7 @@
   {
     "spell_id": "spell_mending",
     "package_id": "phb_5e_zh_user",
-    "name": "修复术",
+    "name": "Spell Mending",
     "level": 0,
     "school": "",
     "casting_time": "",
@@ -542,7 +542,7 @@
   {
     "spell_id": "spell_armor_of_agathys",
     "package_id": "phb_5e_zh_user",
-    "name": "艾嘉西斯之铠",
+    "name": "Spell Armor Of Agathys",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -562,7 +562,7 @@
   {
     "spell_id": "spell_sanctuary",
     "package_id": "phb_5e_zh_user",
-    "name": "庇护术",
+    "name": "Spell Sanctuary",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -582,7 +582,7 @@
   {
     "spell_id": "spell_dissonant_whispers",
     "package_id": "phb_5e_zh_user",
-    "name": "不谐低语",
+    "name": "Spell Dissonant Whispers",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -602,7 +602,7 @@
   {
     "spell_id": "spell_searing_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "炽焰斩",
+    "name": "Spell Searing Smite",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -622,7 +622,7 @@
   {
     "spell_id": "spell_hex",
     "package_id": "phb_5e_zh_user",
-    "name": "脆弱诅咒",
+    "name": "Spell Hex",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -642,7 +642,7 @@
   {
     "spell_id": "spell_longstrider",
     "package_id": "phb_5e_zh_user",
-    "name": "大步奔行",
+    "name": "Spell Longstrider",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -662,7 +662,7 @@
   {
     "spell_id": "spell_speak_with_animal",
     "package_id": "phb_5e_zh_user",
-    "name": "动物交谈术",
+    "name": "Spell Speak With Animal",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -682,7 +682,7 @@
   {
     "spell_id": "spell_speak_with_animals",
     "package_id": "phb_5e_zh_user",
-    "name": "动物交谈术",
+    "name": "Spell Speak With Animals",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -702,7 +702,7 @@
   {
     "spell_id": "spell_mage_armor",
     "package_id": "phb_5e_zh_user",
-    "name": "法师护甲",
+    "name": "Spell Mage Armor",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -722,7 +722,7 @@
   {
     "spell_id": "spell_chromatic_orb",
     "package_id": "phb_5e_zh_user",
-    "name": "繁彩球",
+    "name": "Spell Chromatic Orb",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -742,7 +742,7 @@
   {
     "spell_id": "spell_protection_from_evil_and_good",
     "package_id": "phb_5e_zh_user",
-    "name": "防护善恶",
+    "name": "Spell Protection From Evil And Good",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -762,7 +762,7 @@
   {
     "spell_id": "spell_arms_of_hadar",
     "package_id": "phb_5e_zh_user",
-    "name": "哈达之臂",
+    "name": "Spell Arms Of Hadar",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -782,7 +782,7 @@
   {
     "spell_id": "spell_shield",
     "package_id": "phb_5e_zh_user",
-    "name": "护盾术",
+    "name": "Spell Shield",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -802,7 +802,7 @@
   {
     "spell_id": "spell_animal_friendship",
     "package_id": "phb_5e_zh_user",
-    "name": "化兽为友",
+    "name": "Spell Animal Friendship",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -822,7 +822,7 @@
   {
     "spell_id": "spell_find_familiar",
     "package_id": "phb_5e_zh_user",
-    "name": "获得魔宠",
+    "name": "Spell Find Familiar",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -842,7 +842,7 @@
   {
     "spell_id": "spell_wrathful_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "激愤斩",
+    "name": "Spell Wrathful Smite",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -862,7 +862,7 @@
   {
     "spell_id": "spell_hail_of_thorns",
     "package_id": "phb_5e_zh_user",
-    "name": "棘雹术",
+    "name": "Spell Hail Of Thorns",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -882,7 +882,7 @@
   {
     "spell_id": "spell_identify",
     "package_id": "phb_5e_zh_user",
-    "name": "鉴定术",
+    "name": "Spell Identify",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -902,7 +902,7 @@
   {
     "spell_id": "spell_expeditious_retreat",
     "package_id": "phb_5e_zh_user",
-    "name": "脚底抹油",
+    "name": "Spell Expeditious Retreat",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -922,7 +922,7 @@
   {
     "spell_id": "spell_alarm",
     "package_id": "phb_5e_zh_user",
-    "name": "警报术",
+    "name": "Spell Alarm",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -942,7 +942,7 @@
   {
     "spell_id": "spell_purify_food_and_drink",
     "package_id": "phb_5e_zh_user",
-    "name": "净化食粮",
+    "name": "Spell Purify Food And Drink",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -962,7 +962,7 @@
   {
     "spell_id": "spell_entangle",
     "package_id": "phb_5e_zh_user",
-    "name": "纠缠术",
+    "name": "Spell Entangle",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -982,7 +982,7 @@
   {
     "spell_id": "spell_thunderwave",
     "package_id": "phb_5e_zh_user",
-    "name": "雷鸣波",
+    "name": "Spell Thunderwave",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1002,7 +1002,7 @@
   {
     "spell_id": "spell_thunderous_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "雷鸣斩",
+    "name": "Spell Thunderous Smite",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1022,7 +1022,7 @@
   {
     "spell_id": "spell_hellish_rebuke",
     "package_id": "phb_5e_zh_user",
-    "name": "炼狱叱喝",
+    "name": "Spell Hellish Rebuke",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1042,7 +1042,7 @@
   {
     "spell_id": "spell_cure_wounds",
     "package_id": "phb_5e_zh_user",
-    "name": "疗伤术",
+    "name": "Spell Cure Wounds",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1062,7 +1062,7 @@
   {
     "spell_id": "spell_hunters_mark",
     "package_id": "phb_5e_zh_user",
-    "name": "猎人印记",
+    "name": "Spell Hunters Mark",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1082,7 +1082,7 @@
   {
     "spell_id": "spell_charm_person",
     "package_id": "phb_5e_zh_user",
-    "name": "魅惑人类",
+    "name": "Spell Charm Person",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1102,7 +1102,7 @@
   {
     "spell_id": "spell_illusory_script",
     "package_id": "phb_5e_zh_user",
-    "name": "迷幻手稿",
+    "name": "Spell Illusory Script",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1122,7 +1122,7 @@
   {
     "spell_id": "spell_command",
     "package_id": "phb_5e_zh_user",
-    "name": "命令术",
+    "name": "Spell Command",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1142,7 +1142,7 @@
   {
     "spell_id": "spell_magic_missile",
     "package_id": "phb_5e_zh_user",
-    "name": "魔法飞弹",
+    "name": "Spell Magic Missile",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1162,7 +1162,7 @@
   {
     "spell_id": "spell_color_spray",
     "package_id": "phb_5e_zh_user",
-    "name": "七彩喷射",
+    "name": "Spell Color Spray",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1182,7 +1182,7 @@
   {
     "spell_id": "spell_shield_of_faith",
     "package_id": "phb_5e_zh_user",
-    "name": "虔诚护盾",
+    "name": "Spell Shield Of Faith",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1202,7 +1202,7 @@
   {
     "spell_id": "spell_compelled_duel",
     "package_id": "phb_5e_zh_user",
-    "name": "强令对决",
+    "name": "Spell Compelled Duel",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1222,7 +1222,7 @@
   {
     "spell_id": "spell_burning_hands",
     "package_id": "phb_5e_zh_user",
-    "name": "燃烧之手",
+    "name": "Spell Burning Hands",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1242,7 +1242,7 @@
   {
     "spell_id": "spell_divine_favor",
     "package_id": "phb_5e_zh_user",
-    "name": "神恩",
+    "name": "Spell Divine Favor",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1262,7 +1262,7 @@
   {
     "spell_id": "spell_goodberry",
     "package_id": "phb_5e_zh_user",
-    "name": "神莓术",
+    "name": "Spell Goodberry",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1282,7 +1282,7 @@
   {
     "spell_id": "spell_sleep",
     "package_id": "phb_5e_zh_user",
-    "name": "睡眠术",
+    "name": "Spell Sleep",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1302,7 +1302,7 @@
   {
     "spell_id": "spell_tashas_hideous_laughter",
     "package_id": "phb_5e_zh_user",
-    "name": "塔莎狂笑术",
+    "name": "Spell Tashas Hideous Laughter",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1322,7 +1322,7 @@
   {
     "spell_id": "spell_tensers_floating_disk",
     "package_id": "phb_5e_zh_user",
-    "name": "谭森浮碟术",
+    "name": "Spell Tensers Floating Disk",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1342,7 +1342,7 @@
   {
     "spell_id": "spell_jump",
     "package_id": "phb_5e_zh_user",
-    "name": "跳跃术",
+    "name": "Spell Jump",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1362,7 +1362,7 @@
   {
     "spell_id": "spell_comprehend_languages",
     "package_id": "phb_5e_zh_user",
-    "name": "通晓语言",
+    "name": "Spell Comprehend Languages",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1382,7 +1382,7 @@
   {
     "spell_id": "spell_witch_bolt",
     "package_id": "phb_5e_zh_user",
-    "name": "巫术箭",
+    "name": "Spell Witch Bolt",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1402,7 +1402,7 @@
   {
     "spell_id": "spell_silent_image",
     "package_id": "phb_5e_zh_user",
-    "name": "无声幻影",
+    "name": "Spell Silent Image",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1422,7 +1422,7 @@
   {
     "spell_id": "spell_false_life",
     "package_id": "phb_5e_zh_user",
-    "name": "虚假生命",
+    "name": "Spell False Life",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1442,7 +1442,7 @@
   {
     "spell_id": "spell_faerie_fire",
     "package_id": "phb_5e_zh_user",
-    "name": "妖火",
+    "name": "Spell Faerie Fire",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1462,7 +1462,7 @@
   {
     "spell_id": "spell_guiding_bolt",
     "package_id": "phb_5e_zh_user",
-    "name": "曳光弹",
+    "name": "Spell Guiding Bolt",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1482,7 +1482,7 @@
   {
     "spell_id": "spell_disguise_self",
     "package_id": "phb_5e_zh_user",
-    "name": "易容术",
+    "name": "Spell Disguise Self",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1502,7 +1502,7 @@
   {
     "spell_id": "spell_unseen_servant",
     "package_id": "phb_5e_zh_user",
-    "name": "隐形仆役",
+    "name": "Spell Unseen Servant",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1522,7 +1522,7 @@
   {
     "spell_id": "spell_heroism",
     "package_id": "phb_5e_zh_user",
-    "name": "英雄气概",
+    "name": "Spell Heroism",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1542,7 +1542,7 @@
   {
     "spell_id": "spell_grease",
     "package_id": "phb_5e_zh_user",
-    "name": "油腻术",
+    "name": "Spell Grease",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1562,7 +1562,7 @@
   {
     "spell_id": "spell_ensnaring_strike",
     "package_id": "phb_5e_zh_user",
-    "name": "诱捕打击",
+    "name": "Spell Ensnaring Strike",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1582,7 +1582,7 @@
   {
     "spell_id": "spell_feather_fall",
     "package_id": "phb_5e_zh_user",
-    "name": "羽落术",
+    "name": "Spell Feather Fall",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1602,7 +1602,7 @@
   {
     "spell_id": "spell_fog_cloud",
     "package_id": "phb_5e_zh_user",
-    "name": "云雾术",
+    "name": "Spell Fog Cloud",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1622,7 +1622,7 @@
   {
     "spell_id": "spell_bane",
     "package_id": "phb_5e_zh_user",
-    "name": "灾祸术",
+    "name": "Spell Bane",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1642,7 +1642,7 @@
   {
     "spell_id": "spell_create_or_destroy_water",
     "package_id": "phb_5e_zh_user",
-    "name": "造水/枯水术",
+    "name": "Spell Create Or Destroy Water",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1662,7 +1662,7 @@
   {
     "spell_id": "spell_detect_poison_and_disease",
     "package_id": "phb_5e_zh_user",
-    "name": "侦测毒性和疾病",
+    "name": "Spell Detect Poison And Disease",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1682,7 +1682,7 @@
   {
     "spell_id": "spell_detect_magic",
     "package_id": "phb_5e_zh_user",
-    "name": "侦测魔法",
+    "name": "Spell Detect Magic",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1702,7 +1702,7 @@
   {
     "spell_id": "spell_detect_evil_and_good",
     "package_id": "phb_5e_zh_user",
-    "name": "侦测善恶",
+    "name": "Spell Detect Evil And Good",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1722,7 +1722,7 @@
   {
     "spell_id": "spell_healing_word",
     "package_id": "phb_5e_zh_user",
-    "name": "治愈真言",
+    "name": "Spell Healing Word",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1742,7 +1742,7 @@
   {
     "spell_id": "spell_ray_of_sickness",
     "package_id": "phb_5e_zh_user",
-    "name": "致病射线",
+    "name": "Spell Ray Of Sickness",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1762,7 +1762,7 @@
   {
     "spell_id": "spell_inflict_wounds",
     "package_id": "phb_5e_zh_user",
-    "name": "致伤术",
+    "name": "Spell Inflict Wounds",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1782,7 +1782,7 @@
   {
     "spell_id": "spell_bless",
     "package_id": "phb_5e_zh_user",
-    "name": "祝福术",
+    "name": "Spell Bless",
     "level": 1,
     "school": "",
     "casting_time": "",
@@ -1802,7 +1802,7 @@
   {
     "spell_id": "spell_calm_emotions",
     "package_id": "phb_5e_zh_user",
-    "name": "安定心神",
+    "name": "Spell Calm Emotions",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1822,7 +1822,7 @@
   {
     "spell_id": "spell_suggestion",
     "package_id": "phb_5e_zh_user",
-    "name": "暗示术",
+    "name": "Spell Suggestion",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1842,7 +1842,7 @@
   {
     "spell_id": "spell_cloud_of_daggers",
     "package_id": "phb_5e_zh_user",
-    "name": "匕首之云",
+    "name": "Spell Cloud Of Daggers",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1862,7 +1862,7 @@
   {
     "spell_id": "spell_enlarge_reduce",
     "package_id": "phb_5e_zh_user",
-    "name": "变巨/缩小术",
+    "name": "Spell Enlarge Reduce",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1882,7 +1882,7 @@
   {
     "spell_id": "spell_alter_self",
     "package_id": "phb_5e_zh_user",
-    "name": "变身术",
+    "name": "Spell Alter Self",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1902,7 +1902,7 @@
   {
     "spell_id": "spell_augury",
     "package_id": "phb_5e_zh_user",
-    "name": "卜筮术",
+    "name": "Spell Augury",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1922,7 +1922,7 @@
   {
     "spell_id": "spell_continual_flame",
     "package_id": "phb_5e_zh_user",
-    "name": "不灭明焰",
+    "name": "Spell Continual Flame",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1942,7 +1942,7 @@
   {
     "spell_id": "spell_silence",
     "package_id": "phb_5e_zh_user",
-    "name": "沉默术",
+    "name": "Spell Silence",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1962,7 +1962,7 @@
   {
     "spell_id": "spell_zone_of_truth",
     "package_id": "phb_5e_zh_user",
-    "name": "诚实之域",
+    "name": "Spell Zone Of Truth",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -1982,7 +1982,7 @@
   {
     "spell_id": "spell_flaming_sphere",
     "package_id": "phb_5e_zh_user",
-    "name": "炽焰法球",
+    "name": "Spell Flaming Sphere",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2002,7 +2002,7 @@
   {
     "spell_id": "spell_lesser_restoration",
     "package_id": "phb_5e_zh_user",
-    "name": "次级复原术",
+    "name": "Spell Lesser Restoration",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2022,7 +2022,7 @@
   {
     "spell_id": "spell_animal_messenger",
     "package_id": "phb_5e_zh_user",
-    "name": "动物信使",
+    "name": "Spell Animal Messenger",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2042,7 +2042,7 @@
   {
     "spell_id": "spell_locate_animals_or_plants",
     "package_id": "phb_5e_zh_user",
-    "name": "动植物定位术",
+    "name": "Spell Locate Animals Or Plants",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2062,7 +2062,7 @@
   {
     "spell_id": "spell_protection_from_poison",
     "package_id": "phb_5e_zh_user",
-    "name": "防护毒素",
+    "name": "Spell Protection From Poison",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2082,7 +2082,7 @@
   {
     "spell_id": "spell_shatter",
     "package_id": "phb_5e_zh_user",
-    "name": "粉碎音波",
+    "name": "Spell Shatter",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2102,7 +2102,7 @@
   {
     "spell_id": "spell_crown_of_madness",
     "package_id": "phb_5e_zh_user",
-    "name": "疯狂冠冕",
+    "name": "Spell Crown Of Madness",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2122,7 +2122,7 @@
   {
     "spell_id": "spell_levitate",
     "package_id": "phb_5e_zh_user",
-    "name": "浮空术",
+    "name": "Spell Levitate",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2142,7 +2142,7 @@
   {
     "spell_id": "spell_darkvision",
     "package_id": "phb_5e_zh_user",
-    "name": "黑暗视觉",
+    "name": "Spell Darkvision",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2162,7 +2162,7 @@
   {
     "spell_id": "spell_darkness",
     "package_id": "phb_5e_zh_user",
-    "name": "黑暗术",
+    "name": "Spell Darkness",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2182,7 +2182,7 @@
   {
     "spell_id": "spell_flame_blade",
     "package_id": "phb_5e_zh_user",
-    "name": "火焰刀",
+    "name": "Spell Flame Blade",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2202,7 +2202,7 @@
   {
     "spell_id": "spell_spike_growth",
     "package_id": "phb_5e_zh_user",
-    "name": "荆棘丛生",
+    "name": "Spell Spike Growth",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2222,7 +2222,7 @@
   {
     "spell_id": "spell_cordon_of_arrows",
     "package_id": "phb_5e_zh_user",
-    "name": "警戒之箭",
+    "name": "Spell Cordon Of Arrows",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2242,7 +2242,7 @@
   {
     "spell_id": "spell_mirror_image",
     "package_id": "phb_5e_zh_user",
-    "name": "镜影术",
+    "name": "Spell Mirror Image",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2262,7 +2262,7 @@
   {
     "spell_id": "spell_spiritual_weapon",
     "package_id": "phb_5e_zh_user",
-    "name": "灵体武器",
+    "name": "Spell Spiritual Weapon",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2282,7 +2282,7 @@
   {
     "spell_id": "spell_melfs_acid_arrow",
     "package_id": "phb_5e_zh_user",
-    "name": "马友夫强酸箭",
+    "name": "Spell Melfs Acid Arrow",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2302,7 +2302,7 @@
   {
     "spell_id": "spell_phantasmal_force",
     "package_id": "phb_5e_zh_user",
-    "name": "魅影之力",
+    "name": "Spell Phantasmal Force",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2322,7 +2322,7 @@
   {
     "spell_id": "spell_blur",
     "package_id": "phb_5e_zh_user",
-    "name": "朦胧术",
+    "name": "Spell Blur",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2342,7 +2342,7 @@
   {
     "spell_id": "spell_misty_step",
     "package_id": "phb_5e_zh_user",
-    "name": "迷踪步",
+    "name": "Spell Misty Step",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2362,7 +2362,7 @@
   {
     "spell_id": "spell_arcane_lock",
     "package_id": "phb_5e_zh_user",
-    "name": "秘法锁",
+    "name": "Spell Arcane Lock",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2382,7 +2382,7 @@
   {
     "spell_id": "spell_magic_weapon",
     "package_id": "phb_5e_zh_user",
-    "name": "魔化武器",
+    "name": "Spell Magic Weapon",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2402,7 +2402,7 @@
   {
     "spell_id": "spell_rope_trick",
     "package_id": "phb_5e_zh_user",
-    "name": "魔绳术",
+    "name": "Spell Rope Trick",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2422,7 +2422,7 @@
   {
     "spell_id": "spell_magic_mouth",
     "package_id": "phb_5e_zh_user",
-    "name": "魔嘴术",
+    "name": "Spell Magic Mouth",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2442,7 +2442,7 @@
   {
     "spell_id": "spell_blindness_deafness",
     "package_id": "phb_5e_zh_user",
-    "name": "目盲/耳聋术",
+    "name": "Spell Blindness Deafness",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2462,7 +2462,7 @@
   {
     "spell_id": "spell_nystuls_magic_aura",
     "package_id": "phb_5e_zh_user",
-    "name": "涅斯图魔法灵光",
+    "name": "Spell Nystuls Magic Aura",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2482,7 +2482,7 @@
   {
     "spell_id": "spell_enhance_ability",
     "package_id": "phb_5e_zh_user",
-    "name": "强化属性",
+    "name": "Spell Enhance Ability",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2502,7 +2502,7 @@
   {
     "spell_id": "spell_knock",
     "package_id": "phb_5e_zh_user",
-    "name": "敲击术",
+    "name": "Spell Knock",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2522,7 +2522,7 @@
   {
     "spell_id": "spell_hold_person",
     "package_id": "phb_5e_zh_user",
-    "name": "人类定身术",
+    "name": "Spell Hold Person",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2542,7 +2542,7 @@
   {
     "spell_id": "spell_see_invisibility",
     "package_id": "phb_5e_zh_user",
-    "name": "识破隐形",
+    "name": "Spell See Invisibility",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2562,7 +2562,7 @@
   {
     "spell_id": "spell_warding_bond",
     "package_id": "phb_5e_zh_user",
-    "name": "守护之链",
+    "name": "Spell Warding Bond",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2582,7 +2582,7 @@
   {
     "spell_id": "spell_barkskin",
     "package_id": "phb_5e_zh_user",
-    "name": "树肤术",
+    "name": "Spell Barkskin",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2602,7 +2602,7 @@
   {
     "spell_id": "spell_ray_of_enfeeblement",
     "package_id": "phb_5e_zh_user",
-    "name": "衰弱射线",
+    "name": "Spell Ray Of Enfeeblement",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2622,7 +2622,7 @@
   {
     "spell_id": "spell_locate_object",
     "package_id": "phb_5e_zh_user",
-    "name": "物件定位术",
+    "name": "Spell Locate Object",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2642,7 +2642,7 @@
   {
     "spell_id": "spell_pass_without_trace",
     "package_id": "phb_5e_zh_user",
-    "name": "行动无踪",
+    "name": "Spell Pass Without Trace",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2662,7 +2662,7 @@
   {
     "spell_id": "spell_find_traps",
     "package_id": "phb_5e_zh_user",
-    "name": "寻找陷阱",
+    "name": "Spell Find Traps",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2682,7 +2682,7 @@
   {
     "spell_id": "spell_beast_sense",
     "package_id": "phb_5e_zh_user",
-    "name": "野兽知觉",
+    "name": "Spell Beast Sense",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2702,7 +2702,7 @@
   {
     "spell_id": "spell_gentle_repose",
     "package_id": "phb_5e_zh_user",
-    "name": "遗体防腐",
+    "name": "Spell Gentle Repose",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2722,7 +2722,7 @@
   {
     "spell_id": "spell_invisibility",
     "package_id": "phb_5e_zh_user",
-    "name": "隐形术",
+    "name": "Spell Invisibility",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2742,7 +2742,7 @@
   {
     "spell_id": "spell_branding_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "印记斩",
+    "name": "Spell Branding Smite",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2762,7 +2762,7 @@
   {
     "spell_id": "spell_aid",
     "package_id": "phb_5e_zh_user",
-    "name": "援助术",
+    "name": "Spell Aid",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2782,7 +2782,7 @@
   {
     "spell_id": "spell_moonbeam",
     "package_id": "phb_5e_zh_user",
-    "name": "月华之光",
+    "name": "Spell Moonbeam",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2802,7 +2802,7 @@
   {
     "spell_id": "spell_gust_of_wind",
     "package_id": "phb_5e_zh_user",
-    "name": "造风术",
+    "name": "Spell Gust Of Wind",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2822,7 +2822,7 @@
   {
     "spell_id": "spell_find_steed",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤坐骑",
+    "name": "Spell Find Steed",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2842,7 +2842,7 @@
   {
     "spell_id": "spell_detect_thoughts",
     "package_id": "phb_5e_zh_user",
-    "name": "侦测思想",
+    "name": "Spell Detect Thoughts",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2862,7 +2862,7 @@
   {
     "spell_id": "spell_prayer_of_healing",
     "package_id": "phb_5e_zh_user",
-    "name": "治疗祷言",
+    "name": "Spell Prayer Of Healing",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2882,7 +2882,7 @@
   {
     "spell_id": "spell_web",
     "package_id": "phb_5e_zh_user",
-    "name": "蛛网术",
+    "name": "Spell Web",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2902,7 +2902,7 @@
   {
     "spell_id": "spell_spider_climb",
     "package_id": "phb_5e_zh_user",
-    "name": "蛛行术",
+    "name": "Spell Spider Climb",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2922,7 +2922,7 @@
   {
     "spell_id": "spell_enthrall",
     "package_id": "phb_5e_zh_user",
-    "name": "注目术",
+    "name": "Spell Enthrall",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2942,7 +2942,7 @@
   {
     "spell_id": "spell_heat_metal",
     "package_id": "phb_5e_zh_user",
-    "name": "灼热金属",
+    "name": "Spell Heat Metal",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2962,7 +2962,7 @@
   {
     "spell_id": "spell_scorching_ray",
     "package_id": "phb_5e_zh_user",
-    "name": "灼热射线",
+    "name": "Spell Scorching Ray",
     "level": 2,
     "school": "",
     "casting_time": "",
@@ -2982,7 +2982,7 @@
   {
     "spell_id": "spell_animate_dead",
     "package_id": "phb_5e_zh_user",
-    "name": "操纵死尸",
+    "name": "Spell Animate Dead",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3002,7 +3002,7 @@
   {
     "spell_id": "spell_stinking_cloud",
     "package_id": "phb_5e_zh_user",
-    "name": "臭云术",
+    "name": "Spell Stinking Cloud",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3022,7 +3022,7 @@
   {
     "spell_id": "spell_hypnotic_pattern",
     "package_id": "phb_5e_zh_user",
-    "name": "催眠图纹",
+    "name": "Spell Hypnotic Pattern",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3042,7 +3042,7 @@
   {
     "spell_id": "spell_sending",
     "package_id": "phb_5e_zh_user",
-    "name": "短讯术",
+    "name": "Spell Sending",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3062,7 +3062,7 @@
   {
     "spell_id": "spell_counterspell",
     "package_id": "phb_5e_zh_user",
-    "name": "法术反制",
+    "name": "Spell Counterspell",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3082,7 +3082,7 @@
   {
     "spell_id": "spell_magic_circle",
     "package_id": "phb_5e_zh_user",
-    "name": "防护法阵",
+    "name": "Spell Magic Circle",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3102,7 +3102,7 @@
   {
     "spell_id": "spell_protection_from_energy",
     "package_id": "phb_5e_zh_user",
-    "name": "防护能量伤害",
+    "name": "Spell Protection From Energy",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3122,7 +3122,7 @@
   {
     "spell_id": "spell_fly",
     "package_id": "phb_5e_zh_user",
-    "name": "飞行术",
+    "name": "Spell Fly",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3142,7 +3142,7 @@
   {
     "spell_id": "spell_wind_wall",
     "package_id": "phb_5e_zh_user",
-    "name": "风墙术",
+    "name": "Spell Wind Wall",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3162,7 +3162,7 @@
   {
     "spell_id": "spell_major_image",
     "package_id": "phb_5e_zh_user",
-    "name": "高等幻影",
+    "name": "Spell Major Image",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3182,7 +3182,7 @@
   {
     "spell_id": "spell_hunger_of_hadar",
     "package_id": "phb_5e_zh_user",
-    "name": "哈达之欲",
+    "name": "Spell Hunger Of Hadar",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3202,7 +3202,7 @@
   {
     "spell_id": "spell_slow",
     "package_id": "phb_5e_zh_user",
-    "name": "缓慢术",
+    "name": "Spell Slow",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3222,7 +3222,7 @@
   {
     "spell_id": "spell_nondetection",
     "package_id": "phb_5e_zh_user",
-    "name": "回避侦测",
+    "name": "Spell Nondetection",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3242,7 +3242,7 @@
   {
     "spell_id": "spell_revivify",
     "package_id": "phb_5e_zh_user",
-    "name": "回生术",
+    "name": "Spell Revivify",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3262,7 +3262,7 @@
   {
     "spell_id": "spell_aura_of_vitality",
     "package_id": "phb_5e_zh_user",
-    "name": "活力灵光",
+    "name": "Spell Aura Of Vitality",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3282,7 +3282,7 @@
   {
     "spell_id": "spell_fireball",
     "package_id": "phb_5e_zh_user",
-    "name": "火球术",
+    "name": "Spell Fireball",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3302,7 +3302,7 @@
   {
     "spell_id": "spell_haste",
     "package_id": "phb_5e_zh_user",
-    "name": "加速术",
+    "name": "Spell Haste",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3322,7 +3322,7 @@
   {
     "spell_id": "spell_feign_death",
     "package_id": "phb_5e_zh_user",
-    "name": "假死术",
+    "name": "Spell Feign Death",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3342,7 +3342,7 @@
   {
     "spell_id": "spell_bestow_curse",
     "package_id": "phb_5e_zh_user",
-    "name": "降咒",
+    "name": "Spell Bestow Curse",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3362,7 +3362,7 @@
   {
     "spell_id": "spell_dispel_magic",
     "package_id": "phb_5e_zh_user",
-    "name": "解除魔法",
+    "name": "Spell Dispel Magic",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3382,7 +3382,7 @@
   {
     "spell_id": "spell_fear",
     "package_id": "phb_5e_zh_user",
-    "name": "恐惧术",
+    "name": "Spell Fear",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3402,7 +3402,7 @@
   {
     "spell_id": "spell_leomunds_tiny_hut",
     "package_id": "phb_5e_zh_user",
-    "name": "李欧蒙小屋",
+    "name": "Spell Leomunds Tiny Hut",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3422,7 +3422,7 @@
   {
     "spell_id": "spell_spirit_guardians",
     "package_id": "phb_5e_zh_user",
-    "name": "灵体卫士",
+    "name": "Spell Spirit Guardians",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3442,7 +3442,7 @@
   {
     "spell_id": "spell_phantom_steed",
     "package_id": "phb_5e_zh_user",
-    "name": "魅影驹",
+    "name": "Spell Phantom Steed",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3462,7 +3462,7 @@
   {
     "spell_id": "spell_gaseous_form",
     "package_id": "phb_5e_zh_user",
-    "name": "气化形体",
+    "name": "Spell Gaseous Form",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3482,7 +3482,7 @@
   {
     "spell_id": "spell_tongues",
     "package_id": "phb_5e_zh_user",
-    "name": "巧言术",
+    "name": "Spell Tongues",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3502,7 +3502,7 @@
   {
     "spell_id": "spell_mass_healing_word",
     "package_id": "phb_5e_zh_user",
-    "name": "群体治愈真言",
+    "name": "Spell Mass Healing Word",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3522,7 +3522,7 @@
   {
     "spell_id": "spell_meld_into_stone",
     "package_id": "phb_5e_zh_user",
-    "name": "融身入石",
+    "name": "Spell Meld Into Stone",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3542,7 +3542,7 @@
   {
     "spell_id": "spell_lightning_arrow",
     "package_id": "phb_5e_zh_user",
-    "name": "闪电箭",
+    "name": "Spell Lightning Arrow",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3562,7 +3562,7 @@
   {
     "spell_id": "spell_lightning_bolt",
     "package_id": "phb_5e_zh_user",
-    "name": "闪电束",
+    "name": "Spell Lightning Bolt",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3582,7 +3582,7 @@
   {
     "spell_id": "spell_blink",
     "package_id": "phb_5e_zh_user",
-    "name": "闪现术",
+    "name": "Spell Blink",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3602,7 +3602,7 @@
   {
     "spell_id": "spell_crusaders_mantle",
     "package_id": "phb_5e_zh_user",
-    "name": "十字军披风",
+    "name": "Spell Crusaders Mantle",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3622,7 +3622,7 @@
   {
     "spell_id": "spell_glyph_of_warding",
     "package_id": "phb_5e_zh_user",
-    "name": "守卫刻文",
+    "name": "Spell Glyph Of Warding",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3642,7 +3642,7 @@
   {
     "spell_id": "spell_water_walk",
     "package_id": "phb_5e_zh_user",
-    "name": "水上行走",
+    "name": "Spell Water Walk",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3662,7 +3662,7 @@
   {
     "spell_id": "spell_water_breathing",
     "package_id": "phb_5e_zh_user",
-    "name": "水下呼吸",
+    "name": "Spell Water Breathing",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3682,7 +3682,7 @@
   {
     "spell_id": "spell_speak_with_dead",
     "package_id": "phb_5e_zh_user",
-    "name": "死者交谈",
+    "name": "Spell Speak With Dead",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3702,7 +3702,7 @@
   {
     "spell_id": "spell_vampiric_touch",
     "package_id": "phb_5e_zh_user",
-    "name": "吸血鬼之触",
+    "name": "Spell Vampiric Touch",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3722,7 +3722,7 @@
   {
     "spell_id": "spell_beacon_of_hope",
     "package_id": "phb_5e_zh_user",
-    "name": "希望信标",
+    "name": "Spell Beacon Of Hope",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3742,7 +3742,7 @@
   {
     "spell_id": "spell_sleet_storm",
     "package_id": "phb_5e_zh_user",
-    "name": "雪雨暴",
+    "name": "Spell Sleet Storm",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3762,7 +3762,7 @@
   {
     "spell_id": "spell_remove_curse",
     "package_id": "phb_5e_zh_user",
-    "name": "移除诅咒",
+    "name": "Spell Remove Curse",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3782,7 +3782,7 @@
   {
     "spell_id": "spell_clairvoyance",
     "package_id": "phb_5e_zh_user",
-    "name": "鹰眼术",
+    "name": "Spell Clairvoyance",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3802,7 +3802,7 @@
   {
     "spell_id": "spell_elemental_weapon",
     "package_id": "phb_5e_zh_user",
-    "name": "元素武器",
+    "name": "Spell Elemental Weapon",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3822,7 +3822,7 @@
   {
     "spell_id": "spell_create_food_and_water",
     "package_id": "phb_5e_zh_user",
-    "name": "造粮术",
+    "name": "Spell Create Food And Water",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3842,7 +3842,7 @@
   {
     "spell_id": "spell_conjure_animals",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤动物",
+    "name": "Spell Conjure Animals",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3862,7 +3862,7 @@
   {
     "spell_id": "spell_conjure_barrage",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤箭雨",
+    "name": "Spell Conjure Barrage",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3882,7 +3882,7 @@
   {
     "spell_id": "spell_call_lightning",
     "package_id": "phb_5e_zh_user",
-    "name": "召雷术",
+    "name": "Spell Call Lightning",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3902,7 +3902,7 @@
   {
     "spell_id": "spell_speak_with_plants",
     "package_id": "phb_5e_zh_user",
-    "name": "植物交谈",
+    "name": "Spell Speak With Plants",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3922,7 +3922,7 @@
   {
     "spell_id": "spell_plant_growth",
     "package_id": "phb_5e_zh_user",
-    "name": "植物滋长",
+    "name": "Spell Plant Growth",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3942,7 +3942,7 @@
   {
     "spell_id": "spell_blinding_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "致盲斩",
+    "name": "Spell Blinding Smite",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3962,7 +3962,7 @@
   {
     "spell_id": "spell_daylight",
     "package_id": "phb_5e_zh_user",
-    "name": "昼明术",
+    "name": "Spell Daylight",
     "level": 3,
     "school": "",
     "casting_time": "",
@@ -3982,7 +3982,7 @@
   {
     "spell_id": "spell_evards_black_tentacles",
     "package_id": "phb_5e_zh_user",
-    "name": "艾伐黑触手",
+    "name": "Spell Evards Black Tentacles",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4002,7 +4002,7 @@
   {
     "spell_id": "spell_polymorph",
     "package_id": "phb_5e_zh_user",
-    "name": "变形术",
+    "name": "Spell Polymorph",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4022,7 +4022,7 @@
   {
     "spell_id": "spell_ice_storm",
     "package_id": "phb_5e_zh_user",
-    "name": "冰风暴",
+    "name": "Spell Ice Storm",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4042,7 +4042,7 @@
   {
     "spell_id": "spell_control_water",
     "package_id": "phb_5e_zh_user",
-    "name": "操控水体",
+    "name": "Spell Control Water",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4062,7 +4062,7 @@
   {
     "spell_id": "spell_death_ward",
     "package_id": "phb_5e_zh_user",
-    "name": "防死结界",
+    "name": "Spell Death Ward",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4082,7 +4082,7 @@
   {
     "spell_id": "spell_banishment",
     "package_id": "phb_5e_zh_user",
-    "name": "放逐术",
+    "name": "Spell Banishment",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4102,7 +4102,7 @@
   {
     "spell_id": "spell_greater_invisibility",
     "package_id": "phb_5e_zh_user",
-    "name": "高等隐形术",
+    "name": "Spell Greater Invisibility",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4122,7 +4122,7 @@
   {
     "spell_id": "spell_fabricate",
     "package_id": "phb_5e_zh_user",
-    "name": "鬼斧神工",
+    "name": "Spell Fabricate",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4142,7 +4142,7 @@
   {
     "spell_id": "spell_hallucinatory_terrain",
     "package_id": "phb_5e_zh_user",
-    "name": "幻景",
+    "name": "Spell Hallucinatory Terrain",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4162,7 +4162,7 @@
   {
     "spell_id": "spell_wall_of_fire",
     "package_id": "phb_5e_zh_user",
-    "name": "火墙术",
+    "name": "Spell Wall Of Fire",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4182,7 +4182,7 @@
   {
     "spell_id": "spell_fire_shield",
     "package_id": "phb_5e_zh_user",
-    "name": "火焰护盾",
+    "name": "Spell Fire Shield",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4202,7 +4202,7 @@
   {
     "spell_id": "spell_staggering_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "惊惧斩",
+    "name": "Spell Staggering Smite",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4222,7 +4222,7 @@
   {
     "spell_id": "spell_aura_of_purity",
     "package_id": "phb_5e_zh_user",
-    "name": "净化灵光",
+    "name": "Spell Aura Of Purity",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4242,7 +4242,7 @@
   {
     "spell_id": "spell_giant_insect",
     "package_id": "phb_5e_zh_user",
-    "name": "巨虫术",
+    "name": "Spell Giant Insect",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4262,7 +4262,7 @@
   {
     "spell_id": "spell_blight",
     "package_id": "phb_5e_zh_user",
-    "name": "枯萎术",
+    "name": "Spell Blight",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4282,7 +4282,7 @@
   {
     "spell_id": "spell_confusion",
     "package_id": "phb_5e_zh_user",
-    "name": "困惑术",
+    "name": "Spell Confusion",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4302,7 +4302,7 @@
   {
     "spell_id": "spell_leomunds_secret_chest",
     "package_id": "phb_5e_zh_user",
-    "name": "李欧蒙秘藏箱",
+    "name": "Spell Leomunds Secret Chest",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4322,7 +4322,7 @@
   {
     "spell_id": "spell_phantasmal_killer",
     "package_id": "phb_5e_zh_user",
-    "name": "魅影杀手",
+    "name": "Spell Phantasmal Killer",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4342,7 +4342,7 @@
   {
     "spell_id": "spell_arcane_eye",
     "package_id": "phb_5e_zh_user",
-    "name": "秘法眼",
+    "name": "Spell Arcane Eye",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4362,7 +4362,7 @@
   {
     "spell_id": "spell_mordenkainens_private_sanctum",
     "package_id": "phb_5e_zh_user",
-    "name": "摩登肯私人密室",
+    "name": "Spell Mordenkainens Private Sanctum",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4382,7 +4382,7 @@
   {
     "spell_id": "spell_mordenkainens_faithful_hound",
     "package_id": "phb_5e_zh_user",
-    "name": "摩登肯忠犬",
+    "name": "Spell Mordenkainens Faithful Hound",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4402,7 +4402,7 @@
   {
     "spell_id": "spell_otilukes_resilient_sphere",
     "package_id": "phb_5e_zh_user",
-    "name": "欧提路克弹力法球",
+    "name": "Spell Otilukes Resilient Sphere",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4422,7 +4422,7 @@
   {
     "spell_id": "spell_compulsion",
     "package_id": "phb_5e_zh_user",
-    "name": "强迫术",
+    "name": "Spell Compulsion",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4442,7 +4442,7 @@
   {
     "spell_id": "spell_grasping_vine",
     "package_id": "phb_5e_zh_user",
-    "name": "擒抱藤",
+    "name": "Spell Grasping Vine",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4462,7 +4462,7 @@
   {
     "spell_id": "spell_dimension_door",
     "package_id": "phb_5e_zh_user",
-    "name": "任意门",
+    "name": "Spell Dimension Door",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4482,7 +4482,7 @@
   {
     "spell_id": "spell_aura_of_life",
     "package_id": "phb_5e_zh_user",
-    "name": "生命灵光",
+    "name": "Spell Aura Of Life",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4502,7 +4502,7 @@
   {
     "spell_id": "spell_locate_creature",
     "package_id": "phb_5e_zh_user",
-    "name": "生物定位术",
+    "name": "Spell Locate Creature",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4522,7 +4522,7 @@
   {
     "spell_id": "spell_stoneskin",
     "package_id": "phb_5e_zh_user",
-    "name": "石肤术",
+    "name": "Spell Stoneskin",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4542,7 +4542,7 @@
   {
     "spell_id": "spell_stone_shape",
     "package_id": "phb_5e_zh_user",
-    "name": "塑石术",
+    "name": "Spell Stone Shape",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4562,7 +4562,7 @@
   {
     "spell_id": "spell_guardian_of_faith",
     "package_id": "phb_5e_zh_user",
-    "name": "信仰守卫",
+    "name": "Spell Guardian Of Faith",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4582,7 +4582,7 @@
   {
     "spell_id": "spell_freedom_of_movement",
     "package_id": "phb_5e_zh_user",
-    "name": "行动自如",
+    "name": "Spell Freedom Of Movement",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4602,7 +4602,7 @@
   {
     "spell_id": "spell_divination",
     "package_id": "phb_5e_zh_user",
-    "name": "预言术",
+    "name": "Spell Divination",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4622,7 +4622,7 @@
   {
     "spell_id": "spell_conjure_minor_elementals",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤次级元素生物",
+    "name": "Spell Conjure Minor Elementals",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4642,7 +4642,7 @@
   {
     "spell_id": "spell_conjure_woodland_beings",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤林地之精",
+    "name": "Spell Conjure Woodland Beings",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4662,7 +4662,7 @@
   {
     "spell_id": "spell_dominate_beast",
     "package_id": "phb_5e_zh_user",
-    "name": "支配野兽",
+    "name": "Spell Dominate Beast",
     "level": 4,
     "school": "",
     "casting_time": "",
@@ -4682,7 +4682,7 @@
   {
     "spell_id": "spell_bigbys_hand",
     "package_id": "phb_5e_zh_user",
-    "name": "毕格比之手",
+    "name": "Spell Bigbys Hand",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4702,7 +4702,7 @@
   {
     "spell_id": "spell_passwall",
     "package_id": "phb_5e_zh_user",
-    "name": "穿墙术",
+    "name": "Spell Passwall",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4722,7 +4722,7 @@
   {
     "spell_id": "spell_teleportation_circle",
     "package_id": "phb_5e_zh_user",
-    "name": "传送法阵",
+    "name": "Spell Teleportation Circle",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4742,7 +4742,7 @@
   {
     "spell_id": "spell_modify_memory",
     "package_id": "phb_5e_zh_user",
-    "name": "篡改记忆",
+    "name": "Spell Modify Memory",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4762,7 +4762,7 @@
   {
     "spell_id": "spell_dispel_evil_and_good",
     "package_id": "phb_5e_zh_user",
-    "name": "反制善恶",
+    "name": "Spell Dispel Evil And Good",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4782,7 +4782,7 @@
   {
     "spell_id": "spell_antilife_shell",
     "package_id": "phb_5e_zh_user",
-    "name": "防活物护罩",
+    "name": "Spell Antilife Shell",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4802,7 +4802,7 @@
   {
     "spell_id": "spell_banishing_smite",
     "package_id": "phb_5e_zh_user",
-    "name": "放逐斩",
+    "name": "Spell Banishing Smite",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4822,7 +4822,7 @@
   {
     "spell_id": "spell_greater_restoration",
     "package_id": "phb_5e_zh_user",
-    "name": "高等复原术",
+    "name": "Spell Greater Restoration",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4842,7 +4842,7 @@
   {
     "spell_id": "spell_hold_monster",
     "package_id": "phb_5e_zh_user",
-    "name": "怪物定身术",
+    "name": "Spell Hold Monster",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4862,7 +4862,7 @@
   {
     "spell_id": "spell_cone_of_cold",
     "package_id": "phb_5e_zh_user",
-    "name": "寒冰锥",
+    "name": "Spell Cone Of Cold",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4882,7 +4882,7 @@
   {
     "spell_id": "spell_animate_objects",
     "package_id": "phb_5e_zh_user",
-    "name": "活化物件",
+    "name": "Spell Animate Objects",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4902,7 +4902,7 @@
   {
     "spell_id": "spell_mislead",
     "package_id": "phb_5e_zh_user",
-    "name": "假象术",
+    "name": "Spell Mislead",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4922,7 +4922,7 @@
   {
     "spell_id": "spell_rarys_telepathic_bond",
     "package_id": "phb_5e_zh_user",
-    "name": "拉瑞心灵联结",
+    "name": "Spell Rarys Telepathic Bond",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4942,7 +4942,7 @@
   {
     "spell_id": "spell_wall_of_force",
     "package_id": "phb_5e_zh_user",
-    "name": "力场墙",
+    "name": "Spell Wall Of Force",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4962,7 +4962,7 @@
   {
     "spell_id": "spell_awaken",
     "package_id": "phb_5e_zh_user",
-    "name": "启蒙术",
+    "name": "Spell Awaken",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -4982,7 +4982,7 @@
   {
     "spell_id": "spell_mass_cure_wounds",
     "package_id": "phb_5e_zh_user",
-    "name": "群体疗伤术",
+    "name": "Spell Mass Cure Wounds",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5002,7 +5002,7 @@
   {
     "spell_id": "spell_hallow",
     "package_id": "phb_5e_zh_user",
-    "name": "圣居",
+    "name": "Spell Hallow",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5022,7 +5022,7 @@
   {
     "spell_id": "spell_wall_of_stone",
     "package_id": "phb_5e_zh_user",
-    "name": "石墙术",
+    "name": "Spell Wall Of Stone",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5042,7 +5042,7 @@
   {
     "spell_id": "spell_tree_stride",
     "package_id": "phb_5e_zh_user",
-    "name": "树跃术",
+    "name": "Spell Tree Stride",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5062,7 +5062,7 @@
   {
     "spell_id": "spell_cloudkill",
     "package_id": "phb_5e_zh_user",
-    "name": "死云术",
+    "name": "Spell Cloudkill",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5082,7 +5082,7 @@
   {
     "spell_id": "spell_raise_dead",
     "package_id": "phb_5e_zh_user",
-    "name": "死者复活",
+    "name": "Spell Raise Dead",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5102,7 +5102,7 @@
   {
     "spell_id": "spell_scrying",
     "package_id": "phb_5e_zh_user",
-    "name": "探知",
+    "name": "Spell Scrying",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5122,7 +5122,7 @@
   {
     "spell_id": "spell_commune",
     "package_id": "phb_5e_zh_user",
-    "name": "通神术",
+    "name": "Spell Commune",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5142,7 +5142,7 @@
   {
     "spell_id": "spell_legend_lore",
     "package_id": "phb_5e_zh_user",
-    "name": "通晓传奇",
+    "name": "Spell Legend Lore",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5162,7 +5162,7 @@
   {
     "spell_id": "spell_dream",
     "package_id": "phb_5e_zh_user",
-    "name": "托梦术",
+    "name": "Spell Dream",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5182,7 +5182,7 @@
   {
     "spell_id": "spell_conjure_volley",
     "package_id": "phb_5e_zh_user",
-    "name": "万箭齐发",
+    "name": "Spell Conjure Volley",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5202,7 +5202,7 @@
   {
     "spell_id": "spell_seeming",
     "package_id": "phb_5e_zh_user",
-    "name": "伪装术",
+    "name": "Spell Seeming",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5222,7 +5222,7 @@
   {
     "spell_id": "spell_commune_with_nature",
     "package_id": "phb_5e_zh_user",
-    "name": "问道自然",
+    "name": "Spell Commune With Nature",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5242,7 +5242,7 @@
   {
     "spell_id": "spell_telekinesis",
     "package_id": "phb_5e_zh_user",
-    "name": "心灵遥控",
+    "name": "Spell Telekinesis",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5262,7 +5262,7 @@
   {
     "spell_id": "spell_swift_quiver",
     "package_id": "phb_5e_zh_user",
-    "name": "迅捷箭袋",
+    "name": "Spell Swift Quiver",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5282,7 +5282,7 @@
   {
     "spell_id": "spell_destructive_wave",
     "package_id": "phb_5e_zh_user",
-    "name": "湮灭波",
+    "name": "Spell Destructive Wave",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5302,7 +5302,7 @@
   {
     "spell_id": "spell_flame_strike",
     "package_id": "phb_5e_zh_user",
-    "name": "焰击术",
+    "name": "Spell Flame Strike",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5322,7 +5322,7 @@
   {
     "spell_id": "spell_planar_binding",
     "package_id": "phb_5e_zh_user",
-    "name": "异界誓缚",
+    "name": "Spell Planar Binding",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5342,7 +5342,7 @@
   {
     "spell_id": "spell_contact_other_plane",
     "package_id": "phb_5e_zh_user",
-    "name": "异界探知",
+    "name": "Spell Contact Other Plane",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5362,7 +5362,7 @@
   {
     "spell_id": "spell_insect_plague",
     "package_id": "phb_5e_zh_user",
-    "name": "疫病虫群",
+    "name": "Spell Insect Plague",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5382,7 +5382,7 @@
   {
     "spell_id": "spell_contagion",
     "package_id": "phb_5e_zh_user",
-    "name": "疫病术",
+    "name": "Spell Contagion",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5402,7 +5402,7 @@
   {
     "spell_id": "spell_circle_of_power",
     "package_id": "phb_5e_zh_user",
-    "name": "原力法阵",
+    "name": "Spell Circle Of Power",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5422,7 +5422,7 @@
   {
     "spell_id": "spell_creation",
     "package_id": "phb_5e_zh_user",
-    "name": "造物术",
+    "name": "Spell Creation",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5442,7 +5442,7 @@
   {
     "spell_id": "spell_conjure_elemental",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤元素生物",
+    "name": "Spell Conjure Elemental",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5462,7 +5462,7 @@
   {
     "spell_id": "spell_dominate_person",
     "package_id": "phb_5e_zh_user",
-    "name": "支配人类",
+    "name": "Spell Dominate Person",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5482,7 +5482,7 @@
   {
     "spell_id": "spell_geas",
     "package_id": "phb_5e_zh_user",
-    "name": "指使术",
+    "name": "Spell Geas",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5502,7 +5502,7 @@
   {
     "spell_id": "spell_reincarnate",
     "package_id": "phb_5e_zh_user",
-    "name": "转生术",
+    "name": "Spell Reincarnate",
     "level": 5,
     "school": "",
     "casting_time": "",
@@ -5522,7 +5522,7 @@
   {
     "spell_id": "spell_ottos_irresistible_dance",
     "package_id": "phb_5e_zh_user",
-    "name": "奥图迷舞",
+    "name": "Spell Ottos Irresistible Dance",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5542,7 +5542,7 @@
   {
     "spell_id": "spell_wall_of_ice",
     "package_id": "phb_5e_zh_user",
-    "name": "冰墙术",
+    "name": "Spell Wall Of Ice",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5562,7 +5562,7 @@
   {
     "spell_id": "spell_contingency",
     "package_id": "phb_5e_zh_user",
-    "name": "触发术",
+    "name": "Spell Contingency",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5582,7 +5582,7 @@
   {
     "spell_id": "spell_move_earth",
     "package_id": "phb_5e_zh_user",
-    "name": "地动术",
+    "name": "Spell Move Earth",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5602,7 +5602,7 @@
   {
     "spell_id": "spell_globe_of_invulnerability",
     "package_id": "phb_5e_zh_user",
-    "name": "法术无效结界",
+    "name": "Spell Globe Of Invulnerability",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5622,7 +5622,7 @@
   {
     "spell_id": "spell_create_undead",
     "package_id": "phb_5e_zh_user",
-    "name": "唤起死灵",
+    "name": "Spell Create Undead",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5642,7 +5642,7 @@
   {
     "spell_id": "spell_word_of_recall",
     "package_id": "phb_5e_zh_user",
-    "name": "回返真言",
+    "name": "Spell Word Of Recall",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5662,7 +5662,7 @@
   {
     "spell_id": "spell_wall_of_throns",
     "package_id": "phb_5e_zh_user",
-    "name": "棘墙术",
+    "name": "Spell Wall Of Throns",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5682,7 +5682,7 @@
   {
     "spell_id": "spell_blade_barrier",
     "package_id": "phb_5e_zh_user",
-    "name": "剑刃护壁",
+    "name": "Spell Blade Barrier",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5702,7 +5702,7 @@
   {
     "spell_id": "spell_disintegrate",
     "package_id": "phb_5e_zh_user",
-    "name": "解离术",
+    "name": "Spell Disintegrate",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5722,7 +5722,7 @@
   {
     "spell_id": "spell_forbiddance",
     "package_id": "phb_5e_zh_user",
-    "name": "禁制术",
+    "name": "Spell Forbiddance",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5742,7 +5742,7 @@
   {
     "spell_id": "spell_chain_lightning",
     "package_id": "phb_5e_zh_user",
-    "name": "连锁闪电",
+    "name": "Spell Chain Lightning",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5762,7 +5762,7 @@
   {
     "spell_id": "spell_arcane_gate",
     "package_id": "phb_5e_zh_user",
-    "name": "秘法门",
+    "name": "Spell Arcane Gate",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5782,7 +5782,7 @@
   {
     "spell_id": "spell_magic_jar",
     "package_id": "phb_5e_zh_user",
-    "name": "魔魂壶",
+    "name": "Spell Magic Jar",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5802,7 +5802,7 @@
   {
     "spell_id": "spell_transport_via_plants",
     "package_id": "phb_5e_zh_user",
-    "name": "木遁术",
+    "name": "Spell Transport Via Plants",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5822,7 +5822,7 @@
   {
     "spell_id": "spell_otilukes_freezing_sphere",
     "package_id": "phb_5e_zh_user",
-    "name": "欧提路克冰封法球",
+    "name": "Spell Otilukes Freezing Sphere",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5842,7 +5842,7 @@
   {
     "spell_id": "spell_mass_suggestion",
     "package_id": "phb_5e_zh_user",
-    "name": "群体暗示术",
+    "name": "Spell Mass Suggestion",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5862,7 +5862,7 @@
   {
     "spell_id": "spell_eyebite",
     "package_id": "phb_5e_zh_user",
-    "name": "摄心目光",
+    "name": "Spell Eyebite",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5882,7 +5882,7 @@
   {
     "spell_id": "spell_flesh_to_stone",
     "package_id": "phb_5e_zh_user",
-    "name": "石化术",
+    "name": "Spell Flesh To Stone",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5902,7 +5902,7 @@
   {
     "spell_id": "spell_circle_of_death",
     "package_id": "phb_5e_zh_user",
-    "name": "死亡法阵",
+    "name": "Spell Circle Of Death",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5922,7 +5922,7 @@
   {
     "spell_id": "spell_guards_and_wards",
     "package_id": "phb_5e_zh_user",
-    "name": "铜墙铁壁",
+    "name": "Spell Guards And Wards",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5942,7 +5942,7 @@
   {
     "spell_id": "spell_find_the_path",
     "package_id": "phb_5e_zh_user",
-    "name": "寻路术",
+    "name": "Spell Find The Path",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5962,7 +5962,7 @@
   {
     "spell_id": "spell_sunbeam",
     "package_id": "phb_5e_zh_user",
-    "name": "阳炎射线",
+    "name": "Spell Sunbeam",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -5982,7 +5982,7 @@
   {
     "spell_id": "spell_heal",
     "package_id": "phb_5e_zh_user",
-    "name": "医疗术",
+    "name": "Spell Heal",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6002,7 +6002,7 @@
   {
     "spell_id": "spell_planar_ally",
     "package_id": "phb_5e_zh_user",
-    "name": "异界盟誓",
+    "name": "Spell Planar Ally",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6022,7 +6022,7 @@
   {
     "spell_id": "spell_heroes_feast",
     "package_id": "phb_5e_zh_user",
-    "name": "英雄宴",
+    "name": "Spell Heroes Feast",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6042,7 +6042,7 @@
   {
     "spell_id": "spell_programmed_illusion",
     "package_id": "phb_5e_zh_user",
-    "name": "预置幻影",
+    "name": "Spell Programmed Illusion",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6062,7 +6062,7 @@
   {
     "spell_id": "spell_wind_walk",
     "package_id": "phb_5e_zh_user",
-    "name": "御风而行",
+    "name": "Spell Wind Walk",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6082,7 +6082,7 @@
   {
     "spell_id": "spell_conjure_fey",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤精类生物",
+    "name": "Spell Conjure Fey",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6102,7 +6102,7 @@
   {
     "spell_id": "spell_true_seeing",
     "package_id": "phb_5e_zh_user",
-    "name": "真知术",
+    "name": "Spell True Seeing",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6122,7 +6122,7 @@
   {
     "spell_id": "spell_harm",
     "package_id": "phb_5e_zh_user",
-    "name": "重伤术",
+    "name": "Spell Harm",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6142,7 +6142,7 @@
   {
     "spell_id": "spell_drawmijs_instant_summons",
     "package_id": "phb_5e_zh_user",
-    "name": "卓姆吉瞬间召唤",
+    "name": "Spell Drawmijs Instant Summons",
     "level": 6,
     "school": "",
     "casting_time": "",
@@ -6162,7 +6162,7 @@
   {
     "spell_id": "spell_teleport",
     "package_id": "phb_5e_zh_user",
-    "name": "传送术",
+    "name": "Spell Teleport",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6182,7 +6182,7 @@
   {
     "spell_id": "spell_reverse_gravity",
     "package_id": "phb_5e_zh_user",
-    "name": "反重力",
+    "name": "Spell Reverse Gravity",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6202,7 +6202,7 @@
   {
     "spell_id": "spell_resurrection",
     "package_id": "phb_5e_zh_user",
-    "name": "复生术",
+    "name": "Spell Resurrection",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6222,7 +6222,7 @@
   {
     "spell_id": "spell_sequester",
     "package_id": "phb_5e_zh_user",
-    "name": "隔离术",
+    "name": "Spell Sequester",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6242,7 +6242,7 @@
   {
     "spell_id": "spell_mirage_arcane",
     "package_id": "phb_5e_zh_user",
-    "name": "海市蜃楼",
+    "name": "Spell Mirage Arcane",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6262,7 +6262,7 @@
   {
     "spell_id": "spell_prismatic_spray",
     "package_id": "phb_5e_zh_user",
-    "name": "虹光喷射",
+    "name": "Spell Prismatic Spray",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6282,7 +6282,7 @@
   {
     "spell_id": "spell_fire_storm",
     "package_id": "phb_5e_zh_user",
-    "name": "火焰风暴",
+    "name": "Spell Fire Storm",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6302,7 +6302,7 @@
   {
     "spell_id": "spell_mordenkainens_magnificent_mansion",
     "package_id": "phb_5e_zh_user",
-    "name": "摩登肯豪宅术",
+    "name": "Spell Mordenkainens Magnificent Mansion",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6322,7 +6322,7 @@
   {
     "spell_id": "spell_mordenkainens_sword",
     "package_id": "phb_5e_zh_user",
-    "name": "摩登肯之剑",
+    "name": "Spell Mordenkainens Sword",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6342,7 +6342,7 @@
   {
     "spell_id": "spell_symbol",
     "package_id": "phb_5e_zh_user",
-    "name": "魔法徽记",
+    "name": "Spell Symbol",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6362,7 +6362,7 @@
   {
     "spell_id": "spell_forcecage",
     "package_id": "phb_5e_zh_user",
-    "name": "魔力监牢",
+    "name": "Spell Forcecage",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6382,7 +6382,7 @@
   {
     "spell_id": "spell_simulacrum",
     "package_id": "phb_5e_zh_user",
-    "name": "拟像术",
+    "name": "Spell Simulacrum",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6402,7 +6402,7 @@
   {
     "spell_id": "spell_divine_word",
     "package_id": "phb_5e_zh_user",
-    "name": "圣言术",
+    "name": "Spell Divine Word",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6422,7 +6422,7 @@
   {
     "spell_id": "spell_finger_of_death",
     "package_id": "phb_5e_zh_user",
-    "name": "死亡一指",
+    "name": "Spell Finger Of Death",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6442,7 +6442,7 @@
   {
     "spell_id": "spell_project_image",
     "package_id": "phb_5e_zh_user",
-    "name": "投影术",
+    "name": "Spell Project Image",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6462,7 +6462,7 @@
   {
     "spell_id": "spell_delayed_blast_fireball",
     "package_id": "phb_5e_zh_user",
-    "name": "延迟爆裂火球",
+    "name": "Spell Delayed Blast Fireball",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6482,7 +6482,7 @@
   {
     "spell_id": "spell_etherealness",
     "package_id": "phb_5e_zh_user",
-    "name": "以太化",
+    "name": "Spell Etherealness",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6502,7 +6502,7 @@
   {
     "spell_id": "spell_plane_shift",
     "package_id": "phb_5e_zh_user",
-    "name": "异界传送",
+    "name": "Spell Plane Shift",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6522,7 +6522,7 @@
   {
     "spell_id": "spell_regenerate",
     "package_id": "phb_5e_zh_user",
-    "name": "再生术",
+    "name": "Spell Regenerate",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6542,7 +6542,7 @@
   {
     "spell_id": "spell_conjure_celestial",
     "package_id": "phb_5e_zh_user",
-    "name": "召唤天界生物",
+    "name": "Spell Conjure Celestial",
     "level": 7,
     "school": "",
     "casting_time": "",
@@ -6562,7 +6562,7 @@
   {
     "spell_id": "spell_control_weather",
     "package_id": "phb_5e_zh_user",
-    "name": "操控天气",
+    "name": "Spell Control Weather",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6582,7 +6582,7 @@
   {
     "spell_id": "spell_demiplane",
     "package_id": "phb_5e_zh_user",
-    "name": "创造半位面",
+    "name": "Spell Demiplane",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6602,7 +6602,7 @@
   {
     "spell_id": "spell_earthquake",
     "package_id": "phb_5e_zh_user",
-    "name": "地震术",
+    "name": "Spell Earthquake",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6622,7 +6622,7 @@
   {
     "spell_id": "spell_animal_shapes",
     "package_id": "phb_5e_zh_user",
-    "name": "动物形态",
+    "name": "Spell Animal Shapes",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6642,7 +6642,7 @@
   {
     "spell_id": "spell_antimagic_field",
     "package_id": "phb_5e_zh_user",
-    "name": "反魔法力场",
+    "name": "Spell Antimagic Field",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6662,7 +6662,7 @@
   {
     "spell_id": "spell_incendiary_cloud",
     "package_id": "phb_5e_zh_user",
-    "name": "焚云术",
+    "name": "Spell Incendiary Cloud",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6682,7 +6682,7 @@
   {
     "spell_id": "spell_tsunami",
     "package_id": "phb_5e_zh_user",
-    "name": "海啸术",
+    "name": "Spell Tsunami",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6702,7 +6702,7 @@
   {
     "spell_id": "spell_glibness",
     "package_id": "phb_5e_zh_user",
-    "name": "花言巧语",
+    "name": "Spell Glibness",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6722,7 +6722,7 @@
   {
     "spell_id": "spell_clone",
     "package_id": "phb_5e_zh_user",
-    "name": "克隆术",
+    "name": "Spell Clone",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6742,7 +6742,7 @@
   {
     "spell_id": "spell_power_word_stun",
     "package_id": "phb_5e_zh_user",
-    "name": "律令震慑",
+    "name": "Spell Power Word Stun",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6762,7 +6762,7 @@
   {
     "spell_id": "spell_maze",
     "package_id": "phb_5e_zh_user",
-    "name": "迷宫术",
+    "name": "Spell Maze",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6782,7 +6782,7 @@
   {
     "spell_id": "spell_feeblemind",
     "package_id": "phb_5e_zh_user",
-    "name": "弱智术",
+    "name": "Spell Feeblemind",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6802,7 +6802,7 @@
   {
     "spell_id": "spell_holy_aura",
     "package_id": "phb_5e_zh_user",
-    "name": "圣洁灵光",
+    "name": "Spell Holy Aura",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6822,7 +6822,7 @@
   {
     "spell_id": "spell_antipathy_sympathy",
     "package_id": "phb_5e_zh_user",
-    "name": "嫌恶/关怀术",
+    "name": "Spell Antipathy Sympathy",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6842,7 +6842,7 @@
   {
     "spell_id": "spell_telepathy",
     "package_id": "phb_5e_zh_user",
-    "name": "心灵感应",
+    "name": "Spell Telepathy",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6862,7 +6862,7 @@
   {
     "spell_id": "spell_mind_blank",
     "package_id": "phb_5e_zh_user",
-    "name": "心灵屏障",
+    "name": "Spell Mind Blank",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6882,7 +6882,7 @@
   {
     "spell_id": "spell_sunburst",
     "package_id": "phb_5e_zh_user",
-    "name": "阳炎爆",
+    "name": "Spell Sunburst",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6902,7 +6902,7 @@
   {
     "spell_id": "spell_dominate_monster",
     "package_id": "phb_5e_zh_user",
-    "name": "支配怪物",
+    "name": "Spell Dominate Monster",
     "level": 8,
     "school": "",
     "casting_time": "",
@@ -6922,7 +6922,7 @@
   {
     "spell_id": "spell_storm_of_vengeance",
     "package_id": "phb_5e_zh_user",
-    "name": "复仇风暴",
+    "name": "Spell Storm Of Vengeance",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -6942,7 +6942,7 @@
   {
     "spell_id": "spell_weird",
     "package_id": "phb_5e_zh_user",
-    "name": "怪影杀手",
+    "name": "Spell Weird",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -6962,7 +6962,7 @@
   {
     "spell_id": "spell_prismatic_wall",
     "package_id": "phb_5e_zh_user",
-    "name": "虹光法墙",
+    "name": "Spell Prismatic Wall",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -6982,7 +6982,7 @@
   {
     "spell_id": "spell_imprisonment",
     "package_id": "phb_5e_zh_user",
-    "name": "禁锢术",
+    "name": "Spell Imprisonment",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7002,7 +7002,7 @@
   {
     "spell_id": "spell_meteor_swarm",
     "package_id": "phb_5e_zh_user",
-    "name": "流星爆",
+    "name": "Spell Meteor Swarm",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7022,7 +7022,7 @@
   {
     "spell_id": "spell_power_word_kill",
     "package_id": "phb_5e_zh_user",
-    "name": "律令死亡",
+    "name": "Spell Power Word Kill",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7042,7 +7042,7 @@
   {
     "spell_id": "spell_power_word_heal",
     "package_id": "phb_5e_zh_user",
-    "name": "律令医疗",
+    "name": "Spell Power Word Heal",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7062,7 +7062,7 @@
   {
     "spell_id": "spell_wish",
     "package_id": "phb_5e_zh_user",
-    "name": "祈愿术",
+    "name": "Spell Wish",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7082,7 +7082,7 @@
   {
     "spell_id": "spell_mass_heal",
     "package_id": "phb_5e_zh_user",
-    "name": "群体医疗术",
+    "name": "Spell Mass Heal",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7102,7 +7102,7 @@
   {
     "spell_id": "spell_time_stop",
     "package_id": "phb_5e_zh_user",
-    "name": "时间停止",
+    "name": "Spell Time Stop",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7122,7 +7122,7 @@
   {
     "spell_id": "spell_true_polymorph",
     "package_id": "phb_5e_zh_user",
-    "name": "完全变形术",
+    "name": "Spell True Polymorph",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7142,7 +7142,7 @@
   {
     "spell_id": "spell_true_resurrection",
     "package_id": "phb_5e_zh_user",
-    "name": "完全复生术",
+    "name": "Spell True Resurrection",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7162,7 +7162,7 @@
   {
     "spell_id": "spell_astral_projection",
     "package_id": "phb_5e_zh_user",
-    "name": "星界投影",
+    "name": "Spell Astral Projection",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7182,7 +7182,7 @@
   {
     "spell_id": "spell_shapechange",
     "package_id": "phb_5e_zh_user",
-    "name": "形体变化",
+    "name": "Spell Shapechange",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7202,7 +7202,7 @@
   {
     "spell_id": "spell_gate",
     "package_id": "phb_5e_zh_user",
-    "name": "异界之门",
+    "name": "Spell Gate",
     "level": 9,
     "school": "",
     "casting_time": "",
@@ -7222,7 +7222,7 @@
   {
     "spell_id": "spell_foresight",
     "package_id": "phb_5e_zh_user",
-    "name": "预警术",
+    "name": "Spell Foresight",
     "level": 9,
     "school": "",
     "casting_time": "",

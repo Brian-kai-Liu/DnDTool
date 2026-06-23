@@ -2,126 +2,126 @@
   {
     "skill_id": "athletics",
     "package_id": "phb_5e_zh_user",
-    "name": "运动",
+    "name": "Phb 5e Zh User",
     "ability_id": "strength",
     "description": ""
   },
   {
     "skill_id": "acrobatics",
     "package_id": "phb_5e_zh_user",
-    "name": "体操",
+    "name": "Phb 5e Zh User",
     "ability_id": "dexterity",
     "description": ""
   },
   {
     "skill_id": "sleight_of_hand",
     "package_id": "phb_5e_zh_user",
-    "name": "巧手",
+    "name": "Phb 5e Zh User",
     "ability_id": "dexterity",
     "description": ""
   },
   {
     "skill_id": "stealth",
     "package_id": "phb_5e_zh_user",
-    "name": "隐匿",
+    "name": "Phb 5e Zh User",
     "ability_id": "dexterity",
     "description": ""
   },
   {
     "skill_id": "arcana",
     "package_id": "phb_5e_zh_user",
-    "name": "奥秘",
+    "name": "Phb 5e Zh User",
     "ability_id": "intelligence",
     "description": ""
   },
   {
     "skill_id": "history",
     "package_id": "phb_5e_zh_user",
-    "name": "历史",
+    "name": "Phb 5e Zh User",
     "ability_id": "intelligence",
     "description": ""
   },
   {
     "skill_id": "investigation",
     "package_id": "phb_5e_zh_user",
-    "name": "调查",
+    "name": "Phb 5e Zh User",
     "ability_id": "intelligence",
     "description": ""
   },
   {
     "skill_id": "nature",
     "package_id": "phb_5e_zh_user",
-    "name": "自然",
+    "name": "Phb 5e Zh User",
     "ability_id": "intelligence",
     "description": ""
   },
   {
     "skill_id": "religion",
     "package_id": "phb_5e_zh_user",
-    "name": "宗教",
+    "name": "Phb 5e Zh User",
     "ability_id": "intelligence",
     "description": ""
   },
   {
     "skill_id": "animal_handling",
     "package_id": "phb_5e_zh_user",
-    "name": "驯兽",
+    "name": "Phb 5e Zh User",
     "ability_id": "wisdom",
     "description": ""
   },
   {
     "skill_id": "insight",
     "package_id": "phb_5e_zh_user",
-    "name": "洞悉",
+    "name": "Phb 5e Zh User",
     "ability_id": "wisdom",
     "description": ""
   },
   {
     "skill_id": "medicine",
     "package_id": "phb_5e_zh_user",
-    "name": "医药",
+    "name": "Phb 5e Zh User",
     "ability_id": "wisdom",
     "description": ""
   },
   {
     "skill_id": "perception",
     "package_id": "phb_5e_zh_user",
-    "name": "察觉",
+    "name": "Phb 5e Zh User",
     "ability_id": "wisdom",
     "description": ""
   },
   {
     "skill_id": "survival",
     "package_id": "phb_5e_zh_user",
-    "name": "求生",
+    "name": "Phb 5e Zh User",
     "ability_id": "wisdom",
     "description": ""
   },
   {
     "skill_id": "deception",
     "package_id": "phb_5e_zh_user",
-    "name": "欺瞒",
+    "name": "Phb 5e Zh User",
     "ability_id": "charisma",
     "description": ""
   },
   {
     "skill_id": "intimidation",
     "package_id": "phb_5e_zh_user",
-    "name": "威吓",
+    "name": "Phb 5e Zh User",
     "ability_id": "charisma",
     "description": ""
   },
   {
     "skill_id": "performance",
     "package_id": "phb_5e_zh_user",
-    "name": "表演",
+    "name": "Phb 5e Zh User",
     "ability_id": "charisma",
     "description": ""
   },
   {
     "skill_id": "persuasion",
     "package_id": "phb_5e_zh_user",
-    "name": "游说",
+    "name": "Phb 5e Zh User",
     "ability_id": "charisma",
     "description": ""
   }

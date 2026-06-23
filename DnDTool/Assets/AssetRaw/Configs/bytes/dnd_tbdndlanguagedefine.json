@@ -2,129 +2,129 @@
   {
     "language_id": "common",
     "package_id": "phb_5e_zh_user",
-    "name": "通用语",
+    "name": "Common",
     "english_name": "Common",
     "language_category": "standard",
-    "description": "人类与多数族群通用的贸易语言。"
+    "description": ""
   },
   {
     "language_id": "dwarvish",
     "package_id": "phb_5e_zh_user",
-    "name": "矮人语",
+    "name": "Dwarvish",
     "english_name": "Dwarvish",
     "language_category": "standard",
-    "description": "矮人族语言。"
+    "description": ""
   },
   {
     "language_id": "elvish",
     "package_id": "phb_5e_zh_user",
-    "name": "精灵语",
+    "name": "Elvish",
     "english_name": "Elvish",
     "language_category": "standard",
-    "description": "精灵族语言。"
+    "description": ""
   },
   {
     "language_id": "giant",
     "package_id": "phb_5e_zh_user",
-    "name": "巨人语",
+    "name": "Giant",
     "english_name": "Giant",
     "language_category": "standard",
-    "description": "巨人及相关族群语言。"
+    "description": ""
   },
   {
     "language_id": "gnomish",
     "package_id": "phb_5e_zh_user",
-    "name": "侏儒语",
+    "name": "Gnomish",
     "english_name": "Gnomish",
     "language_category": "standard",
-    "description": "侏儒族语言。"
+    "description": ""
   },
   {
     "language_id": "goblin",
     "package_id": "phb_5e_zh_user",
-    "name": "地精语",
+    "name": "Goblin",
     "english_name": "Goblin",
     "language_category": "standard",
-    "description": "地精类生物语言。"
+    "description": ""
   },
   {
     "language_id": "halfling",
     "package_id": "phb_5e_zh_user",
-    "name": "半身人语",
+    "name": "Halfling",
     "english_name": "Halfling",
     "language_category": "standard",
-    "description": "半身人族语言。"
+    "description": ""
   },
   {
     "language_id": "orc",
     "package_id": "phb_5e_zh_user",
-    "name": "兽人语",
+    "name": "Orc",
     "english_name": "Orc",
     "language_category": "standard",
-    "description": "兽人族语言。"
+    "description": ""
   },
   {
     "language_id": "abyssal",
     "package_id": "phb_5e_zh_user",
-    "name": "深渊语",
+    "name": "Abyssal",
     "english_name": "Abyssal",
     "language_category": "exotic",
-    "description": "下层位面邪魔常用语言。"
+    "description": ""
   },
   {
     "language_id": "celestial",
     "package_id": "phb_5e_zh_user",
-    "name": "天界语",
+    "name": "Celestial",
     "english_name": "Celestial",
     "language_category": "exotic",
-    "description": "天界生物语言。"
+    "description": ""
   },
   {
     "language_id": "draconic",
     "package_id": "phb_5e_zh_user",
-    "name": "龙语",
+    "name": "Draconic",
     "english_name": "Draconic",
     "language_category": "exotic",
-    "description": "龙类与龙裔相关语言。"
+    "description": ""
   },
   {
     "language_id": "deep_speech",
     "package_id": "phb_5e_zh_user",
-    "name": "地底通用语",
+    "name": "Deep Speech",
     "english_name": "Deep Speech",
     "language_category": "exotic",
-    "description": "地下深处与异怪相关语言。"
+    "description": ""
   },
   {
     "language_id": "infernal",
     "package_id": "phb_5e_zh_user",
-    "name": "炼狱语",
+    "name": "Infernal",
     "english_name": "Infernal",
     "language_category": "exotic",
-    "description": "魔鬼与九狱相关语言。"
+    "description": ""
   },
   {
     "language_id": "primordial",
     "package_id": "phb_5e_zh_user",
-    "name": "原初语",
+    "name": "Primordial",
     "english_name": "Primordial",
     "language_category": "exotic",
-    "description": "元素生物语言。"
+    "description": ""
   },
   {
     "language_id": "sylvan",
     "package_id": "phb_5e_zh_user",
-    "name": "木族语",
+    "name": "Sylvan",
     "english_name": "Sylvan",
     "language_category": "exotic",
-    "description": "精类与荒野生物语言。"
+    "description": ""
   },
   {
     "language_id": "undercommon",
     "package_id": "phb_5e_zh_user",
-    "name": "地底语",
+    "name": "Undercommon",
     "english_name": "Undercommon",
     "language_category": "exotic",
-    "description": "幽暗地域通用语言。"
+    "description": ""
   }
 ]

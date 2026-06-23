@@ -456,6 +456,27 @@ public partial class Tables
             m_TbDndLanguageDefine.ResolveRef(this);
         }
     }
+    /// <summary>
+    /// DnD text localization table
+    /// </summary>
+    private dnd.TbTextLocalize m_TbTextLocalize;
+    public dnd.TbTextLocalize TbTextLocalize
+    {
+        get
+        {
+            if (m_TbTextLocalize == null)
+            {
+                m_TbTextLocalize = new dnd.TbTextLocalize(defaultLoader("dnd_tbtextlocalize"));
+                m_TbTextLocalize.ResolveRef(this);
+            }
+            return m_TbTextLocalize;
+        }
+        set
+        {
+            m_TbTextLocalize = value;
+            m_TbTextLocalize.ResolveRef(this);
+        }
+    }
 
     #endregion
 

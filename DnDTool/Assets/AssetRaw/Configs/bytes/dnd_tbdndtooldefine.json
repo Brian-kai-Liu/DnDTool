@@ -2,469 +2,469 @@
   {
     "tool_id": "alchemist_supplies",
     "package_id": "phb_5e_zh_user",
-    "name": "炼金工具",
+    "name": "Alchemist's supplies",
     "tool_category": "artisan_tools",
     "english_name": "Alchemist's supplies",
     "price_gp": 50,
     "weight": 8,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于炼金、酸液、炼金火等相关制作与鉴定。"
+    "description": ""
   },
   {
     "tool_id": "brewer_supplies",
     "package_id": "phb_5e_zh_user",
-    "name": "酿酒工具",
+    "name": "Brewer's supplies",
     "tool_category": "artisan_tools",
     "english_name": "Brewer's supplies",
     "price_gp": 20,
     "weight": 9,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于酿造啤酒、葡萄酒或辨识发酵饮品。"
+    "description": ""
   },
   {
     "tool_id": "calligrapher_supplies",
     "package_id": "phb_5e_zh_user",
-    "name": "书法工具",
+    "name": "Calligrapher's supplies",
     "tool_category": "artisan_tools",
     "english_name": "Calligrapher's supplies",
     "price_gp": 10,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于书写、装饰文字与辨识精美笔迹。"
+    "description": ""
   },
   {
     "tool_id": "carpenter_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "木匠工具",
+    "name": "Carpenter's tools",
     "tool_category": "artisan_tools",
     "english_name": "Carpenter's tools",
     "price_gp": 8,
     "weight": 6,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于木工作业、修补木制结构与制作木制品。"
+    "description": ""
   },
   {
     "tool_id": "cartographer_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "制图工具",
+    "name": "Cartographer's tools",
     "tool_category": "artisan_tools",
     "english_name": "Cartographer's tools",
     "price_gp": 15,
     "weight": 6,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于绘制、解读和校准地图。"
+    "description": ""
   },
   {
     "tool_id": "cobbler_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "鞋匠工具",
+    "name": "Cobbler's tools",
     "tool_category": "artisan_tools",
     "english_name": "Cobbler's tools",
     "price_gp": 5,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于制作和修补鞋靴。"
+    "description": ""
   },
   {
     "tool_id": "cook_utensils",
     "package_id": "phb_5e_zh_user",
-    "name": "厨具",
+    "name": "Cook's utensils",
     "tool_category": "artisan_tools",
     "english_name": "Cook's utensils",
     "price_gp": 1,
     "weight": 8,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于烹饪、处理食材与制作餐食。"
+    "description": ""
   },
   {
     "tool_id": "glassblower_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "玻璃匠工具",
+    "name": "Glassblower's tools",
     "tool_category": "artisan_tools",
     "english_name": "Glassblower's tools",
     "price_gp": 30,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于制作、修补和鉴定玻璃制品。"
+    "description": ""
   },
   {
     "tool_id": "jeweler_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "珠宝匠工具",
+    "name": "Jeweler's tools",
     "tool_category": "artisan_tools",
     "english_name": "Jeweler's tools",
     "price_gp": 25,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于切割宝石、制作首饰与鉴定珠宝。"
+    "description": ""
   },
   {
     "tool_id": "leatherworker_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "皮匠工具",
+    "name": "Leatherworker's tools",
     "tool_category": "artisan_tools",
     "english_name": "Leatherworker's tools",
     "price_gp": 5,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于处理皮革、制作皮具与修补皮甲。"
+    "description": ""
   },
   {
     "tool_id": "mason_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "泥瓦匠工具",
+    "name": "Mason's tools",
     "tool_category": "artisan_tools",
     "english_name": "Mason's tools",
     "price_gp": 10,
     "weight": 8,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于石工、砖石结构修补与鉴定石材工艺。"
+    "description": ""
   },
   {
     "tool_id": "painter_supplies",
     "package_id": "phb_5e_zh_user",
-    "name": "绘画工具",
+    "name": "Painter's supplies",
     "tool_category": "artisan_tools",
     "english_name": "Painter's supplies",
     "price_gp": 10,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于绘画、调色与识别绘画技法。"
+    "description": ""
   },
   {
     "tool_id": "potter_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "陶匠工具",
+    "name": "Potter's tools",
     "tool_category": "artisan_tools",
     "english_name": "Potter's tools",
     "price_gp": 10,
     "weight": 3,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于制作陶器、修补陶制品与鉴定陶艺。"
+    "description": ""
   },
   {
     "tool_id": "smith_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "铁匠工具",
+    "name": "Smith's tools",
     "tool_category": "artisan_tools",
     "english_name": "Smith's tools",
     "price_gp": 20,
     "weight": 8,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于锻造、修理金属物品和维护武器护甲。"
+    "description": ""
   },
   {
     "tool_id": "tinker_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "修理工具",
+    "name": "Tinker's tools",
     "tool_category": "artisan_tools",
     "english_name": "Tinker's tools",
     "price_gp": 50,
     "weight": 10,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于修理小型机械、器具和复杂零件。"
+    "description": ""
   },
   {
     "tool_id": "weaver_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "织布工具",
+    "name": "Weaver's tools",
     "tool_category": "artisan_tools",
     "english_name": "Weaver's tools",
     "price_gp": 1,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于织布、修补衣物和制作纺织品。"
+    "description": ""
   },
   {
     "tool_id": "woodcarver_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "木雕工具",
+    "name": "Woodcarver's tools",
     "tool_category": "artisan_tools",
     "english_name": "Woodcarver's tools",
     "price_gp": 1,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于雕刻木材、制作箭杆和细木工艺。"
+    "description": ""
   },
   {
     "tool_id": "dice_set",
     "package_id": "phb_5e_zh_user",
-    "name": "骰子",
+    "name": "Dice set",
     "tool_category": "gaming_set",
     "english_name": "Dice set",
     "price_gp": 0.1,
     "weight": 0,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于骰子类游戏。"
+    "description": ""
   },
   {
     "tool_id": "dragonchess_set",
     "package_id": "phb_5e_zh_user",
-    "name": "龙棋",
+    "name": "Dragonchess set",
     "tool_category": "gaming_set",
     "english_name": "Dragonchess set",
     "price_gp": 1,
     "weight": 0.5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于龙棋游戏。"
+    "description": ""
   },
   {
     "tool_id": "playing_card_set",
     "package_id": "phb_5e_zh_user",
-    "name": "纸牌",
+    "name": "Playing card set",
     "tool_category": "gaming_set",
     "english_name": "Playing card set",
     "price_gp": 0.5,
     "weight": 0,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于纸牌类游戏。"
+    "description": ""
   },
   {
     "tool_id": "three_dragon_ante_set",
     "package_id": "phb_5e_zh_user",
-    "name": "三龙牌",
+    "name": "Three-Dragon Ante set",
     "tool_category": "gaming_set",
     "english_name": "Three-Dragon Ante set",
     "price_gp": 1,
     "weight": 0,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于三龙牌游戏。"
+    "description": ""
   },
   {
     "tool_id": "bagpipes",
     "package_id": "phb_5e_zh_user",
-    "name": "风笛",
+    "name": "Bagpipes",
     "tool_category": "musical_instrument",
     "english_name": "Bagpipes",
     "price_gp": 30,
     "weight": 6,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "drum",
     "package_id": "phb_5e_zh_user",
-    "name": "鼓",
+    "name": "Drum",
     "tool_category": "musical_instrument",
     "english_name": "Drum",
     "price_gp": 6,
     "weight": 3,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "dulcimer",
     "package_id": "phb_5e_zh_user",
-    "name": "扬琴",
+    "name": "Dulcimer",
     "tool_category": "musical_instrument",
     "english_name": "Dulcimer",
     "price_gp": 25,
     "weight": 10,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "flute",
     "package_id": "phb_5e_zh_user",
-    "name": "长笛",
+    "name": "Flute",
     "tool_category": "musical_instrument",
     "english_name": "Flute",
     "price_gp": 2,
     "weight": 1,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "lute",
     "package_id": "phb_5e_zh_user",
-    "name": "鲁特琴",
+    "name": "Lute",
     "tool_category": "musical_instrument",
     "english_name": "Lute",
     "price_gp": 35,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "lyre",
     "package_id": "phb_5e_zh_user",
-    "name": "里拉琴",
+    "name": "Lyre",
     "tool_category": "musical_instrument",
     "english_name": "Lyre",
     "price_gp": 30,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "horn",
     "package_id": "phb_5e_zh_user",
-    "name": "号",
+    "name": "Horn",
     "tool_category": "musical_instrument",
     "english_name": "Horn",
     "price_gp": 3,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "pan_flute",
     "package_id": "phb_5e_zh_user",
-    "name": "排箫",
+    "name": "Pan flute",
     "tool_category": "musical_instrument",
     "english_name": "Pan flute",
     "price_gp": 12,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "shawm",
     "package_id": "phb_5e_zh_user",
-    "name": "唢呐",
+    "name": "Shawm",
     "tool_category": "musical_instrument",
     "english_name": "Shawm",
     "price_gp": 2,
     "weight": 1,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "viol",
     "package_id": "phb_5e_zh_user",
-    "name": "维奥尔琴",
+    "name": "Viol",
     "tool_category": "musical_instrument",
     "english_name": "Viol",
     "price_gp": 30,
     "weight": 1,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "常见乐器。"
+    "description": ""
   },
   {
     "tool_id": "disguise_kit",
     "package_id": "phb_5e_zh_user",
-    "name": "易容工具",
+    "name": "Disguise kit",
     "tool_category": "kit",
     "english_name": "Disguise kit",
     "price_gp": 25,
     "weight": 3,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于伪装外貌和制作易容效果。"
+    "description": ""
   },
   {
     "tool_id": "forgery_kit",
     "package_id": "phb_5e_zh_user",
-    "name": "文书伪造工具",
+    "name": "Forgery kit",
     "tool_category": "kit",
     "english_name": "Forgery kit",
     "price_gp": 15,
     "weight": 5,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于伪造文书、印章和辨识伪造痕迹。"
+    "description": ""
   },
   {
     "tool_id": "herbalism_kit",
     "package_id": "phb_5e_zh_user",
-    "name": "草药工具",
+    "name": "Herbalism kit",
     "tool_category": "kit",
     "english_name": "Herbalism kit",
     "price_gp": 5,
     "weight": 3,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于辨识草药、制作解毒剂和药草制品。"
+    "description": ""
   },
   {
     "tool_id": "navigator_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "领航工具",
+    "name": "Navigator's tools",
     "tool_category": "kit",
     "english_name": "Navigator's tools",
     "price_gp": 25,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于航海定位、绘制航线和导航。"
+    "description": ""
   },
   {
     "tool_id": "poisoner_kit",
     "package_id": "phb_5e_zh_user",
-    "name": "制毒工具",
+    "name": "Poisoner's kit",
     "tool_category": "kit",
     "english_name": "Poisoner's kit",
     "price_gp": 50,
     "weight": 2,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于处理、制作和识别毒药。"
+    "description": ""
   },
   {
     "tool_id": "thieves_tools",
     "package_id": "phb_5e_zh_user",
-    "name": "盗贼工具",
+    "name": "Thieves' tools",
     "tool_category": "kit",
     "english_name": "Thieves' tools",
     "price_gp": 25,
     "weight": 1,
     "source_book": "PHB",
     "source_page": "150",
-    "description": "用于开锁、解除陷阱和处理精密机关。"
+    "description": ""
   },
   {
     "tool_id": "vehicles_land",
     "package_id": "phb_5e_zh_user",
-    "name": "载具（陆运）",
+    "name": "Vehicles (land)",
     "tool_category": "vehicle",
     "english_name": "Vehicles (land)",
     "price_gp": 0,
     "weight": 0,
     "source_book": "PHB",
     "source_page": "155",
-    "description": "陆地载具熟练项。"
+    "description": ""
   },
   {
     "tool_id": "vehicles_water",
     "package_id": "phb_5e_zh_user",
-    "name": "载具（水运）",
+    "name": "Vehicles (water)",
     "tool_category": "vehicle",
     "english_name": "Vehicles (water)",
     "price_gp": 0,
     "weight": 0,
     "source_book": "PHB",
     "source_page": "157",
-    "description": "水上载具熟练项。"
+    "description": ""
   }
 ]

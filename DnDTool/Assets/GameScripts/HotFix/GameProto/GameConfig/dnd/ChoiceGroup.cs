@@ -29,6 +29,15 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
         OptionFilter = (string)_obj.GetValue("option_filter");
         SelectionMode = (string)_obj.GetValue("selection_mode");
         Description = (string)_obj.GetValue("description");
+        {if (_obj.TryGetValue("value_per_selection", out var _j)) { ValuePerSelection = (int)_j; } else { ValuePerSelection = null; } }
+        {if (_obj.TryGetValue("max_value_per_option", out var _j)) { MaxValuePerOption = (int)_j; } else { MaxValuePerOption = null; } }
+        {if (_obj.TryGetValue("target_value_cap", out var _j)) { TargetValueCap = (int)_j; } else { TargetValueCap = null; } }
+        {if (_obj.TryGetValue("target_value_floor", out var _j)) { TargetValueFloor = (int)_j; } else { TargetValueFloor = null; } }
+        SelectionValueMode = (string)_obj.GetValue("selection_value_mode");
+        ResultValueType = (string)_obj.GetValue("result_value_type");
+        ResultStorage = (string)_obj.GetValue("result_storage");
+        { var __json0 = _obj.GetValue("next_choice_group_ids"); NextChoiceGroupIds = new System.Collections.Generic.List<string>((__json0 as JArray).Count); foreach(JToken __e0 in __json0) { string __v0;  __v0 = (string)__e0;  NextChoiceGroupIds.Add(__v0); }   }
+        UiMode = (string)_obj.GetValue("ui_mode");
     }
 
     public static ChoiceGroup DeserializeChoiceGroup(JToken _buf)
@@ -72,6 +81,42 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
     /// 说明。
     /// </summary>
     public readonly string Description;
+    /// <summary>
+    /// 数值型选择：每次选择提供的数值；为空表示不作为数值选择。
+    /// </summary>
+    public readonly int? ValuePerSelection;
+    /// <summary>
+    /// 数值型选择：同一选项最多可累计的数值。
+    /// </summary>
+    public readonly int? MaxValuePerOption;
+    /// <summary>
+    /// 数值型选择：目标最终值上限。
+    /// </summary>
+    public readonly int? TargetValueCap;
+    /// <summary>
+    /// 数值型选择：目标最终值下限。
+    /// </summary>
+    public readonly int? TargetValueFloor;
+    /// <summary>
+    /// 选择值应用模式：Additive/Grant/Replace。
+    /// </summary>
+    public readonly string SelectionValueMode;
+    /// <summary>
+    /// 选择结果类型：AbilityScore/Feat/Feature/Skill/Tool/Language/Spell。
+    /// </summary>
+    public readonly string ResultValueType;
+    /// <summary>
+    /// 选择结果存储方式：ChoiceSelections/FeatIds/RuntimeOnly。
+    /// </summary>
+    public readonly string ResultStorage;
+    /// <summary>
+    /// 本选择确认后进入的二级选择组ID列表。
+    /// </summary>
+    public readonly System.Collections.Generic.List<string> NextChoiceGroupIds;
+    /// <summary>
+    /// UI交互模式：CardList/AbilityStepper/GeneratedList等。
+    /// </summary>
+    public readonly string UiMode;
 
 
     public const int __ID__ = -195751318;
@@ -93,6 +138,15 @@ public sealed partial class ChoiceGroup : Luban.BeanBase
         + "optionFilter:" + OptionFilter + ","
         + "selectionMode:" + SelectionMode + ","
         + "description:" + Description + ","
+        + "valuePerSelection:" + ValuePerSelection + ","
+        + "maxValuePerOption:" + MaxValuePerOption + ","
+        + "targetValueCap:" + TargetValueCap + ","
+        + "targetValueFloor:" + TargetValueFloor + ","
+        + "selectionValueMode:" + SelectionValueMode + ","
+        + "resultValueType:" + ResultValueType + ","
+        + "resultStorage:" + ResultStorage + ","
+        + "nextChoiceGroupIds:" + Luban.StringUtil.CollectionToString(NextChoiceGroupIds) + ","
+        + "uiMode:" + UiMode + ","
         + "}";
     }
 }

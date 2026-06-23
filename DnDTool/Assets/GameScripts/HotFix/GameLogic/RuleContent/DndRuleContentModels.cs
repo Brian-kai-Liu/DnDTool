@@ -56,6 +56,8 @@ namespace GameLogic
         public List<DndEnumListData> EnumLists { get; } = new List<DndEnumListData>();
 
         public List<DndAlignmentData> Alignments { get; } = new List<DndAlignmentData>();
+
+        public List<DndTextLocalizeData> TextLocalizations { get; } = new List<DndTextLocalizeData>();
     }
 
     internal sealed class DndRulePackageData
@@ -590,5 +592,16 @@ namespace GameLogic
         public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndTextLocalizeData
+    {
+        public string TextKey { get; set; } = string.Empty;
+
+        public string Language { get; set; } = string.Empty;
+
+        public string Text { get; set; } = string.Empty;
+
+        public string Context { get; set; } = string.Empty;
     }
 }

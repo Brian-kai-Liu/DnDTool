@@ -2,339 +2,339 @@
   {
     "class_id": "barbarian",
     "package_id": "phb_5e_zh_user",
-    "name": "野蛮人",
+    "name": "Barbarian",
     "hit_die": 12,
     "primary_ability_ids": [
-      "力量"
+      "Strength"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "力量",
-      "体质"
+      "Strength",
+      "Constitution"
     ],
     "armor_proficiencies": [
-      "轻甲",
-      "中甲",
-      "盾牌"
+      "LightArmor",
+      "MediumArmor",
+      "Shield"
     ],
     "weapon_proficiencies": [
-      "简易武器",
-      "军用武器"
+      "SimpleWeapon",
+      "MartialWeapon"
     ],
     "tool_proficiencies": [],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
-    "description": "高生命骰与狂暴核心的前线职业；具体特性效果按 PHB 条目结构化整理。"
+    "description": ""
   },
   {
     "class_id": "bard",
     "package_id": "phb_5e_zh_user",
-    "name": "吟游诗人",
+    "name": "Bard",
     "hit_die": 8,
     "primary_ability_ids": [
-      "魅力"
+      "Charisma"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "敏捷",
-      "魅力"
+      "Dexterity",
+      "Charisma"
     ],
     "armor_proficiencies": [
-      "轻甲"
+      "LightArmor"
     ],
     "weapon_proficiencies": [
-      "简易武器",
-      "手弩",
-      "长剑",
-      "刺剑",
-      "短剑"
+      "SimpleWeapon",
+      "HandCrossbow",
+      "Longsword",
+      "Rapier",
+      "Shortsword"
     ],
     "tool_proficiencies": [
       "choice_bard_musical_instrument"
     ],
-    "spellcasting_ability": "魅力",
+    "spellcasting_ability": "Charisma",
     "spell_slot_progression_id": "bard_spell_slots",
-    "description": "以魅力施法、激励和技能泛用性为核心的全能支援职业。"
+    "description": ""
   },
   {
     "class_id": "cleric",
     "package_id": "phb_5e_zh_user",
-    "name": "牧师",
+    "name": "Cleric",
     "hit_die": 8,
     "primary_ability_ids": [
-      "感知"
+      "Wisdom"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "感知",
-      "魅力"
+      "Wisdom",
+      "Charisma"
     ],
     "armor_proficiencies": [
-      "轻甲",
-      "中甲",
-      "盾牌"
+      "LightArmor",
+      "MediumArmor",
+      "Shield"
     ],
     "weapon_proficiencies": [
-      "简易武器"
+      "SimpleWeapon"
     ],
     "tool_proficiencies": [],
-    "spellcasting_ability": "感知",
+    "spellcasting_ability": "Wisdom",
     "spell_slot_progression_id": "cleric_spell_slots",
-    "description": "以感知施展神术，可通过领域获得额外能力和领域法术。"
+    "description": ""
   },
   {
     "class_id": "druid",
     "package_id": "phb_5e_zh_user",
-    "name": "德鲁伊",
+    "name": "Druid",
     "hit_die": 8,
     "primary_ability_ids": [
-      "感知"
+      "Wisdom"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "智力",
-      "感知"
+      "Intelligence",
+      "Wisdom"
     ],
     "armor_proficiencies": [
-      "轻甲",
-      "中甲",
-      "盾牌"
+      "LightArmor",
+      "MediumArmor",
+      "Shield"
     ],
     "weapon_proficiencies": [
-      "短棒",
-      "匕首",
-      "飞镖",
-      "标枪",
-      "硬头锤",
-      "长棍",
-      "弯刀",
-      "镰刀",
-      "投石索",
-      "矛"
+      "Club",
+      "Dagger",
+      "Dart",
+      "Javelin",
+      "Mace",
+      "Quarterstaff",
+      "Scimitar",
+      "Sickle",
+      "Sling",
+      "Spear"
     ],
     "tool_proficiencies": [
       "herbalism_kit"
     ],
-    "spellcasting_ability": "感知",
+    "spellcasting_ability": "Wisdom",
     "spell_slot_progression_id": "druid_spell_slots",
-    "description": "以感知施展自然神术，可通过荒野形态和结社能力变化定位。"
+    "description": ""
   },
   {
     "class_id": "fighter",
     "package_id": "phb_5e_zh_user",
-    "name": "战士",
+    "name": "Fighter",
     "hit_die": 10,
     "primary_ability_ids": [
-      "力量",
-      "敏捷"
+      "Strength",
+      "Dexterity"
     ],
     "primary_ability_mode": "AnyOne",
     "saving_throw_proficiencies": [
-      "力量",
-      "体质"
+      "Strength",
+      "Constitution"
     ],
     "armor_proficiencies": [
-      "轻甲",
-      "中甲",
-      "重甲",
-      "盾牌"
+      "LightArmor",
+      "MediumArmor",
+      "HeavyArmor",
+      "Shield"
     ],
     "weapon_proficiencies": [
-      "简易武器",
-      "军用武器"
+      "SimpleWeapon",
+      "MartialWeapon"
     ],
     "tool_proficiencies": [],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
-    "description": "泛用武装战斗职业，可通过战斗风格和武术范型定制定位。"
+    "description": ""
   },
   {
     "class_id": "monk",
     "package_id": "phb_5e_zh_user",
-    "name": "武僧",
+    "name": "Monk",
     "hit_die": 8,
     "primary_ability_ids": [
-      "敏捷",
-      "感知"
+      "Dexterity",
+      "Wisdom"
     ],
     "primary_ability_mode": "All",
     "saving_throw_proficiencies": [
-      "力量",
-      "敏捷"
+      "Strength",
+      "Dexterity"
     ],
     "armor_proficiencies": [],
     "weapon_proficiencies": [
-      "简易武器",
-      "短剑"
+      "SimpleWeapon",
+      "Shortsword"
     ],
     "tool_proficiencies": [
       "choice_monk_artisan_or_musical_tool"
     ],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
-    "description": "以敏捷、感知、气和徒手战斗为核心的机动职业。"
+    "description": ""
   },
   {
     "class_id": "paladin",
     "package_id": "phb_5e_zh_user",
-    "name": "圣武士",
+    "name": "Paladin",
     "hit_die": 10,
     "primary_ability_ids": [
-      "力量",
-      "魅力"
+      "Strength",
+      "Charisma"
     ],
     "primary_ability_mode": "All",
     "saving_throw_proficiencies": [
-      "感知",
-      "魅力"
+      "Wisdom",
+      "Charisma"
     ],
     "armor_proficiencies": [
-      "轻甲",
-      "中甲",
-      "重甲",
-      "盾牌"
+      "LightArmor",
+      "MediumArmor",
+      "HeavyArmor",
+      "Shield"
     ],
     "weapon_proficiencies": [
-      "简易武器",
-      "军用武器"
+      "SimpleWeapon",
+      "MartialWeapon"
     ],
     "tool_proficiencies": [],
-    "spellcasting_ability": "魅力",
+    "spellcasting_ability": "Charisma",
     "spell_slot_progression_id": "paladin_spell_slots",
-    "description": "以魅力施展誓言神术，并结合重甲、武器与圣疗能力。"
+    "description": ""
   },
   {
     "class_id": "ranger",
     "package_id": "phb_5e_zh_user",
-    "name": "游侠",
+    "name": "Ranger",
     "hit_die": 10,
     "primary_ability_ids": [
-      "敏捷",
-      "感知"
+      "Dexterity",
+      "Wisdom"
     ],
     "primary_ability_mode": "All",
     "saving_throw_proficiencies": [
-      "力量",
-      "敏捷"
+      "Strength",
+      "Dexterity"
     ],
     "armor_proficiencies": [
-      "轻甲",
-      "中甲",
-      "盾牌"
+      "LightArmor",
+      "MediumArmor",
+      "Shield"
     ],
     "weapon_proficiencies": [
-      "简易武器",
-      "军用武器"
+      "SimpleWeapon",
+      "MartialWeapon"
     ],
     "tool_proficiencies": [],
-    "spellcasting_ability": "感知",
+    "spellcasting_ability": "Wisdom",
     "spell_slot_progression_id": "ranger_spell_slots",
-    "description": "以探索、追踪、武器战斗和感知施法结合的野外职业。"
+    "description": ""
   },
   {
     "class_id": "rogue",
     "package_id": "phb_5e_zh_user",
-    "name": "游荡者",
+    "name": "Rogue",
     "hit_die": 8,
     "primary_ability_ids": [
-      "敏捷"
+      "Dexterity"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "敏捷",
-      "智力"
+      "Dexterity",
+      "Intelligence"
     ],
     "armor_proficiencies": [
-      "轻甲"
+      "LightArmor"
     ],
     "weapon_proficiencies": [
-      "简易武器",
-      "手弩",
-      "长剑",
-      "刺剑",
-      "短剑"
+      "SimpleWeapon",
+      "HandCrossbow",
+      "Longsword",
+      "Rapier",
+      "Shortsword"
     ],
     "tool_proficiencies": [
       "thieves_tools"
     ],
     "spellcasting_ability": "",
     "spell_slot_progression_id": "",
-    "description": "高技能、偷袭、机动与隐秘行动职业。"
+    "description": ""
   },
   {
     "class_id": "sorcerer",
     "package_id": "phb_5e_zh_user",
-    "name": "术士",
+    "name": "Sorcerer",
     "hit_die": 6,
     "primary_ability_ids": [
-      "魅力"
+      "Charisma"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "体质",
-      "魅力"
+      "Constitution",
+      "Charisma"
     ],
     "armor_proficiencies": [],
     "weapon_proficiencies": [
-      "匕首",
-      "飞镖",
-      "投石索",
-      "长棍",
-      "轻弩"
+      "Dagger",
+      "Dart",
+      "Sling",
+      "Quarterstaff",
+      "LightCrossbow"
     ],
     "tool_proficiencies": [],
-    "spellcasting_ability": "魅力",
+    "spellcasting_ability": "Charisma",
     "spell_slot_progression_id": "sorcerer_spell_slots",
-    "description": "以内在魔力和超魔法调整施法的魅力施法者。"
+    "description": ""
   },
   {
     "class_id": "warlock",
     "package_id": "phb_5e_zh_user",
-    "name": "邪术师",
+    "name": "Warlock",
     "hit_die": 8,
     "primary_ability_ids": [
-      "魅力"
+      "Charisma"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "感知",
-      "魅力"
+      "Wisdom",
+      "Charisma"
     ],
     "armor_proficiencies": [
-      "轻甲"
+      "LightArmor"
     ],
     "weapon_proficiencies": [
-      "简易武器"
+      "SimpleWeapon"
     ],
     "tool_proficiencies": [],
-    "spellcasting_ability": "魅力",
+    "spellcasting_ability": "Charisma",
     "spell_slot_progression_id": "warlock_spell_slots",
-    "description": "以契约魔法、魔能祈唤和宗主恩赐为核心的魅力施法者。"
+    "description": ""
   },
   {
     "class_id": "wizard",
     "package_id": "phb_5e_zh_user",
-    "name": "法师",
+    "name": "Wizard",
     "hit_die": 6,
     "primary_ability_ids": [
-      "智力"
+      "Intelligence"
     ],
     "primary_ability_mode": "Fixed",
     "saving_throw_proficiencies": [
-      "智力",
-      "感知"
+      "Intelligence",
+      "Wisdom"
     ],
     "armor_proficiencies": [],
     "weapon_proficiencies": [
-      "匕首",
-      "飞镖",
-      "投石索",
-      "长棍",
-      "轻弩"
+      "Dagger",
+      "Dart",
+      "Sling",
+      "Quarterstaff",
+      "LightCrossbow"
     ],
     "tool_proficiencies": [],
-    "spellcasting_ability": "智力",
+    "spellcasting_ability": "Intelligence",
     "spell_slot_progression_id": "wizard_spell_slots",
-    "description": "以智力、法术书和奥术传统为核心的准备施法者。"
+    "description": ""
   }
 ]

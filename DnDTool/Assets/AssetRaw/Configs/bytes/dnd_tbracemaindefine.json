@@ -2,8 +2,8 @@
   {
     "main_race_id": "dwarf",
     "package_id": "phb_5e_zh_user",
-    "name": "矮人",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 25,
     "language_ids": [
       "common",
@@ -23,8 +23,8 @@
   {
     "main_race_id": "elf",
     "package_id": "phb_5e_zh_user",
-    "name": "精灵",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 30,
     "language_ids": [
       "common",
@@ -43,8 +43,8 @@
   {
     "main_race_id": "halfling",
     "package_id": "phb_5e_zh_user",
-    "name": "半身人",
-    "size": "小型",
+    "name": "Phb 5e Zh User",
+    "size": "Small",
     "speed": 25,
     "language_ids": [
       "common",
@@ -62,8 +62,8 @@
   {
     "main_race_id": "human",
     "package_id": "phb_5e_zh_user",
-    "name": "人类",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 30,
     "language_ids": [
       "common"
@@ -80,8 +80,8 @@
   {
     "main_race_id": "dragonborn",
     "package_id": "phb_5e_zh_user",
-    "name": "龙裔",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 30,
     "language_ids": [
       "common",
@@ -100,8 +100,8 @@
   {
     "main_race_id": "gnome",
     "package_id": "phb_5e_zh_user",
-    "name": "侏儒",
-    "size": "小型",
+    "name": "Phb 5e Zh User",
+    "size": "Small",
     "speed": 25,
     "language_ids": [
       "common",
@@ -118,8 +118,8 @@
   {
     "main_race_id": "half_elf",
     "package_id": "phb_5e_zh_user",
-    "name": "半精灵",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 30,
     "language_ids": [
       "common",
@@ -141,8 +141,8 @@
   {
     "main_race_id": "half_orc",
     "package_id": "phb_5e_zh_user",
-    "name": "半兽人",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 30,
     "language_ids": [
       "common",
@@ -162,8 +162,8 @@
   {
     "main_race_id": "tiefling",
     "package_id": "phb_5e_zh_user",
-    "name": "提夫林",
-    "size": "中型",
+    "name": "Phb 5e Zh User",
+    "size": "Medium",
     "speed": 30,
     "language_ids": [
       "common",

@@ -15,7 +15,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "barbarian",
@@ -54,7 +54,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 7,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -115,7 +115,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 7,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -175,7 +175,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 7,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -233,7 +233,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 7,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -278,7 +278,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 7,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -323,7 +323,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "bard",
@@ -369,7 +369,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -441,7 +441,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -511,7 +511,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -579,7 +579,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -631,7 +631,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -680,7 +680,7 @@
     "prepared_spell_formula": "level+WisMod",
     "asi_available": false,
     "subclass_feature": true,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "cleric",
@@ -718,7 +718,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -780,7 +780,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -842,7 +842,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -902,7 +902,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -948,7 +948,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -991,7 +991,7 @@
     "prepared_spell_formula": "level+WisMod",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "druid",
@@ -1030,7 +1030,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1090,7 +1090,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1150,7 +1150,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1210,7 +1210,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1259,7 +1259,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1303,7 +1303,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "fighter",
@@ -1341,7 +1341,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1373,7 +1373,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1403,7 +1403,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1463,7 +1463,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1493,7 +1493,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1523,7 +1523,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1569,7 +1569,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1611,7 +1611,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "monk",
@@ -1651,7 +1651,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1715,7 +1715,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1773,7 +1773,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1835,7 +1835,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1880,7 +1880,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -1923,7 +1923,7 @@
     "prepared_spell_formula": "floor(level/2)+ChaMod",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "paladin",
@@ -1966,7 +1966,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2030,7 +2030,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2094,7 +2094,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2156,7 +2156,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2202,7 +2202,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2245,7 +2245,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "ranger",
@@ -2289,7 +2289,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2356,7 +2356,7 @@
     "fixed_hp_gain": 6,
     "feature_ids": [
       "feature_ranger_level_08_lands_stride",
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2422,7 +2422,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2488,7 +2488,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2539,7 +2539,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 6,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2586,7 +2586,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "rogue",
@@ -2624,7 +2624,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2684,7 +2684,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2714,7 +2714,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2746,7 +2746,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2806,7 +2806,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2851,7 +2851,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -2896,7 +2896,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": true,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "sorcerer",
@@ -2940,7 +2940,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3008,7 +3008,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3076,7 +3076,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3144,7 +3144,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3196,7 +3196,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3247,7 +3247,7 @@
     "prepared_spell_formula": "",
     "asi_available": false,
     "subclass_feature": true,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "warlock",
@@ -3291,7 +3291,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3359,7 +3359,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3429,7 +3429,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3501,7 +3501,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3555,7 +3555,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 5,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3604,7 +3604,7 @@
     "prepared_spell_formula": "level+IntMod",
     "asi_available": false,
     "subclass_feature": false,
-    "note": "PHB 职业成长结构化条目；详细特性效果可继续拆分。"
+    "note": ""
   },
   {
     "class_id": "wizard",
@@ -3642,7 +3642,7 @@
     "proficiency_bonus": 2,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3702,7 +3702,7 @@
     "proficiency_bonus": 3,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3762,7 +3762,7 @@
     "proficiency_bonus": 4,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3822,7 +3822,7 @@
     "proficiency_bonus": 5,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"
@@ -3870,7 +3870,7 @@
     "proficiency_bonus": 6,
     "fixed_hp_gain": 4,
     "feature_ids": [
-      "feature_asi"
+      "feature_class_ability_score_improvement_or_feat"
     ],
     "choice_group_ids": [
       "choice_asi_or_feat"

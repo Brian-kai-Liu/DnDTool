@@ -49,6 +49,9 @@ namespace GameLogic
                 LoadRows(tables, "TbDndLanguageDefine", library.Languages, CreateDndLanguageDefine);
                 LoadRows(tables, "TbEnumList", library.EnumLists, CreateEnumList);
                 LoadRows(tables, "TbAlignment", library.Alignments, CreateAlignment);
+                LoadRows(tables, "TbTextLocalize", library.TextLocalizations, CreateTextLocalize);
+
+                ApplyTextLocalizations(library, "zh_CN");
 
                 if (library.RaceMains.Count > 0 || library.RaceSubs.Count > 0)
                 {
@@ -887,6 +890,204 @@ namespace GameLogic
                 Name = GetString(row, "Name", "name"),
                 Description = GetString(row, "Description", "description")
             };
+        }
+
+        private static DndTextLocalizeData CreateTextLocalize(object row)
+        {
+            return new DndTextLocalizeData
+            {
+                TextKey = GetString(row, "TextKey", "text_key", "textKey"),
+                Language = GetString(row, "Language", "language"),
+                Text = GetString(row, "Text", "text"),
+                Context = GetString(row, "Context", "context")
+            };
+        }
+
+        private static void ApplyTextLocalizations(DndRuleContentLibraryData library, string language)
+        {
+            Dictionary<string, string> textByKey = BuildTextLocalizationMap(library, language);
+            if (textByKey.Count == 0)
+            {
+                return;
+            }
+
+            for (int index = 0; index < library.RulePackages.Count; index++)
+            {
+                DndRulePackageData item = library.RulePackages[index];
+                item.PackageName = GetText(textByKey, "TbRulePackage", item.PackageId, "package_name", item.PackageName);
+                item.Description = GetText(textByKey, "TbRulePackage", item.PackageId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Classes.Count; index++)
+            {
+                DndClassDefineData item = library.Classes[index];
+                item.Name = GetText(textByKey, "TbClassDefine", item.ClassId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbClassDefine", item.ClassId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.LevelProgressions.Count; index++)
+            {
+                DndLevelProgressionData item = library.LevelProgressions[index];
+                string rowKey = BuildProgressionKey(item.ClassId, item.Level);
+                item.Note = GetText(textByKey, "TbClassLevelProgression", rowKey, "note", item.Note);
+            }
+
+            for (int index = 0; index < library.SubclassLevelProgressions.Count; index++)
+            {
+                DndSubclassLevelProgressionData item = library.SubclassLevelProgressions[index];
+                string rowKey = BuildProgressionKey(item.SubclassId, item.Level);
+                item.Note = GetText(textByKey, "TbSubclassLevelProgression", rowKey, "note", item.Note);
+            }
+
+            for (int index = 0; index < library.Features.Count; index++)
+            {
+                DndFeatureDefineData item = library.Features[index];
+                item.Name = GetText(textByKey, "TbFeatureDefine", item.FeatureId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbFeatureDefine", item.FeatureId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.FeatureEffects.Count; index++)
+            {
+                DndFeatureEffectData item = library.FeatureEffects[index];
+                item.ManualNote = GetText(textByKey, "TbFeatureEffect", item.EffectId, "manual_note", item.ManualNote);
+            }
+
+            for (int index = 0; index < library.FeatureEffectConditions.Count; index++)
+            {
+                DndFeatureEffectConditionData item = library.FeatureEffectConditions[index];
+                item.Description = GetText(textByKey, "TbFeatureEffectCondition", item.ConditionId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.ChoiceGroups.Count; index++)
+            {
+                DndChoiceGroupData item = library.ChoiceGroups[index];
+                item.Name = GetText(textByKey, "TbChoiceGroup", item.ChoiceGroupId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbChoiceGroup", item.ChoiceGroupId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.ChoiceOptions.Count; index++)
+            {
+                DndChoiceOptionData item = library.ChoiceOptions[index];
+                string rowKey = $"{item.ChoiceGroupId}.{item.OptionId}";
+                item.Name = GetText(textByKey, "TbChoiceOption", rowKey, "name", item.Name);
+                item.Description = GetText(textByKey, "TbChoiceOption", rowKey, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Skills.Count; index++)
+            {
+                DndSkillDefineData item = library.Skills[index];
+                item.Name = GetText(textByKey, "TbSkillDefine", item.SkillId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbSkillDefine", item.SkillId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.RaceMains.Count; index++)
+            {
+                DndRaceMainDefineData item = library.RaceMains[index];
+                item.Name = GetText(textByKey, "TbRaceMainDefine", item.MainRaceId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbRaceMainDefine", item.MainRaceId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.RaceSubs.Count; index++)
+            {
+                DndRaceSubDefineData item = library.RaceSubs[index];
+                item.Name = GetText(textByKey, "TbRaceSubDefine", item.SubRaceId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbRaceSubDefine", item.SubRaceId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Backgrounds.Count; index++)
+            {
+                DndBackgroundDefineData item = library.Backgrounds[index];
+                item.Name = GetText(textByKey, "TbBackgroundDefine", item.BackgroundId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbBackgroundDefine", item.BackgroundId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Feats.Count; index++)
+            {
+                DndFeatDefineData item = library.Feats[index];
+                item.Name = GetText(textByKey, "TbFeatDefine", item.FeatId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbFeatDefine", item.FeatId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Spells.Count; index++)
+            {
+                DndSpellDefineData item = library.Spells[index];
+                item.Name = GetText(textByKey, "TbSpellDefine", item.SpellId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbSpellDefine", item.SpellId, "description", item.Description);
+                item.HigherLevelDescription = GetText(textByKey, "TbSpellDefine", item.SpellId, "higher_level_description", item.HigherLevelDescription);
+            }
+
+            for (int index = 0; index < library.Items.Count; index++)
+            {
+                DndItemDefineData item = library.Items[index];
+                item.Name = GetText(textByKey, "TbDndItemDefine", item.ItemId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbDndItemDefine", item.ItemId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Tools.Count; index++)
+            {
+                DndToolDefineData item = library.Tools[index];
+                item.Name = GetText(textByKey, "TbDndToolDefine", item.ToolId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbDndToolDefine", item.ToolId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Languages.Count; index++)
+            {
+                DndLanguageDefineData item = library.Languages[index];
+                item.Name = GetText(textByKey, "TbDndLanguageDefine", item.LanguageId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbDndLanguageDefine", item.LanguageId, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.EnumLists.Count; index++)
+            {
+                DndEnumListData item = library.EnumLists[index];
+                string rowKey = $"{item.EnumType}.{item.Value}";
+                item.Description = GetText(textByKey, "TbEnumList", rowKey, "description", item.Description);
+            }
+
+            for (int index = 0; index < library.Alignments.Count; index++)
+            {
+                DndAlignmentData item = library.Alignments[index];
+                item.Name = GetText(textByKey, "TbAlignment", item.AlignmentId, "name", item.Name);
+                item.Description = GetText(textByKey, "TbAlignment", item.AlignmentId, "description", item.Description);
+            }
+        }
+
+        private static Dictionary<string, string> BuildTextLocalizationMap(DndRuleContentLibraryData library, string language)
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            for (int index = 0; index < library.TextLocalizations.Count; index++)
+            {
+                DndTextLocalizeData row = library.TextLocalizations[index];
+                if (row == null
+                    || string.IsNullOrWhiteSpace(row.TextKey)
+                    || string.IsNullOrWhiteSpace(row.Text)
+                    || (!string.IsNullOrWhiteSpace(language) && !string.Equals(row.Language, language, StringComparison.OrdinalIgnoreCase)))
+                {
+                    continue;
+                }
+
+                result[row.TextKey.Trim()] = row.Text.Trim();
+            }
+
+            return result;
+        }
+
+        private static string GetText(Dictionary<string, string> textByKey, string tableName, string rowKey, string fieldName, string fallback)
+        {
+            if (string.IsNullOrWhiteSpace(tableName) || string.IsNullOrWhiteSpace(rowKey) || string.IsNullOrWhiteSpace(fieldName))
+            {
+                return fallback;
+            }
+
+            string textKey = $"{tableName}.{rowKey.Trim()}.{fieldName.Trim()}";
+            return textByKey.TryGetValue(textKey, out string text) && !string.IsNullOrWhiteSpace(text)
+                ? text
+                : fallback;
+        }
+
+        private static string BuildProgressionKey(string id, int level)
+        {
+            return string.IsNullOrWhiteSpace(id) ? level.ToString() : $"{id.Trim()}.{level}";
         }
     }
 }

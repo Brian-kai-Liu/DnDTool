@@ -2,7 +2,7 @@
   {
     "feat_id": "alert",
     "package_id": "phb_5e_zh_user",
-    "name": "警觉",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_alert"
@@ -11,12 +11,12 @@
       "effect_feat_alert"
     ],
     "choice_group_ids": [],
-    "description": "先攻加值、免疫突袭相关优势，隐藏攻击者不因未被看见获得优势。"
+    "description": ""
   },
   {
     "feat_id": "athlete",
     "package_id": "phb_5e_zh_user",
-    "name": "运动员",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_athlete"
@@ -25,12 +25,12 @@
       "effect_feat_ability_choice"
     ],
     "choice_group_ids": [],
-    "description": "力量或敏捷提高1，并改善起立、攀爬与助跑跳跃。"
+    "description": ""
   },
   {
     "feat_id": "actor",
     "package_id": "phb_5e_zh_user",
-    "name": "演员",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_actor"
@@ -39,12 +39,12 @@
       "effect_feat_ability_cha"
     ],
     "choice_group_ids": [],
-    "description": "魅力提高1，并强化伪装他人与声音模仿相关检定。"
+    "description": ""
   },
   {
     "feat_id": "charger",
     "package_id": "phb_5e_zh_user",
-    "name": "冲锋手",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_charger"
@@ -53,12 +53,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "疾走后可用附赠动作攻击或推撞，并获得额外效果。"
+    "description": ""
   },
   {
     "feat_id": "crossbow_expert",
     "package_id": "phb_5e_zh_user",
-    "name": "强弩专家",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_crossbow_expert"
@@ -67,12 +67,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "改善弩装填、近距离远程攻击与手弩附赠攻击。"
+    "description": ""
   },
   {
     "feat_id": "defensive_duelist",
     "package_id": "phb_5e_zh_user",
-    "name": "防御式决斗",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_dexterity_13"
     ],
@@ -83,12 +83,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "持灵巧武器时可用反应将熟练加值加入AC对抗一次近战攻击。"
+    "description": ""
   },
   {
     "feat_id": "dual_wielder",
     "package_id": "phb_5e_zh_user",
-    "name": "双持客",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_dual_wielder"
@@ -97,12 +97,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "双持时AC提高，并放宽双武器限制和拔取数量。"
+    "description": ""
   },
   {
     "feat_id": "dungeon_delver",
     "package_id": "phb_5e_zh_user",
-    "name": "地城探索者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_dungeon_delver"
@@ -111,12 +111,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "改善发现陷阱/密门、抵抗陷阱和探索节奏。"
+    "description": ""
   },
   {
     "feat_id": "durable",
     "package_id": "phb_5e_zh_user",
-    "name": "坚韧",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_durable"
@@ -125,12 +125,12 @@
       "effect_feat_ability_con"
     ],
     "choice_group_ids": [],
-    "description": "体质提高1，并提高花费生命骰恢复的最低值。"
+    "description": ""
   },
   {
     "feat_id": "elemental_adept",
     "package_id": "phb_5e_zh_user",
-    "name": "元素专家",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_spellcasting"
     ],
@@ -141,12 +141,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "选择一种元素伤害，相关法术忽略抗性并提高最低伤害表现。"
+    "description": ""
   },
   {
     "feat_id": "grappler",
     "package_id": "phb_5e_zh_user",
-    "name": "擒抱者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_strength_13"
     ],
@@ -157,12 +157,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "改善擒抱目标时的攻击优势，并提供压制选项。"
+    "description": ""
   },
   {
     "feat_id": "great_weapon_master",
     "package_id": "phb_5e_zh_user",
-    "name": "巨武器大师",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_great_weapon_master"
@@ -171,12 +171,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "重击/击倒后附赠攻击，并可牺牲命中换取重武器伤害。"
+    "description": ""
   },
   {
     "feat_id": "healer",
     "package_id": "phb_5e_zh_user",
-    "name": "医者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_healer"
@@ -185,12 +185,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "使用医疗包稳定或恢复生物生命。"
+    "description": ""
   },
   {
     "feat_id": "heavily_armored",
     "package_id": "phb_5e_zh_user",
-    "name": "重甲训练",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_mediumarmorproficiency"
     ],
@@ -201,12 +201,12 @@
       "effect_feat_armor_heavy"
     ],
     "choice_group_ids": [],
-    "description": "力量提高1，并获得重甲熟练。"
+    "description": ""
   },
   {
     "feat_id": "heavy_armor_master",
     "package_id": "phb_5e_zh_user",
-    "name": "重甲大师",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_heavyarmorproficiency"
     ],
@@ -217,12 +217,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "力量提高1，穿重甲时降低非魔法武器伤害。"
+    "description": ""
   },
   {
     "feat_id": "inspiring_leader",
     "package_id": "phb_5e_zh_user",
-    "name": "激励领袖",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_charisma_13"
     ],
@@ -233,12 +233,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "短演说后为队友提供临时生命值。"
+    "description": ""
   },
   {
     "feat_id": "keen_mind",
     "package_id": "phb_5e_zh_user",
-    "name": "敏锐头脑",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_keen_mind"
@@ -247,12 +247,12 @@
       "effect_feat_ability_int"
     ],
     "choice_group_ids": [],
-    "description": "智力提高1，并强化方向、时间和近期记忆。"
+    "description": ""
   },
   {
     "feat_id": "lightly_armored",
     "package_id": "phb_5e_zh_user",
-    "name": "轻甲训练",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_lightly_armored"
@@ -261,12 +261,12 @@
       "effect_feat_armor_light"
     ],
     "choice_group_ids": [],
-    "description": "力量或敏捷提高1，并获得轻甲熟练。"
+    "description": ""
   },
   {
     "feat_id": "linguist",
     "package_id": "phb_5e_zh_user",
-    "name": "语言学家",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_linguist"
@@ -275,12 +275,12 @@
       "effect_feat_language"
     ],
     "choice_group_ids": [],
-    "description": "智力提高1，获得语言并能创建密码。"
+    "description": ""
   },
   {
     "feat_id": "lucky",
     "package_id": "phb_5e_zh_user",
-    "name": "幸运",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_lucky"
@@ -289,12 +289,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "获得幸运点，用于重掷或干扰攻击检定。"
+    "description": ""
   },
   {
     "feat_id": "mage_slayer",
     "package_id": "phb_5e_zh_user",
-    "name": "法师杀手",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_mage_slayer"
@@ -303,12 +303,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "强化近距离对抗施法者的反应攻击和豁免压制。"
+    "description": ""
   },
   {
     "feat_id": "magic_initiate",
     "package_id": "phb_5e_zh_user",
-    "name": "魔法学徒",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_magic_initiate"
@@ -317,12 +317,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "选择一个施法职业，获得戏法和一个1环法术。"
+    "description": ""
   },
   {
     "feat_id": "martial_adept",
     "package_id": "phb_5e_zh_user",
-    "name": "武技专家",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_martial_adept"
@@ -331,12 +331,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "获得战技和优势骰。"
+    "description": ""
   },
   {
     "feat_id": "medium_armor_master",
     "package_id": "phb_5e_zh_user",
-    "name": "中甲大师",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_mediumarmorproficiency"
     ],
@@ -347,12 +347,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "穿中甲时减少隐匿劣势并提高敏捷加值上限。"
+    "description": ""
   },
   {
     "feat_id": "mobile",
     "package_id": "phb_5e_zh_user",
-    "name": "机动",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_mobile"
@@ -361,12 +361,12 @@
       "effect_feat_speed"
     ],
     "choice_group_ids": [],
-    "description": "速度提高，疾走穿越困难地形更好，攻击后避免借机攻击。"
+    "description": ""
   },
   {
     "feat_id": "moderately_armored",
     "package_id": "phb_5e_zh_user",
-    "name": "中甲训练",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_lightarmorproficiency"
     ],
@@ -377,12 +377,12 @@
       "effect_feat_armor_medium"
     ],
     "choice_group_ids": [],
-    "description": "力量或敏捷提高1，并获得中甲和盾牌熟练。"
+    "description": ""
   },
   {
     "feat_id": "mounted_combatant",
     "package_id": "phb_5e_zh_user",
-    "name": "骑乘战斗",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_mounted_combatant"
@@ -391,12 +391,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "强化骑乘攻击、保护坐骑和坐骑豁免收益。"
+    "description": ""
   },
   {
     "feat_id": "observant",
     "package_id": "phb_5e_zh_user",
-    "name": "观察入微",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_observant"
@@ -405,12 +405,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "智力或感知提高1，并提高被动察觉/调查与读唇能力。"
+    "description": ""
   },
   {
     "feat_id": "polearm_master",
     "package_id": "phb_5e_zh_user",
-    "name": "长柄武器大师",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_polearm_master"
@@ -419,12 +419,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "使用指定长柄武器获得附赠攻击和接近触发借机攻击。"
+    "description": ""
   },
   {
     "feat_id": "resilient",
     "package_id": "phb_5e_zh_user",
-    "name": "坚毅",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_resilient"
@@ -433,12 +433,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "选择一项属性提高1，并获得对应豁免熟练。"
+    "description": ""
   },
   {
     "feat_id": "ritual_caster",
     "package_id": "phb_5e_zh_user",
-    "name": "仪式施法者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_intelligenceorwisdom_13"
     ],
@@ -449,12 +449,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "获得仪式书并可学习所选职业的仪式法术。"
+    "description": ""
   },
   {
     "feat_id": "savage_attacker",
     "package_id": "phb_5e_zh_user",
-    "name": "凶蛮攻击者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_savage_attacker"
@@ -463,12 +463,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "每回合一次重掷近战武器伤害骰并取较好结果。"
+    "description": ""
   },
   {
     "feat_id": "sentinel",
     "package_id": "phb_5e_zh_user",
-    "name": "哨兵",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_sentinel"
@@ -477,12 +477,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "强化借机攻击、阻止移动并惩罚攻击队友的敌人。"
+    "description": ""
   },
   {
     "feat_id": "sharpshooter",
     "package_id": "phb_5e_zh_user",
-    "name": "神射手",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_sharpshooter"
@@ -491,12 +491,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "远程攻击忽略部分掩护和远距劣势，可牺牲命中换伤害。"
+    "description": ""
   },
   {
     "feat_id": "shield_master",
     "package_id": "phb_5e_zh_user",
-    "name": "盾牌大师",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_shield_master"
@@ -505,24 +505,24 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "盾牌推撞、敏捷豁免加值和区域效应减伤相关收益。"
+    "description": ""
   },
   {
     "feat_id": "skilled",
     "package_id": "phb_5e_zh_user",
-    "name": "技能专家",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_skilled"
     ],
     "effect_ids": [],
     "choice_group_ids": [],
-    "description": "获得任意三个技能或工具熟练。"
+    "description": ""
   },
   {
     "feat_id": "skulker",
     "package_id": "phb_5e_zh_user",
-    "name": "潜伏者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_dexterity_13"
     ],
@@ -533,12 +533,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "改善隐匿、昏暗观察和远程未命中暴露。"
+    "description": ""
   },
   {
     "feat_id": "spell_sniper",
     "package_id": "phb_5e_zh_user",
-    "name": "法术狙击",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_spellcasting"
     ],
@@ -549,12 +549,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "提高攻击法术距离、忽略部分掩护并获得一个攻击戏法。"
+    "description": ""
   },
   {
     "feat_id": "tavern_brawler",
     "package_id": "phb_5e_zh_user",
-    "name": "酒馆斗殴者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_tavern_brawler"
@@ -563,12 +563,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "力量或体质提高1，改善临时武器、徒手伤害和擒抱附赠动作。"
+    "description": ""
   },
   {
     "feat_id": "tough",
     "package_id": "phb_5e_zh_user",
-    "name": "健壮",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_tough"
@@ -577,12 +577,12 @@
       "effect_feat_hp"
     ],
     "choice_group_ids": [],
-    "description": "生命值上限随等级提高。"
+    "description": ""
   },
   {
     "feat_id": "war_caster",
     "package_id": "phb_5e_zh_user",
-    "name": "战地施法者",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [
       "prereq_spellcasting"
     ],
@@ -593,12 +593,12 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "强化专注豁免、持物施法和借机施法。"
+    "description": ""
   },
   {
     "feat_id": "weapon_master",
     "package_id": "phb_5e_zh_user",
-    "name": "武器大师",
+    "name": "Phb 5e Zh User",
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_weapon_master"
@@ -607,6 +607,6 @@
       "effect_manual_resolve"
     ],
     "choice_group_ids": [],
-    "description": "力量或敏捷提高1，并获得四种武器熟练。"
+    "description": ""
   }
 ]

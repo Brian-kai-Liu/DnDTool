@@ -21,6 +21,7 @@ namespace GameLogic
         private readonly Dictionary<string, DndToolDefineData> m_toolById = new Dictionary<string, DndToolDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndLanguageDefineData> m_languageById = new Dictionary<string, DndLanguageDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndAlignmentData> m_alignmentById = new Dictionary<string, DndAlignmentData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndTextLocalizeData> m_textLocalizeByKey = new Dictionary<string, DndTextLocalizeData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndRaceMainDefineData> m_raceMainById = new Dictionary<string, DndRaceMainDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndRaceSubDefineData> m_raceSubById = new Dictionary<string, DndRaceSubDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndLevelProgressionData>> m_classProgressionsByClassId = new Dictionary<string, List<DndLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
@@ -85,6 +86,8 @@ namespace GameLogic
         public IReadOnlyList<DndToolDefineData> Tools => GetLibrary().Tools;
 
         public IReadOnlyList<DndLanguageDefineData> Languages => GetLibrary().Languages;
+
+        public IReadOnlyList<DndTextLocalizeData> TextLocalizations => GetLibrary().TextLocalizations;
 
         public bool HasLoadedContent()
         {
@@ -174,6 +177,19 @@ namespace GameLogic
         {
             GetLibrary();
             return m_languageById.TryGetValue(languageId ?? string.Empty, out language);
+        }
+
+        public bool TryGetText(string textKey, out string text)
+        {
+            GetLibrary();
+            text = string.Empty;
+            if (!m_textLocalizeByKey.TryGetValue(textKey ?? string.Empty, out DndTextLocalizeData row) || row == null)
+            {
+                return false;
+            }
+
+            text = row.Text ?? string.Empty;
+            return !string.IsNullOrWhiteSpace(text);
         }
 
         public bool TryGetChoiceGroup(string choiceGroupId, out DndChoiceGroupData choiceGroup)
@@ -348,6 +364,7 @@ namespace GameLogic
             m_toolById.Clear();
             m_languageById.Clear();
             m_alignmentById.Clear();
+            m_textLocalizeByKey.Clear();
             m_raceMainById.Clear();
             m_raceSubById.Clear();
             m_classProgressionsByClassId.Clear();
@@ -576,6 +593,15 @@ namespace GameLogic
                     int levelComparison = left.MinClassLevel.CompareTo(right.MinClassLevel);
                     return levelComparison != 0 ? levelComparison : string.Compare(left.SpellId, right.SpellId, StringComparison.OrdinalIgnoreCase);
                 });
+            }
+
+            for (int index = 0; index < m_library.TextLocalizations.Count; index++)
+            {
+                DndTextLocalizeData row = m_library.TextLocalizations[index];
+                if (!string.IsNullOrWhiteSpace(row.TextKey))
+                {
+                    m_textLocalizeByKey[row.TextKey] = row;
+                }
             }
         }
 

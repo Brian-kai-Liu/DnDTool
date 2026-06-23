@@ -2,7 +2,7 @@
   {
     "background_id": "acolyte",
     "package_id": "phb_5e_zh_user",
-    "name": "侍僧",
+    "name": "Acolyte",
     "skill_proficiencies": [
       "insight",
       "religion"
@@ -21,7 +21,7 @@
   {
     "background_id": "charlatan",
     "package_id": "phb_5e_zh_user",
-    "name": "骗子",
+    "name": "Charlatan",
     "skill_proficiencies": [
       "deception",
       "sleight_of_hand"
@@ -40,7 +40,7 @@
   {
     "background_id": "criminal",
     "package_id": "phb_5e_zh_user",
-    "name": "罪犯",
+    "name": "Criminal",
     "skill_proficiencies": [
       "deception",
       "stealth"
@@ -59,7 +59,7 @@
   {
     "background_id": "entertainer",
     "package_id": "phb_5e_zh_user",
-    "name": "艺人",
+    "name": "Entertainer",
     "skill_proficiencies": [
       "acrobatics",
       "performance"
@@ -78,7 +78,7 @@
   {
     "background_id": "folk_hero",
     "package_id": "phb_5e_zh_user",
-    "name": "平民英雄",
+    "name": "Folk Hero",
     "skill_proficiencies": [
       "animal_handling",
       "survival"
@@ -97,7 +97,7 @@
   {
     "background_id": "guild_artisan",
     "package_id": "phb_5e_zh_user",
-    "name": "公会工匠",
+    "name": "Guild Artisan",
     "skill_proficiencies": [
       "insight",
       "persuasion"
@@ -117,7 +117,7 @@
   {
     "background_id": "hermit",
     "package_id": "phb_5e_zh_user",
-    "name": "隐士",
+    "name": "Hermit",
     "skill_proficiencies": [
       "medicine",
       "religion"
@@ -137,7 +137,7 @@
   {
     "background_id": "noble",
     "package_id": "phb_5e_zh_user",
-    "name": "贵族",
+    "name": "Noble",
     "skill_proficiencies": [
       "history",
       "persuasion"
@@ -157,7 +157,7 @@
   {
     "background_id": "outlander",
     "package_id": "phb_5e_zh_user",
-    "name": "化外之民",
+    "name": "Outlander",
     "skill_proficiencies": [
       "athletics",
       "survival"
@@ -177,7 +177,7 @@
   {
     "background_id": "sage",
     "package_id": "phb_5e_zh_user",
-    "name": "贤者",
+    "name": "Sage",
     "skill_proficiencies": [
       "arcana",
       "history"
@@ -196,7 +196,7 @@
   {
     "background_id": "sailor",
     "package_id": "phb_5e_zh_user",
-    "name": "水手",
+    "name": "Sailor",
     "skill_proficiencies": [
       "athletics",
       "perception"
@@ -215,7 +215,7 @@
   {
     "background_id": "soldier",
     "package_id": "phb_5e_zh_user",
-    "name": "士兵",
+    "name": "Soldier",
     "skill_proficiencies": [
       "athletics",
       "intimidation"
@@ -234,7 +234,7 @@
   {
     "background_id": "urchin",
     "package_id": "phb_5e_zh_user",
-    "name": "流浪儿",
+    "name": "Urchin",
     "skill_proficiencies": [
       "sleight_of_hand",
       "stealth"
