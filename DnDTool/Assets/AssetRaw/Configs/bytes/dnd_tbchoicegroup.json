@@ -964,5 +964,24 @@
     "result_storage": "ChoiceSelections",
     "next_choice_group_ids": [],
     "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_athlete_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Athlete Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "Strength;Dexterity",
+    "selection_mode": "Distinct",
+    "description": "",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [],
+    "ui_mode": "CardList"
   }
 ]

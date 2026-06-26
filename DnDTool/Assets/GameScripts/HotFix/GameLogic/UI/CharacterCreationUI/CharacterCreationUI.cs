@@ -938,18 +938,19 @@ namespace GameLogic
 
             m_activeToolChoiceState = null;
             m_activeFeatureChoiceState = state;
+            if (CharacterCreationSessionService.Instance.IsAbilityScoreFeatureChoice(state))
+            {
+                RefreshCreationView();
+                HideRightPanelTemplates();
+                HideSelectionListOptions();
+                return;
+            }
+
             if (state.PendingOptionIds.Count == 0 && state.SelectedOptionIds.Count > 0)
             {
                 for (int index = 0; index < state.SelectedOptionIds.Count; index++)
                 {
-                    if (string.Equals(state.ChoiceType, "AbilityScore", StringComparison.OrdinalIgnoreCase))
-                    {
-                        state.PendingOptionIds.Add(state.SelectedOptionIds[index]);
-                    }
-                    else
-                    {
-                        AppendUniqueExactValue(state.PendingOptionIds, state.SelectedOptionIds[index]);
-                    }
+                    AppendUniqueExactValue(state.PendingOptionIds, state.SelectedOptionIds[index]);
                 }
             }
 
@@ -1141,7 +1142,16 @@ namespace GameLogic
                 return;
             }
 
-            CharacterCreationSessionService.Instance.TogglePendingFeatureChoice(optionId);
+            if (CharacterCreationSessionService.Instance.IsFeatFeatureChoice(state))
+            {
+                CharacterCreationSessionService.Instance.SelectFeatFeatureChoice(optionId);
+            }
+            else
+            {
+                CharacterCreationSessionService.Instance.TogglePendingFeatureChoice(optionId);
+            }
+
+            RefreshCreationView();
             ShowFeatureSelectionOptions(state);
         }
 
@@ -1192,6 +1202,12 @@ namespace GameLogic
 
                 CharacterCreationFeatureChoiceState followupState = CharacterCreationSessionService.Instance.GetActiveFeatureChoiceState();
                 if (followupState != null && CharacterCreationSessionService.Instance.IsActiveAbilityScoreFeatureChoice())
+                {
+                    RefreshCreationView();
+                    HideRightPanelTemplates();
+                    HideSelectionListOptions();
+                }
+                else if (followupState != null && CharacterCreationSessionService.Instance.IsAbilityScoreFeatureChoice(followupState))
                 {
                     RefreshCreationView();
                     HideRightPanelTemplates();
@@ -2117,7 +2133,7 @@ namespace GameLogic
             CharacterCreationFeatureChoiceState state = TryGetNextPendingFeatureChoiceState(entry);
             if (state != null)
             {
-                if (CharacterCreationSessionService.Instance.IsActiveAbilityScoreFeatureChoice())
+                if (CharacterCreationSessionService.Instance.IsAbilityScoreFeatureChoice(state))
                 {
                     RefreshCreationView();
                     HideRightPanelTemplates();

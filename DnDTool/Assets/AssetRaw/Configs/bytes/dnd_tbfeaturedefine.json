@@ -2923,10 +2923,10 @@
     "feature_type": "Feat",
     "source_ref": "athlete",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_feat_ability_choice"
+    "choice_group_ids": [
+      "choice_feat_athlete_ability"
     ],
+    "effect_ids": [],
     "description": ""
   },
   {

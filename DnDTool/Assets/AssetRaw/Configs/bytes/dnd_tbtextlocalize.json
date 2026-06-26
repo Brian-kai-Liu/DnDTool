@@ -18994,5 +18994,53 @@
     "language": "zh_CN",
     "text": "诚实之域",
     "context": "TbSpellDefine.name"
+  },
+  {
+    "text_key": "TbChoiceGroup.choice_feat_athlete_ability.name",
+    "language": "zh_CN",
+    "text": "运动员属性提升",
+    "context": "TbChoiceGroup.name"
+  },
+  {
+    "text_key": "TbChoiceGroup.choice_feat_athlete_ability.description",
+    "language": "zh_CN",
+    "text": "选择力量或敏捷之一提高1点。",
+    "context": "TbChoiceGroup.description"
+  },
+  {
+    "text_key": "TbChoiceOption.choice_feat_athlete_ability.Strength.name",
+    "language": "zh_CN",
+    "text": "力量",
+    "context": "TbChoiceOption.name"
+  },
+  {
+    "text_key": "TbChoiceOption.choice_feat_athlete_ability.Strength.description",
+    "language": "zh_CN",
+    "text": "力量提高1点。",
+    "context": "TbChoiceOption.description"
+  },
+  {
+    "text_key": "TbChoiceOption.choice_feat_athlete_ability.Dexterity.name",
+    "language": "zh_CN",
+    "text": "敏捷",
+    "context": "TbChoiceOption.name"
+  },
+  {
+    "text_key": "TbChoiceOption.choice_feat_athlete_ability.Dexterity.description",
+    "language": "zh_CN",
+    "text": "敏捷提高1点。",
+    "context": "TbChoiceOption.description"
+  },
+  {
+    "text_key": "TbFeatureEffect.effect_feat_athlete_strength.manual_note",
+    "language": "zh_CN",
+    "text": "力量提高1点，最高不超过20。",
+    "context": "TbFeatureEffect.manual_note"
+  },
+  {
+    "text_key": "TbFeatureEffect.effect_feat_athlete_dexterity.manual_note",
+    "language": "zh_CN",
+    "text": "敏捷提高1点，最高不超过20。",
+    "context": "TbFeatureEffect.manual_note"
   }
 ]

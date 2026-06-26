@@ -389,7 +389,7 @@ namespace GameLogic
         private static List<CharacterChoiceSelectionSaveData> BuildPreviewChoiceSelections(string classId)
         {
             List<CharacterChoiceSelectionSaveData> result = new List<CharacterChoiceSelectionSaveData>();
-            AppendFeatureChoices(result, CharacterCreationSessionService.Instance.BuildFeatureChoiceInputs());
+            AppendFeatureChoices(result, CharacterCreationSessionService.Instance.BuildPreviewFeatureChoiceInputs());
             AppendToolChoices(result, CharacterCreationSessionService.Instance.BuildToolChoiceInputs(classId));
             AppendSkillChoices(result, CharacterCreationSessionService.Instance.BuildSkillChoiceInputs());
             AppendRaceAbilityChoices(result, CharacterCreationSessionService.Instance.BuildRaceAbilityChoiceInputs());

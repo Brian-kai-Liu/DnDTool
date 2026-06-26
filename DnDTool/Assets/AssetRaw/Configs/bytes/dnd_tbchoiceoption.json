@@ -1698,5 +1698,25 @@
       "effect_skill_survival"
     ],
     "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_athlete_ability",
+    "option_id": "Strength",
+    "name": "Strength",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_feat_athlete_strength"
+    ],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_athlete_ability",
+    "option_id": "Dexterity",
+    "name": "Dexterity",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [
+      "effect_feat_athlete_dexterity"
+    ],
+    "description": ""
   }
 ]

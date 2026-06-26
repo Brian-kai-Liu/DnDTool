@@ -410,6 +410,18 @@ namespace GameLogic
             return IsRepeatableAbilityScoreChoice(m_activeFeatureChoiceState);
         }
 
+        public bool IsAbilityScoreFeatureChoice(CharacterCreationFeatureChoiceState state)
+        {
+            return IsRepeatableAbilityScoreChoice(state);
+        }
+
+        public bool IsFeatFeatureChoice(CharacterCreationFeatureChoiceState state)
+        {
+            return state != null
+                && DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                && IsFeatChoiceGroup(choiceGroup);
+        }
+
         public bool TogglePendingToolChoice(string toolId)
         {
             CharacterCreationToolChoiceState state = m_activeToolChoiceState;
@@ -444,6 +456,24 @@ namespace GameLogic
             return true;
         }
 
+        public bool SelectFeatFeatureChoice(string optionId)
+        {
+            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            if (!IsFeatFeatureChoice(state) || string.IsNullOrWhiteSpace(optionId))
+            {
+                return false;
+            }
+
+            state.PendingOptionIds.Clear();
+            state.SelectedOptionIds.Clear();
+            AppendUniqueExactValue(state.PendingOptionIds, optionId);
+            AppendUniqueExactValue(state.SelectedOptionIds, optionId);
+            RemoveFollowupFeatureChoicesForSource("Feat");
+            m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
+            return true;
+        }
+
         public bool ConfirmActiveToolChoice()
         {
             CharacterCreationToolChoiceState state = m_activeToolChoiceState;
@@ -463,6 +493,13 @@ namespace GameLogic
             if (state == null)
             {
                 return false;
+            }
+
+            if (IsFeatFeatureChoice(state) && state.SelectedOptionIds.Count > 0)
+            {
+                m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
+                return true;
             }
 
             if (state.MinSelect > 0 && state.PendingOptionIds.Count < state.MinSelect)
@@ -488,7 +525,7 @@ namespace GameLogic
         public CharacterCreationFeatureChoiceState StartFollowupFeatureChoice(CharacterCreationFeatureChoiceState completedState)
         {
             if (completedState == null
-                || completedState.SelectedOptionIds.Count == 0
+                || GetCommittedOrPendingOptionIds(completedState).Count == 0
                 || !DndRuleContentService.Instance.TryGetChoiceGroup(completedState.ChoiceGroupId, out DndChoiceGroupData parentGroup)
                 || parentGroup == null)
             {
@@ -499,7 +536,8 @@ namespace GameLogic
             CharacterCreationFeatureChoiceState followupState = null;
             if (IsAdvancementOptionChoiceType(parentGroup.ChoiceType))
             {
-                string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(parentGroup, completedState.SelectedOptionIds[0]);
+                IReadOnlyList<string> optionIds = GetCommittedOrPendingOptionIds(completedState);
+                string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(parentGroup, optionIds[0]);
                 followupState = StartFirstIncompleteFeatureChoiceGroup(
                     new[] { followupChoiceGroupId },
                     completedState.SourceType,
@@ -510,7 +548,7 @@ namespace GameLogic
             else if (TryResolveSelectedFeat(parentGroup, completedState, out DndFeatDefineData selectedFeat))
             {
                 followupState = StartFirstIncompleteFeatureChoiceGroup(
-                    selectedFeat.ChoiceGroupIds,
+                    BuildFeatChoiceGroupIds(selectedFeat),
                     "Feat",
                     selectedFeat.FeatId,
                     completedState.Level,
@@ -519,7 +557,7 @@ namespace GameLogic
             else if (TryResolveSourceFeat(completedState, out DndFeatDefineData sourceFeat))
             {
                 followupState = StartFirstIncompleteFeatureChoiceGroup(
-                    sourceFeat.ChoiceGroupIds,
+                    BuildFeatChoiceGroupIds(sourceFeat),
                     "Feat",
                     sourceFeat.FeatId,
                     completedState.Level,
@@ -537,7 +575,7 @@ namespace GameLogic
         public CharacterCreationFeatureChoiceState ResumeIncompleteFollowupFeatureChoice(CharacterCreationFeatureChoiceState completedState)
         {
             if (completedState == null
-                || completedState.SelectedOptionIds.Count == 0
+                || GetCommittedOrPendingOptionIds(completedState).Count == 0
                 || !DndRuleContentService.Instance.TryGetChoiceGroup(completedState.ChoiceGroupId, out DndChoiceGroupData parentGroup)
                 || parentGroup == null)
             {
@@ -546,7 +584,8 @@ namespace GameLogic
 
             if (IsAdvancementOptionChoiceType(parentGroup.ChoiceType))
             {
-                string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(parentGroup, completedState.SelectedOptionIds[0]);
+                IReadOnlyList<string> optionIds = GetCommittedOrPendingOptionIds(completedState);
+                string followupChoiceGroupId = ResolveAdvancementFollowupChoiceGroupId(parentGroup, optionIds[0]);
                 return ResumeFirstIncompleteFeatureChoiceGroup(
                     new[] { followupChoiceGroupId },
                     completedState.SourceType,
@@ -558,7 +597,7 @@ namespace GameLogic
             if (TryResolveSelectedFeat(parentGroup, completedState, out DndFeatDefineData selectedFeat))
             {
                 return ResumeFirstIncompleteFeatureChoiceGroup(
-                    selectedFeat.ChoiceGroupIds,
+                    BuildFeatChoiceGroupIds(selectedFeat),
                     "Feat",
                     selectedFeat.FeatId,
                     completedState.Level,
@@ -568,7 +607,7 @@ namespace GameLogic
             if (TryResolveSourceFeat(completedState, out DndFeatDefineData sourceFeat))
             {
                 return ResumeFirstIncompleteFeatureChoiceGroup(
-                    sourceFeat.ChoiceGroupIds,
+                    BuildFeatChoiceGroupIds(sourceFeat),
                     "Feat",
                     sourceFeat.FeatId,
                     completedState.Level,
@@ -840,6 +879,16 @@ namespace GameLogic
 
         public List<CharacterCreationFeatureChoiceInput> BuildFeatureChoiceInputs()
         {
+            return BuildFeatureChoiceInputs(false);
+        }
+
+        public List<CharacterCreationFeatureChoiceInput> BuildPreviewFeatureChoiceInputs()
+        {
+            return BuildFeatureChoiceInputs(true);
+        }
+
+        private List<CharacterCreationFeatureChoiceInput> BuildFeatureChoiceInputs(bool includeActivePending)
+        {
             List<CharacterCreationFeatureChoiceInput> result = new List<CharacterCreationFeatureChoiceInput>();
 
             for (int stateIndex = 0; stateIndex < FeatureChoiceStates.Count; stateIndex++)
@@ -850,9 +899,16 @@ namespace GameLogic
                     continue;
                 }
 
-                for (int optionIndex = 0; optionIndex < state.SelectedOptionIds.Count; optionIndex++)
+                IReadOnlyList<string> optionIds = includeActivePending
+                    && ReferenceEquals(state, m_activeFeatureChoiceState)
+                    && !IsRepeatableAbilityScoreChoice(state)
+                    && state.PendingOptionIds.Count > 0
+                    ? state.PendingOptionIds
+                    : state.SelectedOptionIds;
+
+                for (int optionIndex = 0; optionIndex < optionIds.Count; optionIndex++)
                 {
-                    string optionId = state.SelectedOptionIds[optionIndex];
+                    string optionId = optionIds[optionIndex];
                     if (string.IsNullOrWhiteSpace(optionId))
                     {
                         continue;
@@ -1371,20 +1427,33 @@ namespace GameLogic
                     || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat", StringComparison.OrdinalIgnoreCase));
         }
 
+        private static IReadOnlyList<string> GetCommittedOrPendingOptionIds(CharacterCreationFeatureChoiceState state)
+        {
+            if (state == null)
+            {
+                return Array.Empty<string>();
+            }
+
+            return state.SelectedOptionIds.Count > 0
+                ? state.SelectedOptionIds
+                : state.PendingOptionIds;
+        }
+
         private static bool TryResolveSelectedFeat(
             DndChoiceGroupData parentGroup,
             CharacterCreationFeatureChoiceState state,
             out DndFeatDefineData feat)
         {
             feat = null;
-            if (!IsFeatChoiceGroup(parentGroup) || state == null || state.SelectedOptionIds.Count == 0)
+            IReadOnlyList<string> optionIds = GetCommittedOrPendingOptionIds(state);
+            if (!IsFeatChoiceGroup(parentGroup) || state == null || optionIds.Count == 0)
             {
                 return false;
             }
 
-            for (int index = 0; index < state.SelectedOptionIds.Count; index++)
+            for (int index = 0; index < optionIds.Count; index++)
             {
-                string optionId = state.SelectedOptionIds[index]?.Trim() ?? string.Empty;
+                string optionId = optionIds[index]?.Trim() ?? string.Empty;
                 if (string.IsNullOrWhiteSpace(optionId))
                 {
                     continue;
@@ -1395,14 +1464,39 @@ namespace GameLogic
                     return true;
                 }
 
-                DndChoiceOptionData option = FindChoiceOption(state.ChoiceGroupId, optionId);
-                if (option != null && DndRuleContentService.Instance.TryGetFeat(option.OptionId, out feat))
+                if (TryResolveFeatFromOption(state.ChoiceGroupId, optionId, out feat))
                 {
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private static List<string> BuildFeatChoiceGroupIds(DndFeatDefineData feat)
+        {
+            List<string> choiceGroupIds = new List<string>();
+            if (feat == null)
+            {
+                return choiceGroupIds;
+            }
+
+            AppendUniqueValues(choiceGroupIds, feat.ChoiceGroupIds);
+            if (feat.FeatureIds == null)
+            {
+                return choiceGroupIds;
+            }
+
+            for (int index = 0; index < feat.FeatureIds.Count; index++)
+            {
+                string featureId = feat.FeatureIds[index];
+                if (DndRuleContentService.Instance.TryGetFeature(featureId, out DndFeatureDefineData feature))
+                {
+                    AppendUniqueValues(choiceGroupIds, feature.ChoiceGroupIds);
+                }
+            }
+
+            return choiceGroupIds;
         }
 
         private static bool TryResolveSourceFeat(CharacterCreationFeatureChoiceState state, out DndFeatDefineData feat)
@@ -1501,6 +1595,33 @@ namespace GameLogic
         public void RemoveFeatureChoiceStatesBySource(string sourceType)
         {
             RemoveChoiceStatesBySource(FeatureChoiceStates, sourceType);
+        }
+
+        private void RemoveFollowupFeatureChoicesForSource(string sourceType)
+        {
+            if (string.IsNullOrWhiteSpace(sourceType))
+            {
+                return;
+            }
+
+            for (int index = FeatureChoiceStates.Count - 1; index >= 0; index--)
+            {
+                CharacterCreationFeatureChoiceState state = FeatureChoiceStates[index];
+                if (state == null || ReferenceEquals(state, m_activeFeatureChoiceState))
+                {
+                    continue;
+                }
+
+                if (string.Equals(state.SourceType, sourceType, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (ReferenceEquals(state, m_activeFeatureChoiceState))
+                    {
+                        SetActiveFeatureChoice(null);
+                    }
+
+                    FeatureChoiceStates.RemoveAt(index);
+                }
+            }
         }
 
         public void ClearChoiceState()
@@ -1698,6 +1819,136 @@ namespace GameLogic
                 total += CountExactValues(values, normalized);
             }
 
+            total += GetPendingFeatAbilityScoreBonus(normalized);
+            return total;
+        }
+
+        private int GetPendingFeatAbilityScoreBonus(string abilityId)
+        {
+            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            if (state == null
+                || state.PendingOptionIds.Count == 0
+                || !DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                || !IsFeatChoiceGroup(choiceGroup))
+            {
+                return 0;
+            }
+
+            int total = 0;
+            for (int index = 0; index < state.PendingOptionIds.Count; index++)
+            {
+                string optionId = state.PendingOptionIds[index];
+                if (TryResolveFeatFromOption(state.ChoiceGroupId, optionId, out DndFeatDefineData feat))
+                {
+                    total += SumFeatAbilityScoreBonus(feat, abilityId);
+                }
+
+                DndChoiceOptionData option = FindChoiceOption(state.ChoiceGroupId, optionId);
+                total += SumAbilityScoreBonusFromEffects(option?.GrantEffectIds, abilityId);
+                total += SumAbilityScoreBonusFromFeatures(option?.GrantFeatureIds, abilityId);
+            }
+
+            return total;
+        }
+
+        private static bool TryResolveFeatFromOption(string choiceGroupId, string optionId, out DndFeatDefineData feat)
+        {
+            feat = null;
+            string normalizedOptionId = optionId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalizedOptionId))
+            {
+                return false;
+            }
+
+            if (DndRuleContentService.Instance.TryGetFeat(normalizedOptionId, out feat))
+            {
+                return true;
+            }
+
+            DndChoiceOptionData option = FindChoiceOption(choiceGroupId, normalizedOptionId);
+            if (option?.GrantFeatureIds == null || option.GrantFeatureIds.Count == 0)
+            {
+                return false;
+            }
+
+            IReadOnlyList<DndFeatDefineData> feats = DndRuleContentService.Instance.Feats;
+            for (int featIndex = 0; featIndex < feats.Count; featIndex++)
+            {
+                DndFeatDefineData candidate = feats[featIndex];
+                if (candidate?.FeatureIds == null)
+                {
+                    continue;
+                }
+
+                for (int featureIndex = 0; featureIndex < option.GrantFeatureIds.Count; featureIndex++)
+                {
+                    if (ContainsExactString(candidate.FeatureIds, option.GrantFeatureIds[featureIndex]))
+                    {
+                        feat = candidate;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static int SumFeatAbilityScoreBonus(DndFeatDefineData feat, string abilityId)
+        {
+            if (feat?.FeatureIds == null || string.IsNullOrWhiteSpace(abilityId))
+            {
+                return 0;
+            }
+
+            int total = 0;
+            total += SumAbilityScoreBonusFromFeatures(feat.FeatureIds, abilityId);
+            return total;
+        }
+
+        private static int SumAbilityScoreBonusFromFeatures(IReadOnlyList<string> featureIds, string abilityId)
+        {
+            if (featureIds == null || string.IsNullOrWhiteSpace(abilityId))
+            {
+                return 0;
+            }
+
+            int total = 0;
+            for (int featureIndex = 0; featureIndex < featureIds.Count; featureIndex++)
+            {
+                if (!DndRuleContentService.Instance.TryGetFeature(featureIds[featureIndex], out DndFeatureDefineData feature)
+                    || feature?.EffectIds == null)
+                {
+                    continue;
+                }
+
+                total += SumAbilityScoreBonusFromEffects(feature.EffectIds, abilityId);
+            }
+
+            return total;
+        }
+
+        private static int SumAbilityScoreBonusFromEffects(IReadOnlyList<string> effectIds, string abilityId)
+        {
+            if (effectIds == null || string.IsNullOrWhiteSpace(abilityId))
+            {
+                return 0;
+            }
+
+            int total = 0;
+            for (int effectIndex = 0; effectIndex < effectIds.Count; effectIndex++)
+            {
+                if (!DndRuleContentService.Instance.TryGetFeatureEffect(effectIds[effectIndex], out DndFeatureEffectData effect)
+                    || effect == null
+                    || !string.Equals(effect.EffectType, "AbilityScoreBonus", StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(NormalizeAbilityId(effect.Target), abilityId, StringComparison.OrdinalIgnoreCase)
+                    || !int.TryParse(effect.Value, out int value))
+                {
+                    continue;
+                }
+
+                total += value;
+            }
+
             return total;
         }
 
@@ -1817,7 +2068,7 @@ namespace GameLogic
                 return false;
             }
 
-            return string.Equals(choiceGroup.SelectionMode, "Repeatable", StringComparison.OrdinalIgnoreCase);
+            return string.Equals(choiceGroup.ChoiceType, "AbilityScore", StringComparison.OrdinalIgnoreCase);
         }
 
         private static void ToggleRepeatableAbilityScoreChoice(CharacterCreationFeatureChoiceState state, string optionId)
@@ -1983,6 +2234,25 @@ namespace GameLogic
                     return;
                 }
             }
+        }
+
+        private static bool ContainsExactString(IReadOnlyList<string> values, string value)
+        {
+            if (values == null || string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            string normalized = value.Trim();
+            for (int index = 0; index < values.Count; index++)
+            {
+                if (string.Equals(values[index]?.Trim(), normalized, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void AppendValues(List<string> target, List<string> source)

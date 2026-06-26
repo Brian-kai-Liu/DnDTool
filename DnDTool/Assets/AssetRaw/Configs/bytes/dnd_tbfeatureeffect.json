@@ -1024,5 +1024,23 @@
     "condition": "",
     "stacking_rule": "Unique",
     "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_athlete_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_athlete_dexterity",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Dexterity",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
   }
 ]
