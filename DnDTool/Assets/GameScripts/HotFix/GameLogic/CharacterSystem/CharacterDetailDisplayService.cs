@@ -52,12 +52,12 @@ namespace GameLogic
                 return entries;
             }
 
-            AppendUniqueValues(entries, snapshot.ArmorProficiencyIds);
-            AppendUniqueValues(entries, snapshot.WeaponProficiencyIds);
-            AppendUniqueValues(entries, snapshot.ToolProficiencyIds);
-            AppendEquipmentSummaryValues(entries, snapshot.ArmorProficiencies);
-            AppendEquipmentSummaryValues(entries, snapshot.WeaponProficiencies);
-            AppendEquipmentSummaryValues(entries, snapshot.ToolProficiencies);
+            AppendEquipmentProficiencyValues(entries, snapshot.ArmorProficiencyIds, CharacterEquipmentProficiencyDisplayService.Instance.FormatArmorLabel);
+            AppendEquipmentProficiencyValues(entries, snapshot.WeaponProficiencyIds, CharacterEquipmentProficiencyDisplayService.Instance.FormatWeaponLabel);
+            AppendEquipmentProficiencyValues(entries, snapshot.ToolProficiencyIds, CharacterEquipmentProficiencyDisplayService.Instance.FormatToolLabel);
+            AppendEquipmentSummaryValues(entries, snapshot.ArmorProficiencies, CharacterEquipmentProficiencyDisplayService.Instance.FormatArmorLabel);
+            AppendEquipmentSummaryValues(entries, snapshot.WeaponProficiencies, CharacterEquipmentProficiencyDisplayService.Instance.FormatWeaponLabel);
+            AppendEquipmentSummaryValues(entries, snapshot.ToolProficiencies, CharacterEquipmentProficiencyDisplayService.Instance.FormatToolLabel);
             return entries;
         }
 
@@ -1445,9 +1445,9 @@ namespace GameLogic
             return false;
         }
 
-        private static void AppendEquipmentSummaryValues(List<string> target, string summary)
+        private static void AppendEquipmentSummaryValues(List<string> target, string summary, Func<string, string> formatLabel)
         {
-            if (target == null || string.IsNullOrWhiteSpace(summary))
+            if (target == null || string.IsNullOrWhiteSpace(summary) || formatLabel == null)
             {
                 return;
             }
@@ -1461,7 +1461,20 @@ namespace GameLogic
                     continue;
                 }
 
-                AppendUniqueValue(target, value);
+                AppendUniqueValue(target, formatLabel(value));
+            }
+        }
+
+        private static void AppendEquipmentProficiencyValues(List<string> target, IReadOnlyList<string> values, Func<string, string> formatLabel)
+        {
+            if (target == null || values == null || formatLabel == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < values.Count; index++)
+            {
+                AppendUniqueValue(target, formatLabel(values[index]));
             }
         }
 

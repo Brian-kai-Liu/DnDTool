@@ -290,7 +290,7 @@
   {
     "effect_id": "effect_dwarf_tool_smith",
     "effect_type": "ToolProficiency",
-    "target": "smiths_tools",
+    "target": "smith_tools",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
@@ -299,7 +299,7 @@
   {
     "effect_id": "effect_dwarf_tool_brewer",
     "effect_type": "ToolProficiency",
-    "target": "brewers_supplies",
+    "target": "brewer_supplies",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",
@@ -308,7 +308,7 @@
   {
     "effect_id": "effect_dwarf_tool_mason",
     "effect_type": "ToolProficiency",
-    "target": "masons_tools",
+    "target": "mason_tools",
     "value": "1",
     "condition": "",
     "stacking_rule": "Unique",

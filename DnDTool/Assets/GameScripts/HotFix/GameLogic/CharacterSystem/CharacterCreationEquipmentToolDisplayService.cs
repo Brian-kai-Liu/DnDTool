@@ -23,8 +23,8 @@ namespace GameLogic
 
             if (classData != null)
             {
-                AppendPrefixedLabels(state.Labels, "护甲", classData.ArmorProficiencies);
-                AppendPrefixedLabels(state.Labels, "武器", classData.WeaponProficiencies);
+                AppendDisplayLabels(state.Labels, classData.ArmorProficiencies, CharacterEquipmentProficiencyDisplayService.Instance.FormatArmorLabel);
+                AppendDisplayLabels(state.Labels, classData.WeaponProficiencies, CharacterEquipmentProficiencyDisplayService.Instance.FormatWeaponLabel);
                 AppendToolProficiencyLabels(state, classData.ToolProficiencies);
             }
 
@@ -41,17 +41,7 @@ namespace GameLogic
 
         public string GetToolDisplayName(string toolId)
         {
-            if (string.IsNullOrWhiteSpace(toolId))
-            {
-                return string.Empty;
-            }
-
-            if (DndRuleContentService.Instance.TryGetTool(toolId, out DndToolDefineData tool))
-            {
-                return FirstNonEmpty(tool.Name, tool.ToolId);
-            }
-
-            return toolId.Trim();
+            return CharacterEquipmentProficiencyDisplayService.Instance.GetToolDisplayName(toolId);
         }
 
         public string BuildToolChoiceLabel(DndChoiceGroupData choiceGroup)
@@ -113,7 +103,7 @@ namespace GameLogic
 
                 if (DndRuleContentService.Instance.TryGetTool(value, out DndToolDefineData tool))
                 {
-                    labels.Add($"工具：{FirstNonEmpty(tool.Name, tool.ToolId)}");
+                    labels.Add(CharacterEquipmentProficiencyDisplayService.Instance.FormatToolLabel(tool.ToolId));
                 }
             }
         }
@@ -129,15 +119,15 @@ namespace GameLogic
 
                 if (string.Equals(effect.EffectType, "ArmorProficiency", StringComparison.OrdinalIgnoreCase))
                 {
-                    AppendDelimitedEffectTargets(labels, "护甲", effect.Target);
+                    AppendDelimitedEffectTargets(labels, effect.Target, CharacterEquipmentProficiencyDisplayService.Instance.FormatArmorLabel);
                 }
                 else if (string.Equals(effect.EffectType, "WeaponProficiency", StringComparison.OrdinalIgnoreCase))
                 {
-                    AppendDelimitedEffectTargets(labels, "武器", effect.Target);
+                    AppendDelimitedEffectTargets(labels, effect.Target, CharacterEquipmentProficiencyDisplayService.Instance.FormatWeaponLabel);
                 }
                 else if (string.Equals(effect.EffectType, "ToolProficiency", StringComparison.OrdinalIgnoreCase))
                 {
-                    AppendDelimitedEffectTargets(labels, "工具", effect.Target);
+                    AppendDelimitedEffectTargets(labels, effect.Target, CharacterEquipmentProficiencyDisplayService.Instance.FormatToolLabel);
                 }
             });
         }
@@ -199,35 +189,39 @@ namespace GameLogic
             }
         }
 
-        private static void AppendPrefixedLabels(List<string> labels, string prefix, IReadOnlyList<string> values)
+        private static void AppendDisplayLabels(List<string> labels, IReadOnlyList<string> values, Func<string, string> formatLabel)
         {
-            if (labels == null || values == null || values.Count == 0)
+            if (labels == null || values == null || values.Count == 0 || formatLabel == null)
             {
                 return;
             }
 
             for (int index = 0; index < values.Count; index++)
             {
-                string value = values[index];
-                if (!string.IsNullOrWhiteSpace(value))
+                string label = formatLabel(values[index]);
+                if (!string.IsNullOrWhiteSpace(label))
                 {
-                    labels.Add($"{prefix}：{value.Trim()}");
+                    labels.Add(label);
                 }
             }
         }
 
-        private static void AppendDelimitedEffectTargets(List<string> labels, string prefix, string value)
+        private static void AppendDelimitedEffectTargets(List<string> labels, string value, Func<string, string> formatLabel)
         {
-            int startCount = labels?.Count ?? 0;
-            AppendDelimitedValues(labels, value);
-            if (labels == null)
+            if (labels == null || formatLabel == null)
             {
                 return;
             }
 
-            for (int index = startCount; index < labels.Count; index++)
+            List<string> values = new List<string>();
+            AppendDelimitedValues(values, value);
+            for (int index = 0; index < values.Count; index++)
             {
-                labels[index] = $"{prefix}：{labels[index]}";
+                string label = formatLabel(values[index]);
+                if (!string.IsNullOrWhiteSpace(label))
+                {
+                    labels.Add(label);
+                }
             }
         }
 

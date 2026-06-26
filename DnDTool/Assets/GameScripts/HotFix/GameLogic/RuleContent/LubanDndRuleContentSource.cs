@@ -753,7 +753,6 @@ namespace GameLogic
             };
             data.PrerequisiteIds.AddRange(GetStringList(row, "PrerequisiteIds", "prerequisite_ids", "prerequisiteIds"));
             data.FeatureIds.AddRange(GetStringList(row, "FeatureIds", "feature_ids", "featureIds"));
-            data.EffectIds.AddRange(GetStringList(row, "EffectIds", "effect_ids", "effectIds"));
             data.ChoiceGroupIds.AddRange(GetStringList(row, "ChoiceGroupIds", "choice_group_ids", "choiceGroupIds"));
             return data;
         }

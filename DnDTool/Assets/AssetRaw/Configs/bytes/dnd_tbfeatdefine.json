@@ -7,9 +7,6 @@
     "feature_ids": [
       "feature_feat_alert"
     ],
-    "effect_ids": [
-      "effect_feat_alert"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -20,9 +17,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_athlete"
-    ],
-    "effect_ids": [
-      "effect_feat_ability_choice"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -35,9 +29,6 @@
     "feature_ids": [
       "feature_feat_actor"
     ],
-    "effect_ids": [
-      "effect_feat_ability_cha"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -49,9 +40,6 @@
     "feature_ids": [
       "feature_feat_charger"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -62,9 +50,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_crossbow_expert"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -79,9 +64,6 @@
     "feature_ids": [
       "feature_feat_defensive_duelist"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -92,9 +74,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_dual_wielder"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -107,9 +86,6 @@
     "feature_ids": [
       "feature_feat_dungeon_delver"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -120,9 +96,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_durable"
-    ],
-    "effect_ids": [
-      "effect_feat_ability_con"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -137,9 +110,6 @@
     "feature_ids": [
       "feature_feat_elemental_adept"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -153,9 +123,6 @@
     "feature_ids": [
       "feature_feat_grappler"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -167,9 +134,6 @@
     "feature_ids": [
       "feature_feat_great_weapon_master"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -180,9 +144,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_healer"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -197,9 +158,6 @@
     "feature_ids": [
       "feature_feat_heavily_armored"
     ],
-    "effect_ids": [
-      "effect_feat_armor_heavy"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -212,9 +170,6 @@
     ],
     "feature_ids": [
       "feature_feat_heavy_armor_master"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -229,9 +184,6 @@
     "feature_ids": [
       "feature_feat_inspiring_leader"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -242,9 +194,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_keen_mind"
-    ],
-    "effect_ids": [
-      "effect_feat_ability_int"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -257,9 +206,6 @@
     "feature_ids": [
       "feature_feat_lightly_armored"
     ],
-    "effect_ids": [
-      "effect_feat_armor_light"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -270,9 +216,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_linguist"
-    ],
-    "effect_ids": [
-      "effect_feat_language"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -285,9 +228,6 @@
     "feature_ids": [
       "feature_feat_lucky"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -298,9 +238,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_mage_slayer"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -313,9 +250,6 @@
     "feature_ids": [
       "feature_feat_magic_initiate"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -326,9 +260,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_martial_adept"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -343,9 +274,6 @@
     "feature_ids": [
       "feature_feat_medium_armor_master"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -356,9 +284,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_mobile"
-    ],
-    "effect_ids": [
-      "effect_feat_speed"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -373,9 +298,6 @@
     "feature_ids": [
       "feature_feat_moderately_armored"
     ],
-    "effect_ids": [
-      "effect_feat_armor_medium"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -386,9 +308,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_mounted_combatant"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -401,9 +320,6 @@
     "feature_ids": [
       "feature_feat_observant"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -415,9 +331,6 @@
     "feature_ids": [
       "feature_feat_polearm_master"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -428,9 +341,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_resilient"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -445,9 +355,6 @@
     "feature_ids": [
       "feature_feat_ritual_caster"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -458,9 +365,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_savage_attacker"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -473,9 +377,6 @@
     "feature_ids": [
       "feature_feat_sentinel"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -486,9 +387,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_sharpshooter"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -501,9 +399,6 @@
     "feature_ids": [
       "feature_feat_shield_master"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -515,7 +410,6 @@
     "feature_ids": [
       "feature_feat_skilled"
     ],
-    "effect_ids": [],
     "choice_group_ids": [],
     "description": ""
   },
@@ -528,9 +422,6 @@
     ],
     "feature_ids": [
       "feature_feat_skulker"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -545,9 +436,6 @@
     "feature_ids": [
       "feature_feat_spell_sniper"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -559,9 +447,6 @@
     "feature_ids": [
       "feature_feat_tavern_brawler"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -572,9 +457,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_tough"
-    ],
-    "effect_ids": [
-      "effect_feat_hp"
     ],
     "choice_group_ids": [],
     "description": ""
@@ -589,9 +471,6 @@
     "feature_ids": [
       "feature_feat_war_caster"
     ],
-    "effect_ids": [
-      "effect_manual_resolve"
-    ],
     "choice_group_ids": [],
     "description": ""
   },
@@ -602,9 +481,6 @@
     "prerequisite_ids": [],
     "feature_ids": [
       "feature_feat_weapon_master"
-    ],
-    "effect_ids": [
-      "effect_manual_resolve"
     ],
     "choice_group_ids": [],
     "description": ""

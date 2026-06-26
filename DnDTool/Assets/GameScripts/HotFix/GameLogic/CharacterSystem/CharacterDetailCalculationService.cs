@@ -1330,7 +1330,6 @@ namespace GameLogic
             ApplyFeatureEffects(raceData?.FeatureIds, action);
 
             DndFeatDefineData featData = FindFeat(character.FeatId);
-            ApplyEffects(featData?.EffectIds, action);
             ApplyFeatureEffects(featData?.FeatureIds, action);
 
             List<CharacterClassProgressSaveData> progresses = GetCharacterClassProgresses(character);
@@ -1542,9 +1541,10 @@ namespace GameLogic
                     && TryResolveFeatFromSelection(selection, out DndFeatDefineData feat)
                     && feat != null)
                 {
-                    ApplyEffects(feat.EffectIds, action);
                     ApplyFeatureEffects(feat.FeatureIds, action);
+                    continue;
                 }
+
                 IReadOnlyList<DndChoiceOptionData> options = DndRuleContentService.Instance.GetChoiceOptions(selection.ChoiceGroupId.Trim());
                 for (int optionIndex = 0; optionIndex < options.Count; optionIndex++)
                 {

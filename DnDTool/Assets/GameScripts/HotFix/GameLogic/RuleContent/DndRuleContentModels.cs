@@ -400,8 +400,6 @@ namespace GameLogic
 
         public List<string> FeatureIds { get; } = new List<string>();
 
-        public List<string> EffectIds { get; } = new List<string>();
-
         public List<string> ChoiceGroupIds { get; } = new List<string>();
 
         public string Description { get; set; } = string.Empty;
