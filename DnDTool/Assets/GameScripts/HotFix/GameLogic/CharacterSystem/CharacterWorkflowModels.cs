@@ -58,8 +58,10 @@ namespace GameLogic
         public string ClassId { get; set; } = string.Empty;
         public string BackgroundId { get; set; } = string.Empty;
         public string AlignmentId { get; set; } = string.Empty;
+        public string PreviewImagePath { get; set; } = string.Empty;
         public int Level { get; set; } = 1;
         public CharacterRuntimeSnapshotData RuntimeSnapshot { get; set; } = new CharacterRuntimeSnapshotData();
+        public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
         public List<CharacterClassProgressSaveData> ClassProgresses { get; set; } = new List<CharacterClassProgressSaveData>();
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; set; } = new List<CharacterChoiceSelectionSaveData>();
     }
@@ -72,6 +74,7 @@ namespace GameLogic
         public string SubclassId { get; set; } = string.Empty;
         public string BackgroundId { get; set; } = string.Empty;
         public string AlignmentId { get; set; } = string.Empty;
+        public string PreviewImagePath { get; set; } = string.Empty;
         public int Level { get; set; } = 1;
         public int Speed { get; set; }
         public int Strength { get; set; } = 10;
@@ -92,6 +95,7 @@ namespace GameLogic
         public List<CharacterCreationSkillChoiceInput> SkillChoices { get; set; } = new List<CharacterCreationSkillChoiceInput>();
         public List<CharacterCreationToolChoiceInput> ToolChoices { get; set; } = new List<CharacterCreationToolChoiceInput>();
         public List<CharacterCreationFeatureChoiceInput> FeatureChoices { get; set; } = new List<CharacterCreationFeatureChoiceInput>();
+        public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
     }
 
     internal sealed class CharacterCreationFormInput
@@ -324,6 +328,7 @@ namespace GameLogic
         public CharacterCreationEquipmentToolDisplayState EquipmentTools { get; set; } = new CharacterCreationEquipmentToolDisplayState();
         public List<CharacterCreationFeatureDisplayEntry> ClassFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
         public List<CharacterCreationFeatureDisplayEntry> RaceFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
+        public List<CharacterStatusEffectDisplayEntry> StatusEffects { get; } = new List<CharacterStatusEffectDisplayEntry>();
     }
 
     internal sealed class CharacterCreationAbilityViewState
@@ -429,15 +434,25 @@ namespace GameLogic
         public bool HasExpertise { get; set; }
     }
 
+    internal sealed class CharacterInventoryOperationResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
+        public string ItemInstanceId { get; set; } = string.Empty;
+    }
+
     internal readonly struct CharacterInventoryDisplayEntry
     {
+        public readonly string ItemInstanceId;
         public readonly string Label;
         public readonly string Title;
         public readonly string Description;
         public readonly bool IsEquipped;
 
-        public CharacterInventoryDisplayEntry(string label, string title, string description, bool isEquipped)
+        public CharacterInventoryDisplayEntry(string itemInstanceId, string label, string title, string description, bool isEquipped)
         {
+            ItemInstanceId = itemInstanceId?.Trim() ?? string.Empty;
             Label = label ?? string.Empty;
             Title = title ?? string.Empty;
             Description = description ?? string.Empty;
@@ -449,11 +464,13 @@ namespace GameLogic
     {
         public readonly string Name;
         public readonly string Duration;
+        public readonly string IconPath;
 
-        public CharacterStatusEffectDisplayEntry(string name, string duration)
+        public CharacterStatusEffectDisplayEntry(string name, string duration, string iconPath = "")
         {
             Name = name ?? string.Empty;
             Duration = duration ?? string.Empty;
+            IconPath = iconPath ?? string.Empty;
         }
     }
 

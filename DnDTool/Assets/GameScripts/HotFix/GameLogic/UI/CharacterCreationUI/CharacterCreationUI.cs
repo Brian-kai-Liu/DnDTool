@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using TEngine;
 using UnityEngine;
@@ -58,6 +60,8 @@ namespace GameLogic
         private Button m_btnWisdomDecrease;
         private Button m_btnCharismaIncrease;
         private Button m_btnCharismaDecrease;
+        private Button m_btnPortraitUpload;
+        private Image m_imgPortraitUpload;
         private RectTransform m_rectInfoListContent;
         private RectTransform m_rectSelectionListContent;
         private GameObject m_goClassTemplate;
@@ -73,6 +77,8 @@ namespace GameLogic
         private RectTransform m_rectSkillProficiencies;
         private RectTransform m_rectInventoryContent;
         private RectTransform m_rectOtherFeatureContent;
+        private RectTransform m_rectStatusEffectContent;
+        private GameObject m_goStatusEffectTemplate;
         private TMP_Text m_tmpHitDiceDie;
         private TMP_Text m_tmpHitDiceRemaining;
         private TMP_Text m_tmpCurrentHp;
@@ -132,6 +138,10 @@ namespace GameLogic
         private bool m_isUpdatingLevelInput;
         private string m_pendingAbilityGenerationMethodId = string.Empty;
         private string m_pendingHitPointGenerationMethodId = string.Empty;
+        private Texture2D m_portraitTexture;
+        private Sprite m_portraitSprite;
+        private string m_previewImagePath = string.Empty;
+        private int m_portraitLoadVersion;
 
         private const int MinCharacterLevel = 1;
         private const int MaxCharacterLevel = 20;
@@ -170,6 +180,7 @@ namespace GameLogic
         private readonly List<CharacterCreationLabelItemView> m_equipmentToolItems = new List<CharacterCreationLabelItemView>();
         private readonly List<CharacterCreationLabelItemView> m_classFeatureItems = new List<CharacterCreationLabelItemView>();
         private readonly List<CharacterCreationLabelItemView> m_raceFeatureItems = new List<CharacterCreationLabelItemView>();
+        private readonly List<CharacterCreationStatusEffectItemView> m_statusEffectItems = new List<CharacterCreationStatusEffectItemView>();
         private readonly Dictionary<string, string> m_toolChoiceGroupIdByLabel = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private List<CharacterCreationSkillChoiceState> m_skillChoiceStates => CharacterCreationSessionService.Instance.SkillChoiceStates;
         private List<CharacterCreationToolChoiceState> m_toolChoiceStates => CharacterCreationSessionService.Instance.ToolChoiceStates;
@@ -241,6 +252,11 @@ namespace GameLogic
             RefreshCreationView();
         }
 
+        protected override void OnDestroy()
+        {
+            CleanupPortraitResources();
+        }
+
         private void BindControls()
         {
             m_btnBack = FindChildComponent<Button>("m_btnBack");
@@ -270,6 +286,13 @@ namespace GameLogic
             m_btnWisdomDecrease = FindChildComponent<Button>("m_btnWisdomDecrease");
             m_btnCharismaIncrease = FindChildComponent<Button>("m_btnCharismaIncrease");
             m_btnCharismaDecrease = FindChildComponent<Button>("m_btnCharismaDecrease");
+            m_btnPortraitUpload = FindChildComponent<Button>("m_img角色形象图片上传区域");
+            m_imgPortraitUpload = FindChildComponent<Image>("m_img角色形象图片上传区域");
+            if (m_imgPortraitUpload != null)
+            {
+                m_imgPortraitUpload.preserveAspect = true;
+            }
+
             m_rectInfoListContent = FindScrollContent("m_scrollInfoList");
             m_rectSelectionListContent = FindScrollContent("m_scrollSelectionList");
             m_goClassTemplate = FindChildComponent<RectTransform>("m_itemClassTemplate")?.gameObject;
@@ -285,6 +308,8 @@ namespace GameLogic
             m_rectSkillProficiencies = FindChildComponent<RectTransform>("m_gridSkillProficiencies");
             m_rectInventoryContent = FindChildComponent<RectTransform>("m_rectInventoryContent");
             m_rectOtherFeatureContent = FindChildComponent<RectTransform>("m_rectOtherFeatureContent");
+            m_rectStatusEffectContent = FindChildComponent<RectTransform>("m_gridStatusEffects");
+            m_goStatusEffectTemplate = FindChildComponent<RectTransform>("m_itemStatusEffectTemplate")?.gameObject;
             BindSkillItems();
             BindAbilityItems();
             m_tmpHitDiceDie = FindChildComponent<TMP_Text>("m_tmpHitDiceDie");
@@ -453,6 +478,7 @@ namespace GameLogic
             BindButton(m_btnPanelAlignment, ShowAlignmentOptions);
             BindButton(m_btnAbilityGeneration, OnClickAbilityGenerationButton);
             BindButton(m_btnGenerateHitPoints, OnClickHitPointGenerationButton);
+            BindButton(m_btnPortraitUpload, () => UploadPortraitImageAsync().Forget());
             BindButton(m_btnSectionInventory, () => ToggleRectActive(m_rectInventoryContent));
             BindButton(m_btnSectionSkills, () => ToggleRectActive(m_rectSkillProficiencies));
             BindButton(m_btnSectionEquipmentTools, () => ToggleRectActive(m_rectEquipmentToolContent));
@@ -1316,6 +1342,7 @@ namespace GameLogic
             ApplyEquipmentToolViewState(state.EquipmentTools);
             RefreshClassFeatureItems(state.ClassFeatures);
             RefreshRaceFeatureItems(state.RaceFeatures);
+            RefreshStatusEffectItems(state.StatusEffects);
         }
 
         private void ApplyAbilityViewStates(IReadOnlyList<CharacterCreationAbilityViewState> abilities)
@@ -1564,6 +1591,41 @@ namespace GameLogic
             RefreshFeatureLabelItems(m_raceFeatureItems, m_rectRaceFeatureContent, m_goRaceFeatureTemplate, entries, "m_itemRaceFeature_", "m_tmpRaceFeatureTitle");
         }
 
+        private void RefreshStatusEffectItems(IReadOnlyList<CharacterStatusEffectDisplayEntry> entries)
+        {
+            if (m_rectStatusEffectContent == null || m_goStatusEffectTemplate == null)
+            {
+                return;
+            }
+
+            int count = entries?.Count ?? 0;
+            while (m_statusEffectItems.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goStatusEffectTemplate, m_rectStatusEffectContent);
+                itemObject.name = $"m_itemStatusEffect_{m_statusEffectItems.Count + 1}";
+                itemObject.SetActive(true);
+                m_statusEffectItems.Add(CharacterCreationStatusEffectItemView.Bind(itemObject));
+            }
+
+            if (m_goStatusEffectTemplate.activeSelf)
+            {
+                m_goStatusEffectTemplate.SetActive(false);
+            }
+
+            SetActive(m_rectStatusEffectContent.gameObject, count > 0);
+
+            for (int index = 0; index < m_statusEffectItems.Count; index++)
+            {
+                CharacterCreationStatusEffectItemView item = m_statusEffectItems[index];
+                bool active = index < count;
+                item.SetActive(active);
+                if (active)
+                {
+                    item.Bind(entries[index]);
+                }
+            }
+        }
+
         private void HideRightPanelTemplates()
         {
             if (m_rectInfoListContent == null)
@@ -1624,7 +1686,95 @@ namespace GameLogic
                 FixedToolProficiencyIds = CharacterCreationViewStateService.Instance.BuildFixedToolProficiencyIds()
             };
 
-            return CharacterCreationSessionService.Instance.BuildDraftInput(form);
+            CharacterCreationDraftInput input = CharacterCreationSessionService.Instance.BuildDraftInput(form);
+            input.PreviewImagePath = m_previewImagePath?.Trim() ?? string.Empty;
+            return input;
+        }
+
+        private async UniTaskVoid UploadPortraitImageAsync()
+        {
+            string sourceFilePath = RuntimeImageFileDialog.OpenImageFile("选择角色样貌图片");
+            if (string.IsNullOrWhiteSpace(sourceFilePath))
+            {
+                return;
+            }
+
+            if (!File.Exists(sourceFilePath))
+            {
+                Log.Error($"角色样貌图片文件不存在: {sourceFilePath}");
+                return;
+            }
+
+            string targetDirectoryPath = CharacterPortraitApplicationService.Instance.GetPortraitDirectoryPath();
+            string targetFilePath;
+            byte[] imageBytes;
+            try
+            {
+                targetFilePath = await UniTask.RunOnThreadPool(() => CharacterPortraitApplicationService.Instance.StorePortraitImage(sourceFilePath, targetDirectoryPath));
+                imageBytes = await UniTask.RunOnThreadPool(() => CharacterPortraitApplicationService.Instance.ReadImageBytes(targetFilePath));
+            }
+            catch (Exception exception)
+            {
+                Log.Error($"保存角色样貌图片失败: {exception.Message}");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(targetFilePath) || imageBytes == null || imageBytes.Length == 0)
+            {
+                Log.Error("角色样貌图片保存失败。");
+                return;
+            }
+
+            ApplyPortraitImage(targetFilePath, imageBytes, ++m_portraitLoadVersion, true);
+        }
+
+        private void ApplyPortraitImage(string imagePath, byte[] imageBytes, int loadVersion, bool logOnFailure)
+        {
+            if (loadVersion != m_portraitLoadVersion)
+            {
+                return;
+            }
+
+            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            if (!texture.LoadImage(imageBytes))
+            {
+                UnityEngine.Object.Destroy(texture);
+                if (logOnFailure)
+                {
+                    Log.Error("角色样貌图片加载失败，文件不是有效图片。");
+                }
+
+                return;
+            }
+
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            CleanupPortraitResources();
+            m_portraitTexture = texture;
+            m_portraitSprite = sprite;
+            m_previewImagePath = imagePath?.Trim() ?? string.Empty;
+            CharacterCreationSessionService.Instance.SetPreviewImagePath(m_previewImagePath);
+
+            if (m_imgPortraitUpload != null)
+            {
+                m_imgPortraitUpload.sprite = m_portraitSprite;
+                m_imgPortraitUpload.color = Color.white;
+                m_imgPortraitUpload.preserveAspect = true;
+            }
+        }
+
+        private void CleanupPortraitResources()
+        {
+            if (m_portraitSprite != null)
+            {
+                UnityEngine.Object.Destroy(m_portraitSprite);
+                m_portraitSprite = null;
+            }
+
+            if (m_portraitTexture != null)
+            {
+                UnityEngine.Object.Destroy(m_portraitTexture);
+                m_portraitTexture = null;
+            }
         }
 
         private void ReturnToCharacterManagement()
@@ -2159,6 +2309,56 @@ namespace GameLogic
 
             SetText(m_tmpFeatureDetailTitle, CharacterCreationFeatureDisplayService.Instance.BuildFeatureEntryDisplayTitle(entry));
             SetText(m_tmpFeatureDetailDescription, CharacterCreationFeatureDisplayService.Instance.BuildFeatureEntryDisplayDescription(entry));
+        }
+
+        private sealed class CharacterCreationStatusEffectItemView
+        {
+            private readonly GameObject m_root;
+            private readonly TMP_Text m_nameText;
+            private readonly TMP_Text m_durationText;
+            private readonly Image m_iconImage;
+            private readonly Sprite m_defaultIcon;
+
+            private CharacterCreationStatusEffectItemView(GameObject root, TMP_Text nameText, TMP_Text durationText, Image iconImage)
+            {
+                m_root = root;
+                m_nameText = nameText;
+                m_durationText = durationText;
+                m_iconImage = iconImage;
+                m_defaultIcon = iconImage != null ? iconImage.sprite : null;
+            }
+
+            public static CharacterCreationStatusEffectItemView Bind(GameObject root)
+            {
+                TMP_Text nameText = null;
+                TMP_Text durationText = null;
+                Image iconImage = null;
+                if (root != null)
+                {
+                    nameText = root.transform.Find("m_tmpStatusEffectName")?.GetComponent<TMP_Text>();
+                    durationText = root.transform.Find("m_imgStatusEffectIcon/m_tmpStatusEffectDuration")?.GetComponent<TMP_Text>();
+                    iconImage = root.transform.Find("m_imgStatusEffectIcon")?.GetComponent<Image>();
+                }
+
+                return new CharacterCreationStatusEffectItemView(root, nameText, durationText, iconImage);
+            }
+
+            public void Bind(CharacterStatusEffectDisplayEntry entry)
+            {
+                SetText(m_nameText, entry.Name);
+                SetText(m_durationText, entry.Duration);
+                CharacterCreationUI.SetActive(m_durationText != null ? m_durationText.gameObject : null, !string.IsNullOrWhiteSpace(entry.Duration));
+
+                if (m_iconImage != null && m_iconImage.sprite == null && m_defaultIcon != null)
+                {
+                    m_iconImage.sprite = m_defaultIcon;
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                CharacterCreationUI.SetActive(m_root, active);
+            }
         }
 
         private sealed class CharacterCreationLabelItemView

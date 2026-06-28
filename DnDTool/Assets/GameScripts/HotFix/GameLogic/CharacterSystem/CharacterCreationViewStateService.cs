@@ -49,6 +49,7 @@ namespace GameLogic
             FillCombatOverviewState(state, character, normalizedLevel);
             FillCurrencyState(state, character);
             FillEquipmentToolState(state, classData, raceData, backgroundData);
+            FillStatusEffectState(state, character);
             return state;
         }
 
@@ -279,6 +280,16 @@ namespace GameLogic
             state.ElectrumText = currency.Electrum.ToString();
             state.GoldText = currency.Gold.ToString();
             state.PlatinumText = currency.Platinum.ToString();
+        }
+
+        private static void FillStatusEffectState(CharacterCreationViewState state, CharacterCardDraftSaveData character)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            state.StatusEffects.AddRange(CharacterDetailDisplayService.Instance.BuildStatusEffectEntries(character));
         }
 
         private static CharacterCardDraftSaveData BuildPreviewCharacter(CharacterCardDraftSaveData source, int level)

@@ -255,8 +255,9 @@ namespace GameLogic
                 return;
             }
 
+            HashSet<string> appliedItemIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             CharacterEquipmentItemSaveData armor = equipment.Armor;
-            if (CharacterEquipmentItemSaveData.HasItem(armor))
+            if (CharacterEquipmentItemSaveData.HasItem(armor) && MarkItemApplied(armor, appliedItemIds))
             {
                 snapshot.ArmorCategory = CharacterArmorCategoryIds.Normalize(armor.ArmorCategory);
                 if (armor.ArmorBaseAc > 0)
@@ -268,12 +269,13 @@ namespace GameLogic
             }
 
             CharacterEquipmentItemSaveData shield = equipment.Shield;
-            if (CharacterEquipmentItemSaveData.HasItem(shield))
+            if (CharacterEquipmentItemSaveData.HasItem(shield) && MarkItemApplied(shield, appliedItemIds))
             {
                 snapshot.ShieldAcBonus += Math.Max(0, shield.ArmorBaseAc) + CalculateItemAcBonus(shield, snapshot);
             }
 
-            AppendEquippedItemAcBonus(snapshot, equipment.EquippedItems);
+            AppendEquippedItemAcBonus(snapshot, equipment.EquippedItems, appliedItemIds);
+            ApplyInventoryEquippedItemAcData(snapshot, equipment.InventoryItems, appliedItemIds);
         }
 
         public void ApplyEquippedItemAttributeEffects(CharacterRuntimeSnapshotData snapshot, CharacterEquipmentSetSaveData equipment)
@@ -283,21 +285,22 @@ namespace GameLogic
                 return;
             }
 
-            ApplyItemAttributeEffects(snapshot, equipment.Armor);
-            ApplyItemAttributeEffects(snapshot, equipment.Shield);
-            if (equipment.EquippedItems == null)
+            HashSet<string> appliedItemIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            ApplyItemAttributeEffects(snapshot, equipment.Armor, appliedItemIds);
+            ApplyItemAttributeEffects(snapshot, equipment.Shield, appliedItemIds);
+            if (equipment.EquippedItems != null)
             {
-                return;
-            }
-
-            for (int index = 0; index < equipment.EquippedItems.Count; index++)
-            {
-                CharacterEquipmentItemSaveData item = equipment.EquippedItems[index];
-                if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped)
+                for (int index = 0; index < equipment.EquippedItems.Count; index++)
                 {
-                    ApplyItemAttributeEffects(snapshot, item);
+                    CharacterEquipmentItemSaveData item = equipment.EquippedItems[index];
+                    if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped)
+                    {
+                        ApplyItemAttributeEffects(snapshot, item, appliedItemIds);
+                    }
                 }
             }
+
+            ApplyInventoryEquippedItemAttributeEffects(snapshot, equipment.InventoryItems, appliedItemIds);
         }
 
         public int CalculateArmorClass(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
@@ -854,7 +857,70 @@ namespace GameLogic
             return value > max ? max : value;
         }
 
-        private static void AppendEquippedItemAcBonus(CharacterRuntimeSnapshotData snapshot, IReadOnlyList<CharacterEquipmentItemSaveData> items)
+        private static void AppendEquippedItemAcBonus(
+            CharacterRuntimeSnapshotData snapshot,
+            IReadOnlyList<CharacterEquipmentItemSaveData> items,
+            HashSet<string> appliedItemIds)
+        {
+            if (snapshot == null || items == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < items.Count; index++)
+            {
+                CharacterEquipmentItemSaveData item = items[index];
+                if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped && MarkItemApplied(item, appliedItemIds))
+                {
+                    snapshot.EquipmentAcBonus += CalculateItemAcBonus(item, snapshot);
+                }
+            }
+        }
+
+        private static void ApplyInventoryEquippedItemAcData(
+            CharacterRuntimeSnapshotData snapshot,
+            IReadOnlyList<CharacterEquipmentItemSaveData> items,
+            HashSet<string> appliedItemIds)
+        {
+            if (snapshot == null || items == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < items.Count; index++)
+            {
+                CharacterEquipmentItemSaveData item = items[index];
+                if (!CharacterEquipmentItemSaveData.HasItem(item) || !item.IsEquipped || !MarkItemApplied(item, appliedItemIds))
+                {
+                    continue;
+                }
+
+                string slot = GetEquipmentSlot(item);
+                if (IsShieldItem(item, slot))
+                {
+                    snapshot.ShieldAcBonus += Math.Max(0, item.ArmorBaseAc) + CalculateItemAcBonus(item, snapshot);
+                }
+                else if (IsArmorItem(item, slot))
+                {
+                    snapshot.ArmorCategory = CharacterArmorCategoryIds.Normalize(item.ArmorCategory);
+                    if (item.ArmorBaseAc > 0)
+                    {
+                        snapshot.ArmorBaseAc = item.ArmorBaseAc;
+                    }
+
+                    snapshot.EquipmentAcBonus += CalculateItemAcBonus(item, snapshot);
+                }
+                else
+                {
+                    snapshot.EquipmentAcBonus += CalculateItemAcBonus(item, snapshot);
+                }
+            }
+        }
+
+        private static void ApplyInventoryEquippedItemAttributeEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            IReadOnlyList<CharacterEquipmentItemSaveData> items,
+            HashSet<string> appliedItemIds)
         {
             if (snapshot == null || items == null)
             {
@@ -866,15 +932,19 @@ namespace GameLogic
                 CharacterEquipmentItemSaveData item = items[index];
                 if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped)
                 {
-                    snapshot.EquipmentAcBonus += CalculateItemAcBonus(item, snapshot);
+                    ApplyItemAttributeEffects(snapshot, item, appliedItemIds);
                 }
             }
         }
 
-        private static void ApplyItemAttributeEffects(CharacterRuntimeSnapshotData snapshot, CharacterEquipmentItemSaveData item)
+        private static void ApplyItemAttributeEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            CharacterEquipmentItemSaveData item,
+            HashSet<string> appliedItemIds = null)
         {
             if (snapshot == null
                 || !CharacterEquipmentItemSaveData.HasItem(item)
+                || !MarkItemApplied(item, appliedItemIds)
                 || !IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot))
             {
                 return;
@@ -1019,6 +1089,45 @@ namespace GameLogic
             {
                 snapshot.Charisma += value;
             }
+        }
+
+        private static bool MarkItemApplied(CharacterEquipmentItemSaveData item, HashSet<string> appliedItemIds)
+        {
+            if (appliedItemIds == null || item == null || string.IsNullOrWhiteSpace(item.ItemInstanceId))
+            {
+                return true;
+            }
+
+            return appliedItemIds.Add(item.ItemInstanceId.Trim());
+        }
+
+        private static string GetEquipmentSlot(CharacterEquipmentItemSaveData item)
+        {
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.SourceItemId)
+                && DndRuleContentService.Instance.TryGetItem(item.SourceItemId, out DndItemDefineData ruleItem)
+                && ruleItem != null)
+            {
+                return ruleItem.EquipmentSlot?.Trim() ?? string.Empty;
+            }
+
+            return string.Empty;
+        }
+
+        private static bool IsArmorItem(CharacterEquipmentItemSaveData item, string slot)
+        {
+            return string.Equals(slot, "armor", StringComparison.OrdinalIgnoreCase)
+                || !string.Equals(CharacterArmorCategoryIds.Normalize(item?.ArmorCategory), CharacterArmorCategoryIds.None, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsShieldItem(CharacterEquipmentItemSaveData item, string slot)
+        {
+            return string.Equals(slot, "shield", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(item?.ItemType, "shield", StringComparison.OrdinalIgnoreCase);
         }
 
         private static int CalculateItemAcBonus(CharacterEquipmentItemSaveData item, CharacterRuntimeSnapshotData snapshot)
@@ -1222,20 +1331,38 @@ namespace GameLogic
             }
 
             int bonus = 0;
-            bonus += CalculateItemEffectBonus(equipment.Armor, snapshot, effectType, targets);
-            bonus += CalculateItemEffectBonus(equipment.Shield, snapshot, effectType, targets);
-
-            if (equipment.EquippedItems == null)
+            HashSet<string> appliedItemIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (MarkItemApplied(equipment.Armor, appliedItemIds))
             {
-                return bonus;
+                bonus += CalculateItemEffectBonus(equipment.Armor, snapshot, effectType, targets);
             }
 
-            for (int index = 0; index < equipment.EquippedItems.Count; index++)
+            if (MarkItemApplied(equipment.Shield, appliedItemIds))
             {
-                CharacterEquipmentItemSaveData item = equipment.EquippedItems[index];
-                if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped)
+                bonus += CalculateItemEffectBonus(equipment.Shield, snapshot, effectType, targets);
+            }
+
+            if (equipment.EquippedItems != null)
+            {
+                for (int index = 0; index < equipment.EquippedItems.Count; index++)
                 {
-                    bonus += CalculateItemEffectBonus(item, snapshot, effectType, targets);
+                    CharacterEquipmentItemSaveData item = equipment.EquippedItems[index];
+                    if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped && MarkItemApplied(item, appliedItemIds))
+                    {
+                        bonus += CalculateItemEffectBonus(item, snapshot, effectType, targets);
+                    }
+                }
+            }
+
+            if (equipment.InventoryItems != null)
+            {
+                for (int index = 0; index < equipment.InventoryItems.Count; index++)
+                {
+                    CharacterEquipmentItemSaveData item = equipment.InventoryItems[index];
+                    if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped && MarkItemApplied(item, appliedItemIds))
+                    {
+                        bonus += CalculateItemEffectBonus(item, snapshot, effectType, targets);
+                    }
                 }
             }
 

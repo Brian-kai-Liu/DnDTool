@@ -149,8 +149,47 @@ namespace GameLogic
             m_state.Character.ClassId = input.ClassId?.Trim() ?? string.Empty;
             m_state.Character.BackgroundId = input.BackgroundId?.Trim() ?? string.Empty;
             m_state.Character.Alignment = input.AlignmentId?.Trim() ?? string.Empty;
+            m_state.Character.PreviewImagePath = input.PreviewImagePath?.Trim() ?? string.Empty;
             m_state.Character.Level = Math.Max(1, input.Level);
+            m_state.Character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
             m_state.IsDirty = true;
+        }
+
+        public void SetPreviewImagePath(string previewImagePath)
+        {
+            EnsureState();
+            m_state.Character.PreviewImagePath = previewImagePath?.Trim() ?? string.Empty;
+            m_state.IsDirty = true;
+        }
+
+        public CharacterInventoryOperationResult AddInventoryItem(CharacterEquipmentItemSaveData item, int quantity = 1)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.AddItem(equipment, item, quantity));
+        }
+
+        public CharacterInventoryOperationResult AddRuleInventoryItem(string sourceItemId, int quantity = 1)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.AddRuleItem(equipment, sourceItemId, quantity));
+        }
+
+        public CharacterInventoryOperationResult RemoveInventoryItem(string itemInstanceId, int quantity = 1)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.RemoveItem(equipment, itemInstanceId, quantity));
+        }
+
+        public CharacterInventoryOperationResult DeleteInventoryItem(string itemInstanceId)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.DeleteItem(equipment, itemInstanceId));
+        }
+
+        public CharacterInventoryOperationResult EquipInventoryItem(string itemInstanceId)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.EquipItem(equipment, itemInstanceId));
+        }
+
+        public CharacterInventoryOperationResult UnequipInventoryItem(string itemInstanceId)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.UnequipItem(equipment, itemInstanceId));
         }
 
         public CharacterCreationToolChoiceState FindToolChoiceState(string choiceGroupId)
@@ -962,7 +1001,9 @@ namespace GameLogic
                 RaceAbilityChoices = BuildRaceAbilityChoiceInputs(),
                 SkillChoices = BuildSkillChoiceInputs(),
                 ToolChoices = BuildToolChoiceInputs(classId),
-                FeatureChoices = BuildFeatureChoiceInputs()
+                FeatureChoices = BuildFeatureChoiceInputs(),
+                PreviewImagePath = character.PreviewImagePath?.Trim() ?? string.Empty,
+                Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment)
             };
         }
 
@@ -3061,6 +3102,31 @@ namespace GameLogic
                 default:
                     return normalized;
             }
+        }
+
+        private CharacterInventoryOperationResult ApplyInventoryOperation(
+            Func<CharacterEquipmentSetSaveData, CharacterInventoryOperationResult> operation)
+        {
+            EnsureState();
+            if (operation == null)
+            {
+                return new CharacterInventoryOperationResult
+                {
+                    Success = false,
+                    Message = "Inventory operation is empty.",
+                    Equipment = CharacterEquipmentSetSaveData.Clone(m_state.Character?.Equipment)
+                };
+            }
+
+            CharacterInventoryOperationResult result = operation(m_state.Character.Equipment);
+            if (result.Success)
+            {
+                m_state.Character.Equipment = CharacterEquipmentSetSaveData.Clone(result.Equipment);
+                m_state.IsDirty = true;
+                RefreshDerivedStatsAfterAbilityScoresChanged();
+            }
+
+            return result;
         }
 
         private void EnsureState()

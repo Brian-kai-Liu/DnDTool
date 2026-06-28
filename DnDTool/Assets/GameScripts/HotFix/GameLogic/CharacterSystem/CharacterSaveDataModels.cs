@@ -76,14 +76,7 @@ namespace GameLogic
     [Serializable]
     internal sealed class CharacterIdentityProfileSaveData
     {
-        public string Age = string.Empty;
-        public string Height = string.Empty;
-        public string Weight = string.Empty;
-        public string Eyes = string.Empty;
-        public string Skin = string.Empty;
-        public string Hair = string.Empty;
         public string Gender = string.Empty;
-        public string Appearance = string.Empty;
 
         public static CharacterIdentityProfileSaveData Clone(CharacterIdentityProfileSaveData source)
         {
@@ -94,14 +87,7 @@ namespace GameLogic
 
             return new CharacterIdentityProfileSaveData
             {
-                Age = source.Age ?? string.Empty,
-                Height = source.Height ?? string.Empty,
-                Weight = source.Weight ?? string.Empty,
-                Eyes = source.Eyes ?? string.Empty,
-                Skin = source.Skin ?? string.Empty,
-                Hair = source.Hair ?? string.Empty,
-                Gender = source.Gender ?? string.Empty,
-                Appearance = source.Appearance ?? string.Empty
+                Gender = source.Gender ?? string.Empty
             };
         }
     }

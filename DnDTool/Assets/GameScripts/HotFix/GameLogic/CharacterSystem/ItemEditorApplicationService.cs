@@ -109,17 +109,16 @@ namespace GameLogic
                 normalizedItem,
                 Math.Max(1, quantity));
 
-            if (character.Equipment == null)
+            CharacterInventoryOperationResult inventoryResult = CharacterInventoryApplicationService.Instance.AddItem(
+                character.Equipment,
+                characterItem,
+                Math.Max(1, quantity));
+            if (!inventoryResult.Success)
             {
-                character.Equipment = new CharacterEquipmentSetSaveData();
+                return FailAdd(inventoryResult.Message);
             }
 
-            if (character.Equipment.InventoryItems == null)
-            {
-                character.Equipment.InventoryItems = new List<CharacterEquipmentItemSaveData>();
-            }
-
-            character.Equipment.InventoryItems.Add(characterItem);
+            character.Equipment = CharacterEquipmentSetSaveData.Clone(inventoryResult.Equipment);
             CharacterApplicationService.Instance.Save(character);
             return new ItemEditorAddItemResult
             {

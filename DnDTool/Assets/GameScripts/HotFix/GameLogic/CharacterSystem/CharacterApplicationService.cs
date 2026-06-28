@@ -47,8 +47,10 @@ namespace GameLogic
                 ClassId = request.ClassId?.Trim() ?? string.Empty,
                 BackgroundId = request.BackgroundId?.Trim() ?? string.Empty,
                 Alignment = request.AlignmentId?.Trim() ?? string.Empty,
+                PreviewImagePath = request.PreviewImagePath?.Trim() ?? string.Empty,
                 Level = Math.Max(1, request.Level),
                 RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(request.RuntimeSnapshot),
+                Equipment = CharacterEquipmentSetSaveData.Clone(request.Equipment),
                 ClassProgresses = CloneClassProgresses(request.ClassProgresses),
                 ChoiceSelections = CloneChoiceSelections(request.ChoiceSelections)
             };
@@ -71,8 +73,10 @@ namespace GameLogic
                 ClassId = input.ClassId,
                 BackgroundId = input.BackgroundId,
                 AlignmentId = input.AlignmentId,
+                PreviewImagePath = input.PreviewImagePath,
                 Level = level,
                 RuntimeSnapshot = BuildCreationRuntimeSnapshot(input),
+                Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment),
                 ClassProgresses = BuildCreationClassProgresses(input, level),
                 ChoiceSelections = BuildCreationChoiceSelections(input)
             };
@@ -82,7 +86,9 @@ namespace GameLogic
             character.MaxHp = Math.Max(0, input.MaxHp);
             character.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(input.CurrentHp, character.MaxHp);
             character.TemporaryHp = Math.Max(0, input.TemporaryHp);
+            character.PreviewImagePath = input.PreviewImagePath?.Trim() ?? string.Empty;
             character.HpRolls = CloneHpRolls(input.HpRolls);
+            character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
             return CharacterCardLocalRepository.Normalize(character);
         }
 

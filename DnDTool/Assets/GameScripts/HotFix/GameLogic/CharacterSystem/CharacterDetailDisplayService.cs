@@ -1172,7 +1172,7 @@ namespace GameLogic
             {
                 string title = BuildInventoryItemName(item);
                 string description = BuildInventoryItemDetailDescription(item, isEquipped);
-                entries.Add(new CharacterInventoryDisplayEntry(label, title, description, isEquipped));
+                entries.Add(new CharacterInventoryDisplayEntry(item.ItemInstanceId, label, title, description, isEquipped));
             }
         }
 
