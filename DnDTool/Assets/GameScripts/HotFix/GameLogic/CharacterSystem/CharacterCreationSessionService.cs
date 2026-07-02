@@ -35,6 +35,8 @@ namespace GameLogic
 
         public List<CharacterCreationToolChoiceState> ToolChoiceStates { get; } = new List<CharacterCreationToolChoiceState>();
 
+        public List<CharacterCreationMixedProficiencyChoiceState> MixedProficiencyChoiceStates { get; } = new List<CharacterCreationMixedProficiencyChoiceState>();
+
         public List<CharacterCreationFeatureChoiceState> FeatureChoiceStates { get; } = new List<CharacterCreationFeatureChoiceState>();
 
         public CharacterCreationToolChoiceState ActiveToolChoiceState => m_activeToolChoiceState;
@@ -44,6 +46,8 @@ namespace GameLogic
         public CharacterCreationRaceAbilityChoiceState RaceAbilityChoiceState { get; } = new CharacterCreationRaceAbilityChoiceState();
 
         public CharacterCreationAbilityGenerationState AbilityGenerationState { get; } = new CharacterCreationAbilityGenerationState();
+
+        public CharacterCreationSpellSelectionState SpellSelectionState { get; } = new CharacterCreationSpellSelectionState();
 
         public void BeginNewDraft()
         {
@@ -150,8 +154,16 @@ namespace GameLogic
             m_state.Character.BackgroundId = input.BackgroundId?.Trim() ?? string.Empty;
             m_state.Character.Alignment = input.AlignmentId?.Trim() ?? string.Empty;
             m_state.Character.PreviewImagePath = input.PreviewImagePath?.Trim() ?? string.Empty;
+            m_state.Character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
             m_state.Character.Level = Math.Max(1, input.Level);
             m_state.Character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
+            m_state.Character.RoleplayProfile = new CharacterRoleplayProfileSaveData
+            {
+                PersonalityTraits = input.PersonalityTraits?.Trim() ?? string.Empty,
+                Ideals = input.Ideals?.Trim() ?? string.Empty,
+                Bonds = input.Bonds?.Trim() ?? string.Empty,
+                Flaws = input.Flaws?.Trim() ?? string.Empty
+            };
             m_state.IsDirty = true;
         }
 
@@ -197,6 +209,11 @@ namespace GameLogic
             return FindChoiceState(ToolChoiceStates, choiceGroupId);
         }
 
+        public CharacterCreationMixedProficiencyChoiceState FindMixedProficiencyChoiceState(string choiceGroupId)
+        {
+            return FindChoiceState(MixedProficiencyChoiceStates, choiceGroupId);
+        }
+
         public CharacterCreationFeatureChoiceState FindFeatureChoiceState(string choiceGroupId)
         {
             return FindChoiceState(FeatureChoiceStates, choiceGroupId);
@@ -223,6 +240,83 @@ namespace GameLogic
         {
             m_activeToolChoiceState = null;
             m_activeFeatureChoiceState = null;
+        }
+
+        public void SetPendingSpellSelection(string spellId, int filterLevel)
+        {
+            EnsureState();
+            SpellSelectionState.PendingSpellId = spellId?.Trim() ?? string.Empty;
+            SpellSelectionState.FilterLevel = filterLevel;
+        }
+
+        public void ClearPendingSpellSelection()
+        {
+            SpellSelectionState.PendingSpellId = string.Empty;
+            SpellSelectionState.FilterLevel = -1;
+        }
+
+        public bool ConfirmPendingSpellSelection()
+        {
+            EnsureState();
+            string spellId = SpellSelectionState.PendingSpellId?.Trim() ?? string.Empty;
+            int level = Math.Max(1, m_state?.Character?.Level ?? 1);
+            CharacterCreationSpellbookViewState spellbook = CharacterCreationSpellDisplayService.Instance.BuildSpellbook(m_state.Character, level, -1);
+            if (string.IsNullOrWhiteSpace(spellId)
+                || !DndRuleContentService.Instance.TryGetSpell(spellId, out DndSpellDefineData spell)
+                || CharacterCreationSpellDisplayService.Instance.IsSpellKnown(m_state.Character, spellId)
+                || !CanLearnSpell(spell, spellbook))
+            {
+                return false;
+            }
+
+            bool shouldPrepare = spell.Level > 0
+                && spellbook.MaxKnownSpells <= 0
+                && spellbook.MaxPreparedSpells > 0;
+            if (m_state.Character.Spellcasting == null)
+            {
+                m_state.Character.Spellcasting = new CharacterSpellcastingSaveData();
+            }
+
+            m_state.Character.Spellcasting.HasSpellcasting = true;
+            m_state.Character.Spellcasting.Spells.Add(new CharacterKnownSpellSaveData
+            {
+                SpellId = spell.SpellId,
+                SourceClassId = m_state.Character.ClassId?.Trim() ?? string.Empty,
+                SpellLevel = Math.Max(0, spell.Level),
+                IsCantrip = spell.Level <= 0,
+                IsKnown = true,
+                IsPrepared = shouldPrepare,
+                IsAlwaysPrepared = false,
+                IsRitual = spell.Ritual
+            });
+            SpellSelectionState.PendingSpellId = string.Empty;
+            m_state.IsDirty = true;
+            return true;
+        }
+
+        private static bool CanLearnSpell(DndSpellDefineData spell, CharacterCreationSpellbookViewState spellbook)
+        {
+            if (spell == null || spellbook == null)
+            {
+                return false;
+            }
+
+            if (spell.Level > spellbook.MaxSpellLevel)
+            {
+                return false;
+            }
+
+            if (spell.Level <= 0)
+            {
+                return spellbook.MaxKnownCantrips > 0 && spellbook.KnownCantrips < spellbook.MaxKnownCantrips;
+            }
+
+            if (spellbook.MaxKnownSpells > 0)
+            {
+                return spellbook.KnownSpells < spellbook.MaxKnownSpells;
+            }
+
+            return spellbook.MaxPreparedSpells > 0 && spellbook.PreparedSpells < spellbook.MaxPreparedSpells;
         }
 
         public List<CharacterCreationAbilityGenerationMethodViewState> GetAbilityGenerationMethods()
@@ -469,6 +563,19 @@ namespace GameLogic
                 return false;
             }
 
+            if (state is CharacterCreationMixedToolChoiceState mixedToolState)
+            {
+                CharacterCreationMixedProficiencyChoiceState mixedState = mixedToolState.MixedState;
+                if (mixedState == null)
+                {
+                    return false;
+                }
+
+                TogglePendingMixedToolChoice(mixedState, toolId);
+                m_state.IsDirty = true;
+                return true;
+            }
+
             TogglePendingValue(state.PendingToolIds, toolId, state.MaxSelect);
             m_state.IsDirty = true;
             return true;
@@ -497,17 +604,21 @@ namespace GameLogic
 
         public bool SelectFeatFeatureChoice(string optionId)
         {
-            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
+            return SelectFeatFeatureChoice(m_activeFeatureChoiceState, optionId);
+        }
+
+        public bool SelectFeatFeatureChoice(CharacterCreationFeatureChoiceState state, string optionId)
+        {
             if (!IsFeatFeatureChoice(state) || string.IsNullOrWhiteSpace(optionId))
             {
                 return false;
             }
 
             state.PendingOptionIds.Clear();
-            state.SelectedOptionIds.Clear();
             AppendUniqueExactValue(state.PendingOptionIds, optionId);
-            AppendUniqueExactValue(state.SelectedOptionIds, optionId);
-            RemoveFollowupFeatureChoicesForSource("Feat");
+            state.IsConfirmed = false;
+            RemoveFollowupFeatureChoicesForSource("Feat", state);
+            RemoveToolChoiceStatesBySource("Feat");
             m_state.IsDirty = true;
             RefreshDerivedStatsAfterAbilityScoresChanged();
             return true;
@@ -521,6 +632,22 @@ namespace GameLogic
                 return false;
             }
 
+            if (state is CharacterCreationMixedToolChoiceState mixedToolState)
+            {
+                CharacterCreationMixedProficiencyChoiceState mixedState = mixedToolState.MixedState;
+                if (mixedState == null)
+                {
+                    return false;
+                }
+
+                AppendUniqueValues(mixedState.SelectedToolIds, mixedState.PendingToolIds);
+                mixedState.PendingToolIds.Clear();
+                ValidateMixedToolSelections(mixedState);
+                SyncMixedToolChoiceState(mixedToolState);
+                m_state.IsDirty = true;
+                return true;
+            }
+
             state.SelectedToolIds.Clear();
             AppendUniqueValues(state.SelectedToolIds, state.PendingToolIds);
             m_state.IsDirty = true;
@@ -532,13 +659,6 @@ namespace GameLogic
             if (state == null)
             {
                 return false;
-            }
-
-            if (IsFeatFeatureChoice(state) && state.SelectedOptionIds.Count > 0)
-            {
-                m_state.IsDirty = true;
-                RefreshDerivedStatsAfterAbilityScoresChanged();
-                return true;
             }
 
             if (state.MinSelect > 0 && state.PendingOptionIds.Count < state.MinSelect)
@@ -556,6 +676,7 @@ namespace GameLogic
                 AppendUniqueValues(state.SelectedOptionIds, state.PendingOptionIds);
             }
 
+            state.IsConfirmed = true;
             m_state.IsDirty = true;
             RefreshDerivedStatsAfterAbilityScoresChanged();
             return true;
@@ -705,10 +826,53 @@ namespace GameLogic
             return ValidateToolChoiceState(state);
         }
 
+        public CharacterCreationToolChoiceState CreateOrRefreshMixedToolChoiceState(string choiceGroupId, string label)
+        {
+            CharacterCreationMixedProficiencyChoiceState mixedState = FindMixedProficiencyChoiceState(choiceGroupId);
+            if (mixedState == null || mixedState.OptionToolIds.Count == 0)
+            {
+                return null;
+            }
+
+            ValidateMixedToolSelections(mixedState);
+            CharacterCreationMixedToolChoiceState state = FindMixedToolChoiceState(choiceGroupId);
+            if (state == null)
+            {
+                state = new CharacterCreationMixedToolChoiceState
+                {
+                    ChoiceGroupId = mixedState.ChoiceGroupId
+                };
+                ToolChoiceStates.Add(state);
+            }
+
+            state.MixedState = mixedState;
+            state.Label = FirstNonEmpty(label, mixedState.Label);
+            state.SourceType = mixedState.SourceType ?? string.Empty;
+            state.SourceId = mixedState.SourceId ?? string.Empty;
+            state.MaxSelect = GetMixedToolRemainingSelect(mixedState);
+            state.OptionToolIds.Clear();
+            state.PendingToolIds.Clear();
+            state.SelectedToolIds.Clear();
+            state.OptionIdByToolId.Clear();
+
+            AppendUniqueExactValues(state.OptionToolIds, mixedState.OptionToolIds);
+            AppendUniqueExactValues(state.PendingToolIds, mixedState.PendingToolIds);
+            AppendUniqueExactValues(state.SelectedToolIds, mixedState.SelectedToolIds);
+            foreach (KeyValuePair<string, string> pair in mixedState.OptionIdByToolId)
+            {
+                state.OptionIdByToolId[pair.Key] = pair.Value;
+            }
+
+            return ValidateToolChoiceState(state);
+        }
+
         public void RebuildSkillChoiceStates(IReadOnlyList<CharacterCreationSkillChoiceSource> sources, IReadOnlyList<string> fixedSkillIds)
         {
             List<CharacterCreationSkillChoiceState> previousStates = new List<CharacterCreationSkillChoiceState>(SkillChoiceStates);
+            List<CharacterCreationMixedProficiencyChoiceState> previousMixedStates = new List<CharacterCreationMixedProficiencyChoiceState>(MixedProficiencyChoiceStates);
             SkillChoiceStates.Clear();
+            MixedProficiencyChoiceStates.Clear();
+            RemoveMixedToolChoiceStates();
 
             if (sources == null)
             {
@@ -719,6 +883,7 @@ namespace GameLogic
             {
                 CharacterCreationSkillChoiceSource source = sources[sourceIndex];
                 AppendSkillChoiceStates(previousStates, source.ChoiceGroupIds, source.SourceType, source.SourceId, fixedSkillIds);
+                AppendMixedProficiencyChoiceStates(previousMixedStates, source.ChoiceGroupIds, source.SourceType, source.SourceId, fixedSkillIds);
             }
 
             m_state.IsDirty = true;
@@ -752,14 +917,81 @@ namespace GameLogic
                 });
             }
 
+            AppendSelectedFeatSkillChoiceSources(sources);
             RebuildSkillChoiceStates(sources, CharacterCreationRuleService.Instance.BuildFixedSkillProficiencyIds(raceData, backgroundData));
+        }
+
+        private void AppendSelectedFeatSkillChoiceSources(List<CharacterCreationSkillChoiceSource> sources)
+        {
+            if (sources == null)
+            {
+                return;
+            }
+
+            for (int stateIndex = 0; stateIndex < FeatureChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationFeatureChoiceState state = FeatureChoiceStates[stateIndex];
+                if (!TryGetSelectedFeat(state, out DndFeatDefineData feat))
+                {
+                    continue;
+                }
+
+                sources.Add(new CharacterCreationSkillChoiceSource
+                {
+                    SourceType = "Feat",
+                    SourceId = feat.FeatId,
+                    ChoiceGroupIds = BuildFeatChoiceGroupIds(feat)
+                });
+            }
         }
 
         public bool TrySelectSkill(string skillId, IReadOnlyList<string> currentProficiencyIds)
         {
-            if (string.IsNullOrWhiteSpace(skillId) || ContainsNormalizedSkillId(currentProficiencyIds, skillId))
+            if (string.IsNullOrWhiteSpace(skillId))
             {
                 return false;
+            }
+
+            for (int stateIndex = 0; stateIndex < MixedProficiencyChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[stateIndex];
+                if (state != null && RemoveNormalizedSkillId(state.SelectedSkillIds, skillId))
+                {
+                    ValidateMixedToolSelections(state);
+                    m_state.IsDirty = true;
+                    return true;
+                }
+            }
+
+            for (int stateIndex = 0; stateIndex < SkillChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationSkillChoiceState state = SkillChoiceStates[stateIndex];
+                if (state != null && RemoveNormalizedSkillId(state.SelectedSkillIds, skillId))
+                {
+                    m_state.IsDirty = true;
+                    return true;
+                }
+            }
+
+            if (ContainsNormalizedSkillId(currentProficiencyIds, skillId))
+            {
+                return false;
+            }
+
+            for (int stateIndex = 0; stateIndex < MixedProficiencyChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[stateIndex];
+                if (state == null
+                    || state.PendingCount >= state.MaxSelect
+                    || !ContainsNormalizedSkillId(state.CandidateSkillIds, skillId)
+                    || ContainsNormalizedSkillId(state.SelectedSkillIds, skillId))
+                {
+                    continue;
+                }
+
+                AppendUniqueNormalizedSkillId(state.SelectedSkillIds, skillId);
+                m_state.IsDirty = true;
+                return true;
             }
 
             for (int stateIndex = 0; stateIndex < SkillChoiceStates.Count; stateIndex++)
@@ -800,6 +1032,18 @@ namespace GameLogic
                 }
             }
 
+            for (int index = 0; index < MixedProficiencyChoiceStates.Count; index++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[index];
+                if (state != null
+                    && state.PendingCount < state.MaxSelect
+                    && ContainsNormalizedSkillId(state.CandidateSkillIds, skillId)
+                    && !ContainsNormalizedSkillId(state.SelectedSkillIds, skillId))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -811,6 +1055,15 @@ namespace GameLogic
             for (int index = 0; index < SkillChoiceStates.Count; index++)
             {
                 CharacterCreationSkillChoiceState state = SkillChoiceStates[index];
+                if (state != null)
+                {
+                    AppendUniqueNormalizedSkillIds(result, state.SelectedSkillIds);
+                }
+            }
+
+            for (int index = 0; index < MixedProficiencyChoiceStates.Count; index++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[index];
                 if (state != null)
                 {
                     AppendUniqueNormalizedSkillIds(result, state.SelectedSkillIds);
@@ -851,6 +1104,37 @@ namespace GameLogic
                 }
             }
 
+            for (int stateIndex = 0; stateIndex < MixedProficiencyChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[stateIndex];
+                if (state == null || string.IsNullOrWhiteSpace(state.ChoiceGroupId))
+                {
+                    continue;
+                }
+
+                for (int skillIndex = 0; skillIndex < state.SelectedSkillIds.Count; skillIndex++)
+                {
+                    string skillId = NormalizeSkillId(state.SelectedSkillIds[skillIndex]);
+                    if (string.IsNullOrWhiteSpace(skillId))
+                    {
+                        continue;
+                    }
+
+                    string optionId = state.OptionIdBySkillId.TryGetValue(skillId, out string mappedOptionId)
+                        ? mappedOptionId
+                        : $"skill:{skillId}";
+
+                    result.Add(new CharacterCreationSkillChoiceInput
+                    {
+                        ChoiceGroupId = state.ChoiceGroupId,
+                        SkillId = optionId,
+                        SourceType = state.SourceType?.Trim() ?? string.Empty,
+                        SourceId = state.SourceId?.Trim() ?? string.Empty,
+                        Level = 1
+                    });
+                }
+            }
+
             return result;
         }
 
@@ -861,7 +1145,7 @@ namespace GameLogic
             for (int stateIndex = 0; stateIndex < ToolChoiceStates.Count; stateIndex++)
             {
                 CharacterCreationToolChoiceState state = ToolChoiceStates[stateIndex];
-                if (state == null || string.IsNullOrWhiteSpace(state.ChoiceGroupId))
+                if (state == null || state is CharacterCreationMixedToolChoiceState || string.IsNullOrWhiteSpace(state.ChoiceGroupId))
                 {
                     continue;
                 }
@@ -891,6 +1175,39 @@ namespace GameLogic
                 }
             }
 
+            for (int stateIndex = 0; stateIndex < MixedProficiencyChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[stateIndex];
+                if (state == null || string.IsNullOrWhiteSpace(state.ChoiceGroupId))
+                {
+                    continue;
+                }
+
+                for (int toolIndex = 0; toolIndex < state.SelectedToolIds.Count; toolIndex++)
+                {
+                    string toolId = state.SelectedToolIds[toolIndex];
+                    if (string.IsNullOrWhiteSpace(toolId))
+                    {
+                        continue;
+                    }
+
+                    string normalizedToolId = toolId.Trim();
+                    string optionId = state.OptionIdByToolId.TryGetValue(normalizedToolId, out string mappedOptionId)
+                        ? mappedOptionId
+                        : $"tool:{normalizedToolId}";
+
+                    result.Add(new CharacterCreationToolChoiceInput
+                    {
+                        ChoiceGroupId = state.ChoiceGroupId,
+                        OptionId = optionId?.Trim() ?? string.Empty,
+                        SourceType = state.SourceType?.Trim() ?? string.Empty,
+                        SourceId = state.SourceId?.Trim() ?? string.Empty,
+                        ClassId = string.Equals(state.SourceType, "Class", StringComparison.OrdinalIgnoreCase) ? selectedClassId?.Trim() ?? string.Empty : string.Empty,
+                        Level = 1
+                    });
+                }
+            }
+
             return result;
         }
 
@@ -902,6 +1219,20 @@ namespace GameLogic
             for (int stateIndex = 0; stateIndex < ToolChoiceStates.Count; stateIndex++)
             {
                 CharacterCreationToolChoiceState state = ToolChoiceStates[stateIndex];
+                if (state == null || state is CharacterCreationMixedToolChoiceState)
+                {
+                    continue;
+                }
+
+                for (int toolIndex = 0; toolIndex < state.SelectedToolIds.Count; toolIndex++)
+                {
+                    AppendUniqueExactValue(result, state.SelectedToolIds[toolIndex]);
+                }
+            }
+
+            for (int stateIndex = 0; stateIndex < MixedProficiencyChoiceStates.Count; stateIndex++)
+            {
+                CharacterCreationMixedProficiencyChoiceState state = MixedProficiencyChoiceStates[stateIndex];
                 if (state == null)
                 {
                     continue;
@@ -939,8 +1270,7 @@ namespace GameLogic
                 }
 
                 IReadOnlyList<string> optionIds = includeActivePending
-                    && ReferenceEquals(state, m_activeFeatureChoiceState)
-                    && !IsRepeatableAbilityScoreChoice(state)
+                    && (ReferenceEquals(state, m_activeFeatureChoiceState) || !state.IsConfirmed)
                     && state.PendingOptionIds.Count > 0
                     ? state.PendingOptionIds
                     : state.SelectedOptionIds;
@@ -995,6 +1325,10 @@ namespace GameLogic
                 MaxHp = Math.Max(0, character.MaxHp),
                 CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.CurrentHp, character.MaxHp),
                 TemporaryHp = Math.Max(0, character.TemporaryHp),
+                PersonalityTraits = character.RoleplayProfile?.PersonalityTraits?.Trim() ?? string.Empty,
+                Ideals = character.RoleplayProfile?.Ideals?.Trim() ?? string.Empty,
+                Bonds = character.RoleplayProfile?.Bonds?.Trim() ?? string.Empty,
+                Flaws = character.RoleplayProfile?.Flaws?.Trim() ?? string.Empty,
                 HpRolls = CloneHpRolls(character.HpRolls),
                 SkillProficiencyIds = BuildCurrentSkillProficiencyIds(form.FixedSkillProficiencyIds),
                 ToolProficiencyIds = BuildCurrentToolProficiencyIds(form.FixedToolProficiencyIds),
@@ -1003,7 +1337,8 @@ namespace GameLogic
                 ToolChoices = BuildToolChoiceInputs(classId),
                 FeatureChoices = BuildFeatureChoiceInputs(),
                 PreviewImagePath = character.PreviewImagePath?.Trim() ?? string.Empty,
-                Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment)
+                Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment),
+                Spellcasting = CharacterSpellcastingSaveData.Clone(character.Spellcasting)
             };
         }
 
@@ -1021,6 +1356,7 @@ namespace GameLogic
                     || !string.Equals(state.SourceType, "Class", StringComparison.OrdinalIgnoreCase)
                     || !string.Equals(state.ClassId, classId, StringComparison.OrdinalIgnoreCase)
                     || !string.Equals(state.ChoiceType, "Subclass", StringComparison.OrdinalIgnoreCase)
+                    || !state.IsConfirmed
                     || state.SelectedOptionIds.Count == 0)
                 {
                     continue;
@@ -1279,6 +1615,132 @@ namespace GameLogic
             }
         }
 
+        private void AppendMixedProficiencyChoiceStates(
+            IReadOnlyList<CharacterCreationMixedProficiencyChoiceState> previousStates,
+            IReadOnlyList<string> choiceGroupIds,
+            string sourceType,
+            string sourceId,
+            IReadOnlyList<string> fixedSkillIds)
+        {
+            if (choiceGroupIds == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < choiceGroupIds.Count; index++)
+            {
+                string choiceGroupId = choiceGroupIds[index];
+                if (string.IsNullOrWhiteSpace(choiceGroupId)
+                    || !DndRuleContentService.Instance.TryGetChoiceGroup(choiceGroupId, out DndChoiceGroupData choiceGroup)
+                    || !string.Equals(choiceGroup.ChoiceType, "SkillOrTool", StringComparison.OrdinalIgnoreCase)
+                    || FindMixedProficiencyChoiceState(choiceGroup.ChoiceGroupId) != null)
+                {
+                    continue;
+                }
+
+                CharacterCreationMixedProficiencyChoiceState state = new CharacterCreationMixedProficiencyChoiceState
+                {
+                    ChoiceGroupId = choiceGroup.ChoiceGroupId,
+                    Label = FirstNonEmpty(choiceGroup.Name, choiceGroup.ChoiceGroupId),
+                    SourceType = sourceType ?? string.Empty,
+                    SourceId = sourceId ?? string.Empty,
+                    MaxSelect = Math.Max(choiceGroup.MinSelect, choiceGroup.MaxSelect)
+                };
+
+                IReadOnlyList<DndChoiceOptionData> options = DndRuleContentService.Instance.GetChoiceOptions(choiceGroup.ChoiceGroupId);
+                for (int optionIndex = 0; optionIndex < options.Count; optionIndex++)
+                {
+                    DndChoiceOptionData option = options[optionIndex];
+                    string optionId = option?.OptionId?.Trim() ?? string.Empty;
+                    if (string.IsNullOrWhiteSpace(optionId))
+                    {
+                        continue;
+                    }
+
+                    if (TryResolveSkillOrToolOption(option, out string skillId, out string toolId))
+                    {
+                        if (!string.IsNullOrWhiteSpace(skillId))
+                        {
+                            AppendUniqueNormalizedSkillId(state.OptionSkillIds, skillId);
+                            string normalizedSkillId = NormalizeSkillId(skillId);
+                            if (!state.OptionIdBySkillId.ContainsKey(normalizedSkillId))
+                            {
+                                state.OptionIdBySkillId[normalizedSkillId] = optionId;
+                            }
+
+                            if (!ContainsNormalizedSkillId(fixedSkillIds, normalizedSkillId))
+                            {
+                                AppendUniqueNormalizedSkillId(state.CandidateSkillIds, normalizedSkillId);
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(toolId))
+                        {
+                            AppendUniqueExactValue(state.OptionToolIds, toolId);
+                            if (!state.OptionIdByToolId.ContainsKey(toolId))
+                            {
+                                state.OptionIdByToolId[toolId] = optionId;
+                            }
+                        }
+                    }
+                }
+
+                RestoreMixedProficiencyChoiceSelections(previousStates, state);
+                if (state.MaxSelect > 0 && (state.OptionSkillIds.Count > 0 || state.OptionToolIds.Count > 0))
+                {
+                    MixedProficiencyChoiceStates.Add(state);
+                }
+            }
+        }
+
+        private static void RestoreMixedProficiencyChoiceSelections(
+            IReadOnlyList<CharacterCreationMixedProficiencyChoiceState> previousStates,
+            CharacterCreationMixedProficiencyChoiceState state)
+        {
+            if (previousStates == null || state == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < previousStates.Count; index++)
+            {
+                CharacterCreationMixedProficiencyChoiceState previous = previousStates[index];
+                if (previous == null || !string.Equals(previous.ChoiceGroupId, state.ChoiceGroupId, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                for (int skillIndex = 0; skillIndex < previous.SelectedSkillIds.Count; skillIndex++)
+                {
+                    string skillId = previous.SelectedSkillIds[skillIndex];
+                    if (ContainsNormalizedSkillId(state.OptionSkillIds, skillId) && state.SelectedCount < state.MaxSelect)
+                    {
+                        AppendUniqueNormalizedSkillId(state.SelectedSkillIds, skillId);
+                    }
+                }
+
+                for (int toolIndex = 0; toolIndex < previous.SelectedToolIds.Count; toolIndex++)
+                {
+                    string toolId = previous.SelectedToolIds[toolIndex];
+                    if (ContainsExactValue(state.OptionToolIds, toolId) && state.SelectedCount < state.MaxSelect)
+                    {
+                        AppendUniqueExactValue(state.SelectedToolIds, toolId);
+                    }
+                }
+
+                for (int toolIndex = 0; toolIndex < previous.PendingToolIds.Count; toolIndex++)
+                {
+                    string toolId = previous.PendingToolIds[toolIndex];
+                    if (ContainsExactValue(state.OptionToolIds, toolId) && state.PendingCount < state.MaxSelect)
+                    {
+                        AppendUniqueExactValue(state.PendingToolIds, toolId);
+                    }
+                }
+
+                return;
+            }
+        }
+
         private void AppendFeatureChoiceStates(
             IReadOnlyList<CharacterCreationFeatureChoiceState> previousStates,
             IReadOnlyList<string> choiceGroupIds,
@@ -1358,6 +1820,8 @@ namespace GameLogic
                             AppendUniqueExactValue(state.SelectedOptionIds, optionId);
                             AppendUniqueExactValue(state.PendingOptionIds, optionId);
                         }
+
+                        state.IsConfirmed = previous.IsConfirmed;
                     }
                 }
 
@@ -1464,7 +1928,6 @@ namespace GameLogic
         {
             return choiceGroup != null
                 && (string.Equals(choiceGroup.ChoiceType, "Feat", StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat_any", StringComparison.OrdinalIgnoreCase)
                     || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -1475,7 +1938,7 @@ namespace GameLogic
                 return Array.Empty<string>();
             }
 
-            return state.SelectedOptionIds.Count > 0
+            return state.IsConfirmed && state.SelectedOptionIds.Count > 0
                 ? state.SelectedOptionIds
                 : state.PendingOptionIds;
         }
@@ -1512,6 +1975,24 @@ namespace GameLogic
             }
 
             return false;
+        }
+
+        private static bool TryGetSelectedFeat(CharacterCreationFeatureChoiceState state, out DndFeatDefineData feat)
+        {
+            feat = null;
+            if (state == null)
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(state.ChoiceGroupId)
+                && DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                && TryResolveSelectedFeat(choiceGroup, state, out feat))
+            {
+                return true;
+            }
+
+            return TryResolveSourceFeat(state, out feat);
         }
 
         private static List<string> BuildFeatChoiceGroupIds(DndFeatDefineData feat)
@@ -1603,7 +2084,7 @@ namespace GameLogic
 
             if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase))
             {
-                return "choice_feat_any";
+                return "choice_feat";
             }
 
             return string.Empty;
@@ -1617,7 +2098,7 @@ namespace GameLogic
 
         private static bool IsFeatureChoiceSelectionComplete(CharacterCreationFeatureChoiceState state)
         {
-            if (state == null || state.SelectedOptionIds.Count == 0)
+            if (state == null || !state.IsConfirmed || state.SelectedOptionIds.Count == 0)
             {
                 return false;
             }
@@ -1631,6 +2112,7 @@ namespace GameLogic
         public void RemoveToolChoiceStatesBySource(string sourceType)
         {
             RemoveChoiceStatesBySource(ToolChoiceStates, sourceType);
+            RemoveChoiceStatesBySource(MixedProficiencyChoiceStates, sourceType);
         }
 
         public void RemoveFeatureChoiceStatesBySource(string sourceType)
@@ -1638,7 +2120,7 @@ namespace GameLogic
             RemoveChoiceStatesBySource(FeatureChoiceStates, sourceType);
         }
 
-        private void RemoveFollowupFeatureChoicesForSource(string sourceType)
+        private void RemoveFollowupFeatureChoicesForSource(string sourceType, CharacterCreationFeatureChoiceState stateToKeep = null)
         {
             if (string.IsNullOrWhiteSpace(sourceType))
             {
@@ -1648,7 +2130,7 @@ namespace GameLogic
             for (int index = FeatureChoiceStates.Count - 1; index >= 0; index--)
             {
                 CharacterCreationFeatureChoiceState state = FeatureChoiceStates[index];
-                if (state == null || ReferenceEquals(state, m_activeFeatureChoiceState))
+                if (state == null || ReferenceEquals(state, stateToKeep))
                 {
                     continue;
                 }
@@ -1669,7 +2151,9 @@ namespace GameLogic
         {
             SkillChoiceStates.Clear();
             ToolChoiceStates.Clear();
+            MixedProficiencyChoiceStates.Clear();
             FeatureChoiceStates.Clear();
+            ClearPendingSpellSelection();
             ClearRaceAbilityChoiceState();
             ClearActiveChoice();
         }
@@ -1757,8 +2241,13 @@ namespace GameLogic
         public int GetCurrentAbilityScore(string abilityId, int baseScore)
         {
             string normalized = NormalizeAbilityId(abilityId);
-            return GetBaseAbilityScore(normalized, baseScore)
+            return GetCurrentBaseAbilityScore(normalized, baseScore)
                 + GetFeatureAbilityScoreIncrease(normalized);
+        }
+
+        public int GetCurrentBaseAbilityScore(string abilityId, int baseScore)
+        {
+            return GetBaseAbilityScore(abilityId, baseScore);
         }
 
         private int GetBaseAbilityScore(string abilityId, int baseScore)
@@ -1866,27 +2355,30 @@ namespace GameLogic
 
         private int GetPendingFeatAbilityScoreBonus(string abilityId)
         {
-            CharacterCreationFeatureChoiceState state = m_activeFeatureChoiceState;
-            if (state == null
-                || state.PendingOptionIds.Count == 0
-                || !DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
-                || !IsFeatChoiceGroup(choiceGroup))
-            {
-                return 0;
-            }
-
             int total = 0;
-            for (int index = 0; index < state.PendingOptionIds.Count; index++)
+            for (int stateIndex = 0; stateIndex < FeatureChoiceStates.Count; stateIndex++)
             {
-                string optionId = state.PendingOptionIds[index];
-                if (TryResolveFeatFromOption(state.ChoiceGroupId, optionId, out DndFeatDefineData feat))
+                CharacterCreationFeatureChoiceState state = FeatureChoiceStates[stateIndex];
+                if (state == null
+                    || !DndRuleContentService.Instance.TryGetChoiceGroup(state.ChoiceGroupId, out DndChoiceGroupData choiceGroup)
+                    || !IsFeatChoiceGroup(choiceGroup))
                 {
-                    total += SumFeatAbilityScoreBonus(feat, abilityId);
+                    continue;
                 }
 
-                DndChoiceOptionData option = FindChoiceOption(state.ChoiceGroupId, optionId);
-                total += SumAbilityScoreBonusFromEffects(option?.GrantEffectIds, abilityId);
-                total += SumAbilityScoreBonusFromFeatures(option?.GrantFeatureIds, abilityId);
+                IReadOnlyList<string> optionIds = GetCommittedOrPendingOptionIds(state);
+                for (int optionIndex = 0; optionIndex < optionIds.Count; optionIndex++)
+                {
+                    string optionId = optionIds[optionIndex];
+                    if (TryResolveFeatFromOption(state.ChoiceGroupId, optionId, out DndFeatDefineData feat))
+                    {
+                        total += SumFeatAbilityScoreBonus(feat, abilityId);
+                    }
+
+                    DndChoiceOptionData option = FindChoiceOption(state.ChoiceGroupId, optionId);
+                    total += SumAbilityScoreBonusFromEffects(option?.GrantEffectIds, abilityId);
+                    total += SumAbilityScoreBonusFromFeatures(option?.GrantFeatureIds, abilityId);
+                }
             }
 
             return total;
@@ -2015,6 +2507,12 @@ namespace GameLogic
                     return state;
                 }
 
+                if (state is CharacterCreationMixedProficiencyChoiceState mixedState
+                    && string.Equals(mixedState.ChoiceGroupId, choiceGroupId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return state;
+                }
+
                 if (state is CharacterCreationFeatureChoiceState featureState
                     && string.Equals(featureState.ChoiceGroupId, choiceGroupId, StringComparison.OrdinalIgnoreCase))
                 {
@@ -2037,6 +2535,13 @@ namespace GameLogic
                 T state = states[index];
                 if (state is CharacterCreationToolChoiceState toolState
                     && string.Equals(toolState.SourceType, sourceType, StringComparison.OrdinalIgnoreCase))
+                {
+                    states.RemoveAt(index);
+                    continue;
+                }
+
+                if (state is CharacterCreationMixedProficiencyChoiceState mixedState
+                    && string.Equals(mixedState.SourceType, sourceType, StringComparison.OrdinalIgnoreCase))
                 {
                     states.RemoveAt(index);
                     continue;
@@ -2071,6 +2576,110 @@ namespace GameLogic
             }
 
             return state;
+        }
+
+        private CharacterCreationMixedToolChoiceState FindMixedToolChoiceState(string choiceGroupId)
+        {
+            if (string.IsNullOrWhiteSpace(choiceGroupId))
+            {
+                return null;
+            }
+
+            for (int index = 0; index < ToolChoiceStates.Count; index++)
+            {
+                if (ToolChoiceStates[index] is CharacterCreationMixedToolChoiceState state
+                    && string.Equals(state.ChoiceGroupId, choiceGroupId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return state;
+                }
+            }
+
+            return null;
+        }
+
+        private void RemoveMixedToolChoiceStates()
+        {
+            for (int index = ToolChoiceStates.Count - 1; index >= 0; index--)
+            {
+                if (ToolChoiceStates[index] is CharacterCreationMixedToolChoiceState)
+                {
+                    ToolChoiceStates.RemoveAt(index);
+                }
+            }
+        }
+
+        private static int GetMixedToolRemainingSelect(CharacterCreationMixedProficiencyChoiceState state)
+        {
+            if (state == null || state.MaxSelect <= 0)
+            {
+                return 0;
+            }
+
+            return Math.Max(0, state.MaxSelect - state.SelectedSkillIds.Count);
+        }
+
+        private static int GetMixedPendingToolRemainingSelect(CharacterCreationMixedProficiencyChoiceState state)
+        {
+            if (state == null || state.MaxSelect <= 0)
+            {
+                return 0;
+            }
+
+            return Math.Max(0, state.MaxSelect - state.SelectedSkillIds.Count - state.SelectedToolIds.Count);
+        }
+
+        private static void TogglePendingMixedToolChoice(CharacterCreationMixedProficiencyChoiceState state, string toolId)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(toolId) || !ContainsExactValue(state.OptionToolIds, toolId))
+            {
+                return;
+            }
+
+            int maxToolSelect = GetMixedPendingToolRemainingSelect(state);
+            if (maxToolSelect <= 0 && !ContainsExactValue(state.PendingToolIds, toolId))
+            {
+                return;
+            }
+
+            TogglePendingValue(state.PendingToolIds, toolId, maxToolSelect);
+        }
+
+        private static void SyncMixedToolChoiceState(CharacterCreationMixedToolChoiceState toolState)
+        {
+            if (toolState?.MixedState == null)
+            {
+                return;
+            }
+
+            CharacterCreationMixedProficiencyChoiceState mixedState = toolState.MixedState;
+            toolState.MaxSelect = GetMixedToolRemainingSelect(mixedState);
+            toolState.PendingToolIds.Clear();
+            toolState.SelectedToolIds.Clear();
+            AppendUniqueExactValues(toolState.PendingToolIds, mixedState.PendingToolIds);
+            AppendUniqueExactValues(toolState.SelectedToolIds, mixedState.SelectedToolIds);
+        }
+
+        private static void ValidateMixedToolSelections(CharacterCreationMixedProficiencyChoiceState state)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            RemoveMissingValues(state.PendingToolIds, state.OptionToolIds);
+            RemoveMissingValues(state.SelectedToolIds, state.OptionToolIds);
+
+            int maxPendingToolSelect = GetMixedPendingToolRemainingSelect(state);
+            while (state.PendingToolIds.Count > maxPendingToolSelect)
+            {
+                state.PendingToolIds.RemoveAt(state.PendingToolIds.Count - 1);
+            }
+
+            int maxToolSelect = GetMixedToolRemainingSelect(state);
+            while (state.SelectedToolIds.Count > maxToolSelect)
+            {
+                state.SelectedToolIds.RemoveAt(state.SelectedToolIds.Count - 1);
+            }
         }
 
         private static void TogglePendingValue(List<string> values, string value, int maxSelect)
@@ -2450,6 +3059,70 @@ namespace GameLogic
             {
                 AppendUniqueNormalizedSkillId(target, values[index]);
             }
+        }
+
+        private static bool RemoveNormalizedSkillId(List<string> target, string value)
+        {
+            if (target == null || string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            string normalized = NormalizeSkillId(value);
+            if (string.IsNullOrWhiteSpace(normalized))
+            {
+                return false;
+            }
+
+            for (int index = target.Count - 1; index >= 0; index--)
+            {
+                if (string.Equals(NormalizeSkillId(target[index]), normalized, StringComparison.OrdinalIgnoreCase))
+                {
+                    target.RemoveAt(index);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool TryResolveSkillOrToolOption(DndChoiceOptionData option, out string skillId, out string toolId)
+        {
+            skillId = string.Empty;
+            toolId = string.Empty;
+            string optionId = option?.OptionId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(optionId))
+            {
+                return false;
+            }
+
+            if (optionId.StartsWith("skill:", StringComparison.OrdinalIgnoreCase))
+            {
+                skillId = NormalizeSkillId(optionId.Substring("skill:".Length));
+                return !string.IsNullOrWhiteSpace(skillId);
+            }
+
+            if (optionId.StartsWith("tool:", StringComparison.OrdinalIgnoreCase))
+            {
+                toolId = optionId.Substring("tool:".Length).Trim();
+                return !string.IsNullOrWhiteSpace(toolId) && DndRuleContentService.Instance.TryGetTool(toolId, out _);
+            }
+
+            string normalizedSkillId = NormalizeSkillId(optionId);
+            if (!string.IsNullOrWhiteSpace(normalizedSkillId)
+                && DndRuleContentService.Instance.TryGetSkill(normalizedSkillId, out _))
+            {
+                skillId = normalizedSkillId;
+                return true;
+            }
+
+            if (DndRuleContentService.Instance.TryGetTool(optionId, out DndToolDefineData tool))
+            {
+                toolId = tool.ToolId;
+                return true;
+            }
+
+            return false;
         }
 
         private static string NormalizeSkillId(string value)

@@ -125,6 +125,11 @@ namespace GameLogic
                 return entry.Title;
             }
 
+            if (IsAdvancementFollowupIncomplete(state))
+            {
+                return entry.Title;
+            }
+
             if (TryBuildAdvancementChoiceTitle(state, out string advancementTitle))
             {
                 return advancementTitle;
@@ -159,6 +164,11 @@ namespace GameLogic
                 return entry.Description;
             }
 
+            if (IsAdvancementFollowupIncomplete(state))
+            {
+                return entry.Description;
+            }
+
             if (TryBuildAdvancementChoiceDescription(state, out string advancementDescription))
             {
                 return advancementDescription;
@@ -186,7 +196,7 @@ namespace GameLogic
 
         public bool IsFeatureChoiceCompleted(CharacterCreationFeatureChoiceState state)
         {
-            if (state == null || state.SelectedOptionIds.Count == 0)
+            if (state == null || !state.IsConfirmed || state.SelectedOptionIds.Count == 0)
             {
                 return false;
             }
@@ -258,11 +268,11 @@ namespace GameLogic
                 DndChoiceOptionData option = options[index];
                 if (option != null && string.Equals(option.OptionId, optionId, StringComparison.OrdinalIgnoreCase))
                 {
-                    return FirstNonEmpty(option.Name, option.OptionId);
+                    return FormatChoiceOptionDisplayName(choiceGroupId, FirstNonEmpty(option.Name, option.OptionId));
                 }
             }
 
-            return optionId.Trim();
+            return FormatChoiceOptionDisplayName(choiceGroupId, optionId.Trim());
         }
 
         public string GetChoiceOptionDescription(string choiceGroupId, string optionId)
@@ -286,6 +296,94 @@ namespace GameLogic
 
             string featureDescription = GetFirstGrantedFeatureDescription(option);
             return !string.IsNullOrWhiteSpace(featureDescription) ? featureDescription : string.Empty;
+        }
+
+        public string GetChoiceOptionDetailTitle(string choiceGroupId, string optionId)
+        {
+            DndChoiceOptionData option = FindChoiceOption(choiceGroupId, optionId);
+            if (TryResolveFeatFromChoiceOption(option, out DndFeatDefineData feat)
+                && !string.IsNullOrWhiteSpace(feat.Name))
+            {
+                return feat.Name.Trim();
+            }
+
+            string optionName = GetChoiceOptionDisplayName(choiceGroupId, optionId);
+            if (!string.IsNullOrWhiteSpace(optionName))
+            {
+                return optionName.Trim();
+            }
+
+            return optionId?.Trim() ?? string.Empty;
+        }
+
+        public string GetChoiceOptionDetailDescription(string choiceGroupId, string optionId)
+        {
+            DndChoiceOptionData option = FindChoiceOption(choiceGroupId, optionId);
+            if (TryResolveFeatFromChoiceOption(option, out DndFeatDefineData feat)
+                && !string.IsNullOrWhiteSpace(feat.Description))
+            {
+                return feat.Description.Trim();
+            }
+
+            return GetChoiceOptionDescription(choiceGroupId, optionId);
+        }
+
+        private static string FormatChoiceOptionDisplayName(string choiceGroupId, string optionId)
+        {
+            string normalized = optionId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalized))
+            {
+                return string.Empty;
+            }
+
+            if (normalized.StartsWith("skill:", StringComparison.OrdinalIgnoreCase))
+            {
+                return GetSkillDisplayName(normalized.Substring("skill:".Length));
+            }
+
+            if (normalized.StartsWith("tool:", StringComparison.OrdinalIgnoreCase))
+            {
+                return CharacterEquipmentProficiencyDisplayService.Instance.GetToolDisplayName(normalized.Substring("tool:".Length));
+            }
+
+            if (DndRuleContentService.Instance.TryGetChoiceGroup(choiceGroupId, out DndChoiceGroupData choiceGroup)
+                && choiceGroup != null)
+            {
+                if (string.Equals(choiceGroup.ChoiceType, "Weapon", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(choiceGroup.ResultValueType, "WeaponProficiency", StringComparison.OrdinalIgnoreCase))
+                {
+                    return CharacterEquipmentProficiencyDisplayService.Instance.GetWeaponDisplayName(normalized);
+                }
+
+                if (string.Equals(choiceGroup.ChoiceType, "Skill", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(choiceGroup.ResultValueType, "SkillProficiency", StringComparison.OrdinalIgnoreCase))
+                {
+                    return GetSkillDisplayName(normalized);
+                }
+
+                if (string.Equals(choiceGroup.ChoiceType, "Tool", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(choiceGroup.ResultValueType, "ToolProficiency", StringComparison.OrdinalIgnoreCase))
+                {
+                    return CharacterEquipmentProficiencyDisplayService.Instance.GetToolDisplayName(normalized);
+                }
+            }
+
+            return normalized;
+        }
+
+        private static string GetSkillDisplayName(string skillId)
+        {
+            string normalized = skillId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalized))
+            {
+                return string.Empty;
+            }
+
+            return DndRuleContentService.Instance.TryGetSkill(normalized, out DndSkillDefineData skill)
+                && skill != null
+                && !string.IsNullOrWhiteSpace(skill.Name)
+                    ? skill.Name.Trim()
+                    : normalized;
         }
 
         private void AddFeatureDisplayEntries(List<CharacterCreationFeatureDisplayEntry> entries, CharacterCreationFeatureDisplayEntry entry)
@@ -615,6 +713,17 @@ namespace GameLogic
             return !string.IsNullOrWhiteSpace(title);
         }
 
+        private static bool IsAdvancementFollowupIncomplete(CharacterCreationFeatureChoiceState state)
+        {
+            if (!IsAdvancementOptionChoice(state) || state.SelectedOptionIds.Count == 0)
+            {
+                return false;
+            }
+
+            CharacterCreationFeatureChoiceState followupState = TryGetAdvancementFollowupChoiceState(state);
+            return followupState != null && !CharacterCreationFeatureDisplayService.Instance.IsFeatureChoiceCompleted(followupState);
+        }
+
         private bool TryBuildAdvancementChoiceDescription(CharacterCreationFeatureChoiceState state, out string description)
         {
             description = string.Empty;
@@ -683,7 +792,7 @@ namespace GameLogic
 
             if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase))
             {
-                return "choice_feat_any";
+                return "choice_feat";
             }
 
             return string.Empty;
@@ -840,6 +949,47 @@ namespace GameLogic
             return string.Empty;
         }
 
+        private static bool TryResolveFeatFromChoiceOption(DndChoiceOptionData option, out DndFeatDefineData feat)
+        {
+            feat = null;
+            if (option == null)
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(option.OptionId)
+                && DndRuleContentService.Instance.TryGetFeat(option.OptionId.Trim(), out feat))
+            {
+                return true;
+            }
+
+            if (option.GrantFeatureIds == null || option.GrantFeatureIds.Count == 0)
+            {
+                return false;
+            }
+
+            IReadOnlyList<DndFeatDefineData> feats = DndRuleContentService.Instance.Feats;
+            for (int featIndex = 0; featIndex < feats.Count; featIndex++)
+            {
+                DndFeatDefineData candidate = feats[featIndex];
+                if (candidate?.FeatureIds == null)
+                {
+                    continue;
+                }
+
+                for (int featureIndex = 0; featureIndex < option.GrantFeatureIds.Count; featureIndex++)
+                {
+                    if (ContainsExactValue(candidate.FeatureIds, option.GrantFeatureIds[featureIndex]))
+                    {
+                        feat = candidate;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private static string BuildToolChoiceOptionDescription(DndChoiceOptionData option)
         {
             if (option == null)
@@ -898,6 +1048,25 @@ namespace GameLogic
         private static string FirstNonEmpty(string first, string second)
         {
             return !string.IsNullOrWhiteSpace(first) ? first.Trim() : second?.Trim() ?? string.Empty;
+        }
+
+        private static bool ContainsExactValue(IReadOnlyList<string> values, string value)
+        {
+            if (values == null || string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            string normalized = value.Trim();
+            for (int index = 0; index < values.Count; index++)
+            {
+                if (string.Equals(values[index]?.Trim(), normalized, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void AppendUniqueValues(List<string> target, IReadOnlyList<string> values)

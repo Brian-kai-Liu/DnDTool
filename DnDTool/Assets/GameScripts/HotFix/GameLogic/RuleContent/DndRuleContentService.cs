@@ -27,6 +27,8 @@ namespace GameLogic
         private readonly Dictionary<string, List<DndLevelProgressionData>> m_classProgressionsByClassId = new Dictionary<string, List<DndLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndSubclassLevelProgressionData>> m_subclassProgressionsBySubclassId = new Dictionary<string, List<DndSubclassLevelProgressionData>>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndClassSpellListData>> m_classSpellListsByClassId = new Dictionary<string, List<DndClassSpellListData>>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndSpellSlotProgressionData> m_spellSlotProgressionByKey = new Dictionary<string, DndSpellSlotProgressionData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<int, DndLevelExperienceData> m_levelExperienceByLevel = new Dictionary<int, DndLevelExperienceData>();
         private static readonly Dictionary<string, string[]> ClassSkillListByClassId = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
         {
             ["barbarian"] = new[] { "animal_handling", "athletics", "intimidation", "nature", "perception", "survival" },
@@ -77,6 +79,8 @@ namespace GameLogic
 
         public IReadOnlyList<DndSpellDefineData> Spells => GetLibrary().Spells;
 
+        public IReadOnlyList<DndSpellSlotProgressionData> SpellSlotProgressions => GetLibrary().SpellSlotProgressions;
+
         public IReadOnlyList<DndAlignmentData> Alignments => GetLibrary().Alignments;
 
         public IReadOnlyList<DndSkillDefineData> Skills => GetLibrary().Skills;
@@ -88,6 +92,8 @@ namespace GameLogic
         public IReadOnlyList<DndLanguageDefineData> Languages => GetLibrary().Languages;
 
         public IReadOnlyList<DndTextLocalizeData> TextLocalizations => GetLibrary().TextLocalizations;
+
+        public IReadOnlyList<DndLevelExperienceData> LevelExperiences => GetLibrary().LevelExperiences;
 
         public bool HasLoadedContent()
         {
@@ -177,6 +183,12 @@ namespace GameLogic
         {
             GetLibrary();
             return m_languageById.TryGetValue(languageId ?? string.Empty, out language);
+        }
+
+        public bool TryGetLevelExperience(int level, out DndLevelExperienceData levelExperience)
+        {
+            GetLibrary();
+            return m_levelExperienceByLevel.TryGetValue(Math.Max(1, level), out levelExperience);
         }
 
         public bool TryGetText(string textKey, out string text)
@@ -283,6 +295,12 @@ namespace GameLogic
                 : Array.Empty<DndClassSpellListData>();
         }
 
+        public bool TryGetSpellSlotProgression(string progressionId, int progressionLevel, out DndSpellSlotProgressionData progression)
+        {
+            GetLibrary();
+            return m_spellSlotProgressionByKey.TryGetValue(BuildSpellSlotProgressionKey(progressionId, progressionLevel), out progression);
+        }
+
         public List<string> GetAlignmentOptionLabels()
         {
             DndRuleContentLibraryData library = GetLibrary();
@@ -370,6 +388,8 @@ namespace GameLogic
             m_classProgressionsByClassId.Clear();
             m_subclassProgressionsBySubclassId.Clear();
             m_classSpellListsByClassId.Clear();
+            m_spellSlotProgressionByKey.Clear();
+            m_levelExperienceByLevel.Clear();
         }
 
         private void RebuildIndexes()
@@ -595,6 +615,17 @@ namespace GameLogic
                 });
             }
 
+            for (int index = 0; index < m_library.SpellSlotProgressions.Count; index++)
+            {
+                DndSpellSlotProgressionData progression = m_library.SpellSlotProgressions[index];
+                if (progression == null || string.IsNullOrWhiteSpace(progression.ProgressionId) || progression.ProgressionLevel < 1)
+                {
+                    continue;
+                }
+
+                m_spellSlotProgressionByKey[BuildSpellSlotProgressionKey(progression.ProgressionId, progression.ProgressionLevel)] = progression;
+            }
+
             for (int index = 0; index < m_library.TextLocalizations.Count; index++)
             {
                 DndTextLocalizeData row = m_library.TextLocalizations[index];
@@ -603,6 +634,20 @@ namespace GameLogic
                     m_textLocalizeByKey[row.TextKey] = row;
                 }
             }
+
+            for (int index = 0; index < m_library.LevelExperiences.Count; index++)
+            {
+                DndLevelExperienceData levelExperience = m_library.LevelExperiences[index];
+                if (levelExperience != null && levelExperience.Level > 0)
+                {
+                    m_levelExperienceByLevel[levelExperience.Level] = levelExperience;
+                }
+            }
+        }
+
+        private static string BuildSpellSlotProgressionKey(string progressionId, int progressionLevel)
+        {
+            return $"{progressionId?.Trim() ?? string.Empty}:{Math.Max(1, progressionLevel)}";
         }
 
         private bool TryBuildDynamicChoiceOptions(string choiceGroupId, out List<DndChoiceOptionData> options)
@@ -701,22 +746,6 @@ namespace GameLogic
                     TargetValueCap = 20,
                     UiMode = "AbilityStepper",
                     Description = "\u9009\u62E9\u4E24\u6B21\u5C5E\u6027\u503C\u63D0\u5347\uFF0C\u53EF\u540C\u4E00\u5C5E\u6027\u63D0\u53472\u70B9\u6216\u4E24\u9879\u5C5E\u6027\u54041\u70B9\u3002"
-                };
-            }
-
-            if (string.Equals(choiceGroupId, "choice_feat_any", StringComparison.OrdinalIgnoreCase))
-            {
-                return new DndChoiceGroupData
-                {
-                    ChoiceGroupId = "choice_feat_any",
-                    PackageId = "built_in",
-                    Name = "\u9009\u62E9\u4E13\u957F",
-                    ChoiceType = "Feat",
-                    MinSelect = 1,
-                    MaxSelect = 1,
-                    OptionFilter = "AnyFeat",
-                    SelectionMode = "Distinct",
-                    Description = "\u4ECE\u6240\u6709\u4E13\u957F\u4E2D\u9009\u62E9\u4E00\u9879\u3002"
                 };
             }
 

@@ -35,7 +35,14 @@ namespace GameLogic
 
         public int GetExperienceThreshold(int level)
         {
-            return Math.Max(1, level) switch
+            int normalizedLevel = Math.Max(1, level);
+            if (DndRuleContentService.Instance.TryGetLevelExperience(normalizedLevel, out DndLevelExperienceData levelExperience)
+                && levelExperience != null)
+            {
+                return Math.Max(0, levelExperience.ExperienceThreshold);
+            }
+
+            return normalizedLevel switch
             {
                 1 => 0,
                 2 => 300,

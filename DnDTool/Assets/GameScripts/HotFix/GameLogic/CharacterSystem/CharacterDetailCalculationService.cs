@@ -42,8 +42,10 @@ namespace GameLogic
             DndClassDefineData classData = FindClass(character.ClassId);
             DndRaceDefineData raceData = FindRace(character.RaceId);
             DndBackgroundDefineData backgroundData = FindBackground(character.BackgroundId);
+            ApplyCharacterAbilityScoreEffects(character, snapshot);
             ApplyChoiceAbilityScoreIncreases(character.ChoiceSelections, snapshot);
             ApplyCharacterSkillProficiencyEffects(character, snapshot);
+            ApplyChoiceResultProficiencySelections(character.ChoiceSelections, snapshot);
             AppendUniqueValues(snapshot.SkillProficiencyIds, backgroundData?.SkillProficiencies);
             AppendSkillSummaryValues(snapshot.SkillProficiencyIds, snapshot.Skills);
             AppendEquipmentSummaryValues(snapshot.ArmorProficiencyIds, snapshot.ArmorProficiencies);
@@ -51,8 +53,9 @@ namespace GameLogic
             AppendEquipmentSummaryValues(snapshot.ToolProficiencyIds, snapshot.ToolProficiencies);
             AppendUniqueValues(snapshot.ArmorProficiencyIds, classData?.ArmorProficiencies);
             AppendUniqueValues(snapshot.WeaponProficiencyIds, classData?.WeaponProficiencies);
-            AppendUniqueValues(snapshot.ToolProficiencyIds, classData?.ToolProficiencies);
-            AppendUniqueValues(snapshot.ToolProficiencyIds, backgroundData?.ToolProficiencies);
+            AppendUniqueValues(
+                snapshot.ToolProficiencyIds,
+                CharacterCreationRuleService.Instance.BuildFixedToolProficiencyIds(classData, backgroundData));
             ApplyFeatureEquipmentProficiencyEffects(snapshot, raceData?.FeatureIds);
             ApplyChoiceEquipmentProficiencyEffects(snapshot, character.ChoiceSelections);
             ApplySubclassEquipmentProficiencyEffects(snapshot, character);
@@ -84,31 +87,25 @@ namespace GameLogic
 
             ApplyEquippedItemAttributeEffects(snapshot, character.Equipment);
             snapshot.ArmorClass = CalculateArmorClass(character, snapshot);
+            ApplyCharacterConditionalBenefitEffects(character, snapshot);
 
-            if (string.IsNullOrWhiteSpace(snapshot.SavingThrows))
+            List<string> savingThrowProficiencyIds = BuildSavingThrowProficiencyIds(character, classData);
+            if (savingThrowProficiencyIds.Count > 0)
+            {
+                snapshot.SavingThrows = FormatList(savingThrowProficiencyIds);
+            }
+            else if (string.IsNullOrWhiteSpace(snapshot.SavingThrows))
             {
                 snapshot.SavingThrows = FormatList(classData?.SavingThrowProficiencies);
             }
 
-            if (string.IsNullOrWhiteSpace(snapshot.Skills))
-            {
-                snapshot.Skills = FormatList(backgroundData?.SkillProficiencies);
-            }
+            snapshot.Skills = FormatList(snapshot.SkillProficiencyIds);
 
-            if (string.IsNullOrWhiteSpace(snapshot.ArmorProficiencies))
-            {
-                snapshot.ArmorProficiencies = FormatList(snapshot.ArmorProficiencyIds);
-            }
+            snapshot.ArmorProficiencies = FormatList(snapshot.ArmorProficiencyIds);
 
-            if (string.IsNullOrWhiteSpace(snapshot.WeaponProficiencies))
-            {
-                snapshot.WeaponProficiencies = FormatList(snapshot.WeaponProficiencyIds);
-            }
+            snapshot.WeaponProficiencies = FormatList(snapshot.WeaponProficiencyIds);
 
-            if (string.IsNullOrWhiteSpace(snapshot.ToolProficiencies))
-            {
-                snapshot.ToolProficiencies = FormatList(snapshot.ToolProficiencyIds);
-            }
+            snapshot.ToolProficiencies = FormatList(snapshot.ToolProficiencyIds);
 
             if (string.IsNullOrWhiteSpace(snapshot.Languages))
             {
@@ -575,6 +572,173 @@ namespace GameLogic
             });
         }
 
+        private void ApplyCharacterAbilityScoreEffects(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
+        {
+            if (character == null || snapshot == null)
+            {
+                return;
+            }
+
+            ApplyCharacterEffects(character, effect =>
+            {
+                if (effect == null
+                    || !IsAbilityScoreBonusEffect(effect)
+                    || !IsStructuredEffectConditionMet(effect, snapshot)
+                    || !int.TryParse(effect.Value, out int value))
+                {
+                    return;
+                }
+
+                ApplyAbilityScoreBonus(snapshot, effect.Target, value);
+            });
+        }
+
+        private void ApplyCharacterConditionalBenefitEffects(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
+        {
+            if (character == null || snapshot == null)
+            {
+                return;
+            }
+
+            List<string> benefits = new List<string>();
+            AppendExistingLines(benefits, snapshot.ConditionalBenefits);
+            ApplyCharacterEffects(character, effect =>
+            {
+                if (effect == null || string.IsNullOrWhiteSpace(effect.EffectType))
+                {
+                    return;
+                }
+
+                if (string.Equals(effect.EffectType, "DamageReduction", StringComparison.OrdinalIgnoreCase))
+                {
+                    string target = string.IsNullOrWhiteSpace(effect.Target) ? "Damage" : effect.Target.Trim().Replace(";", "/");
+                    string value = string.IsNullOrWhiteSpace(effect.Value) ? string.Empty : effect.Value.Trim();
+                    string condition = string.IsNullOrWhiteSpace(effect.Condition) ? string.Empty : $" ({effect.Condition.Trim()})";
+                    string label = string.IsNullOrWhiteSpace(value)
+                        ? $"DamageReduction {target}{condition}"
+                        : $"DamageReduction {target} -{value}{condition}";
+                    AppendUniqueValue(benefits, label);
+                }
+                else if (string.Equals(effect.EffectType, "PassiveSkillBonus", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(effect.Target, "perception", StringComparison.OrdinalIgnoreCase)
+                    && int.TryParse(effect.Value, out int passiveValue))
+                {
+                    AppendUniqueValue(benefits, $"PassiveSkillBonus {effect.Target?.Trim() ?? string.Empty} +{passiveValue}");
+                }
+            });
+
+            snapshot.ConditionalBenefits = benefits.Count > 0 ? string.Join("\n", benefits) : string.Empty;
+        }
+
+        private static void ApplyChoiceResultProficiencySelections(
+            IReadOnlyList<CharacterChoiceSelectionSaveData> choiceSelections,
+            CharacterRuntimeSnapshotData snapshot)
+        {
+            if (choiceSelections == null || snapshot == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < choiceSelections.Count; index++)
+            {
+                CharacterChoiceSelectionSaveData selection = choiceSelections[index];
+                if (selection == null
+                    || string.IsNullOrWhiteSpace(selection.ChoiceGroupId)
+                    || string.IsNullOrWhiteSpace(selection.OptionId)
+                    || !DndRuleContentService.Instance.TryGetChoiceGroup(selection.ChoiceGroupId.Trim(), out DndChoiceGroupData choiceGroup)
+                    || choiceGroup == null)
+                {
+                    continue;
+                }
+
+                ApplyChoiceResultProficiencySelection(choiceGroup, selection.OptionId, snapshot);
+            }
+        }
+
+        private static void ApplyChoiceResultProficiencySelection(
+            DndChoiceGroupData choiceGroup,
+            string optionId,
+            CharacterRuntimeSnapshotData snapshot)
+        {
+            if (choiceGroup == null || snapshot == null || string.IsNullOrWhiteSpace(optionId))
+            {
+                return;
+            }
+
+            string normalizedOptionId = optionId.Trim();
+            string resultType = choiceGroup.ResultValueType?.Trim() ?? string.Empty;
+            if (string.Equals(resultType, "SkillOrToolProficiency", StringComparison.OrdinalIgnoreCase))
+            {
+                ApplySkillOrToolChoiceResult(snapshot, normalizedOptionId);
+                return;
+            }
+
+            if (string.Equals(resultType, "SkillProficiency", StringComparison.OrdinalIgnoreCase))
+            {
+                AppendSkillSummaryValues(snapshot.SkillProficiencyIds, normalizedOptionId);
+                return;
+            }
+
+            if (string.Equals(resultType, "ToolProficiency", StringComparison.OrdinalIgnoreCase))
+            {
+                AppendEquipmentSummaryValues(snapshot.ToolProficiencyIds, normalizedOptionId);
+                return;
+            }
+
+            if (string.Equals(resultType, "WeaponProficiency", StringComparison.OrdinalIgnoreCase))
+            {
+                AppendEquipmentSummaryValues(snapshot.WeaponProficiencyIds, normalizedOptionId);
+            }
+        }
+
+        private static void ApplySkillOrToolChoiceResult(CharacterRuntimeSnapshotData snapshot, string optionId)
+        {
+            if (snapshot == null || string.IsNullOrWhiteSpace(optionId))
+            {
+                return;
+            }
+
+            string normalized = optionId.Trim();
+            if (normalized.StartsWith("skill:", StringComparison.OrdinalIgnoreCase))
+            {
+                AppendSkillSummaryValues(snapshot.SkillProficiencyIds, normalized.Substring("skill:".Length));
+            }
+            else if (normalized.StartsWith("tool:", StringComparison.OrdinalIgnoreCase))
+            {
+                AppendEquipmentSummaryValues(snapshot.ToolProficiencyIds, normalized.Substring("tool:".Length));
+            }
+            else
+            {
+                AppendSkillSummaryValues(snapshot.SkillProficiencyIds, normalized);
+            }
+        }
+
+        private void AppendSavingThrowProficiencyEffects(
+            CharacterCardDraftSaveData character,
+            List<string> target)
+        {
+            if (character == null || target == null)
+            {
+                return;
+            }
+
+            ApplyCharacterEffects(character, effect =>
+            {
+                if (effect != null && string.Equals(effect.EffectType, "SavingThrowProficiency", StringComparison.OrdinalIgnoreCase))
+                {
+                    AppendSavingThrowSummaryValues(target, effect.Target);
+                }
+            });
+        }
+
+        private List<string> BuildSavingThrowProficiencyIds(CharacterCardDraftSaveData character, DndClassDefineData classData)
+        {
+            List<string> result = new List<string>();
+            AppendUniqueValues(result, classData?.SavingThrowProficiencies);
+            AppendSavingThrowProficiencyEffects(character, result);
+            return result;
+        }
+
         private static void AppendUniqueValues(List<string> target, IReadOnlyList<string> values)
         {
             if (target == null || values == null)
@@ -585,6 +749,20 @@ namespace GameLogic
             for (int index = 0; index < values.Count; index++)
             {
                 AppendUniqueValue(target, values[index]);
+            }
+        }
+
+        private static void AppendExistingLines(List<string> target, string summary)
+        {
+            if (target == null || string.IsNullOrWhiteSpace(summary))
+            {
+                return;
+            }
+
+            string[] lines = summary.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int index = 0; index < lines.Length; index++)
+            {
+                AppendUniqueValue(target, lines[index]);
             }
         }
 
@@ -632,6 +810,24 @@ namespace GameLogic
             for (int index = 0; index < parts.Length; index++)
             {
                 string normalized = NormalizeSkillId(parts[index]);
+                if (!string.IsNullOrWhiteSpace(normalized))
+                {
+                    AppendUniqueValue(target, normalized);
+                }
+            }
+        }
+
+        private static void AppendSavingThrowSummaryValues(List<string> target, string summary)
+        {
+            if (target == null || string.IsNullOrWhiteSpace(summary))
+            {
+                return;
+            }
+
+            string[] parts = SplitSummary(summary);
+            for (int index = 0; index < parts.Length; index++)
+            {
+                string normalized = NormalizeAbilityId(parts[index]);
                 if (!string.IsNullOrWhiteSpace(normalized))
                 {
                     AppendUniqueValue(target, normalized);
@@ -1235,7 +1431,9 @@ namespace GameLogic
             }
 
             CharacterSkillBonusViewState perception = BuildSkillBonus(character, snapshot, "perception", "瀵熻", AbilityKind.Wisdom);
-            return 10 + perception.Bonus;
+            return 10
+                + perception.Bonus
+                + CalculateCharacterAndItemEffectBonus(character, snapshot, "PassiveSkillBonus", "perception");
         }
 
         private bool TryCalculateSpellcastingNumbers(
@@ -1681,11 +1879,44 @@ namespace GameLogic
                         continue;
                     }
 
-                    ApplyEffects(option.GrantEffectIds, action);
+                    ApplyChoiceOptionEffects(choiceGroup, option.GrantEffectIds, action);
                     ApplyFeatureEffects(option.GrantFeatureIds, action);
                     break;
                 }
             }
+        }
+
+        private static void ApplyChoiceOptionEffects(
+            DndChoiceGroupData choiceGroup,
+            IReadOnlyList<string> effectIds,
+            Action<DndFeatureEffectData> action)
+        {
+            if (effectIds == null || action == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < effectIds.Count; index++)
+            {
+                if (!DndRuleContentService.Instance.TryGetFeatureEffect(effectIds[index], out DndFeatureEffectData effect))
+                {
+                    continue;
+                }
+
+                if (IsAbilityScoreChoiceGroup(choiceGroup) && IsAbilityScoreBonusEffect(effect))
+                {
+                    continue;
+                }
+
+                action(effect);
+            }
+        }
+
+        private static bool IsAbilityScoreBonusEffect(DndFeatureEffectData effect)
+        {
+            return effect != null
+                && (string.Equals(effect.EffectType, "AbilityScoreBonus", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(effect.EffectType, "AbilityBonus", StringComparison.OrdinalIgnoreCase));
         }
 
         private static bool IsAbilityScoreChoiceGroup(DndChoiceGroupData choiceGroup)
@@ -1699,7 +1930,6 @@ namespace GameLogic
         {
             return choiceGroup != null
                 && (string.Equals(choiceGroup.ChoiceType, "Feat", StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat_any", StringComparison.OrdinalIgnoreCase)
                     || string.Equals(choiceGroup.ChoiceGroupId, "choice_feat", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -1757,13 +1987,28 @@ namespace GameLogic
                 return true;
             }
 
+            string[] actualTargets = SplitSummary(actualTarget ?? string.Empty);
             for (int index = 0; index < expectedTargets.Count; index++)
             {
                 string expectedTarget = expectedTargets[index];
-                if (string.IsNullOrWhiteSpace(expectedTarget)
-                    || string.Equals(actualTarget, expectedTarget, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(expectedTarget))
                 {
                     return true;
+                }
+
+                if (string.Equals(actualTarget, expectedTarget, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(actualTarget, "All", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                for (int actualIndex = 0; actualIndex < actualTargets.Length; actualIndex++)
+                {
+                    if (string.Equals(actualTargets[actualIndex]?.Trim(), expectedTarget, StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(actualTargets[actualIndex]?.Trim(), "All", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
                 }
             }
 

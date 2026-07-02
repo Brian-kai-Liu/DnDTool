@@ -62,6 +62,7 @@ namespace GameLogic
         public int Level { get; set; } = 1;
         public CharacterRuntimeSnapshotData RuntimeSnapshot { get; set; } = new CharacterRuntimeSnapshotData();
         public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
+        public CharacterRoleplayProfileSaveData RoleplayProfile { get; set; } = new CharacterRoleplayProfileSaveData();
         public List<CharacterClassProgressSaveData> ClassProgresses { get; set; } = new List<CharacterClassProgressSaveData>();
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; set; } = new List<CharacterChoiceSelectionSaveData>();
     }
@@ -87,6 +88,10 @@ namespace GameLogic
         public int MaxHp { get; set; }
         public int CurrentHp { get; set; } = -1;
         public int TemporaryHp { get; set; }
+        public string PersonalityTraits { get; set; } = string.Empty;
+        public string Ideals { get; set; } = string.Empty;
+        public string Bonds { get; set; } = string.Empty;
+        public string Flaws { get; set; } = string.Empty;
         public List<CharacterHpRollSaveData> HpRolls { get; set; } = new List<CharacterHpRollSaveData>();
         public List<string> SkillProficiencyIds { get; set; } = new List<string>();
         public List<string> ToolProficiencyIds { get; set; } = new List<string>();
@@ -96,6 +101,7 @@ namespace GameLogic
         public List<CharacterCreationToolChoiceInput> ToolChoices { get; set; } = new List<CharacterCreationToolChoiceInput>();
         public List<CharacterCreationFeatureChoiceInput> FeatureChoices { get; set; } = new List<CharacterCreationFeatureChoiceInput>();
         public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
+        public CharacterSpellcastingSaveData Spellcasting { get; set; } = new CharacterSpellcastingSaveData();
     }
 
     internal sealed class CharacterCreationFormInput
@@ -160,7 +166,7 @@ namespace GameLogic
         public readonly List<string> SelectedSkillIds = new List<string>();
     }
 
-    internal sealed class CharacterCreationToolChoiceState
+    internal class CharacterCreationToolChoiceState
     {
         public string ChoiceGroupId = string.Empty;
         public string Label = string.Empty;
@@ -173,6 +179,32 @@ namespace GameLogic
         public readonly Dictionary<string, string> OptionIdByToolId = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public bool IsCompleted => MaxSelect <= 0 ? SelectedToolIds.Count > 0 : SelectedToolIds.Count >= MaxSelect;
+    }
+
+    internal sealed class CharacterCreationMixedToolChoiceState : CharacterCreationToolChoiceState
+    {
+        public CharacterCreationMixedProficiencyChoiceState MixedState;
+    }
+
+    internal sealed class CharacterCreationMixedProficiencyChoiceState
+    {
+        public string ChoiceGroupId = string.Empty;
+        public string Label = string.Empty;
+        public string SourceType = string.Empty;
+        public string SourceId = string.Empty;
+        public int MaxSelect = 1;
+        public readonly List<string> OptionSkillIds = new List<string>();
+        public readonly List<string> CandidateSkillIds = new List<string>();
+        public readonly List<string> OptionToolIds = new List<string>();
+        public readonly List<string> SelectedSkillIds = new List<string>();
+        public readonly List<string> PendingToolIds = new List<string>();
+        public readonly List<string> SelectedToolIds = new List<string>();
+        public readonly Dictionary<string, string> OptionIdBySkillId = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public readonly Dictionary<string, string> OptionIdByToolId = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        public int SelectedCount => SelectedSkillIds.Count + SelectedToolIds.Count;
+        public int PendingCount => SelectedSkillIds.Count + SelectedToolIds.Count + PendingToolIds.Count;
+        public bool IsCompleted => MaxSelect <= 0 ? SelectedCount > 0 : SelectedCount >= MaxSelect;
     }
 
     internal sealed class CharacterCreationFeatureChoiceState
@@ -190,6 +222,7 @@ namespace GameLogic
         public readonly List<string> PendingOptionIds = new List<string>();
         public readonly List<string> SelectedOptionIds = new List<string>();
         public readonly Dictionary<string, string> OptionDisplayNameById = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public bool IsConfirmed;
     }
 
     internal sealed class CharacterCreationRaceAbilityChoiceState
@@ -210,6 +243,12 @@ namespace GameLogic
         public readonly List<CharacterCreationGeneratedAbilityScoreState> Scores = new List<CharacterCreationGeneratedAbilityScoreState>();
         public readonly Dictionary<string, int> PointBuyScores = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         public readonly Dictionary<string, int> ManualScores = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+    }
+
+    internal sealed class CharacterCreationSpellSelectionState
+    {
+        public string PendingSpellId = string.Empty;
+        public int FilterLevel = -1;
     }
 
     internal sealed class CharacterCreationGeneratedAbilityScoreState
@@ -283,6 +322,8 @@ namespace GameLogic
     {
         public List<string> Labels { get; } = new List<string>();
         public Dictionary<string, string> ChoiceGroupIdByLabel { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, string> ChoiceSourceTypeByLabel { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, string> ChoiceSourceIdByLabel { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }
 
     internal sealed class CharacterCreationOptionViewState
@@ -322,13 +363,42 @@ namespace GameLogic
         public string ClassLevelText { get; set; } = string.Empty;
         public string RaceFeatureRaceName { get; set; } = string.Empty;
         public string RaceFeatureSubRaceName { get; set; } = string.Empty;
+        public CharacterExperienceDisplayViewState Experience { get; set; } = new CharacterExperienceDisplayViewState();
         public List<CharacterCreationAbilityViewState> Abilities { get; } = new List<CharacterCreationAbilityViewState>();
         public List<CharacterCreationSkillViewState> Skills { get; } = new List<CharacterCreationSkillViewState>();
         public List<CharacterCreationGeneratedAbilityScoreViewState> AbilityScoreOptions { get; } = new List<CharacterCreationGeneratedAbilityScoreViewState>();
         public CharacterCreationEquipmentToolDisplayState EquipmentTools { get; set; } = new CharacterCreationEquipmentToolDisplayState();
         public List<CharacterCreationFeatureDisplayEntry> ClassFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
         public List<CharacterCreationFeatureDisplayEntry> RaceFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
+        public List<CharacterCreationSpellCardViewState> LearnedSpells { get; } = new List<CharacterCreationSpellCardViewState>();
         public List<CharacterStatusEffectDisplayEntry> StatusEffects { get; } = new List<CharacterStatusEffectDisplayEntry>();
+    }
+
+    internal sealed class CharacterCreationSpellCardViewState
+    {
+        public string SpellId { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string LevelText { get; set; } = string.Empty;
+        public string SchoolText { get; set; } = string.Empty;
+        public bool IsSelected { get; set; }
+        public bool IsKnown { get; set; }
+        public bool IsPrepared { get; set; }
+        public bool IsAlwaysPrepared { get; set; }
+    }
+
+    internal sealed class CharacterCreationSpellbookViewState
+    {
+        public int FilterLevel { get; set; } = -1;
+        public int MaxSpellLevel { get; set; }
+        public int KnownCantrips { get; set; }
+        public int MaxKnownCantrips { get; set; }
+        public int KnownSpells { get; set; }
+        public int MaxKnownSpells { get; set; }
+        public int PreparedSpells { get; set; }
+        public int MaxPreparedSpells { get; set; }
+        public string SummaryText { get; set; } = string.Empty;
+        public List<CharacterCreationSpellCardViewState> AvailableSpells { get; } = new List<CharacterCreationSpellCardViewState>();
+        public List<CharacterCreationSpellCardViewState> LearnedSpells { get; } = new List<CharacterCreationSpellCardViewState>();
     }
 
     internal sealed class CharacterCreationAbilityViewState

@@ -1042,5 +1042,257 @@
     "condition": "max20",
     "stacking_rule": "Unique",
     "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_lightly_armored_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_lightly_armored_dexterity",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Dexterity",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_linguist_intelligence",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Intelligence",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_moderately_armored_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_moderately_armored_dexterity",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Dexterity",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_observant_intelligence",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Intelligence",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_observant_wisdom",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Wisdom",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_resilient_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_resilient_dexterity",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Dexterity",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_resilient_constitution",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Constitution",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_resilient_intelligence",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Intelligence",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_resilient_wisdom",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Wisdom",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_resilient_charisma",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Charisma",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_tavern_brawler_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_tavern_brawler_constitution",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Constitution",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_weapon_master_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_weapon_master_dexterity",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Dexterity",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": "8546"
+  },
+  {
+    "effect_id": "effect_feat_heavily_armored_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_heavy_armor_master_strength",
+    "effect_type": "AbilityScoreBonus",
+    "target": "Strength",
+    "value": "1",
+    "condition": "max20",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_observant_passive_perception",
+    "effect_type": "PassiveSkillBonus",
+    "target": "perception",
+    "value": "5",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_observant_passive_investigation",
+    "effect_type": "PassiveSkillBonus",
+    "target": "investigation",
+    "value": "5",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_heavy_armor_master_damage_reduction",
+    "effect_type": "DamageReduction",
+    "target": "Bludgeoning;Piercing;Slashing",
+    "value": "3",
+    "condition": "WearingHeavyArmor;NonMagicalWeaponDamage",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_resilient_save_strength",
+    "effect_type": "SavingThrowProficiency",
+    "target": "Strength",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_resilient_save_dexterity",
+    "effect_type": "SavingThrowProficiency",
+    "target": "Dexterity",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_resilient_save_constitution",
+    "effect_type": "SavingThrowProficiency",
+    "target": "Constitution",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_resilient_save_intelligence",
+    "effect_type": "SavingThrowProficiency",
+    "target": "Intelligence",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_resilient_save_wisdom",
+    "effect_type": "SavingThrowProficiency",
+    "target": "Wisdom",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
+  },
+  {
+    "effect_id": "effect_feat_resilient_save_charisma",
+    "effect_type": "SavingThrowProficiency",
+    "target": "Charisma",
+    "value": "1",
+    "condition": "",
+    "stacking_rule": "Unique",
+    "manual_note": ""
   }
 ]

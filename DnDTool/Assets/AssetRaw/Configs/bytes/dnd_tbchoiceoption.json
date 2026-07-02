@@ -1718,5 +1718,955 @@
       "effect_feat_athlete_dexterity"
     ],
     "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_lightly_armored_ability",
+    "option_id": "Strength",
+    "name": "Strength",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_lightly_armored_strength"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_lightly_armored_ability",
+    "option_id": "Dexterity",
+    "name": "Dexterity",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_lightly_armored_dexterity"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_moderately_armored_ability",
+    "option_id": "Strength",
+    "name": "Strength",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_moderately_armored_strength"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_moderately_armored_ability",
+    "option_id": "Dexterity",
+    "name": "Dexterity",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_moderately_armored_dexterity"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_observant_ability",
+    "option_id": "Intelligence",
+    "name": "Intelligence",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_observant_intelligence"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_observant_ability",
+    "option_id": "Wisdom",
+    "name": "Wisdom",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_observant_wisdom"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "option_id": "Strength",
+    "name": "Strength",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_resilient_strength",
+      "effect_feat_resilient_save_strength"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "option_id": "Dexterity",
+    "name": "Dexterity",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_resilient_dexterity",
+      "effect_feat_resilient_save_dexterity"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "option_id": "Constitution",
+    "name": "Constitution",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_resilient_constitution",
+      "effect_feat_resilient_save_constitution"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "option_id": "Intelligence",
+    "name": "Intelligence",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_resilient_intelligence",
+      "effect_feat_resilient_save_intelligence"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "option_id": "Wisdom",
+    "name": "Wisdom",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_resilient_wisdom",
+      "effect_feat_resilient_save_wisdom"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "option_id": "Charisma",
+    "name": "Charisma",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_resilient_charisma",
+      "effect_feat_resilient_save_charisma"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_tavern_brawler_ability",
+    "option_id": "Strength",
+    "name": "Strength",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_tavern_brawler_strength"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_tavern_brawler_ability",
+    "option_id": "Constitution",
+    "name": "Constitution",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_tavern_brawler_constitution"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_ability",
+    "option_id": "Strength",
+    "name": "Strength",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_weapon_master_strength"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_ability",
+    "option_id": "Dexterity",
+    "name": "Dexterity",
+    "grant_feature_ids": [
+      "8546"
+    ],
+    "grant_effect_ids": [
+      "effect_feat_weapon_master_dexterity"
+    ],
+    "description": "8546"
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Club",
+    "name": "Club",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Dagger",
+    "name": "Dagger",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Greatclub",
+    "name": "Greatclub",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Handaxe",
+    "name": "Handaxe",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Javelin",
+    "name": "Javelin",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "LightHammer",
+    "name": "LightHammer",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Mace",
+    "name": "Mace",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Quarterstaff",
+    "name": "Quarterstaff",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Sickle",
+    "name": "Sickle",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Spear",
+    "name": "Spear",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "LightCrossbow",
+    "name": "LightCrossbow",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Dart",
+    "name": "Dart",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Shortbow",
+    "name": "Shortbow",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Sling",
+    "name": "Sling",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Battleaxe",
+    "name": "Battleaxe",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Flail",
+    "name": "Flail",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Glaive",
+    "name": "Glaive",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Greataxe",
+    "name": "Greataxe",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Greatsword",
+    "name": "Greatsword",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Halberd",
+    "name": "Halberd",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Lance",
+    "name": "Lance",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Longsword",
+    "name": "Longsword",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Maul",
+    "name": "Maul",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Morningstar",
+    "name": "Morningstar",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Pike",
+    "name": "Pike",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Rapier",
+    "name": "Rapier",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Scimitar",
+    "name": "Scimitar",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Shortsword",
+    "name": "Shortsword",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Trident",
+    "name": "Trident",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "WarPick",
+    "name": "WarPick",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Warhammer",
+    "name": "Warhammer",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Whip",
+    "name": "Whip",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Blowgun",
+    "name": "Blowgun",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "HandCrossbow",
+    "name": "HandCrossbow",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "HeavyCrossbow",
+    "name": "HeavyCrossbow",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Longbow",
+    "name": "Longbow",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "option_id": "Net",
+    "name": "Net",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:athletics",
+    "name": "athletics",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:acrobatics",
+    "name": "acrobatics",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:sleight_of_hand",
+    "name": "sleight_of_hand",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:stealth",
+    "name": "stealth",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:arcana",
+    "name": "arcana",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:history",
+    "name": "history",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:investigation",
+    "name": "investigation",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:nature",
+    "name": "nature",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:religion",
+    "name": "religion",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:animal_handling",
+    "name": "animal_handling",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:insight",
+    "name": "insight",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:medicine",
+    "name": "medicine",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:perception",
+    "name": "perception",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:survival",
+    "name": "survival",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:deception",
+    "name": "deception",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:intimidation",
+    "name": "intimidation",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:performance",
+    "name": "performance",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "skill:persuasion",
+    "name": "persuasion",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:alchemist_supplies",
+    "name": "alchemist_supplies",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:brewer_supplies",
+    "name": "brewer_supplies",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:calligrapher_supplies",
+    "name": "calligrapher_supplies",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:carpenter_tools",
+    "name": "carpenter_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:cartographer_tools",
+    "name": "cartographer_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:cobbler_tools",
+    "name": "cobbler_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:cook_utensils",
+    "name": "cook_utensils",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:glassblower_tools",
+    "name": "glassblower_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:jeweler_tools",
+    "name": "jeweler_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:leatherworker_tools",
+    "name": "leatherworker_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:mason_tools",
+    "name": "mason_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:painter_supplies",
+    "name": "painter_supplies",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:potter_tools",
+    "name": "potter_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:smith_tools",
+    "name": "smith_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:tinker_tools",
+    "name": "tinker_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:weaver_tools",
+    "name": "weaver_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:woodcarver_tools",
+    "name": "woodcarver_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:disguise_kit",
+    "name": "disguise_kit",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:forgery_kit",
+    "name": "forgery_kit",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:dice_set",
+    "name": "dice_set",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:dragonchess_set",
+    "name": "dragonchess_set",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:playing_card_set",
+    "name": "playing_card_set",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:three_dragon_ante_set",
+    "name": "three_dragon_ante_set",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:herbalism_kit",
+    "name": "herbalism_kit",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:bagpipes",
+    "name": "bagpipes",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:drum",
+    "name": "drum",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:dulcimer",
+    "name": "dulcimer",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:flute",
+    "name": "flute",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:lute",
+    "name": "lute",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:lyre",
+    "name": "lyre",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:horn",
+    "name": "horn",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:pan_flute",
+    "name": "pan_flute",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:shawm",
+    "name": "shawm",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:viol",
+    "name": "viol",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:navigator_tools",
+    "name": "navigator_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:poisoner_kit",
+    "name": "poisoner_kit",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:thieves_tools",
+    "name": "thieves_tools",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:vehicles_land",
+    "name": "vehicles_land",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "option_id": "tool:vehicles_water",
+    "name": "vehicles_water",
+    "grant_feature_ids": [],
+    "grant_effect_ids": [],
+    "description": ""
   }
 ]

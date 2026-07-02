@@ -773,7 +773,7 @@ namespace GameLogic
 
             if (string.Equals(normalized, "option_feat", StringComparison.OrdinalIgnoreCase))
             {
-                return "choice_feat_any";
+                return "choice_feat";
             }
 
             return string.Empty;

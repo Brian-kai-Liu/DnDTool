@@ -47,6 +47,10 @@ namespace GameLogic
 
         public List<DndClassSpellListData> ClassSpellLists { get; } = new List<DndClassSpellListData>();
 
+        public List<DndSpellSlotProgressionData> SpellSlotProgressions { get; } = new List<DndSpellSlotProgressionData>();
+
+        public List<DndLevelExperienceData> LevelExperiences { get; } = new List<DndLevelExperienceData>();
+
         public List<DndItemDefineData> Items { get; } = new List<DndItemDefineData>();
 
         public List<DndToolDefineData> Tools { get; } = new List<DndToolDefineData>();
@@ -457,6 +461,71 @@ namespace GameLogic
         public string SourceFeatureId { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndSpellSlotProgressionData
+    {
+        public string ProgressionId { get; set; } = string.Empty;
+
+        public int ProgressionLevel { get; set; }
+
+        public int MaxSpellLevel { get; set; }
+
+        public int Slot1 { get; set; }
+
+        public int Slot2 { get; set; }
+
+        public int Slot3 { get; set; }
+
+        public int Slot4 { get; set; }
+
+        public int Slot5 { get; set; }
+
+        public int Slot6 { get; set; }
+
+        public int Slot7 { get; set; }
+
+        public int Slot8 { get; set; }
+
+        public int Slot9 { get; set; }
+
+        public int GetSlotCount(int spellLevel)
+        {
+            switch (spellLevel)
+            {
+                case 1:
+                    return Slot1;
+                case 2:
+                    return Slot2;
+                case 3:
+                    return Slot3;
+                case 4:
+                    return Slot4;
+                case 5:
+                    return Slot5;
+                case 6:
+                    return Slot6;
+                case 7:
+                    return Slot7;
+                case 8:
+                    return Slot8;
+                case 9:
+                    return Slot9;
+                default:
+                    return 0;
+            }
+        }
+    }
+
+    internal sealed class DndLevelExperienceData
+    {
+        public int Level { get; set; }
+
+        public int ExperienceThreshold { get; set; }
+
+        public int ProficiencyBonus { get; set; }
+
+        public string Description { get; set; } = string.Empty;
     }
 
     internal sealed class DndItemDefineData

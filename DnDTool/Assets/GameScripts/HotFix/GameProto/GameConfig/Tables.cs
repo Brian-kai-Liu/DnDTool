@@ -477,6 +477,45 @@ public partial class Tables
             m_TbTextLocalize.ResolveRef(this);
         }
     }
+    private dnd.TbLevelExperience m_TbLevelExperience;
+    public dnd.TbLevelExperience TbLevelExperience
+    {
+        get
+        {
+            if (m_TbLevelExperience == null)
+            {
+                m_TbLevelExperience = new dnd.TbLevelExperience(defaultLoader("dnd_tblevelexperience"));
+                m_TbLevelExperience.ResolveRef(this);
+            }
+            return m_TbLevelExperience;
+        }
+        set
+        {
+            m_TbLevelExperience = value;
+            m_TbLevelExperience.ResolveRef(this);
+        }
+    }
+    /// <summary>
+    /// Spell slot progression table.
+    /// </summary>
+    private dnd.TbSpellSlotProgression m_TbSpellSlotProgression;
+    public dnd.TbSpellSlotProgression TbSpellSlotProgression
+    {
+        get
+        {
+            if (m_TbSpellSlotProgression == null)
+            {
+                m_TbSpellSlotProgression = new dnd.TbSpellSlotProgression(defaultLoader("dnd_tbspellslotprogression"));
+                m_TbSpellSlotProgression.ResolveRef(this);
+            }
+            return m_TbSpellSlotProgression;
+        }
+        set
+        {
+            m_TbSpellSlotProgression = value;
+            m_TbSpellSlotProgression.ResolveRef(this);
+        }
+    }
 
     #endregion
 

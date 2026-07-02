@@ -44,6 +44,8 @@ namespace GameLogic
                 LoadRows(tables, "TbFeatDefine", library.Feats, CreateFeatDefine);
                 LoadRows(tables, "TbSpellDefine", library.Spells, CreateSpellDefine);
                 LoadRows(tables, "TbClassSpellList", library.ClassSpellLists, CreateClassSpellList);
+                LoadRows(tables, "TbSpellSlotProgression", library.SpellSlotProgressions, CreateSpellSlotProgression);
+                LoadRows(tables, "TbLevelExperience", library.LevelExperiences, CreateLevelExperience);
                 LoadRows(tables, "TbDndItemDefine", library.Items, CreateDndItemDefine);
                 LoadRows(tables, "TbDndToolDefine", library.Tools, CreateDndToolDefine);
                 LoadRows(tables, "TbDndLanguageDefine", library.Languages, CreateDndLanguageDefine);
@@ -793,6 +795,36 @@ namespace GameLogic
                 AlwaysPrepared = GetBool(row, "AlwaysPrepared", "always_prepared", "alwaysPrepared"),
                 SourceFeatureId = GetString(row, "SourceFeatureId", "source_feature_id", "sourceFeatureId"),
                 Note = GetString(row, "Note", "note")
+            };
+        }
+
+        private static DndSpellSlotProgressionData CreateSpellSlotProgression(object row)
+        {
+            return new DndSpellSlotProgressionData
+            {
+                ProgressionId = GetString(row, "ProgressionId", "progression_id", "progressionId"),
+                ProgressionLevel = GetInt(row, "ProgressionLevel", "progression_level", "progressionLevel"),
+                MaxSpellLevel = GetInt(row, "MaxSpellLevel", "max_spell_level", "maxSpellLevel"),
+                Slot1 = GetInt(row, "Slot1", "slot_1", "slot1"),
+                Slot2 = GetInt(row, "Slot2", "slot_2", "slot2"),
+                Slot3 = GetInt(row, "Slot3", "slot_3", "slot3"),
+                Slot4 = GetInt(row, "Slot4", "slot_4", "slot4"),
+                Slot5 = GetInt(row, "Slot5", "slot_5", "slot5"),
+                Slot6 = GetInt(row, "Slot6", "slot_6", "slot6"),
+                Slot7 = GetInt(row, "Slot7", "slot_7", "slot7"),
+                Slot8 = GetInt(row, "Slot8", "slot_8", "slot8"),
+                Slot9 = GetInt(row, "Slot9", "slot_9", "slot9")
+            };
+        }
+
+        private static DndLevelExperienceData CreateLevelExperience(object row)
+        {
+            return new DndLevelExperienceData
+            {
+                Level = GetInt(row, "Level", "level"),
+                ExperienceThreshold = GetInt(row, "ExperienceThreshold", "experience_threshold", "experienceThreshold"),
+                ProficiencyBonus = GetInt(row, "ProficiencyBonus", "proficiency_bonus", "proficiencyBonus"),
+                Description = GetString(row, "Description", "description")
             };
         }
 

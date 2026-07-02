@@ -51,6 +51,7 @@ namespace GameLogic
                 Level = Math.Max(1, request.Level),
                 RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(request.RuntimeSnapshot),
                 Equipment = CharacterEquipmentSetSaveData.Clone(request.Equipment),
+                RoleplayProfile = CharacterRoleplayProfileSaveData.Clone(request.RoleplayProfile),
                 ClassProgresses = CloneClassProgresses(request.ClassProgresses),
                 ChoiceSelections = CloneChoiceSelections(request.ChoiceSelections)
             };
@@ -77,6 +78,7 @@ namespace GameLogic
                 Level = level,
                 RuntimeSnapshot = BuildCreationRuntimeSnapshot(input),
                 Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment),
+                RoleplayProfile = BuildCreationRoleplayProfile(input),
                 ClassProgresses = BuildCreationClassProgresses(input, level),
                 ChoiceSelections = BuildCreationChoiceSelections(input)
             };
@@ -87,8 +89,10 @@ namespace GameLogic
             character.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(input.CurrentHp, character.MaxHp);
             character.TemporaryHp = Math.Max(0, input.TemporaryHp);
             character.PreviewImagePath = input.PreviewImagePath?.Trim() ?? string.Empty;
+            character.RoleplayProfile = BuildCreationRoleplayProfile(input);
             character.HpRolls = CloneHpRolls(input.HpRolls);
             character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
+            character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
             return CharacterCardLocalRepository.Normalize(character);
         }
 
@@ -267,6 +271,18 @@ namespace GameLogic
             AppendToolChoices(result, input?.ToolChoices);
             AppendFeatureChoices(result, input?.FeatureChoices);
             return result;
+        }
+
+        private static CharacterRoleplayProfileSaveData BuildCreationRoleplayProfile(CharacterCreationDraftInput input)
+        {
+            input ??= new CharacterCreationDraftInput();
+            return new CharacterRoleplayProfileSaveData
+            {
+                PersonalityTraits = input.PersonalityTraits?.Trim() ?? string.Empty,
+                Ideals = input.Ideals?.Trim() ?? string.Empty,
+                Bonds = input.Bonds?.Trim() ?? string.Empty,
+                Flaws = input.Flaws?.Trim() ?? string.Empty
+            };
         }
 
         private static void AppendRaceAbilityChoices(List<CharacterChoiceSelectionSaveData> target, List<CharacterCreationRaceAbilityChoiceInput> source)

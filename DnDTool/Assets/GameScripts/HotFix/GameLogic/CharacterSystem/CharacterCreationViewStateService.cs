@@ -37,18 +37,22 @@ namespace GameLogic
                 RaceSummary = FirstNonEmpty(CharacterCreationRuleService.Instance.GetRaceDisplayName(character.RaceId), "未选择种族"),
                 BackgroundSummary = FirstNonEmpty(CharacterCreationRuleService.Instance.GetBackgroundDisplayName(character.BackgroundId), "未选择背景"),
                 AlignmentSummary = FirstNonEmpty(CharacterCreationRuleService.Instance.GetAlignmentDisplayName(character.Alignment), "未选择阵营"),
-                SkillsSummary = "技能熟练"
+                SkillsSummary = "\u6280\u80fd\u719f\u7ec3"
             };
 
             FillClassState(state, classData, normalizedLevel);
             FillRaceState(state, raceData);
-            FillAbilityStates(state);
             state.AbilityScoreOptions.AddRange(CharacterCreationSessionService.Instance.BuildGeneratedAbilityScoreOptions());
-            FillSkillStates(state, raceData, backgroundData, normalizedLevel);
+            CharacterCardDraftSaveData previewCharacter = BuildPreviewCharacter(character, normalizedLevel);
+            CharacterRuntimeSnapshotData previewSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(previewCharacter);
+            FillAbilityStates(state, previewSnapshot);
+            FillSkillStates(state, raceData, backgroundData, normalizedLevel, previewSnapshot);
             FillPassivePerceptionState(state);
-            FillCombatOverviewState(state, character, normalizedLevel);
+            FillCombatOverviewState(state, previewCharacter, previewSnapshot, normalizedLevel);
+            state.Experience = CharacterDetailCalculationService.Instance.BuildExperienceDisplay(character.Experience, normalizedLevel);
             FillCurrencyState(state, character);
-            FillEquipmentToolState(state, classData, raceData, backgroundData);
+            FillEquipmentToolState(state, classData, raceData, backgroundData, previewSnapshot);
+            state.LearnedSpells.AddRange(CharacterCreationSpellDisplayService.Instance.BuildLearnedSpellCards(previewCharacter));
             FillStatusEffectState(state, character);
             return state;
         }
@@ -119,19 +123,19 @@ namespace GameLogic
             state.RaceFeatures.AddRange(CharacterCreationFeatureDisplayService.Instance.BuildFeatureEntries(raceData.FeatureIds, "Race", raceData.RaceId));
         }
 
-        private static void FillAbilityStates(CharacterCreationViewState state)
+        private static void FillAbilityStates(CharacterCreationViewState state, CharacterRuntimeSnapshotData snapshot)
         {
-            AppendAbilityState(state, "Strength");
-            AppendAbilityState(state, "Dexterity");
-            AppendAbilityState(state, "Constitution");
-            AppendAbilityState(state, "Intelligence");
-            AppendAbilityState(state, "Wisdom");
-            AppendAbilityState(state, "Charisma");
+            AppendAbilityState(state, snapshot, "Strength");
+            AppendAbilityState(state, snapshot, "Dexterity");
+            AppendAbilityState(state, snapshot, "Constitution");
+            AppendAbilityState(state, snapshot, "Intelligence");
+            AppendAbilityState(state, snapshot, "Wisdom");
+            AppendAbilityState(state, snapshot, "Charisma");
         }
 
-        private static void AppendAbilityState(CharacterCreationViewState state, string abilityId)
+        private static void AppendAbilityState(CharacterCreationViewState state, CharacterRuntimeSnapshotData snapshot, string abilityId)
         {
-            int score = CharacterCreationSessionService.Instance.GetCurrentAbilityScore(abilityId, BaseAbilityScore);
+            int score = GetSnapshotAbilityScore(snapshot, abilityId);
             state.Abilities.Add(new CharacterCreationAbilityViewState
             {
                 AbilityId = abilityId,
@@ -144,17 +148,56 @@ namespace GameLogic
             });
         }
 
+        private static int GetSnapshotAbilityScore(CharacterRuntimeSnapshotData snapshot, string abilityId)
+        {
+            if (snapshot == null)
+            {
+                return CharacterCreationSessionService.Instance.GetCurrentAbilityScore(abilityId, BaseAbilityScore);
+            }
+
+            if (string.Equals(abilityId, "Strength", StringComparison.OrdinalIgnoreCase))
+            {
+                return snapshot.Strength;
+            }
+
+            if (string.Equals(abilityId, "Dexterity", StringComparison.OrdinalIgnoreCase))
+            {
+                return snapshot.Dexterity;
+            }
+
+            if (string.Equals(abilityId, "Constitution", StringComparison.OrdinalIgnoreCase))
+            {
+                return snapshot.Constitution;
+            }
+
+            if (string.Equals(abilityId, "Intelligence", StringComparison.OrdinalIgnoreCase))
+            {
+                return snapshot.Intelligence;
+            }
+
+            if (string.Equals(abilityId, "Wisdom", StringComparison.OrdinalIgnoreCase))
+            {
+                return snapshot.Wisdom;
+            }
+
+            if (string.Equals(abilityId, "Charisma", StringComparison.OrdinalIgnoreCase))
+            {
+                return snapshot.Charisma;
+            }
+
+            return CharacterCreationSessionService.Instance.GetCurrentAbilityScore(abilityId, BaseAbilityScore);
+        }
+
         private static void FillSkillStates(
             CharacterCreationViewState state,
             DndRaceDefineData raceData,
             DndBackgroundDefineData backgroundData,
-            int level)
+            int level,
+            CharacterRuntimeSnapshotData snapshot)
         {
             List<string> fixedSkillIds = CharacterCreationRuleService.Instance.BuildFixedSkillProficiencyIds(raceData, backgroundData);
             List<string> proficiencyIds = CharacterCreationSessionService.Instance.BuildCurrentSkillProficiencyIds(fixedSkillIds);
             CharacterCardDraftSaveData character = CharacterCreationSessionService.Instance.CurrentState?.Character;
-            CharacterCardDraftSaveData previewCharacter = BuildPreviewCharacter(character, level);
-            CharacterRuntimeSnapshotData snapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(previewCharacter);
             if (snapshot?.SkillProficiencyIds != null)
             {
                 proficiencyIds = snapshot.SkillProficiencyIds;
@@ -162,28 +205,29 @@ namespace GameLogic
 
             TryGetClassLevelProficiencyBonus(character?.ClassId, level, out int proficiencyBonus);
 
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "athletics", "运动", AbilityKind.Strength);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "acrobatics", "体操", AbilityKind.Dexterity);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "sleight_of_hand", "巧手", AbilityKind.Dexterity);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "stealth", "隐匿", AbilityKind.Dexterity);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "arcana", "奥秘", AbilityKind.Intelligence);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "history", "历史", AbilityKind.Intelligence);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "investigation", "调查", AbilityKind.Intelligence);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "nature", "自然", AbilityKind.Intelligence);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "religion", "宗教", AbilityKind.Intelligence);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "animal_handling", "驯兽", AbilityKind.Wisdom);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "insight", "洞悉", AbilityKind.Wisdom);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "medicine", "医药", AbilityKind.Wisdom);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "perception", "察觉", AbilityKind.Wisdom);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "survival", "求生", AbilityKind.Wisdom);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "deception", "欺瞒", AbilityKind.Charisma);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "intimidation", "威吓", AbilityKind.Charisma);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "performance", "表演", AbilityKind.Charisma);
-            AppendSkillState(state, proficiencyIds, proficiencyBonus, "persuasion", "游说", AbilityKind.Charisma);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "athletics", "运动", AbilityKind.Strength);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "acrobatics", "体操", AbilityKind.Dexterity);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "sleight_of_hand", "巧手", AbilityKind.Dexterity);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "stealth", "隐匿", AbilityKind.Dexterity);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "arcana", "奥秘", AbilityKind.Intelligence);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "history", "历史", AbilityKind.Intelligence);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "investigation", "调查", AbilityKind.Intelligence);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "nature", "自然", AbilityKind.Intelligence);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "religion", "宗教", AbilityKind.Intelligence);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "animal_handling", "驯兽", AbilityKind.Wisdom);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "insight", "洞悉", AbilityKind.Wisdom);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "medicine", "医药", AbilityKind.Wisdom);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "perception", "察觉", AbilityKind.Wisdom);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "survival", "求生", AbilityKind.Wisdom);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "deception", "欺瞒", AbilityKind.Charisma);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "intimidation", "威吓", AbilityKind.Charisma);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "performance", "表演", AbilityKind.Charisma);
+            AppendSkillState(state, snapshot, proficiencyIds, proficiencyBonus, "persuasion", "游说", AbilityKind.Charisma);
         }
 
         private static void AppendSkillState(
             CharacterCreationViewState state,
+            CharacterRuntimeSnapshotData snapshot,
             IReadOnlyList<string> proficiencyIds,
             int proficiencyBonus,
             string skillId,
@@ -191,7 +235,7 @@ namespace GameLogic
             AbilityKind ability)
         {
             bool hasProficiency = ContainsSkillId(proficiencyIds, skillId, displayName);
-            int skillBonus = GetAbilityModifier(ability);
+            int skillBonus = GetAbilityModifier(snapshot, ability);
             if (hasProficiency)
             {
                 skillBonus += proficiencyBonus;
@@ -256,10 +300,12 @@ namespace GameLogic
             return true;
         }
 
-        private static void FillCombatOverviewState(CharacterCreationViewState state, CharacterCardDraftSaveData character, int level)
+        private static void FillCombatOverviewState(
+            CharacterCreationViewState state,
+            CharacterCardDraftSaveData previewCharacter,
+            CharacterRuntimeSnapshotData snapshot,
+            int level)
         {
-            CharacterCardDraftSaveData previewCharacter = BuildPreviewCharacter(character, level);
-            CharacterRuntimeSnapshotData snapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(previewCharacter);
             CharacterCombatOverviewViewState overview = CharacterDetailCalculationService.Instance.BuildCombatOverview(previewCharacter, snapshot);
             CharacterHpDisplayViewState hp = CharacterDetailCalculationService.Instance.BuildHpDisplay(snapshot);
 
@@ -355,12 +401,12 @@ namespace GameLogic
             snapshot.MaxHp = preview.MaxHp;
             snapshot.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(preview.CurrentHp, preview.MaxHp);
             snapshot.TemporaryHp = preview.TemporaryHp;
-            snapshot.Strength = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Strength", BaseAbilityScore);
-            snapshot.Dexterity = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Dexterity", BaseAbilityScore);
-            snapshot.Constitution = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Constitution", BaseAbilityScore);
-            snapshot.Intelligence = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Intelligence", BaseAbilityScore);
-            snapshot.Wisdom = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Wisdom", BaseAbilityScore);
-            snapshot.Charisma = CharacterCreationSessionService.Instance.GetCurrentAbilityScore("Charisma", BaseAbilityScore);
+            snapshot.Strength = CharacterCreationSessionService.Instance.GetCurrentBaseAbilityScore("Strength", BaseAbilityScore);
+            snapshot.Dexterity = CharacterCreationSessionService.Instance.GetCurrentBaseAbilityScore("Dexterity", BaseAbilityScore);
+            snapshot.Constitution = CharacterCreationSessionService.Instance.GetCurrentBaseAbilityScore("Constitution", BaseAbilityScore);
+            snapshot.Intelligence = CharacterCreationSessionService.Instance.GetCurrentBaseAbilityScore("Intelligence", BaseAbilityScore);
+            snapshot.Wisdom = CharacterCreationSessionService.Instance.GetCurrentBaseAbilityScore("Wisdom", BaseAbilityScore);
+            snapshot.Charisma = CharacterCreationSessionService.Instance.GetCurrentBaseAbilityScore("Charisma", BaseAbilityScore);
             snapshot.SkillProficiencyIds = CharacterCreationSessionService.Instance.BuildCurrentSkillProficiencyIds(fixedSkillIds);
             snapshot.ToolProficiencyIds = CharacterCreationSessionService.Instance.BuildCurrentToolProficiencyIds(fixedToolIds);
             preview.RuntimeSnapshot = snapshot;
@@ -750,14 +796,15 @@ namespace GameLogic
             CharacterCreationViewState state,
             DndClassDefineData classData,
             DndRaceDefineData raceData,
-            DndBackgroundDefineData backgroundData)
+            DndBackgroundDefineData backgroundData,
+            CharacterRuntimeSnapshotData snapshot)
         {
-            state.EquipmentTools = CharacterCreationEquipmentToolDisplayService.Instance.BuildDisplayState(classData, raceData, backgroundData);
+            state.EquipmentTools = CharacterCreationEquipmentToolDisplayService.Instance.BuildDisplayState(classData, raceData, backgroundData, snapshot);
             int count = state.EquipmentTools.Labels.Count;
-            state.EquipmentToolsSummary = count > 0 ? $"装备与工具熟练项：{count} 项" : "装备与工具熟练项";
+            state.EquipmentToolsSummary = count > 0 ? $"\u88c5\u5907\u4e0e\u5de5\u5177\u719f\u7ec3\u9879\uff1a{count} \u9879" : "\u88c5\u5907\u4e0e\u5de5\u5177\u719f\u7ec3\u9879";
         }
 
-        private static int GetAbilityModifier(AbilityKind ability)
+        private static int GetAbilityModifier(CharacterRuntimeSnapshotData snapshot, AbilityKind ability)
         {
             string abilityId = ability switch
             {
@@ -770,7 +817,7 @@ namespace GameLogic
                 _ => string.Empty
             };
 
-            int score = CharacterCreationSessionService.Instance.GetCurrentAbilityScore(abilityId, BaseAbilityScore);
+            int score = GetSnapshotAbilityScore(snapshot, abilityId);
             return CharacterCreationCalculationService.Instance.CalculateAbilityModifier(score);
         }
 

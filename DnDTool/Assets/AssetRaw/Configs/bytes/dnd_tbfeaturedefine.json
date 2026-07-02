@@ -3089,7 +3089,8 @@
     ],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_feat_armor_heavy"
+      "effect_feat_armor_heavy",
+      "effect_feat_heavily_armored_strength"
     ],
     "description": ""
   },
@@ -3104,7 +3105,8 @@
     ],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_feat_heavy_armor_master_strength",
+      "effect_feat_heavy_armor_master_damage_reduction"
     ],
     "description": ""
   },
@@ -3143,7 +3145,9 @@
     "feature_type": "Feat",
     "source_ref": "lightly_armored",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_feat_lightly_armored_ability"
+    ],
     "effect_ids": [
       "effect_feat_armor_light"
     ],
@@ -3158,7 +3162,8 @@
     "prerequisite_ids": [],
     "choice_group_ids": [],
     "effect_ids": [
-      "effect_feat_language"
+      "effect_feat_language",
+      "effect_feat_linguist_intelligence"
     ],
     "description": ""
   },
@@ -3251,7 +3256,9 @@
     "prerequisite_ids": [
       "prereq_lightarmorproficiency"
     ],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_feat_moderately_armored_ability"
+    ],
     "effect_ids": [
       "effect_feat_armor_medium"
     ],
@@ -3277,9 +3284,13 @@
     "feature_type": "Feat",
     "source_ref": "observant",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_feat_observant_ability"
+    ],
     "effect_ids": [
-      "effect_manual_resolve"
+      "effect_manual_resolve",
+      "effect_feat_observant_passive_perception",
+      "effect_feat_observant_passive_investigation"
     ],
     "description": ""
   },
@@ -3303,10 +3314,10 @@
     "feature_type": "Feat",
     "source_ref": "resilient",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_feat_resilient_ability"
     ],
+    "effect_ids": [],
     "description": ""
   },
   {
@@ -3384,7 +3395,7 @@
     "source_ref": "feat:skilled",
     "prerequisite_ids": [],
     "choice_group_ids": [
-      "choice_feat_skilled_skill"
+      "choice_feat_skilled_proficiency"
     ],
     "effect_ids": [],
     "description": ""
@@ -3426,7 +3437,9 @@
     "feature_type": "Feat",
     "source_ref": "tavern_brawler",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
+    "choice_group_ids": [
+      "choice_feat_tavern_brawler_ability"
+    ],
     "effect_ids": [
       "effect_manual_resolve"
     ],
@@ -3467,10 +3480,11 @@
     "feature_type": "Feat",
     "source_ref": "weapon_master",
     "prerequisite_ids": [],
-    "choice_group_ids": [],
-    "effect_ids": [
-      "effect_manual_resolve"
+    "choice_group_ids": [
+      "choice_feat_weapon_master_ability",
+      "choice_feat_weapon_master_weapon"
     ],
+    "effect_ids": [],
     "description": ""
   },
   {

@@ -1,0 +1,122 @@
+[
+  {
+    "level": 1,
+    "experience_threshold": 0,
+    "proficiency_bonus": 2,
+    "description": "Level 1"
+  },
+  {
+    "level": 2,
+    "experience_threshold": 300,
+    "proficiency_bonus": 2,
+    "description": "Level 2"
+  },
+  {
+    "level": 3,
+    "experience_threshold": 900,
+    "proficiency_bonus": 2,
+    "description": "Level 3"
+  },
+  {
+    "level": 4,
+    "experience_threshold": 2700,
+    "proficiency_bonus": 2,
+    "description": "Level 4"
+  },
+  {
+    "level": 5,
+    "experience_threshold": 6500,
+    "proficiency_bonus": 3,
+    "description": "Level 5"
+  },
+  {
+    "level": 6,
+    "experience_threshold": 14000,
+    "proficiency_bonus": 3,
+    "description": "Level 6"
+  },
+  {
+    "level": 7,
+    "experience_threshold": 23000,
+    "proficiency_bonus": 3,
+    "description": "Level 7"
+  },
+  {
+    "level": 8,
+    "experience_threshold": 34000,
+    "proficiency_bonus": 3,
+    "description": "Level 8"
+  },
+  {
+    "level": 9,
+    "experience_threshold": 48000,
+    "proficiency_bonus": 4,
+    "description": "Level 9"
+  },
+  {
+    "level": 10,
+    "experience_threshold": 64000,
+    "proficiency_bonus": 4,
+    "description": "Level 10"
+  },
+  {
+    "level": 11,
+    "experience_threshold": 85000,
+    "proficiency_bonus": 4,
+    "description": "Level 11"
+  },
+  {
+    "level": 12,
+    "experience_threshold": 100000,
+    "proficiency_bonus": 4,
+    "description": "Level 12"
+  },
+  {
+    "level": 13,
+    "experience_threshold": 120000,
+    "proficiency_bonus": 5,
+    "description": "Level 13"
+  },
+  {
+    "level": 14,
+    "experience_threshold": 140000,
+    "proficiency_bonus": 5,
+    "description": "Level 14"
+  },
+  {
+    "level": 15,
+    "experience_threshold": 165000,
+    "proficiency_bonus": 5,
+    "description": "Level 15"
+  },
+  {
+    "level": 16,
+    "experience_threshold": 195000,
+    "proficiency_bonus": 5,
+    "description": "Level 16"
+  },
+  {
+    "level": 17,
+    "experience_threshold": 225000,
+    "proficiency_bonus": 6,
+    "description": "Level 17"
+  },
+  {
+    "level": 18,
+    "experience_threshold": 265000,
+    "proficiency_bonus": 6,
+    "description": "Level 18"
+  },
+  {
+    "level": 19,
+    "experience_threshold": 305000,
+    "proficiency_bonus": 6,
+    "description": "Level 19"
+  },
+  {
+    "level": 20,
+    "experience_threshold": 355000,
+    "proficiency_bonus": 6,
+    "description": "Level 20"
+  }
+]

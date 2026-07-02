@@ -14,7 +14,7 @@
     "result_storage": "ChoiceSelections",
     "next_choice_group_ids": [
       "choice_asi_attributes",
-      "choice_feat_any"
+      "choice_feat"
     ],
     "ui_mode": "CardList"
   },
@@ -950,25 +950,9 @@
     "ui_mode": "AbilityStepper"
   },
   {
-    "choice_group_id": "choice_feat_any",
-    "package_id": "phb_5e_zh_user",
-    "name": "Feat Any",
-    "choice_type": "Feat",
-    "min_select": 1,
-    "max_select": 1,
-    "option_filter": "AnyFeat",
-    "selection_mode": "Distinct",
-    "description": "",
-    "selection_value_mode": "Grant",
-    "result_value_type": "Feat",
-    "result_storage": "ChoiceSelections",
-    "next_choice_group_ids": [],
-    "ui_mode": "CardList"
-  },
-  {
     "choice_group_id": "choice_feat_athlete_ability",
     "package_id": "phb_5e_zh_user",
-    "name": "Athlete Ability",
+    "name": " ",
     "choice_type": "AbilityScore",
     "min_select": 1,
     "max_select": 1,
@@ -982,6 +966,192 @@
     "result_value_type": "AbilityScore",
     "result_storage": "ChoiceSelections",
     "next_choice_group_ids": [],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_lightly_armored_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Lightly Armored Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "Strength;Dexterity",
+    "selection_mode": "Distinct",
+    "description": "8546",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "target_value_floor": 8546,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8546"
+    ],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_moderately_armored_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Moderately Armored Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "Strength;Dexterity",
+    "selection_mode": "Distinct",
+    "description": "8546",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "target_value_floor": 8546,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8546"
+    ],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_observant_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Observant Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "Intelligence;Wisdom",
+    "selection_mode": "Distinct",
+    "description": "8546",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "target_value_floor": 8546,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8546"
+    ],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_resilient_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Resilient Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "AnyAbility",
+    "selection_mode": "Distinct",
+    "description": "8546",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "target_value_floor": 8546,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8546"
+    ],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_tavern_brawler_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Tavern Brawler Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "Strength;Constitution",
+    "selection_mode": "Distinct",
+    "description": "8546",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "target_value_floor": 8546,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8546"
+    ],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_ability",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Weapon Master Ability",
+    "choice_type": "AbilityScore",
+    "min_select": 1,
+    "max_select": 1,
+    "option_filter": "Strength;Dexterity",
+    "selection_mode": "Distinct",
+    "description": "8546",
+    "value_per_selection": 1,
+    "max_value_per_option": 1,
+    "target_value_cap": 20,
+    "target_value_floor": 8546,
+    "selection_value_mode": "Grant",
+    "result_value_type": "AbilityScore",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8546"
+    ],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_weapon_master_weapon",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Weapon Master Weapon",
+    "choice_type": "Weapon",
+    "min_select": 4,
+    "max_select": 4,
+    "option_filter": "AnyWeapon",
+    "selection_mode": "Distinct",
+    "description": "",
+    "selection_value_mode": "Grant",
+    "result_value_type": "WeaponProficiency",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_proficiency",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Skilled Proficiency",
+    "choice_type": "SkillOrTool",
+    "min_select": 3,
+    "max_select": 3,
+    "option_filter": "AnySkill;AnyTool",
+    "selection_mode": "Distinct",
+    "description": "",
+    "selection_value_mode": "Grant",
+    "result_value_type": "SkillOrToolProficiency",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [],
+    "ui_mode": "CardList"
+  },
+  {
+    "choice_group_id": "choice_feat_skilled_tool",
+    "package_id": "phb_5e_zh_user",
+    "name": "Feat Skilled Tool",
+    "choice_type": "Tool",
+    "min_select": 3,
+    "max_select": 3,
+    "option_filter": "ToolCategory:artisan_tools|gaming_set|musical_instrument|kit|vehicle",
+    "selection_mode": "Distinct",
+    "description": "8704",
+    "value_per_selection": 8704,
+    "max_value_per_option": 8704,
+    "target_value_cap": 8704,
+    "target_value_floor": 8704,
+    "selection_value_mode": "Grant",
+    "result_value_type": "ToolProficiency",
+    "result_storage": "ChoiceSelections",
+    "next_choice_group_ids": [
+      "8704"
+    ],
     "ui_mode": "CardList"
   }
 ]
