@@ -48,6 +48,7 @@ namespace GameLogic
         public List<CharacterResourceSaveData> Resources = new List<CharacterResourceSaveData>();
         public List<CharacterConditionStateSaveData> Conditions = new List<CharacterConditionStateSaveData>();
         public List<CharacterTemporaryEffectSaveData> TemporaryEffects = new List<CharacterTemporaryEffectSaveData>();
+        public List<CharacterCustomFeatureSaveData> CustomFeatures = new List<CharacterCustomFeatureSaveData>();
         public bool IsCompleted = false;
         public string CreatedAt = string.Empty;
         public string UpdatedAt = string.Empty;
@@ -122,6 +123,49 @@ namespace GameLogic
                 Treasure = source.Treasure ?? string.Empty,
                 AdditionalNotes = source.AdditionalNotes ?? string.Empty
             };
+        }
+    }
+
+    [Serializable]
+    internal sealed class CharacterCustomFeatureSaveData
+    {
+        public string Name = string.Empty;
+        public string Description = string.Empty;
+
+        public static CharacterCustomFeatureSaveData Clone(CharacterCustomFeatureSaveData source)
+        {
+            if (source == null)
+            {
+                return new CharacterCustomFeatureSaveData();
+            }
+
+            return new CharacterCustomFeatureSaveData
+            {
+                Name = source.Name?.Trim() ?? string.Empty,
+                Description = source.Description?.Trim() ?? string.Empty
+            };
+        }
+
+        public static List<CharacterCustomFeatureSaveData> CloneList(List<CharacterCustomFeatureSaveData> source)
+        {
+            List<CharacterCustomFeatureSaveData> result = new List<CharacterCustomFeatureSaveData>();
+            if (source == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count; index++)
+            {
+                CharacterCustomFeatureSaveData feature = Clone(source[index]);
+                if (string.IsNullOrWhiteSpace(feature.Name) && string.IsNullOrWhiteSpace(feature.Description))
+                {
+                    continue;
+                }
+
+                result.Add(feature);
+            }
+
+            return result;
         }
     }
 
@@ -1419,6 +1463,7 @@ namespace GameLogic
             character.Resources = CharacterResourceSaveData.CloneList(character.Resources);
             character.Conditions = CharacterConditionStateSaveData.CloneList(character.Conditions);
             character.TemporaryEffects = CharacterTemporaryEffectSaveData.CloneList(character.TemporaryEffects);
+            character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures);
             character.RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(character.RuntimeSnapshot);
 
             string now = DateTime.UtcNow.ToString("O");

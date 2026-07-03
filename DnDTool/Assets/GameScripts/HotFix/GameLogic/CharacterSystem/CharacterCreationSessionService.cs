@@ -155,6 +155,7 @@ namespace GameLogic
             m_state.Character.Alignment = input.AlignmentId?.Trim() ?? string.Empty;
             m_state.Character.PreviewImagePath = input.PreviewImagePath?.Trim() ?? string.Empty;
             m_state.Character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
+            m_state.Character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures);
             m_state.Character.Level = Math.Max(1, input.Level);
             m_state.Character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
             m_state.Character.RoleplayProfile = new CharacterRoleplayProfileSaveData
@@ -165,6 +166,31 @@ namespace GameLogic
                 Flaws = input.Flaws?.Trim() ?? string.Empty
             };
             m_state.IsDirty = true;
+        }
+
+        public bool AddCustomFeature(string featureName, string description)
+        {
+            EnsureState();
+            string normalizedName = featureName?.Trim() ?? string.Empty;
+            string normalizedDescription = description?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalizedName) && string.IsNullOrWhiteSpace(normalizedDescription))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(normalizedName))
+            {
+                normalizedName = "自定义特性";
+            }
+
+            m_state.Character.CustomFeatures ??= new List<CharacterCustomFeatureSaveData>();
+            m_state.Character.CustomFeatures.Add(new CharacterCustomFeatureSaveData
+            {
+                Name = normalizedName,
+                Description = normalizedDescription
+            });
+            m_state.IsDirty = true;
+            return true;
         }
 
         public void SetPreviewImagePath(string previewImagePath)
@@ -1338,7 +1364,8 @@ namespace GameLogic
                 FeatureChoices = BuildFeatureChoiceInputs(),
                 PreviewImagePath = character.PreviewImagePath?.Trim() ?? string.Empty,
                 Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment),
-                Spellcasting = CharacterSpellcastingSaveData.Clone(character.Spellcasting)
+                Spellcasting = CharacterSpellcastingSaveData.Clone(character.Spellcasting),
+                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures)
             };
         }
 

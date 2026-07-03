@@ -52,8 +52,9 @@ namespace GameLogic
             state.Experience = CharacterDetailCalculationService.Instance.BuildExperienceDisplay(character.Experience, normalizedLevel);
             FillCurrencyState(state, character);
             FillEquipmentToolState(state, classData, raceData, backgroundData, previewSnapshot);
-            state.LearnedSpells.AddRange(CharacterCreationSpellDisplayService.Instance.BuildLearnedSpellCards(previewCharacter));
+            state.LearnedSpells.AddRange(CharacterCreationSpellDisplayService.Instance.BuildLearnedSpellCards(previewCharacter, true));
             FillStatusEffectState(state, character);
+            FillOtherFeatureState(state, character);
             return state;
         }
 
@@ -338,6 +339,31 @@ namespace GameLogic
             state.StatusEffects.AddRange(CharacterDetailDisplayService.Instance.BuildStatusEffectEntries(character));
         }
 
+        private static void FillOtherFeatureState(CharacterCreationViewState state, CharacterCardDraftSaveData character)
+        {
+            if (state == null || character?.CustomFeatures == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < character.CustomFeatures.Count; index++)
+            {
+                CharacterCustomFeatureSaveData feature = CharacterCustomFeatureSaveData.Clone(character.CustomFeatures[index]);
+                if (string.IsNullOrWhiteSpace(feature.Name) && string.IsNullOrWhiteSpace(feature.Description))
+                {
+                    continue;
+                }
+
+                state.OtherFeatures.Add(new CharacterCreationFeatureDisplayEntry(
+                    $"custom_feature_{index + 1}",
+                    string.IsNullOrWhiteSpace(feature.Name) ? "自定义特性" : feature.Name,
+                    feature.Description,
+                    "Custom",
+                    string.Empty,
+                    0));
+            }
+        }
+
         private static CharacterCardDraftSaveData BuildPreviewCharacter(CharacterCardDraftSaveData source, int level)
         {
             source ??= new CharacterCardDraftSaveData();
@@ -373,9 +399,11 @@ namespace GameLogic
                 ManualHp = Math.Max(0, source.ManualHp),
                 HpRolls = CharacterHpRollSaveDataCloneList(source.HpRolls),
                 Equipment = CharacterEquipmentSetSaveData.Clone(source.Equipment),
+                Spellcasting = CharacterSpellcastingSaveData.Clone(source.Spellcasting),
                 Resources = CharacterResourceSaveData.CloneList(source.Resources),
                 Conditions = CharacterConditionStateSaveData.CloneList(source.Conditions),
                 TemporaryEffects = CharacterTemporaryEffectSaveData.CloneList(source.TemporaryEffects),
+                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(source.CustomFeatures),
                 RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(source.RuntimeSnapshot)
             };
 

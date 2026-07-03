@@ -44,10 +44,15 @@ namespace GameLogic
             return state;
         }
 
-        public List<CharacterCreationSpellCardViewState> BuildLearnedSpellCards(CharacterCardDraftSaveData character)
+        public List<CharacterCreationSpellCardViewState> BuildLearnedSpellCards(CharacterCardDraftSaveData character, bool includePendingPreview = false)
         {
             CharacterCreationSpellbookViewState state = new CharacterCreationSpellbookViewState();
             AppendLearnedSpells(state, character ?? new CharacterCardDraftSaveData(), character?.ClassId ?? string.Empty);
+            if (includePendingPreview)
+            {
+                AppendPendingSpellPreview(state, character ?? new CharacterCardDraftSaveData());
+            }
+
             return state.LearnedSpells;
         }
 
@@ -348,6 +353,28 @@ namespace GameLogic
                     state.PreparedSpells++;
                 }
             }
+        }
+
+        private static void AppendPendingSpellPreview(CharacterCreationSpellbookViewState state, CharacterCardDraftSaveData character)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            string spellId = CharacterCreationSessionService.Instance.SpellSelectionState.PendingSpellId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(spellId)
+                || CharacterCreationSpellDisplayService.Instance.IsSpellKnown(character, spellId)
+                || !DndRuleContentService.Instance.TryGetSpell(spellId, out DndSpellDefineData spell)
+                || spell == null)
+            {
+                return;
+            }
+
+            CharacterCreationSpellCardViewState card = BuildSpellCard(spell, character, character?.ClassId ?? string.Empty);
+            card.IsSelected = true;
+            card.IsPendingPreview = true;
+            state.LearnedSpells.Add(card);
         }
 
         private static CharacterCreationSpellCardViewState BuildSpellCard(DndSpellDefineData spell, CharacterCardDraftSaveData character, string classId)

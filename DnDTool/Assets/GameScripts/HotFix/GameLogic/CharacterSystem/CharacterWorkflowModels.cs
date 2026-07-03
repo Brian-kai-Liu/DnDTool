@@ -65,6 +65,7 @@ namespace GameLogic
         public CharacterRoleplayProfileSaveData RoleplayProfile { get; set; } = new CharacterRoleplayProfileSaveData();
         public List<CharacterClassProgressSaveData> ClassProgresses { get; set; } = new List<CharacterClassProgressSaveData>();
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; set; } = new List<CharacterChoiceSelectionSaveData>();
+        public List<CharacterCustomFeatureSaveData> CustomFeatures { get; set; } = new List<CharacterCustomFeatureSaveData>();
     }
 
     internal sealed class CharacterCreationDraftInput
@@ -102,6 +103,7 @@ namespace GameLogic
         public List<CharacterCreationFeatureChoiceInput> FeatureChoices { get; set; } = new List<CharacterCreationFeatureChoiceInput>();
         public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
         public CharacterSpellcastingSaveData Spellcasting { get; set; } = new CharacterSpellcastingSaveData();
+        public List<CharacterCustomFeatureSaveData> CustomFeatures { get; set; } = new List<CharacterCustomFeatureSaveData>();
     }
 
     internal sealed class CharacterCreationFormInput
@@ -370,6 +372,7 @@ namespace GameLogic
         public CharacterCreationEquipmentToolDisplayState EquipmentTools { get; set; } = new CharacterCreationEquipmentToolDisplayState();
         public List<CharacterCreationFeatureDisplayEntry> ClassFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
         public List<CharacterCreationFeatureDisplayEntry> RaceFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
+        public List<CharacterCreationFeatureDisplayEntry> OtherFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
         public List<CharacterCreationSpellCardViewState> LearnedSpells { get; } = new List<CharacterCreationSpellCardViewState>();
         public List<CharacterStatusEffectDisplayEntry> StatusEffects { get; } = new List<CharacterStatusEffectDisplayEntry>();
     }
@@ -384,6 +387,7 @@ namespace GameLogic
         public bool IsKnown { get; set; }
         public bool IsPrepared { get; set; }
         public bool IsAlwaysPrepared { get; set; }
+        public bool IsPendingPreview { get; set; }
     }
 
     internal sealed class CharacterCreationSpellbookViewState
@@ -595,5 +599,18 @@ namespace GameLogic
         public string Message { get; set; } = string.Empty;
         public string CharacterName { get; set; } = string.Empty;
         public string ItemName { get; set; } = string.Empty;
+    }
+
+    internal sealed class ItemInfoEditorUIRequest
+    {
+        public string ReturnUI { get; set; } = string.Empty;
+
+        public static ItemInfoEditorUIRequest FromCharacterCreation()
+        {
+            return new ItemInfoEditorUIRequest
+            {
+                ReturnUI = nameof(CharacterCreationUI)
+            };
+        }
     }
 }

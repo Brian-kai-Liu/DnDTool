@@ -213,7 +213,29 @@ namespace GameLogic
 
             DndFeatDefineData featData = FindFeat(character.FeatId);
             AppendFeatureDisplayEntries(entries, featData?.FeatureIds);
+            AppendCustomFeatureDisplayEntries(entries, character.CustomFeatures);
             return entries;
+        }
+
+        private static void AppendCustomFeatureDisplayEntries(List<ClassFeatureDisplayEntry> entries, IReadOnlyList<CharacterCustomFeatureSaveData> customFeatures)
+        {
+            if (entries == null || customFeatures == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < customFeatures.Count; index++)
+            {
+                CharacterCustomFeatureSaveData feature = CharacterCustomFeatureSaveData.Clone(customFeatures[index]);
+                if (string.IsNullOrWhiteSpace(feature.Name) && string.IsNullOrWhiteSpace(feature.Description))
+                {
+                    continue;
+                }
+
+                entries.Add(new ClassFeatureDisplayEntry(
+                    string.IsNullOrWhiteSpace(feature.Name) ? "自定义特性" : feature.Name,
+                    feature.Description));
+            }
         }
 
         public string BuildFeatureDescription(DndFeatureDefineData feature)

@@ -48,6 +48,11 @@ namespace GameLogic
         private Button m_btnSectionClass;
         private Button m_btnSectionRace;
         private Button m_btnSectionOtherFeatures;
+        private Button m_btnAddInventoryItem;
+        private Button m_btnAddCustomFeature;
+        private Button m_btnCloseCustomFeature;
+        private Button m_btnCancelCustomFeature;
+        private Button m_btnConfirmCustomFeature;
         private Button m_btnSectionSpells;
         private readonly Button[] m_btnSpellFilters = new Button[11];
         private Button m_btnStrengthIncrease;
@@ -80,12 +85,12 @@ namespace GameLogic
         private RectTransform m_rectSkillProficiencies;
         private RectTransform m_rectInventoryContent;
         private RectTransform m_rectOtherFeatureContent;
+        private GameObject m_goOtherFeatureTemplate;
         private RectTransform m_rectStatusEffectContent;
         private RectTransform m_rectSpellContent;
         private GameObject m_goStatusEffectTemplate;
         private GameObject m_goSpellTemplate;
         private GameObject m_goSpellInfoTemplate;
-        private GameObject m_goSelectedSpellTemplate;
         private GameObject m_goLearnedSpellTemplate;
         private TMP_Text m_tmpHitDiceDie;
         private TMP_Text m_tmpHitDiceRemaining;
@@ -149,6 +154,9 @@ namespace GameLogic
         private TMP_InputField m_inputIdeals;
         private TMP_InputField m_inputBonds;
         private TMP_InputField m_inputFlaws;
+        private GameObject m_goCustomFeaturePopup;
+        private TMP_InputField m_inputCustomFeatureName;
+        private TMP_InputField m_inputCustomFeatureDescription;
         private bool m_isUpdatingLevelInput;
         private string m_pendingAbilityGenerationMethodId = string.Empty;
         private string m_pendingHitPointGenerationMethodId = string.Empty;
@@ -195,9 +203,9 @@ namespace GameLogic
         private readonly List<CharacterCreationLabelItemView> m_equipmentToolItems = new List<CharacterCreationLabelItemView>();
         private readonly List<CharacterCreationLabelItemView> m_classFeatureItems = new List<CharacterCreationLabelItemView>();
         private readonly List<CharacterCreationLabelItemView> m_raceFeatureItems = new List<CharacterCreationLabelItemView>();
+        private readonly List<CharacterCreationLabelItemView> m_otherFeatureItems = new List<CharacterCreationLabelItemView>();
         private readonly List<CharacterCreationStatusEffectItemView> m_statusEffectItems = new List<CharacterCreationStatusEffectItemView>();
         private readonly List<CharacterCreationSpellCardView> m_availableSpellCards = new List<CharacterCreationSpellCardView>();
-        private readonly List<CharacterCreationSpellCardView> m_selectedSpellCards = new List<CharacterCreationSpellCardView>();
         private readonly List<CharacterCreationSpellCardView> m_learnedSpellCards = new List<CharacterCreationSpellCardView>();
         private readonly Dictionary<string, string> m_toolChoiceGroupIdByLabel = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, string> m_toolChoiceSourceTypeByLabel = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -268,7 +276,9 @@ namespace GameLogic
             BindButtons();
             BindLevelInput();
             BindRoleplayInputs();
+            BindCustomFeatureInputs();
             HideRightPanelTemplates();
+            CloseCustomFeaturePopup();
             ClearSelectionList();
             RebuildSkillChoiceStates();
             RefreshCreationView();
@@ -296,6 +306,11 @@ namespace GameLogic
             m_btnSectionClass = FindChildButton("m_sectionClass");
             m_btnSectionRace = FindChildButton("m_sectionRace");
             m_btnSectionOtherFeatures = FindChildButton("m_sectionOtherFeatures");
+            m_btnAddInventoryItem = FindChildButtonInParent("m_panelInventoryHeader", "Button");
+            m_btnAddCustomFeature = FindChildButtonInParent("m_panelOtherFeatureHeader", "Button");
+            m_btnCloseCustomFeature = FindChildComponent<Button>("m_btnCloseCustomFeature");
+            m_btnCancelCustomFeature = FindChildComponent<Button>("m_btnCancelCustomFeature");
+            m_btnConfirmCustomFeature = FindChildComponent<Button>("m_btnConfirmCustomFeature");
             m_btnSectionSpells = FindChildButton("m_sectionSpells");
             BindSpellFilterControls();
             m_btnStrengthIncrease = FindChildComponent<Button>("m_btnStrengthIncrease");
@@ -333,14 +348,13 @@ namespace GameLogic
             m_rectSkillProficiencies = FindChildComponent<RectTransform>("m_gridSkillProficiencies");
             m_rectInventoryContent = FindChildComponent<RectTransform>("m_rectInventoryContent");
             m_rectOtherFeatureContent = FindChildComponent<RectTransform>("m_rectOtherFeatureContent");
+            m_goOtherFeatureTemplate = FindChildComponent<RectTransform>("m_itemOtherFeatureTemplate")?.gameObject;
             m_rectStatusEffectContent = FindChildComponent<RectTransform>("m_gridStatusEffects");
             m_rectSpellContent = FindChildComponent<RectTransform>("m_rectSpellContent");
             m_goStatusEffectTemplate = FindChildComponent<RectTransform>("m_itemStatusEffectTemplate")?.gameObject;
             m_goSpellTemplate = FindChildComponent<RectTransform>("m_itemSpellTemplate")?.gameObject;
             m_goSpellInfoTemplate = FindChildComponentInChildren<RectTransform>(m_rectInfoListContent, "m_itemSpellInfoTemplate")?.gameObject
                 ?? FindChildComponent<RectTransform>("m_itemSpellInfoTemplate")?.gameObject;
-            m_goSelectedSpellTemplate = FindChildComponentInChildren<RectTransform>(m_rectSelectionListContent, "m_itemSpellInfoTemplate")?.gameObject
-                ?? m_goSpellInfoTemplate;
             m_goLearnedSpellTemplate = FindChildComponentInChildren<RectTransform>(m_rectSpellContent, "m_itemSpellInfoTemplate")?.gameObject
                 ?? m_goSpellTemplate;
             BindSkillItems();
@@ -396,6 +410,9 @@ namespace GameLogic
             m_inputIdeals = FindChildComponent<TMP_InputField>("m_tmpIdeals");
             m_inputBonds = FindChildComponent<TMP_InputField>("m_tmpBonds");
             m_inputFlaws = FindChildComponent<TMP_InputField>("m_tmpFlaws");
+            m_goCustomFeaturePopup = FindChildComponent<RectTransform>("m_popupCustomFeature")?.gameObject;
+            m_inputCustomFeatureName = FindChildComponent<TMP_InputField>("m_inputCustomFeatureName");
+            m_inputCustomFeatureDescription = FindChildComponent<TMP_InputField>("m_inputCustomFeatureDescription");
         }
 
         private void BindSkillItems()
@@ -534,6 +551,11 @@ namespace GameLogic
             BindButton(m_btnSectionClass, () => ToggleRectActive(m_rectClassFeatureContent));
             BindButton(m_btnSectionRace, () => ToggleRectActive(m_rectRaceFeatureContent));
             BindButton(m_btnSectionOtherFeatures, () => ToggleRectActive(m_rectOtherFeatureContent));
+            BindButton(m_btnAddInventoryItem, OpenItemInfoEditor);
+            BindButton(m_btnAddCustomFeature, OpenCustomFeaturePopup);
+            BindButton(m_btnCloseCustomFeature, CloseCustomFeaturePopup);
+            BindButton(m_btnCancelCustomFeature, CloseCustomFeaturePopup);
+            BindButton(m_btnConfirmCustomFeature, ConfirmCustomFeaturePopup);
             BindButton(m_btnSectionSpells, OnClickSpellSection);
             BindButton(m_btnStrengthIncrease, () => ChangeAbilityScore("Strength", 1));
             BindButton(m_btnStrengthDecrease, () => ChangeAbilityScore("Strength", -1));
@@ -559,6 +581,51 @@ namespace GameLogic
                 int capturedLevel = level;
                 BindButton(m_btnSpellFilters[level + 1], () => ShowSpellOptions(capturedLevel));
             }
+        }
+
+        private void OpenCustomFeaturePopup()
+        {
+            if (m_inputCustomFeatureName != null)
+            {
+                m_inputCustomFeatureName.SetTextWithoutNotify(string.Empty);
+            }
+
+            if (m_inputCustomFeatureDescription != null)
+            {
+                m_inputCustomFeatureDescription.SetTextWithoutNotify(string.Empty);
+            }
+
+            SetActive(m_goCustomFeaturePopup, true);
+            if (m_inputCustomFeatureName != null)
+            {
+                m_inputCustomFeatureName.Select();
+                m_inputCustomFeatureName.ActivateInputField();
+            }
+        }
+
+        private void CloseCustomFeaturePopup()
+        {
+            SetActive(m_goCustomFeaturePopup, false);
+        }
+
+        private void ConfirmCustomFeaturePopup()
+        {
+            string featureName = m_inputCustomFeatureName != null ? m_inputCustomFeatureName.text : string.Empty;
+            string description = m_inputCustomFeatureDescription != null ? m_inputCustomFeatureDescription.text : string.Empty;
+            if (!CharacterCreationSessionService.Instance.AddCustomFeature(featureName, description))
+            {
+                Log.Warning("自定义特性名称与描述不能同时为空。");
+                return;
+            }
+
+            CloseCustomFeaturePopup();
+            SetActive(m_rectOtherFeatureContent != null ? m_rectOtherFeatureContent.gameObject : null, true);
+            RefreshCreationView();
+        }
+
+        private void OpenItemInfoEditor()
+        {
+            GameModule.UI.ShowUIAsync<ItemInfoEditorUI>(ItemInfoEditorUIRequest.FromCharacterCreation());
         }
 
         private void BindLevelInput()
@@ -588,6 +655,16 @@ namespace GameLogic
             ConfigureRoleplayInput(m_inputIdeals);
             ConfigureRoleplayInput(m_inputBonds);
             ConfigureRoleplayInput(m_inputFlaws);
+        }
+
+        private void BindCustomFeatureInputs()
+        {
+            ConfigureRoleplayInput(m_inputCustomFeatureName);
+            ConfigureRoleplayInput(m_inputCustomFeatureDescription);
+            if (m_inputCustomFeatureName != null)
+            {
+                m_inputCustomFeatureName.lineType = TMP_InputField.LineType.SingleLine;
+            }
         }
 
         private static void ConfigureRoleplayInput(TMP_InputField input)
@@ -796,13 +873,6 @@ namespace GameLogic
                 spellbook.AvailableSpells,
                 "m_itemSpellOption_",
                 OnClickAvailableSpellCard);
-            RefreshSpellCardItems(
-                m_selectedSpellCards,
-                m_rectSelectionListContent,
-                m_goSelectedSpellTemplate,
-                spellbook.LearnedSpells,
-                "m_itemSelectedSpell_",
-                OnClickSpellCard);
             SetText(m_tmpFeatureDetailTitle, "法术");
             SetText(m_tmpFeatureDetailDescription, spellbook.SummaryText);
         }
@@ -1411,6 +1481,7 @@ namespace GameLogic
 
                 RefreshCreationView();
                 ShowSpellOptions(m_activeSpellFilterLevel);
+                ClearSelectionList();
                 return;
             }
 
@@ -1609,6 +1680,7 @@ namespace GameLogic
             ApplyEquipmentToolViewState(state.EquipmentTools);
             RefreshClassFeatureItems(state.ClassFeatures);
             RefreshRaceFeatureItems(state.RaceFeatures);
+            RefreshOtherFeatureItems(state.OtherFeatures);
             RefreshLearnedSpellItems(state.LearnedSpells);
             RefreshStatusEffectItems(state.StatusEffects);
         }
@@ -1883,6 +1955,11 @@ namespace GameLogic
             RefreshFeatureLabelItems(m_raceFeatureItems, m_rectRaceFeatureContent, m_goRaceFeatureTemplate, entries, "m_itemRaceFeature_", "m_tmpRaceFeatureTitle");
         }
 
+        private void RefreshOtherFeatureItems(IReadOnlyList<CharacterCreationFeatureDisplayEntry> entries)
+        {
+            RefreshFeatureLabelItems(m_otherFeatureItems, m_rectOtherFeatureContent, m_goOtherFeatureTemplate, entries, "m_itemOtherFeature_", "m_tmpOtherFeatureTitle");
+        }
+
         private void RefreshStatusEffectItems(IReadOnlyList<CharacterStatusEffectDisplayEntry> entries)
         {
             if (m_rectStatusEffectContent == null || m_goStatusEffectTemplate == null)
@@ -1979,6 +2056,7 @@ namespace GameLogic
             }
 
             CharacterCreationSessionService.Instance.SetPendingSpellSelection(spellId, m_activeSpellFilterLevel);
+            RefreshCreationView();
             ShowSpellOptions(m_activeSpellFilterLevel);
             OnClickSpellCard(spellId);
         }
@@ -2212,6 +2290,36 @@ namespace GameLogic
             EnsureButtonRaycastTarget(button);
             EnsureMinLayoutHeight(rectTransform, SectionButtonMinHeight);
             return button;
+        }
+
+        private Button FindChildButtonInParent(string parentName, string childName)
+        {
+            RectTransform parent = FindChildComponent<RectTransform>(parentName);
+            if (parent == null || string.IsNullOrWhiteSpace(childName))
+            {
+                return null;
+            }
+
+            Transform[] children = parent.GetComponentsInChildren<Transform>(true);
+            for (int index = 0; index < children.Length; index++)
+            {
+                Transform child = children[index];
+                if (child != null && child.name == childName)
+                {
+                    Button button = child.GetComponent<Button>();
+                    if (button == null)
+                    {
+                        button = child.gameObject.AddComponent<Button>();
+                    }
+
+                    button.transition = Selectable.Transition.None;
+                    button.interactable = true;
+                    EnsureButtonRaycastTarget(button);
+                    return button;
+                }
+            }
+
+            return null;
         }
 
         private RectTransform FindScrollContent(string scrollName)
@@ -2923,6 +3031,7 @@ namespace GameLogic
         {
             private readonly GameObject m_root;
             private readonly Button m_button;
+            private readonly CanvasGroup m_canvasGroup;
             private readonly GameObject m_selectedMark;
             private readonly TMP_Text m_nameText;
             private readonly TMP_Text m_levelText;
@@ -2932,6 +3041,7 @@ namespace GameLogic
             private CharacterCreationSpellCardView(
                 GameObject root,
                 Button button,
+                CanvasGroup canvasGroup,
                 GameObject selectedMark,
                 TMP_Text nameText,
                 TMP_Text levelText,
@@ -2939,6 +3049,7 @@ namespace GameLogic
             {
                 m_root = root;
                 m_button = button;
+                m_canvasGroup = canvasGroup;
                 m_selectedMark = selectedMark;
                 m_nameText = nameText;
                 m_levelText = levelText;
@@ -2952,6 +3063,12 @@ namespace GameLogic
                 {
                     button = root.AddComponent<Button>();
                     button.transition = Selectable.Transition.None;
+                }
+
+                CanvasGroup canvasGroup = root != null ? root.GetComponent<CanvasGroup>() : null;
+                if (root != null && canvasGroup == null)
+                {
+                    canvasGroup = root.AddComponent<CanvasGroup>();
                 }
 
                 GameObject selectedMark = null;
@@ -2997,7 +3114,7 @@ namespace GameLogic
                     }
                 }
 
-                return new CharacterCreationSpellCardView(root, button, selectedMark, nameText, levelText, schoolText);
+                return new CharacterCreationSpellCardView(root, button, canvasGroup, selectedMark, nameText, levelText, schoolText);
             }
 
             public void Bind(CharacterCreationSpellCardViewState state, Action<string> onClick)
@@ -3007,6 +3124,12 @@ namespace GameLogic
                 SetText(m_levelText, state?.LevelText ?? string.Empty);
                 SetText(m_schoolText, state?.SchoolText ?? string.Empty);
                 CharacterCreationUI.SetActive(m_selectedMark, state != null && (state.IsSelected || state.IsKnown || state.IsPrepared || state.IsAlwaysPrepared));
+                if (m_canvasGroup != null)
+                {
+                    m_canvasGroup.alpha = state != null && state.IsPendingPreview ? 0.5f : 1f;
+                    m_canvasGroup.interactable = true;
+                    m_canvasGroup.blocksRaycasts = true;
+                }
 
                 if (m_button != null)
                 {

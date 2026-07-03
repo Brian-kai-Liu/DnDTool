@@ -106,9 +106,11 @@ namespace GameLogic
         private readonly List<GameObject> m_characterPickerItems = new List<GameObject>();
         private List<ItemEditorCharacterPickerEntry> m_characterPickerCharacters = new List<ItemEditorCharacterPickerEntry>();
         private int m_selectedCharacterPickerIndex = -1;
+        private ItemInfoEditorUIRequest m_request;
 
         protected override void ScriptGenerator()
         {
+            m_request = UserData as ItemInfoEditorUIRequest ?? new ItemInfoEditorUIRequest();
             BindControls();
             InitializeDropdowns();
             BindButtons();
@@ -767,6 +769,11 @@ namespace GameLogic
         private void ReturnHome()
         {
             GameModule.UI.CloseUI<ItemInfoEditorUI>();
+            if (string.Equals(m_request.ReturnUI, nameof(CharacterCreationUI), StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             GameModule.UI.ShowUIAsync<HomeUI>();
         }
 
