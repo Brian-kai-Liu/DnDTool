@@ -54,6 +54,7 @@ namespace GameLogic
             FillEquipmentToolState(state, classData, raceData, backgroundData, previewSnapshot);
             state.LearnedSpells.AddRange(CharacterCreationSpellDisplayService.Instance.BuildLearnedSpellCards(previewCharacter, true));
             FillStatusEffectState(state, character);
+            state.InventoryItems.AddRange(CharacterDetailDisplayService.Instance.BuildInventoryEntries(character.Equipment));
             FillOtherFeatureState(state, character);
             return state;
         }

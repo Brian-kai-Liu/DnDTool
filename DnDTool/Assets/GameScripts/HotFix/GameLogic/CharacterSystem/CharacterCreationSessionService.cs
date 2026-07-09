@@ -14,6 +14,7 @@ namespace GameLogic
         private const int PointBuyMaxScore = 15;
         private const int ManualMinScore = 1;
         private const int ManualMaxScore = 30;
+        private const int MaxDiceRollHistoryCount = 20;
 
         private static readonly Lazy<CharacterCreationSessionService> s_instance =
             new Lazy<CharacterCreationSessionService>(() => new CharacterCreationSessionService());
@@ -22,6 +23,7 @@ namespace GameLogic
         private CharacterCreationToolChoiceState m_activeToolChoiceState;
         private CharacterCreationFeatureChoiceState m_activeFeatureChoiceState;
         private readonly System.Random m_random = new System.Random();
+        private readonly List<CharacterDiceRollHistoryEntry> m_diceRollHistory = new List<CharacterDiceRollHistoryEntry>();
 
         private CharacterCreationSessionService()
         {
@@ -30,6 +32,8 @@ namespace GameLogic
         public static CharacterCreationSessionService Instance => s_instance.Value;
 
         public CharacterDraftState CurrentState => m_state;
+
+        public IReadOnlyList<CharacterDiceRollHistoryEntry> DiceRollHistory => m_diceRollHistory;
 
         public List<CharacterCreationSkillChoiceState> SkillChoiceStates { get; } = new List<CharacterCreationSkillChoiceState>();
 
@@ -57,6 +61,7 @@ namespace GameLogic
                 Character = CharacterCardLocalRepository.Normalize(new CharacterCardDraftSaveData()),
                 IsDirty = false
             };
+            LoadDiceRollHistoryFromCharacter(m_state.Character);
             ClearChoiceState();
         }
 
@@ -156,6 +161,8 @@ namespace GameLogic
             m_state.Character.PreviewImagePath = input.PreviewImagePath?.Trim() ?? string.Empty;
             m_state.Character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
             m_state.Character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures);
+            m_state.Character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory);
+            LoadDiceRollHistoryFromCharacter(m_state.Character);
             m_state.Character.Level = Math.Max(1, input.Level);
             m_state.Character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
             m_state.Character.RoleplayProfile = new CharacterRoleplayProfileSaveData
@@ -202,11 +209,55 @@ namespace GameLogic
 
         public CharacterInventoryOperationResult AddInventoryItem(CharacterEquipmentItemSaveData item, int quantity = 1)
         {
+            EnsureState();
+            if (CharacterItemCategoryUtility.IsCurrencyItem(item))
+            {
+                m_state.Character.Currency ??= new CharacterCurrencySaveData();
+                int amount = CharacterItemCategoryUtility.AddCurrency(m_state.Character.Currency, item, quantity);
+                if (amount <= 0)
+                {
+                    return new CharacterInventoryOperationResult
+                    {
+                        Success = false,
+                        Message = "Currency item data is invalid.",
+                        Equipment = CharacterEquipmentSetSaveData.Clone(m_state.Character?.Equipment)
+                    };
+                }
+
+                m_state.IsDirty = true;
+                return new CharacterInventoryOperationResult
+                {
+                    Success = true,
+                    Message = "Currency added.",
+                    Equipment = CharacterEquipmentSetSaveData.Clone(m_state.Character.Equipment)
+                };
+            }
+
             return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.AddItem(equipment, item, quantity));
         }
 
         public CharacterInventoryOperationResult AddRuleInventoryItem(string sourceItemId, int quantity = 1)
         {
+            if (!string.IsNullOrWhiteSpace(sourceItemId)
+                && DndRuleContentService.Instance.TryGetItem(sourceItemId.Trim(), out DndItemDefineData ruleItem)
+                && ruleItem != null)
+            {
+                CharacterEquipmentItemSaveData item = new CharacterEquipmentItemSaveData
+                {
+                    ItemSourceType = CharacterItemSourceTypes.RuleTable,
+                    SourceItemId = ruleItem.ItemId?.Trim() ?? string.Empty,
+                    ItemId = ruleItem.ItemId?.Trim() ?? string.Empty,
+                    ItemName = ruleItem.Name?.Trim() ?? string.Empty,
+                    ItemType = ruleItem.ItemType?.Trim() ?? string.Empty,
+                    Quantity = Math.Max(1, quantity > 0 ? quantity : ruleItem.DefaultQuantity),
+                    Consumable = ruleItem.Consumable
+                };
+                if (CharacterItemCategoryUtility.IsCurrencyItem(item))
+                {
+                    return AddInventoryItem(item, item.Quantity);
+                }
+            }
+
             return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.AddRuleItem(equipment, sourceItemId, quantity));
         }
 
@@ -228,6 +279,193 @@ namespace GameLogic
         public CharacterInventoryOperationResult UnequipInventoryItem(string itemInstanceId)
         {
             return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.UnequipItem(equipment, itemInstanceId));
+        }
+
+        public CharacterInventoryOperationResult AttuneInventoryItem(string itemInstanceId)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.AttuneItem(equipment, itemInstanceId));
+        }
+
+        public CharacterInventoryOperationResult UnattuneInventoryItem(string itemInstanceId)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.UnattuneItem(equipment, itemInstanceId));
+        }
+
+        public CharacterInventoryOperationResult UseInventoryItem(string itemInstanceId, int consumeCount = 1)
+        {
+            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.UseItem(equipment, itemInstanceId, consumeCount));
+        }
+
+        public bool HealCurrentHp(int healAmount, int finalMaxHp)
+        {
+            EnsureState();
+            CharacterCardDraftSaveData character = m_state.Character;
+            if (character == null || healAmount <= 0)
+            {
+                return false;
+            }
+
+            int maxHp = Math.Max(0, finalMaxHp);
+            if (maxHp <= 0)
+            {
+                maxHp = Math.Max(0, character.MaxHp);
+            }
+
+            if (maxHp <= 0)
+            {
+                return false;
+            }
+
+            int currentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.CurrentHp, maxHp);
+            character.CurrentHp = Math.Min(maxHp, currentHp + healAmount);
+            m_state.IsDirty = true;
+            return true;
+        }
+
+        public bool ChangeCurrentHp(int delta, int finalMaxHp)
+        {
+            EnsureState();
+            CharacterCardDraftSaveData character = m_state.Character;
+            if (character == null || delta == 0)
+            {
+                return false;
+            }
+
+            int maxHp = Math.Max(0, finalMaxHp);
+            if (maxHp <= 0)
+            {
+                maxHp = Math.Max(0, character.MaxHp);
+            }
+
+            if (maxHp <= 0)
+            {
+                return false;
+            }
+
+            int currentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.CurrentHp, maxHp);
+            int nextHp = Math.Max(0, Math.Min(maxHp, currentHp + delta));
+            if (nextHp == currentHp)
+            {
+                return false;
+            }
+
+            character.CurrentHp = nextHp;
+            m_state.IsDirty = true;
+            return true;
+        }
+
+        public CharacterDiceRollHistoryEntry AddDiceRollHistoryEntry(
+            CharacterInventoryQuickRollContext context,
+            CharacterDiceRollResultData result,
+            string purpose)
+        {
+            CharacterDiceRollHistoryEntry entry = new CharacterDiceRollHistoryEntry
+            {
+                EntryId = Guid.NewGuid().ToString("N"),
+                CreatedAt = DateTime.Now,
+                SourceItemInstanceId = context?.ItemInstanceId ?? string.Empty,
+                SourceItemName = context?.ItemName ?? string.Empty,
+                SourceEffectName = context?.EffectName ?? string.Empty,
+                DiceExpression = context?.DiceExpression ?? result?.Expression ?? string.Empty,
+                Purpose = purpose?.Trim() ?? string.Empty,
+                Summary = result?.Summary ?? string.Empty,
+                Total = result?.Total ?? 0,
+                Success = result != null && result.Success,
+                Error = result?.Error ?? string.Empty
+            };
+
+            m_diceRollHistory.Insert(0, entry);
+            while (m_diceRollHistory.Count > MaxDiceRollHistoryCount)
+            {
+                m_diceRollHistory.RemoveAt(m_diceRollHistory.Count - 1);
+            }
+
+            SyncDiceRollHistoryToCharacter(true);
+            return entry;
+        }
+
+        public void UpdateDiceRollHistoryPurpose(string entryId, string purpose)
+        {
+            CharacterDiceRollHistoryEntry entry = FindDiceRollHistoryEntry(entryId);
+            if (entry != null)
+            {
+                entry.Purpose = purpose?.Trim() ?? string.Empty;
+                SyncDiceRollHistoryToCharacter(true);
+            }
+        }
+
+        public void MarkDiceRollHistoryApplied(string entryId, string appliedMessage)
+        {
+            CharacterDiceRollHistoryEntry entry = FindDiceRollHistoryEntry(entryId);
+            if (entry != null)
+            {
+                entry.Applied = true;
+                entry.AppliedMessage = appliedMessage?.Trim() ?? string.Empty;
+                SyncDiceRollHistoryToCharacter(true);
+            }
+        }
+
+        private void LoadDiceRollHistoryFromCharacter(CharacterCardDraftSaveData character)
+        {
+            m_diceRollHistory.Clear();
+            if (character?.DiceRollHistory == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < character.DiceRollHistory.Count && m_diceRollHistory.Count < MaxDiceRollHistoryCount; index++)
+            {
+                CharacterDiceRollHistoryEntry entry = CharacterDiceRollHistoryFormatter.FromSaveData(character.DiceRollHistory[index]);
+                if (entry != null)
+                {
+                    m_diceRollHistory.Add(entry);
+                }
+            }
+        }
+
+        private void SyncDiceRollHistoryToCharacter(bool markDirty)
+        {
+            EnsureState();
+            if (m_state.Character == null)
+            {
+                return;
+            }
+
+            List<CharacterDiceRollHistorySaveData> saveData = new List<CharacterDiceRollHistorySaveData>();
+            for (int index = 0; index < m_diceRollHistory.Count && saveData.Count < MaxDiceRollHistoryCount; index++)
+            {
+                CharacterDiceRollHistorySaveData entry = CharacterDiceRollHistoryFormatter.ToSaveData(m_diceRollHistory[index]);
+                if (entry != null)
+                {
+                    saveData.Add(entry);
+                }
+            }
+
+            m_state.Character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(saveData, MaxDiceRollHistoryCount);
+            if (markDirty)
+            {
+                m_state.IsDirty = true;
+            }
+        }
+
+        private CharacterDiceRollHistoryEntry FindDiceRollHistoryEntry(string entryId)
+        {
+            if (string.IsNullOrWhiteSpace(entryId))
+            {
+                return null;
+            }
+
+            string normalized = entryId.Trim();
+            for (int index = 0; index < m_diceRollHistory.Count; index++)
+            {
+                CharacterDiceRollHistoryEntry entry = m_diceRollHistory[index];
+                if (entry != null && string.Equals(entry.EntryId, normalized, StringComparison.OrdinalIgnoreCase))
+                {
+                    return entry;
+                }
+            }
+
+            return null;
         }
 
         public CharacterCreationToolChoiceState FindToolChoiceState(string choiceGroupId)
@@ -1365,7 +1603,8 @@ namespace GameLogic
                 PreviewImagePath = character.PreviewImagePath?.Trim() ?? string.Empty,
                 Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment),
                 Spellcasting = CharacterSpellcastingSaveData.Clone(character.Spellcasting),
-                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures)
+                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures),
+                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory)
             };
         }
 
@@ -2180,6 +2419,7 @@ namespace GameLogic
             ToolChoiceStates.Clear();
             MixedProficiencyChoiceStates.Clear();
             FeatureChoiceStates.Clear();
+            m_diceRollHistory.Clear();
             ClearPendingSpellSelection();
             ClearRaceAbilityChoiceState();
             ClearActiveChoice();

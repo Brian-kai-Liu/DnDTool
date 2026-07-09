@@ -51,6 +51,31 @@ namespace GameLogic
         public bool IsDirty { get; set; }
     }
 
+    internal sealed class CharacterInventoryQuickRollContext
+    {
+        public string ItemInstanceId { get; set; } = string.Empty;
+        public string ItemName { get; set; } = string.Empty;
+        public string EffectName { get; set; } = string.Empty;
+        public string DiceExpression { get; set; } = string.Empty;
+    }
+
+    internal sealed class CharacterDiceRollHistoryEntry
+    {
+        public string EntryId { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string SourceItemInstanceId { get; set; } = string.Empty;
+        public string SourceItemName { get; set; } = string.Empty;
+        public string SourceEffectName { get; set; } = string.Empty;
+        public string DiceExpression { get; set; } = string.Empty;
+        public string Purpose { get; set; } = string.Empty;
+        public string Summary { get; set; } = string.Empty;
+        public int Total { get; set; }
+        public bool Success { get; set; }
+        public string Error { get; set; } = string.Empty;
+        public bool Applied { get; set; }
+        public string AppliedMessage { get; set; } = string.Empty;
+    }
+
     internal sealed class CharacterDraftSaveRequest
     {
         public string CharacterName { get; set; } = string.Empty;
@@ -66,6 +91,7 @@ namespace GameLogic
         public List<CharacterClassProgressSaveData> ClassProgresses { get; set; } = new List<CharacterClassProgressSaveData>();
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; set; } = new List<CharacterChoiceSelectionSaveData>();
         public List<CharacterCustomFeatureSaveData> CustomFeatures { get; set; } = new List<CharacterCustomFeatureSaveData>();
+        public List<CharacterDiceRollHistorySaveData> DiceRollHistory { get; set; } = new List<CharacterDiceRollHistorySaveData>();
     }
 
     internal sealed class CharacterCreationDraftInput
@@ -104,6 +130,7 @@ namespace GameLogic
         public CharacterEquipmentSetSaveData Equipment { get; set; } = new CharacterEquipmentSetSaveData();
         public CharacterSpellcastingSaveData Spellcasting { get; set; } = new CharacterSpellcastingSaveData();
         public List<CharacterCustomFeatureSaveData> CustomFeatures { get; set; } = new List<CharacterCustomFeatureSaveData>();
+        public List<CharacterDiceRollHistorySaveData> DiceRollHistory { get; set; } = new List<CharacterDiceRollHistorySaveData>();
     }
 
     internal sealed class CharacterCreationFormInput
@@ -375,6 +402,7 @@ namespace GameLogic
         public List<CharacterCreationFeatureDisplayEntry> OtherFeatures { get; } = new List<CharacterCreationFeatureDisplayEntry>();
         public List<CharacterCreationSpellCardViewState> LearnedSpells { get; } = new List<CharacterCreationSpellCardViewState>();
         public List<CharacterStatusEffectDisplayEntry> StatusEffects { get; } = new List<CharacterStatusEffectDisplayEntry>();
+        public List<CharacterInventoryDisplayEntry> InventoryItems { get; } = new List<CharacterInventoryDisplayEntry>();
     }
 
     internal sealed class CharacterCreationSpellCardViewState
@@ -579,11 +607,28 @@ namespace GameLogic
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ItemType { get; set; } = string.Empty;
+        public string Rarity { get; set; } = string.Empty;
         public string ArmorCategory { get; set; } = string.Empty;
         public int ArmorBaseAc { get; set; }
         public int AcBonus { get; set; }
-        public bool DefaultEquipped { get; set; }
-        public bool RequiresAttunement { get; set; }
+        public int MaxDexBonus { get; set; }
+        public int StrengthRequirement { get; set; }
+        public bool StealthDisadvantage { get; set; }
+        public string WeaponCategory { get; set; } = string.Empty;
+        public string WeaponRangeType { get; set; } = string.Empty;
+        public string DamageDice { get; set; } = string.Empty;
+        public string DamageType { get; set; } = string.Empty;
+        public List<string> WeaponProperties { get; } = new List<string>();
+        public int NormalRange { get; set; }
+        public int LongRange { get; set; }
+        public string TwoHandDamageDice { get; set; } = string.Empty;
+        public string ToolCategory { get; set; } = string.Empty;
+        public bool Consumable { get; set; }
+        public int Charges { get; set; }
+        public bool ConsumeOnUse { get; set; }
+        public string Weight { get; set; } = string.Empty;
+        public List<string> EffectIds { get; } = new List<string>();
+        public string EffectApplyCondition { get; set; } = string.Empty;
     }
 
     internal sealed class ItemEditorCharacterPickerEntry

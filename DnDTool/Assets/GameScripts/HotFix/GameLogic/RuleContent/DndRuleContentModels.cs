@@ -27,6 +27,8 @@ namespace GameLogic
 
         public List<DndFeatureEffectConditionData> FeatureEffectConditions { get; } = new List<DndFeatureEffectConditionData>();
 
+        public List<DndItemEffectData> ItemEffects { get; } = new List<DndItemEffectData>();
+
         public List<DndChoiceGroupData> ChoiceGroups { get; } = new List<DndChoiceGroupData>();
 
         public List<DndChoiceOptionData> ChoiceOptions { get; } = new List<DndChoiceOptionData>();
@@ -524,6 +526,27 @@ namespace GameLogic
         public int ExperienceThreshold { get; set; }
 
         public int ProficiencyBonus { get; set; }
+
+        public string Description { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndItemEffectData
+    {
+        public string EffectId { get; set; } = string.Empty;
+
+        public string PackageId { get; set; } = string.Empty;
+
+        public string EffectType { get; set; } = string.Empty;
+
+        public string Target { get; set; } = string.Empty;
+
+        public string Value { get; set; } = string.Empty;
+
+        public string ApplyMode { get; set; } = string.Empty;
+
+        public string Condition { get; set; } = string.Empty;
+
+        public string ConditionDescription { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
     }

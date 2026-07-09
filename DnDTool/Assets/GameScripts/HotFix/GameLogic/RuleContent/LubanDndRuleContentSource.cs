@@ -35,6 +35,7 @@ namespace GameLogic
                 LoadRows(tables, "TbFeatureDefine", library.Features, CreateFeatureDefine);
                 LoadRows(tables, "TbFeatureEffect", library.FeatureEffects, CreateFeatureEffect);
                 LoadRows(tables, "TbFeatureEffectCondition", library.FeatureEffectConditions, CreateFeatureEffectCondition);
+                LoadRows(tables, "TbItemEffect", library.ItemEffects, CreateItemEffect);
                 LoadRows(tables, "TbChoiceGroup", library.ChoiceGroups, CreateChoiceGroup);
                 LoadRows(tables, "TbChoiceOption", library.ChoiceOptions, CreateChoiceOption);
                 LoadRows(tables, "TbSkillDefine", library.Skills, CreateSkillDefine);
@@ -824,6 +825,22 @@ namespace GameLogic
                 Level = GetInt(row, "Level", "level"),
                 ExperienceThreshold = GetInt(row, "ExperienceThreshold", "experience_threshold", "experienceThreshold"),
                 ProficiencyBonus = GetInt(row, "ProficiencyBonus", "proficiency_bonus", "proficiencyBonus"),
+                Description = GetString(row, "Description", "description")
+            };
+        }
+
+        private static DndItemEffectData CreateItemEffect(object row)
+        {
+            return new DndItemEffectData
+            {
+                EffectId = GetString(row, "EffectId", "effect_id", "effectId", "ItemEffectId", "item_effect_id", "itemEffectId"),
+                PackageId = GetString(row, "PackageId", "package_id", "packageId"),
+                EffectType = GetString(row, "EffectType", "effect_type", "effectType"),
+                Target = GetString(row, "Target", "target"),
+                Value = GetString(row, "Value", "value"),
+                ApplyMode = GetString(row, "ApplyMode", "apply_mode", "applyMode"),
+                Condition = GetString(row, "Condition", "condition"),
+                ConditionDescription = GetString(row, "ConditionDescription", "condition_description", "conditionDescription"),
                 Description = GetString(row, "Description", "description")
             };
         }

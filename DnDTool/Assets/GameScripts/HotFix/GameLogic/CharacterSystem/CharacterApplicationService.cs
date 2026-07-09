@@ -54,7 +54,8 @@ namespace GameLogic
                 RoleplayProfile = CharacterRoleplayProfileSaveData.Clone(request.RoleplayProfile),
                 ClassProgresses = CloneClassProgresses(request.ClassProgresses),
                 ChoiceSelections = CloneChoiceSelections(request.ChoiceSelections),
-                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(request.CustomFeatures)
+                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(request.CustomFeatures),
+                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(request.DiceRollHistory)
             };
             character.HpModeId = CharacterHpModeIds.Normalize(character.RuntimeSnapshot.HpModeId);
             character.MaxHp = Math.Max(0, character.RuntimeSnapshot.MaxHp);
@@ -82,7 +83,8 @@ namespace GameLogic
                 RoleplayProfile = BuildCreationRoleplayProfile(input),
                 ClassProgresses = BuildCreationClassProgresses(input, level),
                 ChoiceSelections = BuildCreationChoiceSelections(input),
-                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures)
+                CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures),
+                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory)
             };
 
             CharacterCardDraftSaveData character = BuildSaveData(request);
@@ -96,6 +98,7 @@ namespace GameLogic
             character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
             character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
             character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures);
+            character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory);
             return CharacterCardLocalRepository.Normalize(character);
         }
 

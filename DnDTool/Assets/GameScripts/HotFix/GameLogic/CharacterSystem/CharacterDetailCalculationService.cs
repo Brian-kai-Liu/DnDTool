@@ -59,6 +59,8 @@ namespace GameLogic
             ApplyFeatureEquipmentProficiencyEffects(snapshot, raceData?.FeatureIds);
             ApplyChoiceEquipmentProficiencyEffects(snapshot, character.ChoiceSelections);
             ApplySubclassEquipmentProficiencyEffects(snapshot, character);
+            ApplyEquippedItemProficiencyEffects(snapshot, character.Equipment);
+            ApplyEquippedItemStatusEffects(snapshot, character.Equipment);
 
             if (string.IsNullOrWhiteSpace(snapshot.ClassName))
             {
@@ -90,6 +92,7 @@ namespace GameLogic
             ApplyCharacterConditionalBenefitEffects(character, snapshot);
 
             List<string> savingThrowProficiencyIds = BuildSavingThrowProficiencyIds(character, classData);
+            ApplyEquippedItemSavingThrowProficiencyEffects(savingThrowProficiencyIds, character.Equipment, snapshot);
             if (savingThrowProficiencyIds.Count > 0)
             {
                 snapshot.SavingThrows = FormatList(savingThrowProficiencyIds);
@@ -298,6 +301,7 @@ namespace GameLogic
             }
 
             ApplyInventoryEquippedItemAttributeEffects(snapshot, equipment.InventoryItems, appliedItemIds);
+            ApplyInventoryAlwaysItemAttributeEffects(snapshot, equipment.InventoryItems, appliedItemIds);
         }
 
         public int CalculateArmorClass(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
@@ -310,7 +314,7 @@ namespace GameLogic
             int dexterityModifier = CalculateAbilityModifier(NormalizeAbility(snapshot.Dexterity));
             int armorBaseAc = snapshot.ArmorBaseAc > 0 ? snapshot.ArmorBaseAc : 10;
             int dexterityAcBonus = CalculateArmorDexterityAcBonus(snapshot.ArmorCategory, dexterityModifier);
-            int featureAcBonus = snapshot.FeatureAcBonus + CalculateStructuredEffectBonus(character, snapshot, "ACBonus", "AC");
+            int featureAcBonus = snapshot.FeatureAcBonus + CalculateCharacterAndItemEffectBonus(character, snapshot, "ACBonus", "AC");
             return armorBaseAc
                 + dexterityAcBonus
                 + snapshot.EquipmentAcBonus
@@ -556,6 +560,139 @@ namespace GameLogic
             }
         }
 
+        private static void ApplyEquippedItemProficiencyEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            CharacterEquipmentSetSaveData equipment)
+        {
+            if (snapshot == null || equipment == null)
+            {
+                return;
+            }
+
+            ApplyEquippedItemEffects(
+                equipment,
+                snapshot,
+                (item, effectType, target, value, condition, conditionDescription) =>
+                {
+                    string normalizedType = NormalizeItemEffectType(effectType);
+                    if (!CharacterItemEffectConditionUtility.IsMet(condition, snapshot, item, true))
+                    {
+                        return;
+                    }
+
+                    if (string.Equals(normalizedType, "SkillProficiency", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendSkillSummaryValues(snapshot.SkillProficiencyIds, target);
+                    }
+                    else if (string.Equals(normalizedType, "ArmorProficiency", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendEquipmentSummaryValues(snapshot.ArmorProficiencyIds, target);
+                    }
+                    else if (string.Equals(normalizedType, "WeaponProficiency", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendEquipmentSummaryValues(snapshot.WeaponProficiencyIds, target);
+                    }
+                    else if (string.Equals(normalizedType, "ToolProficiency", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendEquipmentSummaryValues(snapshot.ToolProficiencyIds, target);
+                    }
+                });
+        }
+
+        private static void ApplyEquippedItemSavingThrowProficiencyEffects(
+            List<string> target,
+            CharacterEquipmentSetSaveData equipment,
+            CharacterRuntimeSnapshotData snapshot)
+        {
+            if (target == null || equipment == null)
+            {
+                return;
+            }
+
+            ApplyEquippedItemEffects(
+                equipment,
+                snapshot,
+                (item, effectType, effectTarget, value, condition, conditionDescription) =>
+                {
+                    if (string.Equals(NormalizeItemEffectType(effectType), "SavingThrowProficiency", StringComparison.OrdinalIgnoreCase)
+                        && CharacterItemEffectConditionUtility.IsMet(condition, snapshot, item, true))
+                    {
+                        AppendSavingThrowSummaryValues(target, effectTarget);
+                    }
+                });
+        }
+
+        private static void ApplyEquippedItemStatusEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            CharacterEquipmentSetSaveData equipment)
+        {
+            if (snapshot == null || equipment == null)
+            {
+                return;
+            }
+
+            List<string> resistances = new List<string>();
+            AppendUniqueValues(resistances, SplitSummary(snapshot.DamageResistances));
+            List<string> conditionalBenefits = new List<string>();
+            AppendExistingLines(conditionalBenefits, snapshot.ConditionalBenefits);
+
+            ApplyEquippedItemEffects(
+                equipment,
+                snapshot,
+                (item, effectType, target, value, condition, conditionDescription) =>
+                {
+                    string normalizedType = NormalizeItemEffectType(effectType);
+                    bool automatic = CharacterItemEffectConditionUtility.IsMet(condition, snapshot, item, true);
+                    bool manualOrUnknown = CharacterItemEffectConditionUtility.IsManualOrUnknown(condition);
+                    if (string.Equals(normalizedType, "Resistance", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendItemStatusEffect(resistances, conditionalBenefits, "Resistance", target, condition, conditionDescription, automatic, manualOrUnknown);
+                    }
+                    else if (string.Equals(normalizedType, "Immunity", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendItemStatusEffect(resistances, conditionalBenefits, "Immunity", target, condition, conditionDescription, automatic, manualOrUnknown);
+                    }
+                    else if (string.Equals(normalizedType, "Vulnerability", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AppendItemStatusEffect(resistances, conditionalBenefits, "Vulnerability", target, condition, conditionDescription, automatic, manualOrUnknown);
+                    }
+                });
+
+            snapshot.DamageResistances = FormatList(resistances);
+            snapshot.ConditionalBenefits = conditionalBenefits.Count > 0 ? string.Join("\n", conditionalBenefits) : snapshot.ConditionalBenefits;
+        }
+
+        private static void AppendItemStatusEffect(
+            List<string> automaticTarget,
+            List<string> conditionalTarget,
+            string label,
+            string target,
+            string condition,
+            string conditionDescription,
+            bool automatic,
+            bool manualOrUnknown)
+        {
+            string text = JoinNonEmpty(new[] { label, target }, " ");
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
+
+            if (automatic)
+            {
+                AppendUniqueValue(automaticTarget, text);
+                return;
+            }
+
+            if (manualOrUnknown)
+            {
+                string conditionText = JoinNonEmpty(new[] { condition, conditionDescription }, " - ");
+                AppendUniqueValue(
+                    conditionalTarget,
+                    string.IsNullOrWhiteSpace(conditionText) ? text : $"{text} ({conditionText})");
+            }
+        }
+
         private void ApplyCharacterSkillProficiencyEffects(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
         {
             if (character == null || snapshot == null)
@@ -627,7 +764,38 @@ namespace GameLogic
                 }
             });
 
+            AppendManualOrUnknownItemBenefits(benefits, character.Equipment, snapshot);
+
             snapshot.ConditionalBenefits = benefits.Count > 0 ? string.Join("\n", benefits) : string.Empty;
+        }
+
+        private static void AppendManualOrUnknownItemBenefits(
+            List<string> benefits,
+            CharacterEquipmentSetSaveData equipment,
+            CharacterRuntimeSnapshotData snapshot)
+        {
+            if (benefits == null || equipment == null)
+            {
+                return;
+            }
+
+            ApplyEquippedItemEffects(
+                equipment,
+                snapshot,
+                (item, effectType, target, value, condition, conditionDescription) =>
+                {
+                    if (!CharacterItemEffectConditionUtility.IsManualOrUnknown(condition))
+                    {
+                        return;
+                    }
+
+                    string effectText = JoinNonEmpty(new[] { NormalizeItemEffectType(effectType), target, value }, " ");
+                    string conditionText = JoinNonEmpty(new[] { condition, conditionDescription }, " - ");
+                    string text = string.IsNullOrWhiteSpace(conditionText)
+                        ? effectText
+                        : $"{effectText} ({conditionText})";
+                    AppendUniqueValue(benefits, text);
+                });
         }
 
         private static void ApplyChoiceResultProficiencySelections(
@@ -1004,6 +1172,11 @@ namespace GameLogic
 
         private static string JoinNonEmpty(params string[] values)
         {
+            return JoinNonEmpty(values, " / ");
+        }
+
+        private static string JoinNonEmpty(string[] values, string separator)
+        {
             List<string> parts = new List<string>();
             if (values != null)
             {
@@ -1017,7 +1190,7 @@ namespace GameLogic
                 }
             }
 
-            return parts.Count > 0 ? string.Join(" / ", parts) : string.Empty;
+            return parts.Count > 0 ? string.Join(separator ?? " / ", parts) : string.Empty;
         }
 
         private static string FirstNonEmpty(params string[] values)
@@ -1128,7 +1301,27 @@ namespace GameLogic
                 CharacterEquipmentItemSaveData item = items[index];
                 if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped)
                 {
-                    ApplyItemAttributeEffects(snapshot, item, appliedItemIds);
+                    ApplyItemAttributeEffects(snapshot, item, appliedItemIds, true);
+                }
+            }
+        }
+
+        private static void ApplyInventoryAlwaysItemAttributeEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            IReadOnlyList<CharacterEquipmentItemSaveData> items,
+            HashSet<string> appliedItemIds)
+        {
+            if (snapshot == null || items == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < items.Count; index++)
+            {
+                CharacterEquipmentItemSaveData item = items[index];
+                if (CharacterEquipmentItemSaveData.HasItem(item) && !item.IsEquipped)
+                {
+                    ApplyItemAttributeEffects(snapshot, item, appliedItemIds, false);
                 }
             }
         }
@@ -1136,21 +1329,26 @@ namespace GameLogic
         private static void ApplyItemAttributeEffects(
             CharacterRuntimeSnapshotData snapshot,
             CharacterEquipmentItemSaveData item,
-            HashSet<string> appliedItemIds = null)
+            HashSet<string> appliedItemIds = null,
+            bool equippedContext = true)
         {
             if (snapshot == null
                 || !CharacterEquipmentItemSaveData.HasItem(item)
                 || !MarkItemApplied(item, appliedItemIds)
-                || !IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot))
+                || !IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot, item, equippedContext))
             {
                 return;
             }
 
-            ApplyRuleItemAttributeEffects(snapshot, item.EffectIds);
-            ApplyCustomItemAttributeEffects(snapshot, item.CustomEffects);
+            ApplyRuleItemAttributeEffects(snapshot, item.EffectIds, item, equippedContext);
+            ApplyCustomItemAttributeEffects(snapshot, item.CustomEffects, item, equippedContext);
         }
 
-        private static void ApplyRuleItemAttributeEffects(CharacterRuntimeSnapshotData snapshot, IReadOnlyList<string> effectIds)
+        private static void ApplyRuleItemAttributeEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            IReadOnlyList<string> effectIds,
+            CharacterEquipmentItemSaveData item,
+            bool equippedContext)
         {
             if (effectIds == null)
             {
@@ -1160,18 +1358,34 @@ namespace GameLogic
             for (int index = 0; index < effectIds.Count; index++)
             {
                 string effectId = effectIds[index];
-                if (string.IsNullOrWhiteSpace(effectId)
-                    || !DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect)
-                    || !IsStructuredEffectConditionMet(effect, snapshot))
+                if (string.IsNullOrWhiteSpace(effectId))
                 {
                     continue;
                 }
 
-                ApplyItemAttributeEffect(snapshot, effect.EffectType, effect.Target, effect.Value, effect.Condition);
+                if (DndRuleContentService.Instance.TryGetItemEffect(effectId, out DndItemEffectData itemEffect))
+                {
+                    if (IsItemEffectConditionMet(itemEffect, snapshot, item, equippedContext))
+                    {
+                        ApplyItemAttributeEffect(snapshot, itemEffect.EffectType, itemEffect.Target, itemEffect.Value, itemEffect.Condition, item, equippedContext);
+                    }
+
+                    continue;
+                }
+
+                if (DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect)
+                    && IsStructuredEffectConditionMet(effect, snapshot, item, equippedContext))
+                {
+                    ApplyItemAttributeEffect(snapshot, effect.EffectType, effect.Target, effect.Value, effect.Condition, item, equippedContext);
+                }
             }
         }
 
-        private static void ApplyCustomItemAttributeEffects(CharacterRuntimeSnapshotData snapshot, IReadOnlyList<CharacterItemEffectSaveData> effects)
+        private static void ApplyCustomItemAttributeEffects(
+            CharacterRuntimeSnapshotData snapshot,
+            IReadOnlyList<CharacterItemEffectSaveData> effects,
+            CharacterEquipmentItemSaveData item,
+            bool equippedContext)
         {
             if (effects == null)
             {
@@ -1181,12 +1395,12 @@ namespace GameLogic
             for (int index = 0; index < effects.Count; index++)
             {
                 CharacterItemEffectSaveData effect = effects[index];
-                if (effect == null || !IsCharacterItemEffectConditionMet(effect.Condition, snapshot))
+                if (effect == null || !IsCharacterItemEffectConditionMet(effect.Condition, snapshot, item, equippedContext))
                 {
                     continue;
                 }
 
-                ApplyItemAttributeEffect(snapshot, effect.EffectType, effect.Target, effect.Value, effect.Condition);
+                ApplyItemAttributeEffect(snapshot, effect.EffectType, effect.Target, effect.Value, effect.Condition, item, equippedContext);
             }
         }
 
@@ -1195,51 +1409,58 @@ namespace GameLogic
             string effectType,
             string target,
             string valueText,
-            string condition)
+            string condition,
+            CharacterEquipmentItemSaveData item = null,
+            bool equippedContext = false)
         {
             if (snapshot == null
                 || string.IsNullOrWhiteSpace(effectType)
-                || !IsCharacterItemEffectConditionMet(condition, snapshot)
+                || !IsCharacterItemEffectConditionMet(condition, snapshot, item, equippedContext)
                 || !int.TryParse(valueText, out int value))
             {
                 return;
             }
 
-            if (string.Equals(effectType, "AbilityScoreBonus", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(effectType, "AbilityBonus", StringComparison.OrdinalIgnoreCase))
+            string normalizedEffectType = NormalizeItemEffectType(effectType);
+            if (string.Equals(normalizedEffectType, "AbilityScoreBonus", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalizedEffectType, "AbilityBonus", StringComparison.OrdinalIgnoreCase))
             {
                 ApplyAbilityScoreBonus(snapshot, target, value);
             }
-            else if (string.Equals(effectType, "SpeedBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "AbilityScoreSet", StringComparison.OrdinalIgnoreCase))
+            {
+                ApplyAbilityScoreSet(snapshot, target, value);
+            }
+            else if (string.Equals(normalizedEffectType, "SpeedBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Speed = Math.Max(0, snapshot.Speed + value);
             }
-            else if (string.Equals(effectType, "InitiativeBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "InitiativeBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.InitiativeBonus += value;
             }
-            else if (string.Equals(effectType, "SpellAttackBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "SpellAttackBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.SpellAttackBonus += value;
             }
-            else if (string.Equals(effectType, "SpellSaveDcBonus", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(effectType, "SpellSaveDCBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "SpellSaveDcBonus", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalizedEffectType, "SpellSaveDCBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.SpellSaveDcBonus += value;
             }
-            else if (string.Equals(effectType, "AttackBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "AttackBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.AttackBonus += value;
             }
-            else if (string.Equals(effectType, "WeaponAttackBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "WeaponAttackBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.WeaponAttackBonus += value;
             }
-            else if (string.Equals(effectType, "DamageBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "DamageBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.DamageBonus += value;
             }
-            else if (string.Equals(effectType, "SavingThrowBonus", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(normalizedEffectType, "SavingThrowBonus", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.SavingThrowBonus += value;
             }
@@ -1284,6 +1505,35 @@ namespace GameLogic
             else if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase))
             {
                 snapshot.Charisma += value;
+            }
+        }
+
+        private static void ApplyAbilityScoreSet(CharacterRuntimeSnapshotData snapshot, string target, int value)
+        {
+            string normalized = NormalizeAbilityId(target);
+            if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Strength = Math.Max(snapshot.Strength, value);
+            }
+            else if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Dexterity = Math.Max(snapshot.Dexterity, value);
+            }
+            else if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Constitution = Math.Max(snapshot.Constitution, value);
+            }
+            else if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Intelligence = Math.Max(snapshot.Intelligence, value);
+            }
+            else if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Wisdom = Math.Max(snapshot.Wisdom, value);
+            }
+            else if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase))
+            {
+                snapshot.Charisma = Math.Max(snapshot.Charisma, value);
             }
         }
 
@@ -1333,18 +1583,23 @@ namespace GameLogic
                 return 0;
             }
 
-            if (!IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot))
+            if (!IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot, item, true))
             {
                 return 0;
             }
 
             int bonus = item.AcBonus;
-            bonus += CalculateRuleEffectBonus(item.EffectIds, snapshot, "ACBonus", "AC");
-            bonus += CalculateCustomItemEffectBonus(item.CustomEffects, snapshot, "ACBonus", "AC");
+            bonus += CalculateRuleEffectBonus(item.EffectIds, snapshot, "ACBonus", "AC", item);
+            bonus += CalculateCustomItemEffectBonus(item.CustomEffects, snapshot, "ACBonus", "AC", item);
             return bonus;
         }
 
-        private static int CalculateRuleEffectBonus(IReadOnlyList<string> effectIds, CharacterRuntimeSnapshotData snapshot, string effectType, string target)
+        private static int CalculateRuleEffectBonus(
+            IReadOnlyList<string> effectIds,
+            CharacterRuntimeSnapshotData snapshot,
+            string effectType,
+            string target,
+            CharacterEquipmentItemSaveData item = null)
         {
             if (effectIds == null)
             {
@@ -1355,17 +1610,29 @@ namespace GameLogic
             for (int index = 0; index < effectIds.Count; index++)
             {
                 string effectId = effectIds[index];
-                if (string.IsNullOrWhiteSpace(effectId)
-                    || !DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect)
-                    || !IsAcBonusEffect(effect.EffectType, effect.Target, effectType, target)
-                    || !IsStructuredEffectConditionMet(effect, snapshot))
+                if (string.IsNullOrWhiteSpace(effectId))
                 {
                     continue;
                 }
 
-                if (int.TryParse(effect.Value, out int value))
+                if (DndRuleContentService.Instance.TryGetItemEffect(effectId, out DndItemEffectData itemEffect))
                 {
-                    bonus += value;
+                    if (IsAcBonusEffect(itemEffect.EffectType, itemEffect.Target, effectType, target)
+                        && IsItemEffectConditionMet(itemEffect, snapshot, item, true)
+                        && int.TryParse(itemEffect.Value, out int value))
+                    {
+                        bonus += value;
+                    }
+
+                    continue;
+                }
+
+                if (DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect)
+                    && IsAcBonusEffect(effect.EffectType, effect.Target, effectType, target)
+                    && IsStructuredEffectConditionMet(effect, snapshot, item, true)
+                    && int.TryParse(effect.Value, out int featureValue))
+                {
+                    bonus += featureValue;
                 }
             }
 
@@ -1376,7 +1643,8 @@ namespace GameLogic
             IReadOnlyList<CharacterItemEffectSaveData> effects,
             CharacterRuntimeSnapshotData snapshot,
             string effectType,
-            string target)
+            string target,
+            CharacterEquipmentItemSaveData item = null)
         {
             if (effects == null)
             {
@@ -1389,7 +1657,7 @@ namespace GameLogic
                 CharacterItemEffectSaveData effect = effects[index];
                 if (effect == null
                     || !IsAcBonusEffect(effect.EffectType, effect.Target, effectType, target)
-                    || !IsCharacterItemEffectConditionMet(effect.Condition, snapshot))
+                    || !IsCharacterItemEffectConditionMet(effect.Condition, snapshot, item, true))
                 {
                     continue;
                 }
@@ -1405,7 +1673,7 @@ namespace GameLogic
 
         private static bool IsAcBonusEffect(string actualEffectType, string actualTarget, string expectedEffectType, string expectedTarget)
         {
-            return string.Equals(actualEffectType, expectedEffectType, StringComparison.OrdinalIgnoreCase)
+            return string.Equals(NormalizeItemEffectType(actualEffectType), NormalizeItemEffectType(expectedEffectType), StringComparison.OrdinalIgnoreCase)
                 && (string.IsNullOrWhiteSpace(expectedTarget)
                     || string.Equals(actualTarget, expectedTarget, StringComparison.OrdinalIgnoreCase));
         }
@@ -1557,9 +1825,9 @@ namespace GameLogic
                 for (int index = 0; index < equipment.InventoryItems.Count; index++)
                 {
                     CharacterEquipmentItemSaveData item = equipment.InventoryItems[index];
-                    if (CharacterEquipmentItemSaveData.HasItem(item) && item.IsEquipped && MarkItemApplied(item, appliedItemIds))
+                    if (CharacterEquipmentItemSaveData.HasItem(item) && MarkItemApplied(item, appliedItemIds))
                     {
-                        bonus += CalculateItemEffectBonus(item, snapshot, effectType, targets);
+                        bonus += CalculateItemEffectBonus(item, snapshot, effectType, targets, item.IsEquipped);
                     }
                 }
             }
@@ -1567,21 +1835,126 @@ namespace GameLogic
             return bonus;
         }
 
+        private static void ApplyEquippedItemEffects(
+            CharacterEquipmentSetSaveData equipment,
+            CharacterRuntimeSnapshotData snapshot,
+            Action<CharacterEquipmentItemSaveData, string, string, string, string, string> action)
+        {
+            if (equipment == null || action == null)
+            {
+                return;
+            }
+
+            HashSet<string> appliedItemIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            ApplyEquippedItemEffects(equipment.Armor, snapshot, action, appliedItemIds);
+            ApplyEquippedItemEffects(equipment.Shield, snapshot, action, appliedItemIds);
+
+            if (equipment.EquippedItems != null)
+            {
+                for (int index = 0; index < equipment.EquippedItems.Count; index++)
+                {
+                    ApplyEquippedItemEffects(equipment.EquippedItems[index], snapshot, action, appliedItemIds);
+                }
+            }
+
+            if (equipment.InventoryItems != null)
+            {
+                for (int index = 0; index < equipment.InventoryItems.Count; index++)
+                {
+                    CharacterEquipmentItemSaveData item = equipment.InventoryItems[index];
+                    if (CharacterEquipmentItemSaveData.HasItem(item))
+                    {
+                        ApplyEquippedItemEffects(item, snapshot, action, appliedItemIds, item.IsEquipped);
+                    }
+                }
+            }
+        }
+
+        private static void ApplyEquippedItemEffects(
+            CharacterEquipmentItemSaveData item,
+            CharacterRuntimeSnapshotData snapshot,
+            Action<CharacterEquipmentItemSaveData, string, string, string, string, string> action,
+            HashSet<string> appliedItemIds,
+            bool equippedContext = true)
+        {
+            if (!CharacterEquipmentItemSaveData.HasItem(item)
+                || !MarkItemApplied(item, appliedItemIds)
+                || !CharacterItemEffectConditionUtility.IsMet(item.EffectApplyCondition, snapshot, item, equippedContext))
+            {
+                return;
+            }
+
+            if (item.EffectIds != null)
+            {
+                for (int index = 0; index < item.EffectIds.Count; index++)
+                {
+                    string effectId = item.EffectIds[index];
+                    if (string.IsNullOrWhiteSpace(effectId))
+                    {
+                        continue;
+                    }
+
+                    if (DndRuleContentService.Instance.TryGetItemEffect(effectId, out DndItemEffectData itemEffect))
+                    {
+                        if (CharacterItemEffectConditionUtility.IsMet(itemEffect.Condition, snapshot, item, equippedContext)
+                            || CharacterItemEffectConditionUtility.IsManualOrUnknown(itemEffect.Condition))
+                        {
+                            action(item, itemEffect.EffectType, itemEffect.Target, itemEffect.Value, itemEffect.Condition, itemEffect.ConditionDescription);
+                        }
+                    }
+                    else if (DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect))
+                    {
+                        if (CharacterItemEffectConditionUtility.IsMet(effect.Condition, snapshot, item, equippedContext)
+                            || CharacterItemEffectConditionUtility.IsManualOrUnknown(effect.Condition))
+                        {
+                            action(item, effect.EffectType, effect.Target, effect.Value, effect.Condition, effect.ManualNote);
+                        }
+                    }
+                }
+            }
+
+            if (item.CustomEffects == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < item.CustomEffects.Count; index++)
+            {
+                CharacterItemEffectSaveData effect = item.CustomEffects[index];
+                if (effect != null)
+                {
+                    if (CharacterItemEffectConditionUtility.IsMet(effect.Condition, snapshot, item, equippedContext)
+                        || CharacterItemEffectConditionUtility.IsManualOrUnknown(effect.Condition))
+                    {
+                        action(item, effect.EffectType, effect.Target, effect.Value, effect.Condition, effect.ConditionDescription);
+                    }
+                }
+            }
+        }
+
+        private static bool IsImplicitlyEquippedItem(CharacterEquipmentItemSaveData item)
+        {
+            return CharacterEquipmentItemSaveData.HasItem(item)
+                && (!string.Equals(CharacterArmorCategoryIds.Normalize(item.ArmorCategory), CharacterArmorCategoryIds.None, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(item.ItemType, "shield", StringComparison.OrdinalIgnoreCase));
+        }
+
         private static int CalculateItemEffectBonus(
             CharacterEquipmentItemSaveData item,
             CharacterRuntimeSnapshotData snapshot,
             string effectType,
-            IReadOnlyList<string> targets)
+            IReadOnlyList<string> targets,
+            bool equippedContext = true)
         {
             if (!CharacterEquipmentItemSaveData.HasItem(item)
-                || !IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot))
+                || !IsCharacterItemEffectConditionMet(item.EffectApplyCondition, snapshot, item, equippedContext))
             {
                 return 0;
             }
 
             int bonus = 0;
-            bonus += CalculateRuleItemEffectBonus(item.EffectIds, snapshot, effectType, targets);
-            bonus += CalculateCustomItemEffectBonus(item.CustomEffects, snapshot, effectType, targets);
+            bonus += CalculateRuleItemEffectBonus(item.EffectIds, snapshot, effectType, targets, item, equippedContext);
+            bonus += CalculateCustomItemEffectBonus(item.CustomEffects, snapshot, effectType, targets, item, equippedContext);
             return bonus;
         }
 
@@ -1589,7 +1962,9 @@ namespace GameLogic
             IReadOnlyList<string> effectIds,
             CharacterRuntimeSnapshotData snapshot,
             string effectType,
-            IReadOnlyList<string> targets)
+            IReadOnlyList<string> targets,
+            CharacterEquipmentItemSaveData item = null,
+            bool equippedContext = true)
         {
             if (effectIds == null)
             {
@@ -1600,16 +1975,30 @@ namespace GameLogic
             for (int index = 0; index < effectIds.Count; index++)
             {
                 string effectId = effectIds[index];
-                if (string.IsNullOrWhiteSpace(effectId)
-                    || !DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect)
-                    || !IsEffectMatch(effect.EffectType, effect.Target, effectType, targets)
-                    || !IsStructuredEffectConditionMet(effect, snapshot)
-                    || !int.TryParse(effect.Value, out int value))
+                if (string.IsNullOrWhiteSpace(effectId))
                 {
                     continue;
                 }
 
-                bonus += value;
+                if (DndRuleContentService.Instance.TryGetItemEffect(effectId, out DndItemEffectData itemEffect))
+                {
+                    if (IsEffectMatch(itemEffect.EffectType, itemEffect.Target, effectType, targets)
+                        && IsItemEffectConditionMet(itemEffect, snapshot, item, equippedContext)
+                        && int.TryParse(itemEffect.Value, out int itemValue))
+                    {
+                        bonus += itemValue;
+                    }
+
+                    continue;
+                }
+
+                if (DndRuleContentService.Instance.TryGetFeatureEffect(effectId, out DndFeatureEffectData effect)
+                    && IsEffectMatch(effect.EffectType, effect.Target, effectType, targets)
+                    && IsStructuredEffectConditionMet(effect, snapshot, item, equippedContext)
+                    && int.TryParse(effect.Value, out int value))
+                {
+                    bonus += value;
+                }
             }
 
             return bonus;
@@ -1619,7 +2008,9 @@ namespace GameLogic
             IReadOnlyList<CharacterItemEffectSaveData> effects,
             CharacterRuntimeSnapshotData snapshot,
             string effectType,
-            IReadOnlyList<string> targets)
+            IReadOnlyList<string> targets,
+            CharacterEquipmentItemSaveData item = null,
+            bool equippedContext = true)
         {
             if (effects == null)
             {
@@ -1632,7 +2023,7 @@ namespace GameLogic
                 CharacterItemEffectSaveData effect = effects[index];
                 if (effect == null
                     || !IsEffectMatch(effect.EffectType, effect.Target, effectType, targets)
-                    || !IsCharacterItemEffectConditionMet(effect.Condition, snapshot)
+                    || !IsCharacterItemEffectConditionMet(effect.Condition, snapshot, item, equippedContext)
                     || !int.TryParse(effect.Value, out int value))
                 {
                     continue;
@@ -1977,7 +2368,7 @@ namespace GameLogic
 
         private static bool IsEffectMatch(string actualEffectType, string actualTarget, string expectedEffectType, IReadOnlyList<string> expectedTargets)
         {
-            if (!string.Equals(actualEffectType, expectedEffectType, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(NormalizeItemEffectType(actualEffectType), NormalizeItemEffectType(expectedEffectType), StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
@@ -2015,36 +2406,83 @@ namespace GameLogic
             return false;
         }
 
-        private static bool IsStructuredEffectConditionMet(DndFeatureEffectData effect, CharacterRuntimeSnapshotData snapshot)
+        private static string NormalizeItemEffectType(string effectType)
         {
-            if (effect == null || string.IsNullOrWhiteSpace(effect.Condition))
+            string normalized = effectType?.Trim() ?? string.Empty;
+            if (string.Equals(normalized, "AddAbility", StringComparison.OrdinalIgnoreCase))
             {
-                return true;
+                return "AbilityScoreBonus";
             }
 
-            if (string.Equals(effect.Condition, "WearingArmor", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(normalized, "AddAc", StringComparison.OrdinalIgnoreCase))
             {
-                return snapshot != null
-                    && !string.Equals(CharacterArmorCategoryIds.Normalize(snapshot.ArmorCategory), CharacterArmorCategoryIds.None, StringComparison.OrdinalIgnoreCase);
+                return "ACBonus";
             }
 
-            return false;
+            if (string.Equals(normalized, "AddSpeed", StringComparison.OrdinalIgnoreCase))
+            {
+                return "SpeedBonus";
+            }
+
+            if (string.Equals(normalized, "AddInitiative", StringComparison.OrdinalIgnoreCase))
+            {
+                return "InitiativeBonus";
+            }
+
+            if (string.Equals(normalized, "AddSkillBonus", StringComparison.OrdinalIgnoreCase))
+            {
+                return "SkillBonus";
+            }
+
+            if (string.Equals(normalized, "AddSpellAttackBonus", StringComparison.OrdinalIgnoreCase))
+            {
+                return "SpellAttackBonus";
+            }
+
+            if (string.Equals(normalized, "AddSpellSaveDc", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "AddSpellSaveDC", StringComparison.OrdinalIgnoreCase))
+            {
+                return "SpellSaveDcBonus";
+            }
+
+            return normalized;
         }
 
-        private static bool IsCharacterItemEffectConditionMet(string condition, CharacterRuntimeSnapshotData snapshot)
+        private static bool IsStructuredEffectConditionMet(
+            DndFeatureEffectData effect,
+            CharacterRuntimeSnapshotData snapshot,
+            CharacterEquipmentItemSaveData item = null,
+            bool equippedContext = false)
         {
-            if (string.IsNullOrWhiteSpace(condition))
+            if (effect == null)
             {
-                return true;
+                return false;
             }
 
-            if (string.Equals(condition, "WearingArmor", StringComparison.OrdinalIgnoreCase))
+            return CharacterItemEffectConditionUtility.IsMet(effect.Condition, snapshot, item, equippedContext);
+        }
+
+        private static bool IsItemEffectConditionMet(
+            DndItemEffectData effect,
+            CharacterRuntimeSnapshotData snapshot,
+            CharacterEquipmentItemSaveData item = null,
+            bool equippedContext = false)
+        {
+            if (effect == null)
             {
-                return snapshot != null
-                    && !string.Equals(CharacterArmorCategoryIds.Normalize(snapshot.ArmorCategory), CharacterArmorCategoryIds.None, StringComparison.OrdinalIgnoreCase);
+                return false;
             }
 
-            return false;
+            return CharacterItemEffectConditionUtility.IsMet(effect.Condition, snapshot, item, equippedContext);
+        }
+
+        private static bool IsCharacterItemEffectConditionMet(
+            string condition,
+            CharacterRuntimeSnapshotData snapshot,
+            CharacterEquipmentItemSaveData item = null,
+            bool equippedContext = false)
+        {
+            return CharacterItemEffectConditionUtility.IsMet(condition, snapshot, item, equippedContext);
         }
 
         private static int CalculateArmorDexterityAcBonus(string armorCategory, int dexterityModifier)

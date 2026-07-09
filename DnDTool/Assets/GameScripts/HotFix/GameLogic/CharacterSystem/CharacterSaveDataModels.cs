@@ -48,6 +48,7 @@ namespace GameLogic
         public List<CharacterResourceSaveData> Resources = new List<CharacterResourceSaveData>();
         public List<CharacterConditionStateSaveData> Conditions = new List<CharacterConditionStateSaveData>();
         public List<CharacterTemporaryEffectSaveData> TemporaryEffects = new List<CharacterTemporaryEffectSaveData>();
+        public List<CharacterDiceRollHistorySaveData> DiceRollHistory = new List<CharacterDiceRollHistorySaveData>();
         public List<CharacterCustomFeatureSaveData> CustomFeatures = new List<CharacterCustomFeatureSaveData>();
         public bool IsCompleted = false;
         public string CreatedAt = string.Empty;
@@ -411,9 +412,25 @@ namespace GameLogic
         public string ItemId = string.Empty;
         public string ItemName = string.Empty;
         public string ItemType = string.Empty;
+        public string Rarity = string.Empty;
         public string ArmorCategory = CharacterArmorCategoryIds.None;
         public int ArmorBaseAc;
         public int AcBonus;
+        public int MaxDexBonus;
+        public int StrengthRequirement;
+        public bool StealthDisadvantage;
+        public string WeaponCategory = string.Empty;
+        public string WeaponRangeType = string.Empty;
+        public string DamageDice = string.Empty;
+        public string DamageType = string.Empty;
+        public string WeaponProperties = string.Empty;
+        public int NormalRange;
+        public int LongRange;
+        public string TwoHandDamageDice = string.Empty;
+        public string ToolCategory = string.Empty;
+        public bool Consumable;
+        public int Charges;
+        public bool ConsumeOnUse;
         public string Weight = string.Empty;
         public int Quantity = 1;
         public bool IsEquipped;
@@ -440,9 +457,25 @@ namespace GameLogic
                 ItemId = source.ItemId?.Trim() ?? string.Empty,
                 ItemName = source.ItemName?.Trim() ?? string.Empty,
                 ItemType = source.ItemType?.Trim() ?? string.Empty,
+                Rarity = source.Rarity?.Trim() ?? string.Empty,
                 ArmorCategory = CharacterArmorCategoryIds.Normalize(source.ArmorCategory),
                 ArmorBaseAc = Math.Max(0, source.ArmorBaseAc),
                 AcBonus = source.AcBonus,
+                MaxDexBonus = Math.Max(0, source.MaxDexBonus),
+                StrengthRequirement = Math.Max(0, source.StrengthRequirement),
+                StealthDisadvantage = source.StealthDisadvantage,
+                WeaponCategory = source.WeaponCategory?.Trim() ?? string.Empty,
+                WeaponRangeType = source.WeaponRangeType?.Trim() ?? string.Empty,
+                DamageDice = source.DamageDice?.Trim() ?? string.Empty,
+                DamageType = source.DamageType?.Trim() ?? string.Empty,
+                WeaponProperties = source.WeaponProperties?.Trim() ?? string.Empty,
+                NormalRange = Math.Max(0, source.NormalRange),
+                LongRange = Math.Max(0, source.LongRange),
+                TwoHandDamageDice = source.TwoHandDamageDice?.Trim() ?? string.Empty,
+                ToolCategory = source.ToolCategory?.Trim() ?? string.Empty,
+                Consumable = source.Consumable,
+                Charges = Math.Max(0, source.Charges),
+                ConsumeOnUse = source.ConsumeOnUse,
                 Weight = source.Weight?.Trim() ?? string.Empty,
                 Quantity = Math.Max(1, source.Quantity),
                 IsEquipped = source.IsEquipped,
@@ -462,9 +495,25 @@ namespace GameLogic
                 && (!string.IsNullOrWhiteSpace(item.SourceItemId)
                     || !string.IsNullOrWhiteSpace(item.ItemId)
                     || !string.IsNullOrWhiteSpace(item.ItemName)
+                    || !string.IsNullOrWhiteSpace(item.Rarity)
                     || !string.IsNullOrWhiteSpace(item.Weight)
                     || item.ArmorBaseAc > 0
                     || item.AcBonus != 0
+                    || item.MaxDexBonus > 0
+                    || item.StrengthRequirement > 0
+                    || item.StealthDisadvantage
+                    || !string.IsNullOrWhiteSpace(item.WeaponCategory)
+                    || !string.IsNullOrWhiteSpace(item.WeaponRangeType)
+                    || !string.IsNullOrWhiteSpace(item.DamageDice)
+                    || !string.IsNullOrWhiteSpace(item.DamageType)
+                    || !string.IsNullOrWhiteSpace(item.WeaponProperties)
+                    || item.NormalRange > 0
+                    || item.LongRange > 0
+                    || !string.IsNullOrWhiteSpace(item.TwoHandDamageDice)
+                    || !string.IsNullOrWhiteSpace(item.ToolCategory)
+                    || item.Consumable
+                    || item.Charges > 0
+                    || item.ConsumeOnUse
                     || (item.EffectIds != null && item.EffectIds.Count > 0)
                     || (item.CustomEffects != null && item.CustomEffects.Count > 0));
         }
@@ -493,11 +542,15 @@ namespace GameLogic
     [Serializable]
     internal sealed class CharacterItemEffectSaveData
     {
+        public string Name = string.Empty;
         public string EffectType = string.Empty;
         public string Target = string.Empty;
         public string Value = string.Empty;
         public string Condition = string.Empty;
+        public string ConditionDescription = string.Empty;
         public string Description = string.Empty;
+        public bool EnableQuickRoll;
+        public string DiceExpression = string.Empty;
 
         public static CharacterItemEffectSaveData Clone(CharacterItemEffectSaveData source)
         {
@@ -508,12 +561,30 @@ namespace GameLogic
 
             return new CharacterItemEffectSaveData
             {
+                Name = source.Name ?? string.Empty,
                 EffectType = source.EffectType?.Trim() ?? string.Empty,
                 Target = source.Target?.Trim() ?? string.Empty,
                 Value = source.Value?.Trim() ?? string.Empty,
                 Condition = source.Condition?.Trim() ?? string.Empty,
-                Description = source.Description ?? string.Empty
+                ConditionDescription = source.ConditionDescription ?? string.Empty,
+                Description = source.Description ?? string.Empty,
+                EnableQuickRoll = source.EnableQuickRoll,
+                DiceExpression = source.DiceExpression?.Trim() ?? string.Empty
             };
+        }
+
+        public static bool HasContent(CharacterItemEffectSaveData effect)
+        {
+            return effect != null
+                && (!string.IsNullOrWhiteSpace(effect.Name)
+                    || !string.IsNullOrWhiteSpace(effect.EffectType)
+                    || !string.IsNullOrWhiteSpace(effect.Target)
+                    || !string.IsNullOrWhiteSpace(effect.Value)
+                    || !string.IsNullOrWhiteSpace(effect.Condition)
+                    || !string.IsNullOrWhiteSpace(effect.ConditionDescription)
+                    || !string.IsNullOrWhiteSpace(effect.Description)
+                    || effect.EnableQuickRoll
+                    || !string.IsNullOrWhiteSpace(effect.DiceExpression));
         }
 
         public static List<CharacterItemEffectSaveData> CloneList(List<CharacterItemEffectSaveData> source)
@@ -527,7 +598,7 @@ namespace GameLogic
             for (int index = 0; index < source.Count; index++)
             {
                 CharacterItemEffectSaveData effect = Clone(source[index]);
-                if (!string.IsNullOrWhiteSpace(effect.EffectType))
+                if (HasContent(effect))
                 {
                     result.Add(effect);
                 }
@@ -820,6 +891,80 @@ namespace GameLogic
             }
 
             return result;
+        }
+    }
+
+    [Serializable]
+    internal sealed class CharacterDiceRollHistorySaveData
+    {
+        public string EntryId = string.Empty;
+        public string CreatedAt = string.Empty;
+        public string SourceItemInstanceId = string.Empty;
+        public string SourceItemName = string.Empty;
+        public string SourceEffectName = string.Empty;
+        public string DiceExpression = string.Empty;
+        public string Purpose = string.Empty;
+        public string Summary = string.Empty;
+        public int Total;
+        public bool Success;
+        public string Error = string.Empty;
+        public bool Applied;
+        public string AppliedMessage = string.Empty;
+
+        public static CharacterDiceRollHistorySaveData Clone(CharacterDiceRollHistorySaveData source)
+        {
+            if (source == null)
+            {
+                return new CharacterDiceRollHistorySaveData();
+            }
+
+            return new CharacterDiceRollHistorySaveData
+            {
+                EntryId = source.EntryId?.Trim() ?? string.Empty,
+                CreatedAt = source.CreatedAt?.Trim() ?? string.Empty,
+                SourceItemInstanceId = source.SourceItemInstanceId?.Trim() ?? string.Empty,
+                SourceItemName = source.SourceItemName?.Trim() ?? string.Empty,
+                SourceEffectName = source.SourceEffectName?.Trim() ?? string.Empty,
+                DiceExpression = source.DiceExpression?.Trim() ?? string.Empty,
+                Purpose = source.Purpose?.Trim() ?? string.Empty,
+                Summary = source.Summary ?? string.Empty,
+                Total = source.Total,
+                Success = source.Success,
+                Error = source.Error ?? string.Empty,
+                Applied = source.Applied,
+                AppliedMessage = source.AppliedMessage ?? string.Empty
+            };
+        }
+
+        public static List<CharacterDiceRollHistorySaveData> CloneList(List<CharacterDiceRollHistorySaveData> source, int maxCount = 20)
+        {
+            List<CharacterDiceRollHistorySaveData> result = new List<CharacterDiceRollHistorySaveData>();
+            if (source == null || maxCount <= 0)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < source.Count && result.Count < maxCount; index++)
+            {
+                CharacterDiceRollHistorySaveData entry = Clone(source[index]);
+                if (HasContent(entry))
+                {
+                    result.Add(entry);
+                }
+            }
+
+            return result;
+        }
+
+        private static bool HasContent(CharacterDiceRollHistorySaveData entry)
+        {
+            return entry != null
+                && (!string.IsNullOrWhiteSpace(entry.EntryId)
+                    || !string.IsNullOrWhiteSpace(entry.SourceItemName)
+                    || !string.IsNullOrWhiteSpace(entry.SourceEffectName)
+                    || !string.IsNullOrWhiteSpace(entry.DiceExpression)
+                    || !string.IsNullOrWhiteSpace(entry.Summary)
+                    || !string.IsNullOrWhiteSpace(entry.Error));
         }
     }
 
@@ -1463,6 +1608,7 @@ namespace GameLogic
             character.Resources = CharacterResourceSaveData.CloneList(character.Resources);
             character.Conditions = CharacterConditionStateSaveData.CloneList(character.Conditions);
             character.TemporaryEffects = CharacterTemporaryEffectSaveData.CloneList(character.TemporaryEffects);
+            character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory);
             character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures);
             character.RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(character.RuntimeSnapshot);
 

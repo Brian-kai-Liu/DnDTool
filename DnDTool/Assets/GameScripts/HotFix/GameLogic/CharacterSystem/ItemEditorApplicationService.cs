@@ -29,12 +29,29 @@ namespace GameLogic
                 Name = ruleItem.Name ?? string.Empty,
                 Description = ruleItem.Description ?? string.Empty,
                 ItemType = ruleItem.ItemType ?? string.Empty,
+                Rarity = ruleItem.Rarity ?? string.Empty,
                 ArmorCategory = ruleItem.ArmorCategory ?? string.Empty,
                 ArmorBaseAc = ruleItem.ArmorBaseAc,
                 AcBonus = ruleItem.AcBonus,
-                DefaultEquipped = ruleItem.DefaultEquipped,
-                RequiresAttunement = ruleItem.RequiresAttunement
+                MaxDexBonus = ruleItem.MaxDexBonus,
+                StrengthRequirement = ruleItem.StrengthRequirement,
+                StealthDisadvantage = ruleItem.StealthDisadvantage,
+                WeaponCategory = ruleItem.WeaponCategory ?? string.Empty,
+                WeaponRangeType = ruleItem.WeaponRangeType ?? string.Empty,
+                DamageDice = ruleItem.DamageDice ?? string.Empty,
+                DamageType = ruleItem.DamageType ?? string.Empty,
+                NormalRange = ruleItem.NormalRange,
+                LongRange = ruleItem.LongRange,
+                TwoHandDamageDice = ruleItem.TwoHandDamageDice ?? string.Empty,
+                ToolCategory = ruleItem.ToolCategory ?? string.Empty,
+                Consumable = ruleItem.Consumable,
+                Charges = ruleItem.Charges,
+                ConsumeOnUse = ruleItem.ConsumeOnUse,
+                Weight = ruleItem.Weight > 0f ? ruleItem.Weight.ToString("0.##") : string.Empty,
+                EffectApplyCondition = ruleItem.EffectApplyCondition ?? string.Empty
             };
+            state.WeaponProperties.AddRange(ruleItem.WeaponProperties);
+            state.EffectIds.AddRange(ruleItem.EffectIds);
             return true;
         }
 
@@ -108,6 +125,25 @@ namespace GameLogic
             CharacterEquipmentItemSaveData characterItem = LocalCustomItemRepository.CreateCharacterItemSnapshot(
                 normalizedItem,
                 Math.Max(1, quantity));
+
+            if (CharacterItemCategoryUtility.IsCurrencyItem(characterItem))
+            {
+                character.Currency ??= new CharacterCurrencySaveData();
+                int amount = CharacterItemCategoryUtility.AddCurrency(character.Currency, characterItem, quantity);
+                if (amount <= 0)
+                {
+                    return FailAdd("Currency item data is invalid.");
+                }
+
+                CharacterApplicationService.Instance.Save(character);
+                return new ItemEditorAddItemResult
+                {
+                    Success = true,
+                    CharacterName = character.CharacterName ?? string.Empty,
+                    ItemName = characterItem.ItemName ?? string.Empty,
+                    Message = $"Added {characterItem.ItemName} to {character.CharacterName}."
+                };
+            }
 
             CharacterInventoryOperationResult inventoryResult = CharacterInventoryApplicationService.Instance.AddItem(
                 character.Equipment,

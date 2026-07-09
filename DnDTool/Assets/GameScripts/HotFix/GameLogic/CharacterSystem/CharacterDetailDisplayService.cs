@@ -1183,7 +1183,9 @@ namespace GameLogic
 
         private static void AppendInventoryItemEntry(List<CharacterInventoryDisplayEntry> entries, CharacterEquipmentItemSaveData item, bool equipped)
         {
-            if (entries == null || !CharacterEquipmentItemSaveData.HasItem(item))
+            if (entries == null
+                || !CharacterEquipmentItemSaveData.HasItem(item)
+                || CharacterItemCategoryUtility.IsCurrencyItem(item))
             {
                 return;
             }
@@ -1214,10 +1216,20 @@ namespace GameLogic
             }
 
             StringBuilder builder = new StringBuilder(name);
-            if (item.Quantity > 1)
+            if (item.Quantity > 1
+                || item.Consumable
+                || item.ConsumeOnUse
+                || CharacterItemCategoryUtility.IsAmmunitionItem(item))
             {
                 builder.Append(" x");
-                builder.Append(item.Quantity);
+                builder.Append(Math.Max(1, item.Quantity));
+            }
+
+            if (item.Charges > 0)
+            {
+                builder.Append(" [充能:");
+                builder.Append(item.Charges);
+                builder.Append("]");
             }
 
             return builder.ToString();
@@ -1257,11 +1269,51 @@ namespace GameLogic
             AppendDetailLine(builder, "重量", ruleItem != null && ruleItem.Weight > 0f ? $"{ruleItem.Weight:g}" : string.Empty);
             AppendDetailLine(builder, "价格", ruleItem != null && ruleItem.PriceGp > 0 ? $"{ruleItem.PriceGp} gp" : string.Empty);
 
+            AppendDetailLine(builder, "武器类型", FirstNonEmpty(item.WeaponCategory, ruleItem?.WeaponCategory));
+            AppendDetailLine(builder, "武器距离类型", FirstNonEmpty(item.WeaponRangeType, ruleItem?.WeaponRangeType));
+            AppendDetailLine(builder, "伤害详情", BuildInventoryItemDamageText(item, ruleItem));
+            AppendDetailLine(builder, "武器属性详情", FirstNonEmpty(item.WeaponProperties, FormatList(ruleItem?.WeaponProperties)));
+            AppendDetailLine(builder, "工具类型", FirstNonEmpty(item.ToolCategory, ruleItem?.ToolCategory));
+
+            int maxDexBonus = item.MaxDexBonus > 0 ? item.MaxDexBonus : ruleItem?.MaxDexBonus ?? 0;
+            if (maxDexBonus > 0)
+            {
+                AppendDetailLine(builder, "最大敏捷加值", maxDexBonus.ToString());
+            }
+
+            int strengthRequirement = item.StrengthRequirement > 0 ? item.StrengthRequirement : ruleItem?.StrengthRequirement ?? 0;
+            if (strengthRequirement > 0)
+            {
+                AppendDetailLine(builder, "力量需求", strengthRequirement.ToString());
+            }
+
+            if (item.StealthDisadvantage || ruleItem != null && ruleItem.StealthDisadvantage)
+            {
+                AppendDetailLine(builder, "隐匿劣势", "是");
+            }
+
+            if (item.Consumable || ruleItem != null && ruleItem.Consumable)
+            {
+                AppendDetailLine(builder, "消耗品", "是");
+            }
+
+            int charges = item.Charges > 0 ? item.Charges : ruleItem?.Charges ?? 0;
+            if (charges > 0)
+            {
+                AppendDetailLine(builder, "充能次数", charges.ToString());
+            }
+
+            if (item.ConsumeOnUse || ruleItem != null && ruleItem.ConsumeOnUse)
+            {
+                AppendDetailLine(builder, "使用后消耗", "是");
+            }
+
             if (item.RequiresAttunement || ruleItem != null && ruleItem.RequiresAttunement)
             {
                 AppendDetailLine(builder, "同调", item.IsAttuned ? "已同调" : "需要同调");
             }
 
+            AppendDetailLine(builder, "生效条件", FirstNonEmpty(item.EffectApplyCondition, ruleItem?.EffectApplyCondition));
             AppendDetailLine(builder, "描述", FirstNonEmpty(item.Description, ruleItem?.Description));
             AppendDetailLine(builder, "效果", BuildInventoryItemEffectText(item, ruleItem));
             AppendDetailLine(builder, "备注", item.Notes);
@@ -1317,6 +1369,37 @@ namespace GameLogic
             return string.IsNullOrWhiteSpace(sourceType) ? string.Empty : sourceType;
         }
 
+        private static string BuildInventoryItemDamageText(CharacterEquipmentItemSaveData item, DndItemDefineData ruleItem)
+        {
+            string damageDice = FirstNonEmpty(item?.DamageDice, ruleItem?.DamageDice);
+            if (string.IsNullOrWhiteSpace(damageDice))
+            {
+                return string.Empty;
+            }
+
+            string damage = damageDice;
+            string damageType = FirstNonEmpty(item?.DamageType, ruleItem?.DamageType);
+            if (!string.IsNullOrWhiteSpace(damageType))
+            {
+                damage = $"{damage} {damageType.Trim()}";
+            }
+
+            string twoHandDamageDice = FirstNonEmpty(item?.TwoHandDamageDice, ruleItem?.TwoHandDamageDice);
+            if (!string.IsNullOrWhiteSpace(twoHandDamageDice))
+            {
+                damage = $"{damage} / two-hand {twoHandDamageDice.Trim()}";
+            }
+
+            int normalRange = item != null && item.NormalRange > 0 ? item.NormalRange : ruleItem?.NormalRange ?? 0;
+            int longRange = item != null && item.LongRange > 0 ? item.LongRange : ruleItem?.LongRange ?? 0;
+            if (normalRange > 0 || longRange > 0)
+            {
+                damage = $"{damage} ({normalRange}/{longRange})";
+            }
+
+            return damage;
+        }
+
         private static string BuildRuleItemDamageText(DndItemDefineData item)
         {
             if (item == null || string.IsNullOrWhiteSpace(item.DamageDice))
@@ -1359,10 +1442,18 @@ namespace GameLogic
                         continue;
                     }
 
-                    string text = FirstNonEmpty(effect.Description, BuildInlineEffectText(effect.EffectType, effect.Target, effect.Value, effect.Condition));
+                    string text = BuildNameDescriptionText(effect.Name, effect.Description);
+                    if (string.IsNullOrWhiteSpace(text))
+                    {
+                        text = BuildInlineEffectText(effect.EffectType, effect.Target, effect.Value, effect.Condition, effect.ConditionDescription);
+                    }
                     if (!string.IsNullOrWhiteSpace(text))
                     {
                         parts.Add(text);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(effect.ConditionDescription))
+                    {
+                        parts.Add(effect.ConditionDescription.Trim());
                     }
                 }
             }
@@ -1385,7 +1476,22 @@ namespace GameLogic
                     continue;
                 }
 
-                if (DndRuleContentService.Instance.TryGetFeatureEffect(effectId.Trim(), out DndFeatureEffectData effect))
+                if (DndRuleContentService.Instance.TryGetItemEffect(effectId.Trim(), out DndItemEffectData itemEffect))
+                {
+                    string text = FirstNonEmpty(
+                        itemEffect.Description,
+                        BuildInlineEffectText(
+                            itemEffect.EffectType,
+                            itemEffect.Target,
+                            itemEffect.Value,
+                            itemEffect.Condition,
+                            itemEffect.ConditionDescription));
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        target.Add(text);
+                    }
+                }
+                else if (DndRuleContentService.Instance.TryGetFeatureEffect(effectId.Trim(), out DndFeatureEffectData effect))
                 {
                     string text = FirstNonEmpty(effect.ManualNote, BuildInlineEffectText(effect.EffectType, effect.Target, effect.Value, effect.Condition));
                     if (!string.IsNullOrWhiteSpace(text))
@@ -1402,13 +1508,19 @@ namespace GameLogic
 
         private static string BuildInlineEffectText(string effectType, string target, string value, string condition)
         {
+            return BuildInlineEffectText(effectType, target, value, condition, string.Empty);
+        }
+
+        private static string BuildInlineEffectText(string effectType, string target, string value, string condition, string conditionDescription)
+        {
             string main = JoinNonEmpty(new[] { effectType, target, value }, string.Empty);
-            if (string.IsNullOrWhiteSpace(condition))
+            string conditionText = JoinNonEmpty(new[] { condition, conditionDescription }, " - ");
+            if (string.IsNullOrWhiteSpace(conditionText))
             {
                 return main;
             }
 
-            return string.IsNullOrWhiteSpace(main) ? condition.Trim() : $"{main} ({condition.Trim()})";
+            return string.IsNullOrWhiteSpace(main) ? conditionText.Trim() : $"{main} ({conditionText.Trim()})";
         }
 
         private void AppendFeatureDisplayEntries(List<ClassFeatureDisplayEntry> entries, IReadOnlyList<string> featureIds)
@@ -1583,6 +1695,40 @@ namespace GameLogic
             }
 
             return parts.Count > 0 ? string.Join(" / ", parts) : emptyText;
+        }
+
+        private static string JoinNonEmptyWithSeparator(IEnumerable<string> values, string separator)
+        {
+            List<string> parts = new List<string>();
+            if (values != null)
+            {
+                foreach (string value in values)
+                {
+                    if (!string.IsNullOrWhiteSpace(value) && value.Trim() != "无")
+                    {
+                        parts.Add(value.Trim());
+                    }
+                }
+            }
+
+            return parts.Count > 0 ? string.Join(separator ?? string.Empty, parts) : string.Empty;
+        }
+
+        private static string BuildNameDescriptionText(string name, string description)
+        {
+            string normalizedName = name?.Trim() ?? string.Empty;
+            string normalizedDescription = description?.Trim() ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(normalizedName) && !string.IsNullOrWhiteSpace(normalizedDescription))
+            {
+                return $"{normalizedName} - {normalizedDescription}";
+            }
+
+            if (!string.IsNullOrWhiteSpace(normalizedName))
+            {
+                return normalizedName;
+            }
+
+            return normalizedDescription;
         }
 
         private static string FirstNonEmpty(params string[] values)

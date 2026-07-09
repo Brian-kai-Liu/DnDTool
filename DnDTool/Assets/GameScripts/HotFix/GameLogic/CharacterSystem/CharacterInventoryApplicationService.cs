@@ -27,6 +27,29 @@ namespace GameLogic
             }
 
             EnsureInventoryLists(working);
+            if (CharacterItemCategoryUtility.IsInventoryStackable(normalizedItem)
+                && TryMergeStackableInventoryItem(working.InventoryItems, normalizedItem, out string mergedItemInstanceId))
+            {
+                return Ok("Item quantity stacked.", working, mergedItemInstanceId);
+            }
+
+            if (!CharacterItemCategoryUtility.IsInventoryStackable(normalizedItem) && normalizedItem.Quantity > 1)
+            {
+                string firstItemInstanceId = normalizedItem.ItemInstanceId;
+                int count = Math.Max(1, normalizedItem.Quantity);
+                for (int index = 0; index < count; index++)
+                {
+                    CharacterEquipmentItemSaveData itemCopy = CharacterEquipmentItemSaveData.Clone(normalizedItem);
+                    itemCopy.Quantity = 1;
+                    itemCopy.ItemInstanceId = index == 0
+                        ? firstItemInstanceId
+                        : CreateItemInstanceId();
+                    working.InventoryItems.Add(itemCopy);
+                }
+
+                return Ok("Items added.", working, firstItemInstanceId);
+            }
+
             working.InventoryItems.Add(normalizedItem);
             return Ok("Item added.", working, normalizedItem.ItemInstanceId);
         }
@@ -101,6 +124,69 @@ namespace GameLogic
             return Ok("Item unequipped.", working, item.ItemInstanceId);
         }
 
+        public CharacterInventoryOperationResult AttuneItem(CharacterEquipmentSetSaveData equipment, string itemInstanceId)
+        {
+            CharacterEquipmentSetSaveData working = CloneEquipment(equipment);
+            CharacterEquipmentItemSaveData item = FindItem(working, itemInstanceId, out _, out _);
+            if (item == null)
+            {
+                return Fail("Item not found.", working);
+            }
+
+            if (!item.RequiresAttunement)
+            {
+                return Fail("Item does not require attunement.", working);
+            }
+
+            item.IsAttuned = true;
+            return Ok("Item attuned.", working, item.ItemInstanceId);
+        }
+
+        public CharacterInventoryOperationResult UnattuneItem(CharacterEquipmentSetSaveData equipment, string itemInstanceId)
+        {
+            CharacterEquipmentSetSaveData working = CloneEquipment(equipment);
+            CharacterEquipmentItemSaveData item = FindItem(working, itemInstanceId, out _, out _);
+            if (item == null)
+            {
+                return Fail("Item not found.", working);
+            }
+
+            item.IsAttuned = false;
+            return Ok("Item unattuned.", working, item.ItemInstanceId);
+        }
+
+        public CharacterInventoryOperationResult UseItem(CharacterEquipmentSetSaveData equipment, string itemInstanceId, int consumeCount = 1)
+        {
+            CharacterEquipmentSetSaveData working = CloneEquipment(equipment);
+            CharacterEquipmentItemSaveData item = FindItem(working, itemInstanceId, out InventoryItemLocation location, out int index);
+            if (item == null)
+            {
+                return Fail("Item not found.", working);
+            }
+
+            int amount = Math.Max(1, consumeCount);
+            if (item.Charges > 0)
+            {
+                item.Charges = Math.Max(0, item.Charges - amount);
+                return Ok("Item charge consumed.", working, item.ItemInstanceId);
+            }
+
+            if (!item.Consumable && !item.ConsumeOnUse)
+            {
+                return Fail("Item cannot be consumed.", working);
+            }
+
+            string usedItemId = item.ItemInstanceId;
+            if (item.Quantity > amount)
+            {
+                item.Quantity -= amount;
+                return Ok("Item quantity consumed.", working, usedItemId);
+            }
+
+            ClearItemAt(working, location, index);
+            return Ok("Item consumed.", working, usedItemId);
+        }
+
         public CharacterOperationResult AddItemToCharacter(
             string characterId,
             CharacterEquipmentItemSaveData item,
@@ -132,6 +218,21 @@ namespace GameLogic
         public CharacterOperationResult UnequipCharacterItem(string characterId, string itemInstanceId)
         {
             return SaveCharacterInventory(characterId, equipment => UnequipItem(equipment, itemInstanceId));
+        }
+
+        public CharacterOperationResult AttuneCharacterItem(string characterId, string itemInstanceId)
+        {
+            return SaveCharacterInventory(characterId, equipment => AttuneItem(equipment, itemInstanceId));
+        }
+
+        public CharacterOperationResult UnattuneCharacterItem(string characterId, string itemInstanceId)
+        {
+            return SaveCharacterInventory(characterId, equipment => UnattuneItem(equipment, itemInstanceId));
+        }
+
+        public CharacterOperationResult UseCharacterItem(string characterId, string itemInstanceId, int consumeCount = 1)
+        {
+            return SaveCharacterInventory(characterId, equipment => UseItem(equipment, itemInstanceId, consumeCount));
         }
 
         private CharacterOperationResult SaveCharacterInventory(
@@ -196,6 +297,21 @@ namespace GameLogic
                 ArmorCategory = CharacterArmorCategoryIds.Normalize(ruleItem.ArmorCategory),
                 ArmorBaseAc = Math.Max(0, ruleItem.ArmorBaseAc),
                 AcBonus = ruleItem.AcBonus,
+                MaxDexBonus = Math.Max(0, ruleItem.MaxDexBonus),
+                StrengthRequirement = Math.Max(0, ruleItem.StrengthRequirement),
+                StealthDisadvantage = ruleItem.StealthDisadvantage,
+                WeaponCategory = ruleItem.WeaponCategory?.Trim() ?? string.Empty,
+                WeaponRangeType = ruleItem.WeaponRangeType?.Trim() ?? string.Empty,
+                DamageDice = ruleItem.DamageDice?.Trim() ?? string.Empty,
+                DamageType = ruleItem.DamageType?.Trim() ?? string.Empty,
+                WeaponProperties = FormatStringList(ruleItem.WeaponProperties),
+                NormalRange = Math.Max(0, ruleItem.NormalRange),
+                LongRange = Math.Max(0, ruleItem.LongRange),
+                TwoHandDamageDice = ruleItem.TwoHandDamageDice?.Trim() ?? string.Empty,
+                ToolCategory = ruleItem.ToolCategory?.Trim() ?? string.Empty,
+                Consumable = ruleItem.Consumable,
+                Charges = Math.Max(0, ruleItem.Charges),
+                ConsumeOnUse = ruleItem.ConsumeOnUse,
                 Weight = ruleItem.Weight > 0f ? ruleItem.Weight.ToString("0.##") : string.Empty,
                 Quantity = Math.Max(1, quantity > 0 ? quantity : ruleItem.DefaultQuantity),
                 RequiresAttunement = ruleItem.RequiresAttunement,
@@ -315,6 +431,84 @@ namespace GameLogic
             equipment.Shield ??= new CharacterEquipmentItemSaveData();
             equipment.EquippedItems ??= new List<CharacterEquipmentItemSaveData>();
             equipment.InventoryItems ??= new List<CharacterEquipmentItemSaveData>();
+        }
+
+        private static bool TryMergeStackableInventoryItem(
+            List<CharacterEquipmentItemSaveData> inventoryItems,
+            CharacterEquipmentItemSaveData item,
+            out string mergedItemInstanceId)
+        {
+            mergedItemInstanceId = string.Empty;
+            if (inventoryItems == null || item == null)
+            {
+                return false;
+            }
+
+            for (int index = 0; index < inventoryItems.Count; index++)
+            {
+                CharacterEquipmentItemSaveData candidate = inventoryItems[index];
+                if (!CanStackTogether(candidate, item))
+                {
+                    continue;
+                }
+
+                candidate.Quantity = Math.Max(1, candidate.Quantity) + Math.Max(1, item.Quantity);
+                mergedItemInstanceId = candidate.ItemInstanceId;
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool CanStackTogether(CharacterEquipmentItemSaveData left, CharacterEquipmentItemSaveData right)
+        {
+            if (left == null || right == null)
+            {
+                return false;
+            }
+
+            if (!CharacterItemCategoryUtility.IsInventoryStackable(left)
+                || !CharacterItemCategoryUtility.IsInventoryStackable(right))
+            {
+                return false;
+            }
+
+            if (left.IsEquipped || left.IsAttuned || right.IsEquipped || right.IsAttuned)
+            {
+                return false;
+            }
+
+            return string.Equals(left.ItemSourceType, right.ItemSourceType, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(GetStackIdentity(left), GetStackIdentity(right), StringComparison.OrdinalIgnoreCase)
+                && string.Equals(left.ItemType?.Trim() ?? string.Empty, right.ItemType?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(left.Rarity?.Trim() ?? string.Empty, right.Rarity?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(left.Description ?? string.Empty, right.Description ?? string.Empty, StringComparison.Ordinal);
+        }
+
+        private static string GetStackIdentity(CharacterEquipmentItemSaveData item)
+        {
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.SourceItemId))
+            {
+                return item.SourceItemId.Trim();
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.ItemId))
+            {
+                return item.ItemId.Trim();
+            }
+
+            return item.ItemName?.Trim() ?? string.Empty;
+        }
+
+        private static string FormatStringList(IReadOnlyList<string> source)
+        {
+            List<string> result = CloneStringList(source);
+            return result.Count > 0 ? string.Join(";", result) : string.Empty;
         }
 
         private static List<string> CloneStringList(IReadOnlyList<string> source)

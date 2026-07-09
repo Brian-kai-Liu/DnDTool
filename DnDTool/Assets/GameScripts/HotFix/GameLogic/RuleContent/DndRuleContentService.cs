@@ -12,6 +12,7 @@ namespace GameLogic
         private readonly Dictionary<string, DndFeatureDefineData> m_featureById = new Dictionary<string, DndFeatureDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndFeatureEffectData> m_featureEffectById = new Dictionary<string, DndFeatureEffectData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndFeatureEffectConditionData> m_featureEffectConditionById = new Dictionary<string, DndFeatureEffectConditionData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndItemEffectData> m_itemEffectById = new Dictionary<string, DndItemEffectData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndFeatDefineData> m_featById = new Dictionary<string, DndFeatDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndChoiceGroupData> m_choiceGroupById = new Dictionary<string, DndChoiceGroupData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<DndChoiceOptionData>> m_choiceOptionsByGroupId = new Dictionary<string, List<DndChoiceOptionData>>(StringComparer.OrdinalIgnoreCase);
@@ -87,6 +88,8 @@ namespace GameLogic
 
         public IReadOnlyList<DndItemDefineData> Items => GetLibrary().Items;
 
+        public IReadOnlyList<DndItemEffectData> ItemEffects => GetLibrary().ItemEffects;
+
         public IReadOnlyList<DndToolDefineData> Tools => GetLibrary().Tools;
 
         public IReadOnlyList<DndLanguageDefineData> Languages => GetLibrary().Languages;
@@ -147,6 +150,12 @@ namespace GameLogic
         {
             GetLibrary();
             return m_featureEffectById.TryGetValue(effectId ?? string.Empty, out effect);
+        }
+
+        public bool TryGetItemEffect(string effectId, out DndItemEffectData effect)
+        {
+            GetLibrary();
+            return m_itemEffectById.TryGetValue(effectId ?? string.Empty, out effect);
         }
 
         public bool TryGetFeatureEffectCondition(string conditionId, out DndFeatureEffectConditionData condition)
@@ -373,6 +382,7 @@ namespace GameLogic
             m_featureById.Clear();
             m_featureEffectById.Clear();
             m_featureEffectConditionById.Clear();
+            m_itemEffectById.Clear();
             m_featById.Clear();
             m_choiceGroupById.Clear();
             m_choiceOptionsByGroupId.Clear();
@@ -429,6 +439,15 @@ namespace GameLogic
                 if (!string.IsNullOrWhiteSpace(condition.ConditionId))
                 {
                     m_featureEffectConditionById[condition.ConditionId] = condition;
+                }
+            }
+
+            for (int index = 0; index < m_library.ItemEffects.Count; index++)
+            {
+                DndItemEffectData effect = m_library.ItemEffects[index];
+                if (!string.IsNullOrWhiteSpace(effect.EffectId))
+                {
+                    m_itemEffectById[effect.EffectId] = effect;
                 }
             }
 
