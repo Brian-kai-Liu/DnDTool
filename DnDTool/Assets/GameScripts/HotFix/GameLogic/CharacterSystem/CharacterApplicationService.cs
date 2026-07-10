@@ -135,6 +135,70 @@ namespace GameLogic
             return result;
         }
 
+        public CharacterDiceRollHistoryEntry AddDiceRollHistoryEntry(
+            string characterId,
+            CharacterInventoryQuickRollContext context,
+            CharacterDiceRollResultData rollResult,
+            string purpose)
+        {
+            if (!TryGetCharacter(characterId, out CharacterCardDraftSaveData character))
+            {
+                return null;
+            }
+
+            CharacterDiceRollHistoryEntry entry = new CharacterDiceRollHistoryEntry
+            {
+                EntryId = Guid.NewGuid().ToString("N"),
+                CreatedAt = DateTime.Now,
+                SourceItemInstanceId = context?.ItemInstanceId ?? string.Empty,
+                SourceItemName = context?.ItemName ?? string.Empty,
+                SourceEffectName = context?.EffectName ?? string.Empty,
+                DiceExpression = context?.DiceExpression ?? rollResult?.Expression ?? string.Empty,
+                Purpose = purpose?.Trim() ?? string.Empty,
+                Summary = rollResult?.Summary ?? string.Empty,
+                Total = rollResult?.Total ?? 0,
+                Success = rollResult != null && rollResult.Success,
+                Error = rollResult?.Error ?? string.Empty
+            };
+
+            character.DiceRollHistory ??= new List<CharacterDiceRollHistorySaveData>();
+            character.DiceRollHistory.Insert(0, CharacterDiceRollHistoryFormatter.ToSaveData(entry));
+            character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory);
+            CharacterCardLocalRepository.Upsert(character);
+            return entry;
+        }
+
+        public void UpdateDiceRollHistoryPurpose(string characterId, string entryId, string purpose)
+        {
+            if (string.IsNullOrWhiteSpace(entryId)
+                || !TryGetCharacter(characterId, out CharacterCardDraftSaveData character)
+                || character.DiceRollHistory == null)
+            {
+                return;
+            }
+
+            string normalizedEntryId = entryId.Trim();
+            bool changed = false;
+            for (int index = 0; index < character.DiceRollHistory.Count; index++)
+            {
+                CharacterDiceRollHistorySaveData entry = character.DiceRollHistory[index];
+                if (entry == null || !string.Equals(entry.EntryId, normalizedEntryId, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                entry.Purpose = purpose?.Trim() ?? string.Empty;
+                changed = true;
+                break;
+            }
+
+            if (changed)
+            {
+                character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory);
+                CharacterCardLocalRepository.Upsert(character);
+            }
+        }
+
         public void ReloadRuleContent()
         {
             DndRuleContentService.Instance.Reload();

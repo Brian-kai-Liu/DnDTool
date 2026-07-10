@@ -99,6 +99,27 @@ namespace GameLogic
             return builder.ToString().TrimEnd();
         }
 
+        public static string BuildRecentHistoryText(
+            IReadOnlyList<CharacterDiceRollHistorySaveData> history,
+            int maxCount,
+            bool includeTitle)
+        {
+            List<CharacterDiceRollHistoryEntry> entries = new List<CharacterDiceRollHistoryEntry>();
+            if (history != null)
+            {
+                for (int index = 0; index < history.Count && entries.Count < Math.Max(0, maxCount); index++)
+                {
+                    CharacterDiceRollHistoryEntry entry = FromSaveData(history[index]);
+                    if (entry != null)
+                    {
+                        entries.Add(entry);
+                    }
+                }
+            }
+
+            return BuildRecentHistoryText(entries, maxCount, includeTitle);
+        }
+
         private static void AppendHistoryEntry(StringBuilder builder, CharacterDiceRollHistoryEntry entry, int displayIndex)
         {
             if (builder == null || entry == null)
