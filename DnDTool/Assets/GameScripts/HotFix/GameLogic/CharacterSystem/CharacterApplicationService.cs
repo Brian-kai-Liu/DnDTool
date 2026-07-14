@@ -55,12 +55,15 @@ namespace GameLogic
                 ClassProgresses = CloneClassProgresses(request.ClassProgresses),
                 ChoiceSelections = CloneChoiceSelections(request.ChoiceSelections),
                 CustomFeatures = CharacterCustomFeatureSaveData.CloneList(request.CustomFeatures),
-                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(request.DiceRollHistory)
+                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(request.DiceRollHistory),
+                ManualOverrides = CharacterManualOverrideSaveData.Clone(request.ManualOverrides)
             };
             character.HpModeId = CharacterHpModeIds.Normalize(character.RuntimeSnapshot.HpModeId);
             character.MaxHp = Math.Max(0, character.RuntimeSnapshot.MaxHp);
             character.CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.RuntimeSnapshot.CurrentHp, character.MaxHp);
             character.TemporaryHp = Math.Max(0, character.RuntimeSnapshot.TemporaryHp);
+            character.ManualOverrides.ApplyStorageOverrides(character);
+            character.RuntimeSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(character);
 
             return CharacterCardLocalRepository.Normalize(character);
         }
@@ -84,7 +87,8 @@ namespace GameLogic
                 ClassProgresses = BuildCreationClassProgresses(input, level),
                 ChoiceSelections = BuildCreationChoiceSelections(input),
                 CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures),
-                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory)
+                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory),
+                ManualOverrides = CharacterManualOverrideSaveData.Clone(input.ManualOverrides)
             };
 
             CharacterCardDraftSaveData character = BuildSaveData(request);
@@ -99,6 +103,9 @@ namespace GameLogic
             character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
             character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures);
             character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory);
+            character.ManualOverrides = CharacterManualOverrideSaveData.Clone(input.ManualOverrides);
+            character.ManualOverrides.ApplyStorageOverrides(character);
+            character.RuntimeSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(character);
             return CharacterCardLocalRepository.Normalize(character);
         }
 

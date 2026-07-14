@@ -54,6 +54,664 @@ namespace GameLogic
         public string CreatedAt = string.Empty;
         public string UpdatedAt = string.Empty;
         public CharacterRuntimeSnapshotData RuntimeSnapshot = new CharacterRuntimeSnapshotData();
+        public CharacterManualOverrideSaveData ManualOverrides = new CharacterManualOverrideSaveData();
+    }
+
+    internal static class CharacterManualOverrideFieldIds
+    {
+        public const string Strength = "Strength";
+        public const string Dexterity = "Dexterity";
+        public const string Constitution = "Constitution";
+        public const string Intelligence = "Intelligence";
+        public const string Wisdom = "Wisdom";
+        public const string Charisma = "Charisma";
+        public const string CurrentHp = "CurrentHp";
+        public const string MaxHp = "MaxHp";
+        public const string TemporaryHp = "TemporaryHp";
+        public const string ArmorClass = "ArmorClass";
+        public const string Initiative = "Initiative";
+        public const string Speed = "Speed";
+        public const string HitDiceDie = "HitDiceDie";
+        public const string HitDiceRemaining = "HitDiceRemaining";
+        public const string DeathSaveSuccesses = "DeathSaveSuccesses";
+        public const string DeathSaveFailures = "DeathSaveFailures";
+        public const string SpellSaveDc = "SpellSaveDc";
+        public const string SpellAttackBonus = "SpellAttackBonus";
+        public const string Copper = "Copper";
+        public const string Silver = "Silver";
+        public const string Electrum = "Electrum";
+        public const string Gold = "Gold";
+        public const string Platinum = "Platinum";
+    }
+
+    [Serializable]
+    internal sealed class CharacterManualOverrideSaveData
+    {
+        public bool HasStrength;
+        public int Strength;
+        public bool HasDexterity;
+        public int Dexterity;
+        public bool HasConstitution;
+        public int Constitution;
+        public bool HasIntelligence;
+        public int Intelligence;
+        public bool HasWisdom;
+        public int Wisdom;
+        public bool HasCharisma;
+        public int Charisma;
+        public bool HasCurrentHp;
+        public int CurrentHp;
+        public bool HasMaxHp;
+        public int MaxHp;
+        public bool HasTemporaryHp;
+        public int TemporaryHp;
+        public bool HasArmorClass;
+        public int ArmorClass;
+        public bool HasInitiative;
+        public int Initiative;
+        public bool HasSpeed;
+        public int Speed;
+        public bool HasHitDiceDie;
+        public int HitDiceDie;
+        public bool HasHitDiceRemaining;
+        public int HitDiceRemaining;
+        public bool HasDeathSaveSuccesses;
+        public int DeathSaveSuccesses;
+        public bool HasDeathSaveFailures;
+        public int DeathSaveFailures;
+        public bool HasSpellSaveDc;
+        public int SpellSaveDc;
+        public bool HasSpellAttackBonus;
+        public int SpellAttackBonus;
+        public bool HasCopper;
+        public int Copper;
+        public bool HasSilver;
+        public int Silver;
+        public bool HasElectrum;
+        public int Electrum;
+        public bool HasGold;
+        public int Gold;
+        public bool HasPlatinum;
+        public int Platinum;
+
+        public bool HasAny()
+        {
+            return HasStrength
+                || HasDexterity
+                || HasConstitution
+                || HasIntelligence
+                || HasWisdom
+                || HasCharisma
+                || HasCurrentHp
+                || HasMaxHp
+                || HasTemporaryHp
+                || HasArmorClass
+                || HasInitiative
+                || HasSpeed
+                || HasHitDiceDie
+                || HasHitDiceRemaining
+                || HasDeathSaveSuccesses
+                || HasDeathSaveFailures
+                || HasSpellSaveDc
+                || HasSpellAttackBonus
+                || HasCopper
+                || HasSilver
+                || HasElectrum
+                || HasGold
+                || HasPlatinum;
+        }
+
+        public void Clear()
+        {
+            HasStrength = false;
+            Strength = 0;
+            HasDexterity = false;
+            Dexterity = 0;
+            HasConstitution = false;
+            Constitution = 0;
+            HasIntelligence = false;
+            Intelligence = 0;
+            HasWisdom = false;
+            Wisdom = 0;
+            HasCharisma = false;
+            Charisma = 0;
+            HasCurrentHp = false;
+            CurrentHp = 0;
+            HasMaxHp = false;
+            MaxHp = 0;
+            HasTemporaryHp = false;
+            TemporaryHp = 0;
+            HasArmorClass = false;
+            ArmorClass = 0;
+            HasInitiative = false;
+            Initiative = 0;
+            HasSpeed = false;
+            Speed = 0;
+            HasHitDiceDie = false;
+            HitDiceDie = 0;
+            HasHitDiceRemaining = false;
+            HitDiceRemaining = 0;
+            HasDeathSaveSuccesses = false;
+            DeathSaveSuccesses = 0;
+            HasDeathSaveFailures = false;
+            DeathSaveFailures = 0;
+            HasSpellSaveDc = false;
+            SpellSaveDc = 0;
+            HasSpellAttackBonus = false;
+            SpellAttackBonus = 0;
+            HasCopper = false;
+            Copper = 0;
+            HasSilver = false;
+            Silver = 0;
+            HasElectrum = false;
+            Electrum = 0;
+            HasGold = false;
+            Gold = 0;
+            HasPlatinum = false;
+            Platinum = 0;
+        }
+
+        public bool TrySetValue(string fieldId, int value)
+        {
+            string normalized = fieldId?.Trim() ?? string.Empty;
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Strength, StringComparison.OrdinalIgnoreCase))
+            {
+                HasStrength = true;
+                Strength = Clamp(value, 1, 30);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Dexterity, StringComparison.OrdinalIgnoreCase))
+            {
+                HasDexterity = true;
+                Dexterity = Clamp(value, 1, 30);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Constitution, StringComparison.OrdinalIgnoreCase))
+            {
+                HasConstitution = true;
+                Constitution = Clamp(value, 1, 30);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Intelligence, StringComparison.OrdinalIgnoreCase))
+            {
+                HasIntelligence = true;
+                Intelligence = Clamp(value, 1, 30);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Wisdom, StringComparison.OrdinalIgnoreCase))
+            {
+                HasWisdom = true;
+                Wisdom = Clamp(value, 1, 30);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Charisma, StringComparison.OrdinalIgnoreCase))
+            {
+                HasCharisma = true;
+                Charisma = Clamp(value, 1, 30);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.CurrentHp, StringComparison.OrdinalIgnoreCase))
+            {
+                HasCurrentHp = true;
+                CurrentHp = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.MaxHp, StringComparison.OrdinalIgnoreCase))
+            {
+                HasMaxHp = true;
+                MaxHp = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.TemporaryHp, StringComparison.OrdinalIgnoreCase))
+            {
+                HasTemporaryHp = true;
+                TemporaryHp = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.ArmorClass, StringComparison.OrdinalIgnoreCase))
+            {
+                HasArmorClass = true;
+                ArmorClass = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Initiative, StringComparison.OrdinalIgnoreCase))
+            {
+                HasInitiative = true;
+                Initiative = Clamp(value, -99, 99);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Speed, StringComparison.OrdinalIgnoreCase))
+            {
+                HasSpeed = true;
+                Speed = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.HitDiceDie, StringComparison.OrdinalIgnoreCase))
+            {
+                HasHitDiceDie = true;
+                HitDiceDie = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.HitDiceRemaining, StringComparison.OrdinalIgnoreCase))
+            {
+                HasHitDiceRemaining = true;
+                HitDiceRemaining = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.DeathSaveSuccesses, StringComparison.OrdinalIgnoreCase))
+            {
+                HasDeathSaveSuccesses = true;
+                DeathSaveSuccesses = Clamp(value, 0, 3);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.DeathSaveFailures, StringComparison.OrdinalIgnoreCase))
+            {
+                HasDeathSaveFailures = true;
+                DeathSaveFailures = Clamp(value, 0, 3);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.SpellSaveDc, StringComparison.OrdinalIgnoreCase))
+            {
+                HasSpellSaveDc = true;
+                SpellSaveDc = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.SpellAttackBonus, StringComparison.OrdinalIgnoreCase))
+            {
+                HasSpellAttackBonus = true;
+                SpellAttackBonus = Clamp(value, -99, 99);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Copper, StringComparison.OrdinalIgnoreCase))
+            {
+                HasCopper = true;
+                Copper = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Silver, StringComparison.OrdinalIgnoreCase))
+            {
+                HasSilver = true;
+                Silver = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Electrum, StringComparison.OrdinalIgnoreCase))
+            {
+                HasElectrum = true;
+                Electrum = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Gold, StringComparison.OrdinalIgnoreCase))
+            {
+                HasGold = true;
+                Gold = Math.Max(0, value);
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Platinum, StringComparison.OrdinalIgnoreCase))
+            {
+                HasPlatinum = true;
+                Platinum = Math.Max(0, value);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryGetValue(string fieldId, out int value)
+        {
+            string normalized = fieldId?.Trim() ?? string.Empty;
+            value = 0;
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Strength, StringComparison.OrdinalIgnoreCase) && HasStrength)
+            {
+                value = Strength;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Dexterity, StringComparison.OrdinalIgnoreCase) && HasDexterity)
+            {
+                value = Dexterity;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Constitution, StringComparison.OrdinalIgnoreCase) && HasConstitution)
+            {
+                value = Constitution;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Intelligence, StringComparison.OrdinalIgnoreCase) && HasIntelligence)
+            {
+                value = Intelligence;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Wisdom, StringComparison.OrdinalIgnoreCase) && HasWisdom)
+            {
+                value = Wisdom;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Charisma, StringComparison.OrdinalIgnoreCase) && HasCharisma)
+            {
+                value = Charisma;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.CurrentHp, StringComparison.OrdinalIgnoreCase) && HasCurrentHp)
+            {
+                value = CurrentHp;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.MaxHp, StringComparison.OrdinalIgnoreCase) && HasMaxHp)
+            {
+                value = MaxHp;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.TemporaryHp, StringComparison.OrdinalIgnoreCase) && HasTemporaryHp)
+            {
+                value = TemporaryHp;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.ArmorClass, StringComparison.OrdinalIgnoreCase) && HasArmorClass)
+            {
+                value = ArmorClass;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Initiative, StringComparison.OrdinalIgnoreCase) && HasInitiative)
+            {
+                value = Initiative;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Speed, StringComparison.OrdinalIgnoreCase) && HasSpeed)
+            {
+                value = Speed;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.HitDiceDie, StringComparison.OrdinalIgnoreCase) && HasHitDiceDie)
+            {
+                value = HitDiceDie;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.HitDiceRemaining, StringComparison.OrdinalIgnoreCase) && HasHitDiceRemaining)
+            {
+                value = HitDiceRemaining;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.DeathSaveSuccesses, StringComparison.OrdinalIgnoreCase) && HasDeathSaveSuccesses)
+            {
+                value = DeathSaveSuccesses;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.DeathSaveFailures, StringComparison.OrdinalIgnoreCase) && HasDeathSaveFailures)
+            {
+                value = DeathSaveFailures;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.SpellSaveDc, StringComparison.OrdinalIgnoreCase) && HasSpellSaveDc)
+            {
+                value = SpellSaveDc;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.SpellAttackBonus, StringComparison.OrdinalIgnoreCase) && HasSpellAttackBonus)
+            {
+                value = SpellAttackBonus;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Copper, StringComparison.OrdinalIgnoreCase) && HasCopper)
+            {
+                value = Copper;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Silver, StringComparison.OrdinalIgnoreCase) && HasSilver)
+            {
+                value = Silver;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Electrum, StringComparison.OrdinalIgnoreCase) && HasElectrum)
+            {
+                value = Electrum;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Gold, StringComparison.OrdinalIgnoreCase) && HasGold)
+            {
+                value = Gold;
+                return true;
+            }
+
+            if (string.Equals(normalized, CharacterManualOverrideFieldIds.Platinum, StringComparison.OrdinalIgnoreCase) && HasPlatinum)
+            {
+                value = Platinum;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void ApplyAbilityOverrides(CharacterRuntimeSnapshotData snapshot)
+        {
+            if (snapshot == null)
+            {
+                return;
+            }
+
+            if (HasStrength)
+            {
+                snapshot.Strength = Strength;
+            }
+
+            if (HasDexterity)
+            {
+                snapshot.Dexterity = Dexterity;
+            }
+
+            if (HasConstitution)
+            {
+                snapshot.Constitution = Constitution;
+            }
+
+            if (HasIntelligence)
+            {
+                snapshot.Intelligence = Intelligence;
+            }
+
+            if (HasWisdom)
+            {
+                snapshot.Wisdom = Wisdom;
+            }
+
+            if (HasCharisma)
+            {
+                snapshot.Charisma = Charisma;
+            }
+        }
+
+        public void ApplySnapshotOverrides(CharacterRuntimeSnapshotData snapshot)
+        {
+            if (snapshot == null)
+            {
+                return;
+            }
+
+            ApplyAbilityOverrides(snapshot);
+            if (HasMaxHp)
+            {
+                snapshot.MaxHp = MaxHp;
+            }
+
+            if (HasCurrentHp)
+            {
+                snapshot.CurrentHp = CurrentHp;
+            }
+
+            if (HasTemporaryHp)
+            {
+                snapshot.TemporaryHp = TemporaryHp;
+            }
+
+            if (HasDeathSaveSuccesses)
+            {
+                snapshot.DeathSaveSuccesses = DeathSaveSuccesses;
+            }
+
+            if (HasDeathSaveFailures)
+            {
+                snapshot.DeathSaveFailures = DeathSaveFailures;
+            }
+
+            if (HasSpeed)
+            {
+                snapshot.Speed = Speed;
+            }
+
+            if (HasArmorClass)
+            {
+                snapshot.ArmorClass = ArmorClass;
+            }
+        }
+
+        public void ApplyStorageOverrides(CharacterCardDraftSaveData character)
+        {
+            if (character == null)
+            {
+                return;
+            }
+
+            if (HasMaxHp)
+            {
+                character.MaxHp = MaxHp;
+            }
+
+            if (HasCurrentHp)
+            {
+                character.CurrentHp = CurrentHp;
+            }
+
+            if (HasTemporaryHp)
+            {
+                character.TemporaryHp = TemporaryHp;
+            }
+
+            character.DeathSaves ??= new CharacterDeathSaveData();
+            if (HasDeathSaveSuccesses)
+            {
+                character.DeathSaves.Successes = DeathSaveSuccesses;
+            }
+
+            if (HasDeathSaveFailures)
+            {
+                character.DeathSaves.Failures = DeathSaveFailures;
+            }
+
+            character.Currency ??= new CharacterCurrencySaveData();
+            if (HasCopper)
+            {
+                character.Currency.Copper = Copper;
+            }
+
+            if (HasSilver)
+            {
+                character.Currency.Silver = Silver;
+            }
+
+            if (HasElectrum)
+            {
+                character.Currency.Electrum = Electrum;
+            }
+
+            if (HasGold)
+            {
+                character.Currency.Gold = Gold;
+            }
+
+            if (HasPlatinum)
+            {
+                character.Currency.Platinum = Platinum;
+            }
+        }
+
+        public static CharacterManualOverrideSaveData Clone(CharacterManualOverrideSaveData source)
+        {
+            CharacterManualOverrideSaveData result = new CharacterManualOverrideSaveData();
+            if (source == null)
+            {
+                return result;
+            }
+
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Strength);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Dexterity);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Constitution);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Intelligence);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Wisdom);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Charisma);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.CurrentHp);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.MaxHp);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.TemporaryHp);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.ArmorClass);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Initiative);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Speed);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.HitDiceDie);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.HitDiceRemaining);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.DeathSaveSuccesses);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.DeathSaveFailures);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.SpellSaveDc);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.SpellAttackBonus);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Copper);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Silver);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Electrum);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Gold);
+            CopyValue(result, source, CharacterManualOverrideFieldIds.Platinum);
+            return result;
+        }
+
+        private static void CopyValue(CharacterManualOverrideSaveData target, CharacterManualOverrideSaveData source, string fieldId)
+        {
+            if (source.TryGetValue(fieldId, out int value))
+            {
+                target.TrySetValue(fieldId, value);
+            }
+        }
+
+        private static int Clamp(int value, int min, int max)
+        {
+            return Math.Max(min, Math.Min(max, value));
+        }
     }
 
     [Serializable]
@@ -1611,6 +2269,7 @@ namespace GameLogic
             character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory);
             character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures);
             character.RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(character.RuntimeSnapshot);
+            character.ManualOverrides = CharacterManualOverrideSaveData.Clone(character.ManualOverrides);
 
             string now = DateTime.UtcNow.ToString("O");
             if (string.IsNullOrWhiteSpace(character.CreatedAt))

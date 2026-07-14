@@ -92,6 +92,7 @@ namespace GameLogic
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; set; } = new List<CharacterChoiceSelectionSaveData>();
         public List<CharacterCustomFeatureSaveData> CustomFeatures { get; set; } = new List<CharacterCustomFeatureSaveData>();
         public List<CharacterDiceRollHistorySaveData> DiceRollHistory { get; set; } = new List<CharacterDiceRollHistorySaveData>();
+        public CharacterManualOverrideSaveData ManualOverrides { get; set; } = new CharacterManualOverrideSaveData();
     }
 
     internal sealed class CharacterCreationDraftInput
@@ -131,6 +132,7 @@ namespace GameLogic
         public CharacterSpellcastingSaveData Spellcasting { get; set; } = new CharacterSpellcastingSaveData();
         public List<CharacterCustomFeatureSaveData> CustomFeatures { get; set; } = new List<CharacterCustomFeatureSaveData>();
         public List<CharacterDiceRollHistorySaveData> DiceRollHistory { get; set; } = new List<CharacterDiceRollHistorySaveData>();
+        public CharacterManualOverrideSaveData ManualOverrides { get; set; } = new CharacterManualOverrideSaveData();
     }
 
     internal sealed class CharacterCreationFormInput
@@ -385,6 +387,8 @@ namespace GameLogic
         public string PassivePerceptionText { get; set; } = string.Empty;
         public string SpellSaveDcText { get; set; } = string.Empty;
         public string SpellAttackBonusText { get; set; } = string.Empty;
+        public string DeathSaveSuccessesText { get; set; } = string.Empty;
+        public string DeathSaveFailuresText { get; set; } = string.Empty;
         public string SkillsSummary { get; set; } = string.Empty;
         public string EquipmentToolsSummary { get; set; } = string.Empty;
         public string ClassFeatureClassName { get; set; } = string.Empty;

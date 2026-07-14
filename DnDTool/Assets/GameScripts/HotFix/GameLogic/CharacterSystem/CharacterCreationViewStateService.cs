@@ -56,6 +56,7 @@ namespace GameLogic
             FillStatusEffectState(state, character);
             state.InventoryItems.AddRange(CharacterDetailDisplayService.Instance.BuildInventoryEntries(character.Equipment));
             FillOtherFeatureState(state, character);
+            ApplyManualOverrideViewState(state, character.ManualOverrides);
             return state;
         }
 
@@ -316,6 +317,10 @@ namespace GameLogic
             state.CurrentHpText = hp.MaxHp > 0 ? hp.CurrentHp.ToString() : "-";
             state.MaxHpText = hp.MaxHp > 0 ? hp.MaxHp.ToString() : "-";
             state.TemporaryHpText = hp.TemporaryHp > 0 ? hp.TemporaryHp.ToString() : "0";
+            int deathSaveSuccesses = snapshot != null ? Math.Max(0, Math.Min(3, snapshot.DeathSaveSuccesses)) : 0;
+            int deathSaveFailures = snapshot != null ? Math.Max(0, Math.Min(3, snapshot.DeathSaveFailures)) : 0;
+            state.DeathSaveSuccessesText = FormatDeathSaveText("成功", deathSaveSuccesses);
+            state.DeathSaveFailuresText = FormatDeathSaveText("失败", deathSaveFailures);
             state.ShouldShowHitPointGenerationButton = hp.MaxHp <= 0;
             FillSpellcastingCombatText(state, previewCharacter, snapshot, level);
         }
@@ -330,6 +335,99 @@ namespace GameLogic
             state.PlatinumText = currency.Platinum.ToString();
         }
 
+        private static void ApplyManualOverrideViewState(CharacterCreationViewState state, CharacterManualOverrideSaveData overrides)
+        {
+            if (state == null || overrides == null)
+            {
+                return;
+            }
+
+            if (overrides.HasHitDiceRemaining)
+            {
+                state.HitDiceCountText = $"x{overrides.HitDiceRemaining}";
+            }
+
+            if (overrides.HasHitDiceDie)
+            {
+                state.HitDiceDieText = overrides.HitDiceDie > 0 ? $"d{overrides.HitDiceDie}" : "-";
+            }
+
+            if (overrides.HasCurrentHp)
+            {
+                state.CurrentHpText = overrides.CurrentHp.ToString();
+            }
+
+            if (overrides.HasMaxHp)
+            {
+                state.MaxHpText = overrides.MaxHp.ToString();
+            }
+
+            if (overrides.HasTemporaryHp)
+            {
+                state.TemporaryHpText = overrides.TemporaryHp.ToString();
+            }
+
+            if (overrides.HasArmorClass)
+            {
+                state.ArmorClassText = overrides.ArmorClass > 0 ? overrides.ArmorClass.ToString() : "-";
+            }
+
+            if (overrides.HasInitiative)
+            {
+                state.InitiativeText = CharacterCreationCalculationService.Instance.FormatSigned(overrides.Initiative);
+            }
+
+            if (overrides.HasSpeed)
+            {
+                state.SpeedText = overrides.Speed > 0 ? overrides.Speed.ToString() : "-";
+            }
+
+            if (overrides.HasDeathSaveSuccesses)
+            {
+                state.DeathSaveSuccessesText = FormatDeathSaveText("成功", Math.Max(0, Math.Min(3, overrides.DeathSaveSuccesses)));
+            }
+
+            if (overrides.HasDeathSaveFailures)
+            {
+                state.DeathSaveFailuresText = FormatDeathSaveText("失败", Math.Max(0, Math.Min(3, overrides.DeathSaveFailures)));
+            }
+
+            if (overrides.HasSpellSaveDc)
+            {
+                state.SpellSaveDcText = overrides.SpellSaveDc > 0 ? overrides.SpellSaveDc.ToString() : "-";
+            }
+
+            if (overrides.HasSpellAttackBonus)
+            {
+                state.SpellAttackBonusText = CharacterCreationCalculationService.Instance.FormatSigned(overrides.SpellAttackBonus);
+            }
+
+            if (overrides.HasCopper)
+            {
+                state.CopperText = overrides.Copper.ToString();
+            }
+
+            if (overrides.HasSilver)
+            {
+                state.SilverText = overrides.Silver.ToString();
+            }
+
+            if (overrides.HasElectrum)
+            {
+                state.ElectrumText = overrides.Electrum.ToString();
+            }
+
+            if (overrides.HasGold)
+            {
+                state.GoldText = overrides.Gold.ToString();
+            }
+
+            if (overrides.HasPlatinum)
+            {
+                state.PlatinumText = overrides.Platinum.ToString();
+            }
+        }
+
         private static void FillStatusEffectState(CharacterCreationViewState state, CharacterCardDraftSaveData character)
         {
             if (state == null)
@@ -338,6 +436,11 @@ namespace GameLogic
             }
 
             state.StatusEffects.AddRange(CharacterDetailDisplayService.Instance.BuildStatusEffectEntries(character));
+        }
+
+        private static string FormatDeathSaveText(string label, int value)
+        {
+            return $"{label} {Math.Max(0, Math.Min(3, value))}/3";
         }
 
         private static void FillOtherFeatureState(CharacterCreationViewState state, CharacterCardDraftSaveData character)
@@ -397,15 +500,18 @@ namespace GameLogic
                 MaxHp = Math.Max(0, source.MaxHp),
                 CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(source.CurrentHp, source.MaxHp),
                 TemporaryHp = Math.Max(0, source.TemporaryHp),
+                DeathSaves = CharacterDeathSaveData.Clone(source.DeathSaves),
                 ManualHp = Math.Max(0, source.ManualHp),
                 HpRolls = CharacterHpRollSaveDataCloneList(source.HpRolls),
+                Currency = CharacterCurrencySaveData.Clone(source.Currency),
                 Equipment = CharacterEquipmentSetSaveData.Clone(source.Equipment),
                 Spellcasting = CharacterSpellcastingSaveData.Clone(source.Spellcasting),
                 Resources = CharacterResourceSaveData.CloneList(source.Resources),
                 Conditions = CharacterConditionStateSaveData.CloneList(source.Conditions),
                 TemporaryEffects = CharacterTemporaryEffectSaveData.CloneList(source.TemporaryEffects),
                 CustomFeatures = CharacterCustomFeatureSaveData.CloneList(source.CustomFeatures),
-                RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(source.RuntimeSnapshot)
+                RuntimeSnapshot = CharacterRuntimeSnapshotData.Clone(source.RuntimeSnapshot),
+                ManualOverrides = CharacterManualOverrideSaveData.Clone(source.ManualOverrides)
             };
 
             preview.ClassProgresses = new List<CharacterClassProgressSaveData>();

@@ -162,6 +162,7 @@ namespace GameLogic
             m_state.Character.Spellcasting = CharacterSpellcastingSaveData.Clone(input.Spellcasting);
             m_state.Character.CustomFeatures = CharacterCustomFeatureSaveData.CloneList(input.CustomFeatures);
             m_state.Character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(input.DiceRollHistory);
+            m_state.Character.ManualOverrides = CharacterManualOverrideSaveData.Clone(input.ManualOverrides);
             LoadDiceRollHistoryFromCharacter(m_state.Character);
             m_state.Character.Level = Math.Max(1, input.Level);
             m_state.Character.Equipment = CharacterEquipmentSetSaveData.Clone(input.Equipment);
@@ -780,26 +781,63 @@ namespace GameLogic
 
         public bool SetManualAbilityScore(string abilityId, int score)
         {
-            if (!IsManualAbilityMode())
-            {
-                return false;
-            }
-
             string normalized = NormalizeAbilityId(abilityId);
             if (string.IsNullOrWhiteSpace(normalized))
             {
                 return false;
             }
 
-            AbilityGenerationState.ManualScores[normalized] = Math.Max(ManualMinScore, Math.Min(ManualMaxScore, score));
-            m_state.IsDirty = true;
-            RefreshDerivedStatsAfterAbilityScoresChanged();
-            return true;
+            if (IsManualAbilityMode())
+            {
+                AbilityGenerationState.ManualScores[normalized] = Math.Max(ManualMinScore, Math.Min(ManualMaxScore, score));
+            }
+
+            return SetManualNumericOverride(normalized, score);
         }
 
         public bool CanManualInputAbilityScore(string abilityId)
         {
-            return IsManualAbilityMode() && !string.IsNullOrWhiteSpace(NormalizeAbilityId(abilityId));
+            return !string.IsNullOrWhiteSpace(NormalizeAbilityId(abilityId));
+        }
+
+        public bool SetManualNumericOverride(string fieldId, int value)
+        {
+            EnsureState();
+            CharacterManualOverrideSaveData overrides = EnsureManualOverrides();
+            if (!overrides.TrySetValue(fieldId, value))
+            {
+                return false;
+            }
+
+            m_state.IsDirty = true;
+            if (IsAbilityOverrideField(fieldId))
+            {
+                RefreshDerivedStatsAfterAbilityScoresChanged();
+            }
+
+            return true;
+        }
+
+        public bool TryGetManualNumericOverride(string fieldId, out int value)
+        {
+            value = 0;
+            CharacterManualOverrideSaveData overrides = m_state?.Character?.ManualOverrides;
+            return overrides != null && overrides.TryGetValue(fieldId, out value);
+        }
+
+        public bool ClearManualOverrides()
+        {
+            EnsureState();
+            CharacterManualOverrideSaveData overrides = EnsureManualOverrides();
+            if (!overrides.HasAny())
+            {
+                return false;
+            }
+
+            overrides.Clear();
+            m_state.IsDirty = true;
+            RefreshDerivedStatsAfterAbilityScoresChanged();
+            return true;
         }
 
         public bool IsActiveAbilityScoreFeatureChoice()
@@ -1604,7 +1642,8 @@ namespace GameLogic
                 Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment),
                 Spellcasting = CharacterSpellcastingSaveData.Clone(character.Spellcasting),
                 CustomFeatures = CharacterCustomFeatureSaveData.CloneList(character.CustomFeatures),
-                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory)
+                DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(character.DiceRollHistory),
+                ManualOverrides = CharacterManualOverrideSaveData.Clone(character.ManualOverrides)
             };
         }
 
@@ -2510,6 +2549,17 @@ namespace GameLogic
             string normalized = NormalizeAbilityId(abilityId);
             return GetCurrentBaseAbilityScore(normalized, baseScore)
                 + GetFeatureAbilityScoreIncrease(normalized);
+        }
+
+        public int GetCurrentEffectiveAbilityScore(string abilityId, int baseScore)
+        {
+            string normalized = NormalizeAbilityId(abilityId);
+            if (TryGetManualNumericOverride(normalized, out int overrideScore))
+            {
+                return overrideScore;
+            }
+
+            return GetCurrentAbilityScore(normalized, baseScore);
         }
 
         public int GetCurrentBaseAbilityScore(string abilityId, int baseScore)
@@ -3592,6 +3642,19 @@ namespace GameLogic
             return string.Equals(AbilityGenerationState.MethodId, AbilityGenerationMethodManual, StringComparison.OrdinalIgnoreCase);
         }
 
+        private CharacterManualOverrideSaveData EnsureManualOverrides()
+        {
+            EnsureState();
+            m_state.Character.ManualOverrides = CharacterManualOverrideSaveData.Clone(m_state.Character.ManualOverrides);
+            return m_state.Character.ManualOverrides;
+        }
+
+        private static bool IsAbilityOverrideField(string fieldId)
+        {
+            string normalized = NormalizeAbilityId(fieldId);
+            return !string.IsNullOrWhiteSpace(normalized);
+        }
+
         private int RollFourD6DropLowest()
         {
             int total = 0;
@@ -3688,7 +3751,7 @@ namespace GameLogic
 
             int level = Math.Max(1, character.Level);
             int hitDie = Math.Max(1, classData.HitDie);
-            int constitutionModifier = CharacterCreationCalculationService.Instance.CalculateAbilityModifier(GetCurrentAbilityScore("Constitution", 10));
+            int constitutionModifier = CharacterCreationCalculationService.Instance.CalculateAbilityModifier(GetCurrentEffectiveAbilityScore("Constitution", 10));
             List<CharacterHpRollSaveData> rolls = BuildHitPointRollsForLevel(
                 character.HpRolls,
                 character.ClassId,
@@ -3808,12 +3871,12 @@ namespace GameLogic
         {
             CharacterRuntimeSnapshotData snapshot = CharacterRuntimeSnapshotData.Clone(character?.RuntimeSnapshot);
             snapshot.Level = Math.Max(1, character?.Level ?? 1);
-            snapshot.Strength = GetCurrentAbilityScore("Strength", 10);
-            snapshot.Dexterity = GetCurrentAbilityScore("Dexterity", 10);
-            snapshot.Constitution = GetCurrentAbilityScore("Constitution", 10);
-            snapshot.Intelligence = GetCurrentAbilityScore("Intelligence", 10);
-            snapshot.Wisdom = GetCurrentAbilityScore("Wisdom", 10);
-            snapshot.Charisma = GetCurrentAbilityScore("Charisma", 10);
+            snapshot.Strength = GetCurrentEffectiveAbilityScore("Strength", 10);
+            snapshot.Dexterity = GetCurrentEffectiveAbilityScore("Dexterity", 10);
+            snapshot.Constitution = GetCurrentEffectiveAbilityScore("Constitution", 10);
+            snapshot.Intelligence = GetCurrentEffectiveAbilityScore("Intelligence", 10);
+            snapshot.Wisdom = GetCurrentEffectiveAbilityScore("Wisdom", 10);
+            snapshot.Charisma = GetCurrentEffectiveAbilityScore("Charisma", 10);
             return snapshot;
         }
 

@@ -56,6 +56,7 @@ namespace GameLogic
         private GameObject m_goBackgroundTemplate;
         private GameObject m_goAlignmentTemplate;
         private GameObject m_goEquipmentToolTemplate;
+        private GameObject m_goInventoryTemplate;
         private GameObject m_goClassFeatureTemplate;
         private GameObject m_goRaceFeatureTemplate;
         private RectTransform m_rectSkillProficiencies;
@@ -72,6 +73,10 @@ namespace GameLogic
         private TMP_InputField m_inputIntelligence;
         private TMP_InputField m_inputWisdom;
         private TMP_InputField m_inputCharisma;
+        private Button m_btnClearManualOverrides;
+        private readonly Dictionary<string, TMP_InputField> m_manualOverrideInputs = new Dictionary<string, TMP_InputField>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, Image> m_manualOverrideInputFocusBackgrounds = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, TMP_Text> m_manualOverrideInputTexts = new Dictionary<string, TMP_Text>(StringComparer.OrdinalIgnoreCase);
         private readonly TMP_Text[] m_tmpSkillBonuses = new TMP_Text[18];
         private readonly Image[] m_imgSkillBackgrounds = new Image[18];
         private readonly Color[] m_defaultSkillBackgroundColors = new Color[18];
@@ -115,6 +120,10 @@ namespace GameLogic
         private const float SkillProficientAlpha = 1f;
         private const float SkillNotProficientAlpha = 0.5f;
         private static readonly Color SkillChoiceCandidateBackgroundColor = new Color(1f, 0.92f, 0.55f, 1f);
+        private static readonly Color ManualOverrideInputNormalBackgroundColor = new Color(0.08f, 0.13f, 0.16f, 0f);
+        private static readonly Color ManualOverrideInputFocusedBackgroundColor = new Color(0.24f, 0.55f, 0.72f, 0.32f);
+        private static readonly Color ManualOverrideInputSelectionColor = new Color(0.24f, 0.55f, 0.72f, 0.45f);
+        private static readonly Color ManualOverrideInputCaretColor = new Color(0.85f, 0.97f, 1f, 1f);
         private static readonly CharacterCreationSkillDisplayBinding[] SkillDisplayBindings =
         {
             new CharacterCreationSkillDisplayBinding("athletics", "运动", AbilityKind.Strength, "m_itemSkillAthletics", "m_tmpSkillAthleticsLabel", "m_tmpSkillAthleticsBonus"),
@@ -250,6 +259,7 @@ namespace GameLogic
             m_goBackgroundTemplate = m_itemBackgroundTemplate;
             m_goAlignmentTemplate = m_itemAlignmentTemplate;
             m_goEquipmentToolTemplate = m_itemEquipmentToolTemplate;
+            m_goInventoryTemplate = m_itemInventoryTemplate;
             m_goClassFeatureTemplate = m_itemClassFeatureTemplate;
             m_goRaceFeatureTemplate = m_itemRaceFeatureTemplate;
             m_rectSkillProficiencies = m_gridSkillProficiencies != null ? m_gridSkillProficiencies.transform as RectTransform : null;
@@ -267,6 +277,8 @@ namespace GameLogic
             BindSkillItems();
             BindAbilityItems();
             BindAbilityScoreInputs();
+            BindManualOverrideInputs();
+            CreateManualOverrideClearButton();
             m_goCustomFeaturePopup = FindChildComponent<RectTransform>("m_popupCustomFeature")?.gameObject;
         }
 
@@ -339,8 +351,19 @@ namespace GameLogic
         {
             CharacterCreationViewState state = CharacterCreationViewStateService.Instance.BuildCurrentViewState(
                 ParseLevel(m_tmpInputLevel != null ? m_tmpInputLevel.text : string.Empty));
+            int currentHp = ParsePlainInt(state?.CurrentHpText);
             int maxHp = ParsePlainInt(state?.MaxHpText);
-            if (CharacterCreationSessionService.Instance.ChangeCurrentHp(delta, maxHp))
+            int nextHp = currentHp + delta;
+            if (maxHp > 0)
+            {
+                nextHp = Mathf.Clamp(nextHp, 0, maxHp);
+            }
+            else
+            {
+                nextHp = Math.Max(0, nextHp);
+            }
+
+            if (CharacterCreationSessionService.Instance.SetManualNumericOverride(CharacterManualOverrideFieldIds.CurrentHp, nextHp))
             {
                 RefreshCreationView();
             }
@@ -433,35 +456,187 @@ namespace GameLogic
 
         private TMP_InputField BindAbilityScoreInput(TMP_Text scoreText, string abilityId)
         {
-            if (scoreText == null)
+            return BindManualOverrideInput(scoreText, abilityId, false, 2);
+        }
+
+        private void BindManualOverrideInputs()
+        {
+            BindManualOverrideInput(m_tmpHitDiceDie, CharacterManualOverrideFieldIds.HitDiceRemaining, false, 3);
+            BindManualOverrideInput(m_tmpHitDiceRemaining, CharacterManualOverrideFieldIds.HitDiceDie, false, 3);
+            BindManualOverrideInput(m_tmpCurrentHp, CharacterManualOverrideFieldIds.CurrentHp, false, 4);
+            BindManualOverrideInput(m_tmpMaxHp, CharacterManualOverrideFieldIds.MaxHp, false, 4);
+            BindManualOverrideInput(m_tmpTempHp, CharacterManualOverrideFieldIds.TemporaryHp, false, 4);
+            BindManualOverrideInput(m_tmpAc, CharacterManualOverrideFieldIds.ArmorClass, false, 3);
+            BindManualOverrideInput(m_tmpInitiative, CharacterManualOverrideFieldIds.Initiative, true, 4);
+            BindManualOverrideInput(m_tmpSpeed, CharacterManualOverrideFieldIds.Speed, false, 4);
+            BindManualOverrideInput(m_tmpDc, CharacterManualOverrideFieldIds.SpellSaveDc, false, 3);
+            BindManualOverrideInput(m_tmpSpellAttackBonus, CharacterManualOverrideFieldIds.SpellAttackBonus, true, 4);
+            BindManualOverrideInput(m_tmpDeathSaveSuccesses, CharacterManualOverrideFieldIds.DeathSaveSuccesses, true, 8);
+            BindManualOverrideInput(m_tmpDeathSaveFailures, CharacterManualOverrideFieldIds.DeathSaveFailures, true, 8);
+            BindManualOverrideInput(m_tmpCopper, CharacterManualOverrideFieldIds.Copper, false, 6);
+            BindManualOverrideInput(m_tmpSilver, CharacterManualOverrideFieldIds.Silver, false, 6);
+            BindManualOverrideInput(m_tmpElectrum, CharacterManualOverrideFieldIds.Electrum, false, 6);
+            BindManualOverrideInput(m_tmpGold, CharacterManualOverrideFieldIds.Gold, false, 6);
+            BindManualOverrideInput(m_tmpPlatinum, CharacterManualOverrideFieldIds.Platinum, false, 6);
+        }
+
+        private TMP_InputField BindManualOverrideInput(TMP_Text text, string fieldId, bool allowSigned, int characterLimit)
+        {
+            if (text == null || string.IsNullOrWhiteSpace(fieldId))
             {
                 return null;
             }
 
-            TMP_InputField input = scoreText.GetComponent<TMP_InputField>();
+            TMP_InputField input = text.GetComponent<TMP_InputField>();
             if (input == null)
             {
-                Log.Warning($"CharacterCreationUI ability score input is missing TMP_InputField: {scoreText.name}");
-                return null;
+                input = text.gameObject.AddComponent<TMP_InputField>();
             }
 
             if (input.textComponent == null)
             {
-                input.textComponent = scoreText;
+                input.textComponent = text;
             }
 
             if (input.textViewport == null)
             {
-                input.textViewport = input.textComponent != null ? input.textComponent.rectTransform : scoreText.rectTransform;
+                input.textViewport = input.textComponent != null ? input.textComponent.rectTransform : text.rectTransform;
             }
 
-            input.contentType = TMP_InputField.ContentType.IntegerNumber;
+            input.targetGraphic = input.targetGraphic != null ? input.targetGraphic : text.GetComponent<Graphic>();
+            input.contentType = allowSigned ? TMP_InputField.ContentType.Standard : TMP_InputField.ContentType.IntegerNumber;
             input.lineType = TMP_InputField.LineType.SingleLine;
-            input.characterLimit = 2;
-            input.interactable = false;
+            input.characterLimit = Math.Max(1, characterLimit);
+            input.interactable = true;
+            input.selectionColor = ManualOverrideInputSelectionColor;
+            input.customCaretColor = true;
+            input.caretColor = ManualOverrideInputCaretColor;
+            input.caretWidth = Mathf.Max(2, input.caretWidth);
+            input.caretBlinkRate = Mathf.Max(0.6f, input.caretBlinkRate);
+            text.raycastTarget = true;
             input.onEndEdit.RemoveAllListeners();
-            input.onEndEdit.AddListener(value => OnAbilityScoreInputEndEdit(abilityId, value));
+            input.onEndEdit.AddListener(value => OnManualOverrideInputEndEdit(fieldId, value, allowSigned));
+            input.onSelect.RemoveAllListeners();
+            input.onSelect.AddListener(_ => SetManualOverrideInputFocused(fieldId, true));
+            input.onDeselect.RemoveAllListeners();
+            input.onDeselect.AddListener(_ => SetManualOverrideInputFocused(fieldId, false));
+            m_manualOverrideInputs[fieldId] = input;
+            m_manualOverrideInputTexts[fieldId] = text;
+            EnsureManualOverrideInputFocusBackground(text, fieldId);
+            SetManualOverrideInputFocused(fieldId, false);
             return input;
+        }
+
+        private void EnsureManualOverrideInputFocusBackground(TMP_Text text, string fieldId)
+        {
+            if (text == null
+                || string.IsNullOrWhiteSpace(fieldId)
+                || m_manualOverrideInputFocusBackgrounds.ContainsKey(fieldId))
+            {
+                return;
+            }
+
+            RectTransform textRect = text.rectTransform;
+            Transform parent = textRect != null ? textRect.parent : null;
+            if (textRect == null || parent == null)
+            {
+                return;
+            }
+
+            GameObject backgroundObject = new GameObject($"{text.name}_ManualInputFocus");
+            RectTransform backgroundRect = backgroundObject.AddComponent<RectTransform>();
+            backgroundRect.SetParent(parent, false);
+            backgroundRect.anchorMin = textRect.anchorMin;
+            backgroundRect.anchorMax = textRect.anchorMax;
+            backgroundRect.pivot = textRect.pivot;
+            backgroundRect.anchoredPosition = textRect.anchoredPosition;
+            backgroundRect.sizeDelta = textRect.sizeDelta + new Vector2(12f, 6f);
+            backgroundRect.localScale = Vector3.one;
+            backgroundRect.SetSiblingIndex(textRect.GetSiblingIndex());
+
+            LayoutElement layoutElement = backgroundObject.AddComponent<LayoutElement>();
+            layoutElement.ignoreLayout = true;
+
+            Image background = backgroundObject.AddComponent<Image>();
+            background.color = ManualOverrideInputNormalBackgroundColor;
+            background.raycastTarget = false;
+            m_manualOverrideInputFocusBackgrounds[fieldId] = background;
+        }
+
+        private void SetManualOverrideInputFocused(string fieldId, bool focused)
+        {
+            if (string.IsNullOrWhiteSpace(fieldId)
+                || !m_manualOverrideInputFocusBackgrounds.TryGetValue(fieldId, out Image background)
+                || background == null)
+            {
+                return;
+            }
+
+            SyncManualOverrideInputFocusBackground(fieldId);
+            background.color = focused
+                ? ManualOverrideInputFocusedBackgroundColor
+                : ManualOverrideInputNormalBackgroundColor;
+        }
+
+        private void SyncManualOverrideInputFocusBackground(string fieldId)
+        {
+            if (string.IsNullOrWhiteSpace(fieldId)
+                || !m_manualOverrideInputFocusBackgrounds.TryGetValue(fieldId, out Image background)
+                || background == null
+                || !m_manualOverrideInputTexts.TryGetValue(fieldId, out TMP_Text text)
+                || text == null)
+            {
+                return;
+            }
+
+            RectTransform textRect = text.rectTransform;
+            RectTransform backgroundRect = background.transform as RectTransform;
+            if (textRect == null || backgroundRect == null)
+            {
+                return;
+            }
+
+            backgroundRect.anchorMin = textRect.anchorMin;
+            backgroundRect.anchorMax = textRect.anchorMax;
+            backgroundRect.pivot = textRect.pivot;
+            backgroundRect.anchoredPosition = textRect.anchoredPosition;
+            backgroundRect.sizeDelta = textRect.sizeDelta + new Vector2(12f, 6f);
+            int textIndex = textRect.GetSiblingIndex();
+            int backgroundIndex = backgroundRect.GetSiblingIndex();
+            backgroundRect.SetSiblingIndex(Math.Max(0, backgroundIndex < textIndex ? textIndex - 1 : textIndex));
+        }
+
+        private void CreateManualOverrideClearButton()
+        {
+            if (m_btnSave == null || m_btnClearManualOverrides != null)
+            {
+                return;
+            }
+
+            GameObject source = m_btnSave.gameObject;
+            GameObject buttonObject = UnityEngine.Object.Instantiate(source, source.transform.parent);
+            buttonObject.name = "m_btnClearManualOverrides_Runtime";
+            m_btnClearManualOverrides = buttonObject.GetComponent<Button>();
+            if (m_btnClearManualOverrides == null)
+            {
+                m_btnClearManualOverrides = buttonObject.AddComponent<Button>();
+            }
+
+            RectTransform sourceRect = source.transform as RectTransform;
+            RectTransform rect = buttonObject.transform as RectTransform;
+            if (sourceRect != null && rect != null)
+            {
+                rect.anchorMin = sourceRect.anchorMin;
+                rect.anchorMax = sourceRect.anchorMax;
+                rect.pivot = sourceRect.pivot;
+                rect.sizeDelta = sourceRect.sizeDelta;
+                rect.anchoredPosition = sourceRect.anchoredPosition + new Vector2(-Mathf.Max(120f, sourceRect.rect.width + 16f), 0f);
+            }
+
+            TMP_Text label = buttonObject.GetComponentInChildren<TMP_Text>(true);
+            SetText(label, "清除手动修改");
+            m_btnClearManualOverrides.onClick.RemoveAllListeners();
+            m_btnClearManualOverrides.onClick.AddListener(OnClickClearManualOverridesButton);
         }
 
         private void OpenCustomFeaturePopup()
@@ -1588,6 +1763,28 @@ namespace GameLogic
             }
         }
 
+        private void OnManualOverrideInputEndEdit(string fieldId, string value, bool allowSigned)
+        {
+            if (!TryParseManualOverrideInt(value, allowSigned, out int parsedValue))
+            {
+                RefreshCreationView();
+                return;
+            }
+
+            if (CharacterCreationSessionService.Instance.SetManualNumericOverride(fieldId, parsedValue))
+            {
+                RefreshCreationView();
+            }
+        }
+
+        private void OnClickClearManualOverridesButton()
+        {
+            if (CharacterCreationSessionService.Instance.ClearManualOverrides())
+            {
+                RefreshCreationView();
+            }
+        }
+
         private void OnClickToolSelectionOption(string toolId)
         {
             CharacterCreationToolChoiceState state = m_activeToolChoiceState;
@@ -1941,25 +2138,27 @@ namespace GameLogic
             SetText(m_tmpDetailRace, state.RaceSummary);
             SetText(m_tmpDetailBackground, state.BackgroundSummary);
             SetText(m_tmpDetailAlignment, state.AlignmentSummary);
-            SetText(m_tmpHitDiceDie, state.HitDiceCountText);
-            SetText(m_tmpHitDiceRemaining, state.HitDiceDieText);
-            SetText(m_tmpCurrentHp, state.CurrentHpText);
-            SetText(m_tmpMaxHp, state.MaxHpText);
-            SetText(m_tmpTempHp, state.TemporaryHpText);
+            SetManualOverrideText(m_tmpHitDiceDie, CharacterManualOverrideFieldIds.HitDiceRemaining, state.HitDiceCountText);
+            SetManualOverrideText(m_tmpHitDiceRemaining, CharacterManualOverrideFieldIds.HitDiceDie, state.HitDiceDieText);
+            SetManualOverrideText(m_tmpCurrentHp, CharacterManualOverrideFieldIds.CurrentHp, state.CurrentHpText);
+            SetManualOverrideText(m_tmpMaxHp, CharacterManualOverrideFieldIds.MaxHp, state.MaxHpText);
+            SetManualOverrideText(m_tmpTempHp, CharacterManualOverrideFieldIds.TemporaryHp, state.TemporaryHpText);
             SetActive(m_btnGenerateHitPoints != null ? m_btnGenerateHitPoints.gameObject : null, state.ShouldShowHitPointGenerationButton);
-            SetText(m_tmpCopper, state.CopperText);
-            SetText(m_tmpSilver, state.SilverText);
-            SetText(m_tmpElectrum, state.ElectrumText);
-            SetText(m_tmpGold, state.GoldText);
-            SetText(m_tmpPlatinum, state.PlatinumText);
+            SetManualOverrideText(m_tmpCopper, CharacterManualOverrideFieldIds.Copper, state.CopperText);
+            SetManualOverrideText(m_tmpSilver, CharacterManualOverrideFieldIds.Silver, state.SilverText);
+            SetManualOverrideText(m_tmpElectrum, CharacterManualOverrideFieldIds.Electrum, state.ElectrumText);
+            SetManualOverrideText(m_tmpGold, CharacterManualOverrideFieldIds.Gold, state.GoldText);
+            SetManualOverrideText(m_tmpPlatinum, CharacterManualOverrideFieldIds.Platinum, state.PlatinumText);
             ApplyExperienceViewState(state.Experience);
-            SetText(m_tmpSpeed, state.SpeedText);
-            SetText(m_tmpAc, state.ArmorClassText);
-            SetText(m_tmpInitiative, state.InitiativeText);
+            SetManualOverrideText(m_tmpSpeed, CharacterManualOverrideFieldIds.Speed, state.SpeedText);
+            SetManualOverrideText(m_tmpAc, CharacterManualOverrideFieldIds.ArmorClass, state.ArmorClassText);
+            SetManualOverrideText(m_tmpInitiative, CharacterManualOverrideFieldIds.Initiative, state.InitiativeText);
             SetText(m_tmpProficiencyBonus, state.ProficiencyBonusText);
             SetText(m_tmpPassivePerception, state.PassivePerceptionText);
-            SetText(m_tmpDc, state.SpellSaveDcText);
-            SetText(m_tmpSpellAttackBonus, state.SpellAttackBonusText);
+            SetManualOverrideText(m_tmpDc, CharacterManualOverrideFieldIds.SpellSaveDc, state.SpellSaveDcText);
+            SetManualOverrideText(m_tmpSpellAttackBonus, CharacterManualOverrideFieldIds.SpellAttackBonus, state.SpellAttackBonusText);
+            SetManualOverrideText(m_tmpDeathSaveSuccesses, CharacterManualOverrideFieldIds.DeathSaveSuccesses, state.DeathSaveSuccessesText);
+            SetManualOverrideText(m_tmpDeathSaveFailures, CharacterManualOverrideFieldIds.DeathSaveFailures, state.DeathSaveFailuresText);
             SetText(m_tmpSkillsLabel, state.SkillsSummary);
             SetText(m_tmpEquipmentToolsLabel, state.EquipmentToolsSummary);
             SetText(m_tmpClassFeatureClassName, state.ClassFeatureClassName);
@@ -2020,7 +2219,7 @@ namespace GameLogic
             if (scoreInput != null)
             {
                 scoreInput.SetTextWithoutNotify(scoreValue);
-                scoreInput.interactable = state.CanManualInput;
+                scoreInput.interactable = true;
             }
             else
             {
@@ -2241,7 +2440,7 @@ namespace GameLogic
 
         private void RefreshInventoryItems(IReadOnlyList<CharacterInventoryDisplayEntry> entries)
         {
-            if (m_rectInventoryContent == null || m_goEquipmentToolTemplate == null)
+            if (m_rectInventoryContent == null || m_goInventoryTemplate == null)
             {
                 return;
             }
@@ -2249,15 +2448,15 @@ namespace GameLogic
             int count = entries?.Count ?? 0;
             while (m_inventoryItems.Count < count)
             {
-                GameObject itemObject = UnityEngine.Object.Instantiate(m_goEquipmentToolTemplate, m_rectInventoryContent);
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goInventoryTemplate, m_rectInventoryContent);
                 itemObject.name = $"m_itemInventory_{m_inventoryItems.Count + 1}";
                 itemObject.SetActive(true);
-                m_inventoryItems.Add(CharacterCreationLabelItemView.Bind(itemObject, "m_tmpEquipmentToolLabel"));
+                m_inventoryItems.Add(CharacterCreationLabelItemView.Bind(itemObject, "m_tmpInventoryItemTitle"));
             }
 
-            if (m_goEquipmentToolTemplate.activeSelf && m_goEquipmentToolTemplate.transform.IsChildOf(m_rectInventoryContent))
+            if (m_goInventoryTemplate.activeSelf && m_goInventoryTemplate.transform.IsChildOf(m_rectInventoryContent))
             {
-                m_goEquipmentToolTemplate.SetActive(false);
+                m_goInventoryTemplate.SetActive(false);
             }
 
             for (int index = 0; index < m_inventoryItems.Count; index++)
@@ -3456,6 +3655,39 @@ namespace GameLogic
             return new string(buffer, 0, length);
         }
 
+        private static bool TryParseManualOverrideInt(string value, bool allowSigned, out int result)
+        {
+            result = 0;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            string trimmed = value.Trim();
+            int sign = 1;
+            if (allowSigned && trimmed.Length > 0)
+            {
+                if (trimmed[0] == '-')
+                {
+                    sign = -1;
+                    trimmed = trimmed.Substring(1);
+                }
+                else if (trimmed[0] == '+')
+                {
+                    trimmed = trimmed.Substring(1);
+                }
+            }
+
+            string digits = KeepDigitsOnly(trimmed);
+            if (!int.TryParse(digits, out int parsed))
+            {
+                return false;
+            }
+
+            result = parsed * sign;
+            return true;
+        }
+
         private static int ParseLevel(string value)
         {
             int level;
@@ -3529,10 +3761,35 @@ namespace GameLogic
             return !string.IsNullOrWhiteSpace(first) ? first.Trim() : second?.Trim() ?? string.Empty;
         }
 
+        private void SetManualOverrideText(TMP_Text text, string fieldId, string value)
+        {
+            if (text == null)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(fieldId)
+                && m_manualOverrideInputs.TryGetValue(fieldId, out TMP_InputField input)
+                && input != null)
+            {
+                input.SetTextWithoutNotify(value ?? string.Empty);
+                return;
+            }
+
+            SetText(text, value);
+        }
+
         private static void SetText(TMP_Text text, string value)
         {
             if (text != null)
             {
+                TMP_InputField input = text.GetComponent<TMP_InputField>();
+                if (input != null)
+                {
+                    input.SetTextWithoutNotify(value ?? string.Empty);
+                    return;
+                }
+
                 text.text = value ?? string.Empty;
             }
         }

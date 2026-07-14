@@ -18,6 +18,7 @@ namespace GameLogic
         public CharacterRuntimeSnapshotData BuildDisplaySnapshot(CharacterCardDraftSaveData character)
         {
             character = CharacterCardLocalRepository.Normalize(character);
+            CharacterManualOverrideSaveData manualOverrides = CharacterManualOverrideSaveData.Clone(character.ManualOverrides);
             CharacterRuntimeSnapshotData snapshot = CharacterRuntimeSnapshotData.Clone(character.RuntimeSnapshot);
             snapshot.CharacterId = character.CharacterId ?? string.Empty;
             snapshot.CharacterName = FormatTextOrDefault(character.CharacterName, "\u672A\u547D\u540D\u89D2\u8272");
@@ -44,6 +45,7 @@ namespace GameLogic
             DndBackgroundDefineData backgroundData = FindBackground(character.BackgroundId);
             ApplyCharacterAbilityScoreEffects(character, snapshot);
             ApplyChoiceAbilityScoreIncreases(character.ChoiceSelections, snapshot);
+            manualOverrides.ApplyAbilityOverrides(snapshot);
             ApplyCharacterSkillProficiencyEffects(character, snapshot);
             ApplyChoiceResultProficiencySelections(character.ChoiceSelections, snapshot);
             AppendUniqueValues(snapshot.SkillProficiencyIds, backgroundData?.SkillProficiencies);
@@ -126,6 +128,7 @@ namespace GameLogic
                     BuildBackgroundFeatureSummary(character.BackgroundId));
             }
 
+            manualOverrides.ApplySnapshotOverrides(snapshot);
             return snapshot;
         }
 
@@ -144,7 +147,43 @@ namespace GameLogic
             state.HasSpellcasting = TryCalculateSpellcastingNumbers(character, snapshot, out int spellSaveDc, out int spellAttackBonus);
             state.SpellSaveDc = spellSaveDc;
             state.SpellAttackBonus = spellAttackBonus;
+            ApplyManualCombatOverviewOverrides(state, character?.ManualOverrides);
             return state;
+        }
+
+        private static void ApplyManualCombatOverviewOverrides(CharacterCombatOverviewViewState state, CharacterManualOverrideSaveData overrides)
+        {
+            if (state == null || overrides == null)
+            {
+                return;
+            }
+
+            if (overrides.HasArmorClass)
+            {
+                state.ArmorClass = overrides.ArmorClass;
+            }
+
+            if (overrides.HasInitiative)
+            {
+                state.InitiativeBonus = overrides.Initiative;
+            }
+
+            if (overrides.HasSpeed)
+            {
+                state.Speed = overrides.Speed;
+            }
+
+            if (overrides.HasSpellSaveDc)
+            {
+                state.HasSpellcasting = true;
+                state.SpellSaveDc = overrides.SpellSaveDc;
+            }
+
+            if (overrides.HasSpellAttackBonus)
+            {
+                state.HasSpellcasting = true;
+                state.SpellAttackBonus = overrides.SpellAttackBonus;
+            }
         }
 
         public CharacterAbilityDisplayViewState BuildAbilityDisplay(CharacterRuntimeSnapshotData snapshot)
