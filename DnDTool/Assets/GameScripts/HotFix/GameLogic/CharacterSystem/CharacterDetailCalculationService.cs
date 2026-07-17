@@ -38,11 +38,12 @@ namespace GameLogic
             snapshot.DeathSaveFailures = character.DeathSaves != null ? Clamp(character.DeathSaves.Failures, 0, 3) : 0;
             snapshot.ActiveConditions = BuildConditionSummary(character.Conditions);
             snapshot.ActiveResources = BuildResourceSummary(character.Resources);
-            ApplyEquippedItemAcData(snapshot, character.Equipment);
 
             DndClassDefineData classData = FindClass(character.ClassId);
             DndRaceDefineData raceData = FindRace(character.RaceId);
             DndBackgroundDefineData backgroundData = FindBackground(character.BackgroundId);
+            ResetDerivedSnapshotFields(snapshot, raceData);
+            ApplyEquippedItemAcData(snapshot, character.Equipment);
             ApplyCharacterAbilityScoreEffects(character, snapshot);
             ApplyChoiceAbilityScoreIncreases(character.ChoiceSelections, snapshot);
             manualOverrides.ApplyAbilityOverrides(snapshot);
@@ -130,6 +131,30 @@ namespace GameLogic
 
             manualOverrides.ApplySnapshotOverrides(snapshot);
             return snapshot;
+        }
+
+        private static void ResetDerivedSnapshotFields(CharacterRuntimeSnapshotData snapshot, DndRaceDefineData raceData)
+        {
+            if (snapshot == null)
+            {
+                return;
+            }
+
+            snapshot.Speed = raceData != null ? Math.Max(0, raceData.Speed) : Math.Max(0, snapshot.Speed);
+            snapshot.ArmorClass = 0;
+            snapshot.ArmorCategory = CharacterArmorCategoryIds.None;
+            snapshot.ArmorBaseAc = 10;
+            snapshot.EquipmentAcBonus = 0;
+            snapshot.ShieldAcBonus = 0;
+            snapshot.FeatureAcBonus = 0;
+            snapshot.SkillAcBonus = 0;
+            snapshot.InitiativeBonus = 0;
+            snapshot.AttackBonus = 0;
+            snapshot.WeaponAttackBonus = 0;
+            snapshot.SpellAttackBonus = 0;
+            snapshot.SpellSaveDcBonus = 0;
+            snapshot.DamageBonus = 0;
+            snapshot.SavingThrowBonus = 0;
         }
 
         public CharacterCombatOverviewViewState BuildCombatOverview(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
@@ -765,7 +790,7 @@ namespace GameLogic
                     return;
                 }
 
-                ApplyAbilityScoreBonus(snapshot, effect.Target, value);
+                ApplyAbilityScoreBonus(snapshot, effect.Target, value, effect.Condition);
             });
         }
 
@@ -1464,7 +1489,7 @@ namespace GameLogic
             if (string.Equals(normalizedEffectType, "AbilityScoreBonus", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalizedEffectType, "AbilityBonus", StringComparison.OrdinalIgnoreCase))
             {
-                ApplyAbilityScoreBonus(snapshot, target, value);
+                ApplyAbilityScoreBonus(snapshot, target, value, condition);
             }
             else if (string.Equals(normalizedEffectType, "AbilityScoreSet", StringComparison.OrdinalIgnoreCase))
             {
@@ -1505,46 +1530,58 @@ namespace GameLogic
             }
         }
 
-        private static void ApplyAbilityScoreBonus(CharacterRuntimeSnapshotData snapshot, string target, int value)
+        private static void ApplyAbilityScoreBonus(CharacterRuntimeSnapshotData snapshot, string target, int value, string condition = null)
         {
+            bool capAt20 = IsMax20Condition(condition);
             string normalized = target?.Trim() ?? string.Empty;
             if (string.Equals(normalized, "All", StringComparison.OrdinalIgnoreCase)
                 || normalized == "\u5168\u90E8")
             {
-                snapshot.Strength += value;
-                snapshot.Dexterity += value;
-                snapshot.Constitution += value;
-                snapshot.Intelligence += value;
-                snapshot.Wisdom += value;
-                snapshot.Charisma += value;
+                snapshot.Strength = AddAbilityScoreBonusValue(snapshot.Strength, value, capAt20);
+                snapshot.Dexterity = AddAbilityScoreBonusValue(snapshot.Dexterity, value, capAt20);
+                snapshot.Constitution = AddAbilityScoreBonusValue(snapshot.Constitution, value, capAt20);
+                snapshot.Intelligence = AddAbilityScoreBonusValue(snapshot.Intelligence, value, capAt20);
+                snapshot.Wisdom = AddAbilityScoreBonusValue(snapshot.Wisdom, value, capAt20);
+                snapshot.Charisma = AddAbilityScoreBonusValue(snapshot.Charisma, value, capAt20);
                 return;
             }
 
             normalized = NormalizeAbilityId(normalized);
             if (string.Equals(normalized, "Strength", StringComparison.OrdinalIgnoreCase))
             {
-                snapshot.Strength += value;
+                snapshot.Strength = AddAbilityScoreBonusValue(snapshot.Strength, value, capAt20);
             }
             else if (string.Equals(normalized, "Dexterity", StringComparison.OrdinalIgnoreCase))
             {
-                snapshot.Dexterity += value;
+                snapshot.Dexterity = AddAbilityScoreBonusValue(snapshot.Dexterity, value, capAt20);
             }
             else if (string.Equals(normalized, "Constitution", StringComparison.OrdinalIgnoreCase))
             {
-                snapshot.Constitution += value;
+                snapshot.Constitution = AddAbilityScoreBonusValue(snapshot.Constitution, value, capAt20);
             }
             else if (string.Equals(normalized, "Intelligence", StringComparison.OrdinalIgnoreCase))
             {
-                snapshot.Intelligence += value;
+                snapshot.Intelligence = AddAbilityScoreBonusValue(snapshot.Intelligence, value, capAt20);
             }
             else if (string.Equals(normalized, "Wisdom", StringComparison.OrdinalIgnoreCase))
             {
-                snapshot.Wisdom += value;
+                snapshot.Wisdom = AddAbilityScoreBonusValue(snapshot.Wisdom, value, capAt20);
             }
             else if (string.Equals(normalized, "Charisma", StringComparison.OrdinalIgnoreCase))
             {
-                snapshot.Charisma += value;
+                snapshot.Charisma = AddAbilityScoreBonusValue(snapshot.Charisma, value, capAt20);
             }
+        }
+
+        private static int AddAbilityScoreBonusValue(int current, int value, bool capAt20)
+        {
+            int result = current + value;
+            return capAt20 ? Math.Min(20, result) : result;
+        }
+
+        private static bool IsMax20Condition(string condition)
+        {
+            return string.Equals(condition?.Trim(), "Max20", StringComparison.OrdinalIgnoreCase);
         }
 
         private static void ApplyAbilityScoreSet(CharacterRuntimeSnapshotData snapshot, string target, int value)
@@ -1591,6 +1628,11 @@ namespace GameLogic
             if (item == null)
             {
                 return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.EquipmentSlot))
+            {
+                return item.EquipmentSlot.Trim();
             }
 
             if (!string.IsNullOrWhiteSpace(item.SourceItemId)

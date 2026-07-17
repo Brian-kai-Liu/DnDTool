@@ -11,8 +11,37 @@ namespace GameLogic
                 return false;
             }
 
-            return item.Consumable
-                || IsAmmunitionItem(item);
+            if (DndRuleContentService.Instance.TryGetItemType(item.ItemType, out DndItemTypeDefineData itemType))
+            {
+                return itemType.StackableByDefault;
+            }
+
+            return false;
+        }
+
+        public static bool CanStackTogether(CharacterEquipmentItemSaveData left, CharacterEquipmentItemSaveData right)
+        {
+            if (left == null || right == null)
+            {
+                return false;
+            }
+
+            if (!IsInventoryStackable(left)
+                || !IsInventoryStackable(right))
+            {
+                return false;
+            }
+
+            if (left.IsEquipped || left.IsAttuned || right.IsEquipped || right.IsAttuned)
+            {
+                return false;
+            }
+
+            return string.Equals(left.ItemSourceType, right.ItemSourceType, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(GetStackIdentity(left), GetStackIdentity(right), StringComparison.OrdinalIgnoreCase)
+                && string.Equals(left.ItemType?.Trim() ?? string.Empty, right.ItemType?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(left.Rarity?.Trim() ?? string.Empty, right.Rarity?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(left.Description ?? string.Empty, right.Description ?? string.Empty, StringComparison.Ordinal);
         }
 
         public static bool IsAmmunitionItem(CharacterEquipmentItemSaveData item)
@@ -164,6 +193,26 @@ namespace GameLogic
             }
 
             return false;
+        }
+
+        private static string GetStackIdentity(CharacterEquipmentItemSaveData item)
+        {
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.SourceItemId))
+            {
+                return item.SourceItemId.Trim();
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.ItemId))
+            {
+                return item.ItemId.Trim();
+            }
+
+            return item.ItemName?.Trim() ?? string.Empty;
         }
 
         private static string NormalizeToken(string value)

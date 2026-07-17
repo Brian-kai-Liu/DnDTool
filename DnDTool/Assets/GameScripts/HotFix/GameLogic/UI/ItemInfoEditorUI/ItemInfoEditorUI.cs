@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -24,16 +24,6 @@ namespace GameLogic
                 Label = label;
             }
         }
-
-        private static readonly Dictionary<string, string> ItemTypeDisplayNameById = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            ["armor"] = "护甲",
-            ["shield"] = "盾牌",
-            ["weapon"] = "武器",
-            ["tool"] = "工具",
-            ["consumable"] = "消耗品",
-            ["wondrous_item"] = "奇物"
-        };
 
         private static readonly DropdownOption[] SourceTypeOptions =
         {
@@ -123,6 +113,21 @@ namespace GameLogic
         {
             new DropdownOption("false", "No"),
             new DropdownOption("true", "Yes")
+        };
+
+        private static readonly DropdownOption[] EquipmentSlotOptions =
+        {
+            new DropdownOption(string.Empty, "None"),
+            new DropdownOption("armor", "Armor"),
+            new DropdownOption("shield", "Shield"),
+            new DropdownOption("weapon", "Weapon"),
+            new DropdownOption("offhand", "Offhand"),
+            new DropdownOption("focus", "Focus"),
+            new DropdownOption("tool", "Tool"),
+            new DropdownOption("accessory", "Accessory"),
+            new DropdownOption("clothing", "Clothing"),
+            new DropdownOption("mount_vehicle", "Mount/Vehicle"),
+            new DropdownOption("manual", "Manual")
         };
 
         private static readonly DropdownOption[] AffixEffectTargetOptions =
@@ -278,7 +283,6 @@ namespace GameLogic
         private TMP_InputField m_inputDescription;
         private TMP_InputField m_inputNotes;
         private TMP_InputField m_inputSourceItemId;
-        private TMP_InputField m_inputQuantity;
         private TMP_InputField m_inputArmorBaseAc;
         private TMP_InputField m_inputAcBonus;
         private TMP_InputField m_inputMaxDexBonus;
@@ -289,6 +293,8 @@ namespace GameLogic
         private TMP_InputField m_inputLongRange;
         private TMP_InputField m_inputTwoHandDamageDice;
         private TMP_InputField m_inputCharges;
+        private TMP_InputField m_inputMaxCharges;
+        private TMP_InputField m_inputPriceGp;
         private TMP_InputField m_inputWeight;
         private TMP_InputField m_inputEffectTarget;
         private TMP_InputField m_inputEffectValue;
@@ -307,6 +313,8 @@ namespace GameLogic
         private TMP_Dropdown m_dropdownWeaponRangeType;
         private TMP_Dropdown m_dropdownDamageType;
         private TMP_Dropdown m_dropdownToolCategory;
+        private TMP_Dropdown m_dropdownEquipmentSlot;
+        private TMP_Dropdown m_dropdownRequiresAttunement;
         private TMP_Dropdown m_dropdownConsumable;
         private TMP_Dropdown m_dropdownConsumeOnUse;
         private TMP_Dropdown m_dropdownEffectType;
@@ -335,11 +343,11 @@ namespace GameLogic
         private readonly List<string> m_ruleEffectIds = new List<string>();
         private readonly List<ItemAffixRowBinding> m_affixRows = new List<ItemAffixRowBinding>();
         private readonly List<GameObject> m_characterPickerItems = new List<GameObject>();
-        private readonly Dictionary<RectTransform, Vector2> m_itemFormBasePositions = new Dictionary<RectTransform, Vector2>();
         private List<ItemEditorCharacterPickerEntry> m_characterPickerCharacters = new List<ItemEditorCharacterPickerEntry>();
         private List<DropdownOption> m_itemTypeOptions = new List<DropdownOption>();
         private List<DropdownOption> m_currentEffectTargetOptions = new List<DropdownOption>();
         private int m_selectedCharacterPickerIndex = -1;
+        private string m_currentCustomItemId = string.Empty;
         private ItemInfoEditorUIRequest m_request;
 
         private sealed class ItemAffixRowBinding
@@ -385,7 +393,6 @@ namespace GameLogic
             m_inputDescription = FindChildComponent<TMP_InputField>("m_inputDescription");
             m_inputNotes = FindChildComponent<TMP_InputField>("m_inputNotes");
             m_inputSourceItemId = FindChildComponent<TMP_InputField>("m_inputSourceItemId");
-            m_inputQuantity = FindChildComponent<TMP_InputField>("m_inputQuantity");
             m_inputArmorBaseAc = FindChildComponent<TMP_InputField>("m_inputArmorBaseAc");
             m_inputAcBonus = FindChildComponent<TMP_InputField>("m_inputAcBonus");
             m_inputMaxDexBonus = FindChildComponent<TMP_InputField>("m_inputMaxDexBonus");
@@ -396,6 +403,8 @@ namespace GameLogic
             m_inputLongRange = FindChildComponent<TMP_InputField>("m_inputLongRange");
             m_inputTwoHandDamageDice = FindChildComponent<TMP_InputField>("m_inputTwoHandDamageDice");
             m_inputCharges = FindChildComponent<TMP_InputField>("m_inputCharges");
+            m_inputMaxCharges = FindChildComponent<TMP_InputField>("m_inputMaxCharges") ?? m_inputCharges;
+            m_inputPriceGp = FindChildComponent<TMP_InputField>("m_inputPriceGp");
             m_inputWeight = FindChildComponent<TMP_InputField>("m_inputWeight");
             m_inputEffectTarget = FindChildComponent<TMP_InputField>("m_inputEffectTarget");
             m_inputEffectValue = FindChildComponent<TMP_InputField>("m_inputEffectValue");
@@ -411,6 +420,8 @@ namespace GameLogic
             m_dropdownWeaponRangeType = FindChildComponent<TMP_Dropdown>("m_dropdownWeaponRangeType");
             m_dropdownDamageType = FindChildComponent<TMP_Dropdown>("m_dropdownDamageType");
             m_dropdownToolCategory = FindChildComponent<TMP_Dropdown>("m_dropdownToolCategory");
+            m_dropdownEquipmentSlot = FindChildComponent<TMP_Dropdown>("m_dropdownEquipmentSlot");
+            m_dropdownRequiresAttunement = FindChildComponent<TMP_Dropdown>("m_dropdownRequiresAttunement");
             m_dropdownConsumable = FindChildComponent<TMP_Dropdown>("m_dropdownConsumable");
             m_dropdownConsumeOnUse = FindChildComponent<TMP_Dropdown>("m_dropdownConsumeOnUse");
             m_dropdownEffectType = FindChildComponent<TMP_Dropdown>("m_dropdownEffectType");
@@ -441,7 +452,6 @@ namespace GameLogic
             m_btnCancelCharacterPicker = FindChildComponent<Button>("m_btnCancelCharacterPicker");
             m_btnConfirmAddToCharacter = FindChildComponent<Button>("m_btnConfirmAddToCharacter");
             m_tmpCharacterPickerMessage = FindChildComponent<TMP_Text>("m_tmpCharacterPickerMessage");
-            CacheItemFormBasePositions();
         }
 
         private void InitializeDropdowns()
@@ -457,6 +467,8 @@ namespace GameLogic
             SetupDropdown(m_dropdownWeaponRangeType, WeaponRangeTypeOptions);
             SetupDropdown(m_dropdownDamageType, DamageTypeOptions);
             SetupDropdown(m_dropdownToolCategory, ToolCategoryOptions);
+            SetupDropdown(m_dropdownEquipmentSlot, EquipmentSlotOptions);
+            SetupDropdown(m_dropdownRequiresAttunement, BoolOptions);
             SetupDropdown(m_dropdownConsumable, BoolOptions);
             SetupDropdown(m_dropdownConsumeOnUse, BoolOptions);
             SetupDropdown(m_dropdownEffectType, EffectTypeOptions);
@@ -478,6 +490,8 @@ namespace GameLogic
             EnsureDropdownTemplate(m_dropdownWeaponRangeType);
             EnsureDropdownTemplate(m_dropdownDamageType);
             EnsureDropdownTemplate(m_dropdownToolCategory);
+            EnsureDropdownTemplate(m_dropdownEquipmentSlot);
+            EnsureDropdownTemplate(m_dropdownRequiresAttunement);
             EnsureDropdownTemplate(m_dropdownConsumable);
             EnsureDropdownTemplate(m_dropdownConsumeOnUse);
             EnsureDropdownTemplate(m_dropdownEffectType);
@@ -501,7 +515,6 @@ namespace GameLogic
             BindInput(m_inputDescription, RefreshPreview);
             BindInput(m_inputNotes, RefreshPreview);
             BindInput(m_inputSourceItemId, RefreshPreview);
-            BindInput(m_inputQuantity, RefreshPreview);
             BindInput(m_inputArmorBaseAc, RefreshPreview);
             BindInput(m_inputAcBonus, RefreshPreview);
             BindInput(m_inputMaxDexBonus, RefreshPreview);
@@ -512,6 +525,8 @@ namespace GameLogic
             BindInput(m_inputLongRange, RefreshPreview);
             BindInput(m_inputTwoHandDamageDice, RefreshPreview);
             BindInput(m_inputCharges, RefreshPreview);
+            BindInput(m_inputMaxCharges, RefreshPreview);
+            BindInput(m_inputPriceGp, RefreshPreview);
             BindInput(m_inputWeight, RefreshPreview);
             BindInput(m_inputEffectTarget, RefreshPreview);
             BindInput(m_inputEffectValue, RefreshPreview);
@@ -529,6 +544,8 @@ namespace GameLogic
             BindDropdown(m_dropdownWeaponRangeType, RefreshPreview);
             BindDropdown(m_dropdownDamageType, RefreshPreview);
             BindDropdown(m_dropdownToolCategory, RefreshPreview);
+            BindDropdown(m_dropdownEquipmentSlot, RefreshPreview);
+            BindDropdown(m_dropdownRequiresAttunement, RefreshPreview);
             BindDropdown(m_dropdownConsumable, RefreshPreview);
             BindDropdown(m_dropdownConsumeOnUse, RefreshPreview);
             BindDropdown(m_dropdownEffectType, OnEffectTypeChanged);
@@ -555,7 +572,6 @@ namespace GameLogic
             SetInputText(m_inputItemName, ruleItem.Name);
             SetInputText(m_inputDescription, ruleItem.Description);
             SetInputText(m_inputNotes, string.Empty);
-            SetInputText(m_inputQuantity, "1");
             SetInputText(m_inputArmorBaseAc, ruleItem.ArmorBaseAc.ToString());
             SetInputText(m_inputAcBonus, ruleItem.AcBonus.ToString());
             SetInputText(m_inputMaxDexBonus, ruleItem.MaxDexBonus.ToString());
@@ -565,13 +581,14 @@ namespace GameLogic
             SetInputText(m_inputNormalRange, ruleItem.NormalRange.ToString());
             SetInputText(m_inputLongRange, ruleItem.LongRange.ToString());
             SetInputText(m_inputTwoHandDamageDice, ruleItem.TwoHandDamageDice);
-            SetInputText(m_inputCharges, ruleItem.Charges.ToString());
+            SetInputText(m_inputMaxCharges, ruleItem.Charges.ToString());
+            SetInputText(m_inputPriceGp, ruleItem.PriceGp.ToString(CultureInfo.InvariantCulture));
             SetInputText(m_inputWeight, ruleItem.Weight);
             SetInputText(m_inputEffectApplyCondition, ruleItem.EffectApplyCondition);
             m_ruleEffectIds.Clear();
             m_ruleEffectIds.AddRange(ruleItem.EffectIds);
             SelectDropdownValue(m_dropdownItemSourceType, SourceTypeOptions, CharacterItemSourceTypes.RuleTable);
-            SelectDropdownValue(m_dropdownItemType, m_itemTypeOptions, NormalizeOptionOrFirst(m_itemTypeOptions, ruleItem.ItemType));
+            SelectDropdownValue(m_dropdownItemType, m_itemTypeOptions, ResolveSelectableItemType(ruleItem));
             SelectDropdownValue(m_dropdownRarity, RarityOptions, NormalizeOptionOrFirst(RarityOptions, ruleItem.Rarity));
             SelectDropdownValue(m_dropdownArmorCategory, ArmorCategoryOptions, NormalizeOptionOrFirst(ArmorCategoryOptions, ruleItem.ArmorCategory));
             SelectDropdownValue(m_dropdownStealthDisadvantage, BoolOptions, ToBoolOptionValue(ruleItem.StealthDisadvantage));
@@ -579,6 +596,8 @@ namespace GameLogic
             SelectDropdownValue(m_dropdownWeaponRangeType, WeaponRangeTypeOptions, NormalizeOptionOrFirst(WeaponRangeTypeOptions, ruleItem.WeaponRangeType));
             SelectDropdownValue(m_dropdownDamageType, DamageTypeOptions, NormalizeOptionOrFirst(DamageTypeOptions, ruleItem.DamageType));
             SelectDropdownValue(m_dropdownToolCategory, ToolCategoryOptions, NormalizeOptionOrFirst(ToolCategoryOptions, ruleItem.ToolCategory));
+            SelectDropdownValue(m_dropdownEquipmentSlot, EquipmentSlotOptions, NormalizeOptionOrFirst(EquipmentSlotOptions, ruleItem.EquipmentSlot));
+            SelectDropdownValue(m_dropdownRequiresAttunement, BoolOptions, ToBoolOptionValue(ruleItem.RequiresAttunement));
             SelectDropdownValue(m_dropdownConsumable, BoolOptions, ToBoolOptionValue(ruleItem.Consumable));
             SelectDropdownValue(m_dropdownConsumeOnUse, BoolOptions, ToBoolOptionValue(ruleItem.ConsumeOnUse));
             RefreshCategoryFieldVisibility();
@@ -674,7 +693,7 @@ namespace GameLogic
                 character.CharacterId,
                 EnsureCustomItemId(),
                 BuildItemData(),
-                Math.Max(1, ParseInt(m_inputQuantity, 1)));
+                1);
             if (!result.Success)
             {
                 Log.Warning($"ItemInfoEditorUI: add item to character failed. {result.Message}");
@@ -838,15 +857,8 @@ namespace GameLogic
 
             if (dropdown.template == null)
             {
-                TMP_Dropdown templateSource = preferredTemplateSource
-                    ?? m_dropdownEffectType
-                    ?? m_dropdownItemType
-                    ?? m_dropdownRarity;
-                if (templateSource != null)
-                {
-                    EnsureDropdownTemplate(templateSource);
-                    dropdown.template = templateSource.template;
-                }
+                Log.Error($"ItemInfoEditorUI: {dropdown.name} is missing its own dropdown Template. Please add Template under this dropdown in prefab.");
+                return;
             }
 
             EnsureDropdownTemplate(dropdown);
@@ -1049,15 +1061,25 @@ namespace GameLogic
 
         private CharacterEquipmentItemSaveData BuildItemData()
         {
+            string itemTypeId = GetSelectedDropdownValue(m_dropdownItemType, m_itemTypeOptions);
+            DndItemTypeDefineData itemType = FindItemType(itemTypeId);
+            bool isEquippable = itemType?.IsEquipmentType ?? false;
+            string selectedEquipmentSlot = GetSelectedDropdownValue(m_dropdownEquipmentSlot, EquipmentSlotOptions);
+            string equipmentSlot = isEquippable
+                ? FirstNonEmpty(selectedEquipmentSlot, itemType?.DefaultEquipmentSlot)
+                : string.Empty;
+            int maxCharges = itemType != null && itemType.CanHaveCharges
+                ? ParseInt(m_inputMaxCharges, 0)
+                : 0;
             CharacterEquipmentItemSaveData item = new CharacterEquipmentItemSaveData
             {
                 ItemName = GetInputText(m_inputItemName),
-                ItemType = GetSelectedDropdownValue(m_dropdownItemType, m_itemTypeOptions),
+                ItemType = itemTypeId,
                 Rarity = GetSelectedDropdownValue(m_dropdownRarity, RarityOptions),
                 Description = GetInputText(m_inputDescription),
                 Notes = GetInputText(m_inputNotes),
                 ItemSourceType = GetSelectedDropdownValue(m_dropdownItemSourceType, SourceTypeOptions),
-                SourceItemId = GetInputText(m_inputSourceItemId),
+                SourceItemId = GetCustomItemIdValue(),
                 ArmorCategory = GetSelectedDropdownValue(m_dropdownArmorCategory, ArmorCategoryOptions),
                 ArmorBaseAc = ParseInt(m_inputArmorBaseAc, 0),
                 AcBonus = ParseInt(m_inputAcBonus, 0),
@@ -1073,13 +1095,23 @@ namespace GameLogic
                 LongRange = ParseInt(m_inputLongRange, 0),
                 TwoHandDamageDice = GetInputText(m_inputTwoHandDamageDice),
                 ToolCategory = GetSelectedDropdownValue(m_dropdownToolCategory, ToolCategoryOptions),
-                Consumable = ParseBoolDropdown(m_dropdownConsumable),
-                Charges = ParseInt(m_inputCharges, 0),
-                ConsumeOnUse = ParseBoolDropdown(m_dropdownConsumeOnUse),
+                Consumable = itemType != null
+                    ? itemType.ConsumeQuantityOnUseByDefault
+                    : ParseBoolDropdown(m_dropdownConsumable),
+                Charges = 0,
+                MaxCharges = Math.Max(0, maxCharges),
+                ConsumeOnUse = itemType != null
+                    ? itemType.ConsumeQuantityOnUseByDefault
+                    : ParseBoolDropdown(m_dropdownConsumeOnUse),
                 Weight = GetInputText(m_inputWeight),
-                Quantity = Math.Max(1, ParseInt(m_inputQuantity, 1)),
+                PriceGp = ParseInt(m_inputPriceGp, 0),
+                Quantity = 1,
+                IsEquippable = isEquippable,
+                EquipmentSlot = equipmentSlot,
+                RequiresAttunement = ParseBoolDropdown(m_dropdownRequiresAttunement),
                 EffectApplyCondition = GetInputText(m_inputEffectApplyCondition)
             };
+            CharacterItemTypeBehaviorUtility.ApplyTypeDefaults(item);
 
             item.EffectIds.Clear();
             AppendEffectIds(item.EffectIds, m_ruleEffectIds);
@@ -1094,19 +1126,31 @@ namespace GameLogic
                 }
             }
 
-            return item;
+            return CharacterItemSnapshotBuilder.BuildTemplateFromCustomItem(item, GetCustomItemIdValue());
         }
 
         private string EnsureCustomItemId()
         {
-            string customItemId = GetInputText(m_inputSourceItemId);
+            string customItemId = GetCustomItemIdValue();
             if (string.IsNullOrWhiteSpace(customItemId))
             {
                 customItemId = $"custom_item_{DateTime.UtcNow:yyyyMMddHHmmssfff}";
-                SetInputText(m_inputSourceItemId, customItemId);
             }
 
-            return customItemId;
+            m_currentCustomItemId = customItemId.Trim();
+            SetInputText(m_inputSourceItemId, m_currentCustomItemId);
+            return m_currentCustomItemId;
+        }
+
+        private string GetCustomItemIdValue()
+        {
+            string inputValue = GetInputText(m_inputSourceItemId);
+            if (!string.IsNullOrWhiteSpace(inputValue))
+            {
+                m_currentCustomItemId = inputValue.Trim();
+            }
+
+            return m_currentCustomItemId;
         }
 
         private void RefreshPreview()
@@ -1114,7 +1158,7 @@ namespace GameLogic
             CharacterEquipmentItemSaveData item = BuildItemData();
             SetText(m_tmpPreviewItemName, FirstNonEmpty(item.ItemName, "未命名物品"));
             SetText(m_tmpPreviewItemType, $"类型：{GetOptionLabel(m_itemTypeOptions, item.ItemType)}");
-            SetText(m_tmpPreviewItemNum, $"数量：{item.Quantity}");
+            SetText(m_tmpPreviewItemNum, "数量：模板不记录数量");
             SetText(m_tmpPreviewItemRare, $"稀有度：{FirstNonEmpty(GetOptionLabel(RarityOptions, item.Rarity), "无")}");
             SetText(m_tmpPreviewSource, $"来源：{GetOptionLabel(SourceTypeOptions, item.ItemSourceType)}");
             SetText(m_tmpPreviewAc, BuildItemFormPreviewDetails(item));
@@ -1130,10 +1174,18 @@ namespace GameLogic
             StringBuilder builder = new StringBuilder();
             AppendPreviewLine(builder, "来源ID", item.SourceItemId);
             AppendPreviewLine(builder, "重量", item.Weight);
+            AppendPreviewLine(builder, "价格", item.PriceGp > 0 ? $"{item.PriceGp} gp" : string.Empty);
+            AppendPreviewLine(builder, "装备栏位", item.EquipmentSlot);
+            AppendPreviewLine(builder, "需要同调", item.RequiresAttunement ? "是" : string.Empty);
             AppendPreviewLine(builder, "描述", item.Description);
             AppendPreviewLine(builder, "备注", item.Notes);
 
-            if (string.Equals(item.ItemType, "weapon", StringComparison.OrdinalIgnoreCase))
+            DndItemTypeDefineData itemType = FindItemType(item.ItemType);
+            bool isArmor = IsItemTypeOrParent(itemType, "armor") || string.Equals(item.ItemType, "shield", StringComparison.OrdinalIgnoreCase);
+            bool isWeapon = IsItemTypeOrParent(itemType, "weapon");
+            bool isTool = IsItemTypeOrParent(itemType, "tool");
+
+            if (isWeapon)
             {
                 AppendPreviewLine(builder, "武器类别", GetOptionLabel(WeaponCategoryOptions, item.WeaponCategory));
                 AppendPreviewLine(builder, "攻击距离", GetOptionLabel(WeaponRangeTypeOptions, item.WeaponRangeType));
@@ -1144,17 +1196,24 @@ namespace GameLogic
                 AppendPreviewLine(builder, "长射程", item.LongRange > 0 ? item.LongRange.ToString() : string.Empty);
                 AppendPreviewLine(builder, "双手伤害", item.TwoHandDamageDice);
             }
-            else if (string.Equals(item.ItemType, "tool", StringComparison.OrdinalIgnoreCase))
+            else if (isTool)
             {
                 AppendPreviewLine(builder, "工具类别", GetOptionLabel(ToolCategoryOptions, item.ToolCategory));
             }
-            else if (string.Equals(item.ItemType, "consumable", StringComparison.OrdinalIgnoreCase))
+            else if (itemType != null
+                && (itemType.CanUseByDefault
+                    || itemType.StackableByDefault
+                    || itemType.ConsumeQuantityOnUseByDefault
+                    || itemType.CanHaveCharges
+                    || itemType.ConsumeChargeOnUseByDefault))
             {
-                AppendPreviewLine(builder, "是否消耗品", item.Consumable ? "是" : "否");
-                AppendPreviewLine(builder, "充能次数", item.Charges > 0 ? item.Charges.ToString() : string.Empty);
-                AppendPreviewLine(builder, "使用后消耗", item.ConsumeOnUse ? "是" : "否");
+                AppendPreviewLine(builder, "是否可使用", itemType.CanUseByDefault ? "是" : "否");
+                AppendPreviewLine(builder, "是否可堆叠", itemType.StackableByDefault ? "是" : "否");
+                AppendPreviewLine(builder, "使用后减数量", itemType.ConsumeQuantityOnUseByDefault ? "是" : "否");
+                AppendPreviewLine(builder, "使用后减充能", itemType.ConsumeChargeOnUseByDefault ? "是" : "否");
+                AppendPreviewLine(builder, "最大充能", item.MaxCharges > 0 ? item.MaxCharges.ToString() : string.Empty);
             }
-            else
+            else if (isArmor)
             {
                 AppendPreviewLine(builder, "护甲类别", GetOptionLabel(ArmorCategoryOptions, item.ArmorCategory));
                 AppendPreviewLine(builder, "基础AC", item.ArmorBaseAc > 0 ? item.ArmorBaseAc.ToString() : string.Empty);
@@ -1420,18 +1479,22 @@ namespace GameLogic
             if (m_dropdownArmorCategory == null
                 && m_dropdownWeaponCategory == null
                 && m_dropdownToolCategory == null
-                && m_dropdownConsumable == null)
+                && m_dropdownConsumable == null
+                && m_dropdownEquipmentSlot == null
+                && m_inputMaxCharges == null)
             {
                 RefreshItemFormScrollArea(false);
                 return;
             }
 
-            string itemType = GetSelectedDropdownValue(m_dropdownItemType, m_itemTypeOptions);
-            bool isArmor = string.Equals(itemType, "armor", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(itemType, "shield", StringComparison.OrdinalIgnoreCase);
-            bool isWeapon = string.Equals(itemType, "weapon", StringComparison.OrdinalIgnoreCase);
-            bool isTool = string.Equals(itemType, "tool", StringComparison.OrdinalIgnoreCase);
-            bool isConsumable = string.Equals(itemType, "consumable", StringComparison.OrdinalIgnoreCase);
+            string itemTypeId = GetSelectedDropdownValue(m_dropdownItemType, m_itemTypeOptions);
+            DndItemTypeDefineData itemType = FindItemType(itemTypeId);
+            bool isArmor = IsItemTypeOrParent(itemType, "armor")
+                || string.Equals(itemTypeId, "shield", StringComparison.OrdinalIgnoreCase);
+            bool isWeapon = IsItemTypeOrParent(itemType, "weapon");
+            bool isTool = IsItemTypeOrParent(itemType, "tool");
+            bool canHaveCharges = itemType?.CanHaveCharges ?? false;
+            bool isEquippable = itemType?.IsEquipmentType ?? false;
 
             SetControlWithLabelActive(m_dropdownArmorCategory, isArmor);
             SetControlWithLabelActive(m_inputArmorBaseAc, isArmor);
@@ -1451,141 +1514,14 @@ namespace GameLogic
 
             SetControlWithLabelActive(m_dropdownToolCategory, isTool);
 
-            SetControlWithLabelActive(m_dropdownConsumable, isConsumable);
-            SetControlWithLabelActive(m_inputCharges, isConsumable);
-            SetControlWithLabelActive(m_dropdownConsumeOnUse, isConsumable);
-
-            int visibleCategoryFieldCount = PositionCategoryFields(isArmor, isWeapon, isTool, isConsumable);
-            ApplyCategoryLayoutOffset(visibleCategoryFieldCount);
+            SetControlWithLabelActive(m_dropdownEquipmentSlot, isEquippable);
+            SetControlWithLabelActive(m_inputMaxCharges, canHaveCharges);
+            SetControlWithLabelActive(m_inputPriceGp, true);
+            SetControlWithLabelActive(m_dropdownRequiresAttunement, true);
+            SetControlWithLabelActive(m_dropdownConsumable, false);
+            SetControlWithLabelActive(m_inputCharges, false);
+            SetControlWithLabelActive(m_dropdownConsumeOnUse, false);
             RefreshItemFormScrollArea(false);
-        }
-
-        private int PositionCategoryFields(bool isArmor, bool isWeapon, bool isTool, bool isConsumable)
-        {
-            float y = -410f;
-            int count = 0;
-            PositionCategoryField(m_dropdownArmorCategory, isArmor, ref y, ref count);
-            PositionCategoryField(m_inputArmorBaseAc, isArmor, ref y, ref count);
-            PositionCategoryField(m_inputAcBonus, isArmor, ref y, ref count);
-            PositionCategoryField(m_inputMaxDexBonus, isArmor, ref y, ref count);
-            PositionCategoryField(m_inputStrengthRequirement, isArmor, ref y, ref count);
-            PositionCategoryField(m_dropdownStealthDisadvantage, isArmor, ref y, ref count);
-
-            PositionCategoryField(m_dropdownWeaponCategory, isWeapon, ref y, ref count);
-            PositionCategoryField(m_dropdownWeaponRangeType, isWeapon, ref y, ref count);
-            PositionCategoryField(m_inputDamageDice, isWeapon, ref y, ref count);
-            PositionCategoryField(m_dropdownDamageType, isWeapon, ref y, ref count);
-            PositionCategoryField(m_inputWeaponProperties, isWeapon, ref y, ref count);
-            PositionCategoryField(m_inputNormalRange, isWeapon, ref y, ref count);
-            PositionCategoryField(m_inputLongRange, isWeapon, ref y, ref count);
-            PositionCategoryField(m_inputTwoHandDamageDice, isWeapon, ref y, ref count);
-
-            PositionCategoryField(m_dropdownToolCategory, isTool, ref y, ref count);
-
-            PositionCategoryField(m_dropdownConsumable, isConsumable, ref y, ref count);
-            PositionCategoryField(m_inputCharges, isConsumable, ref y, ref count);
-            PositionCategoryField(m_dropdownConsumeOnUse, isConsumable, ref y, ref count);
-            PositionCategoryField(m_inputWeight, true, ref y, ref count);
-            return count;
-        }
-
-        private void PositionCategoryField(Component control, bool active, ref float y, ref int count)
-        {
-            if (!active || control == null)
-            {
-                return;
-            }
-
-            SetCategoryFieldY(control.transform, y);
-            GameObject label = FindSiblingLabel(control.transform);
-            if (label != null)
-            {
-                SetCategoryFieldY(label.transform, y);
-            }
-
-            y -= 54f;
-            count++;
-        }
-
-        private static void SetCategoryFieldY(Transform target, float y)
-        {
-            RectTransform rect = target as RectTransform;
-            if (rect == null)
-            {
-                return;
-            }
-
-            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, y);
-        }
-
-        private void ApplyCategoryLayoutOffset(int visibleCategoryFieldCount)
-        {
-            float offset = Mathf.Max(0, visibleCategoryFieldCount - 3) * 54f;
-            MoveItemFormNode("m_panelCharacterEffectsSection", offset);
-            MoveItemFormNode("m_sectionEquipmentStatsTitle", offset);
-            MoveItemFormNode("m_inputEffectApplyCondition", offset);
-            MoveItemFormNode("m_tmpm_inputEffectApplyConditionLabel", offset);
-            MoveItemFormNode("m_dropdownEffectType", offset);
-            MoveItemFormNode("m_tmpm_dropdownEffectTypeLabel", offset);
-            MoveItemFormNode("m_dropdownEffectTarget", offset);
-            MoveItemFormNode("m_inputEffectTarget", offset);
-            MoveItemFormNode("m_tmpm_inputEffectTargetLabel", offset);
-            MoveItemFormNode("m_inputEffectValue", offset);
-            MoveItemFormNode("m_tmpm_inputEffectValueLabel", offset);
-            MoveItemFormNode("m_dropdownEffectCondition", offset);
-            MoveItemFormNode("m_inputEffectCondition", offset);
-            MoveItemFormNode("m_tmpm_inputEffectConditionLabel", offset);
-            MoveItemFormNode("m_inputEffectConditionDescription", offset);
-            MoveItemFormNode("m_inputEffectDescription", offset);
-            MoveItemFormNode("m_tmpm_inputEffectDescriptionLabel", offset);
-            MoveItemFormNode("m_btnAddEffect", offset);
-            MoveItemFormNode("m_btnRemoveEffect", offset);
-            MoveItemFormNode("m_panelManualResolveSection", offset);
-            MoveItemFormNode("m_sectionManualResolveTitle", offset);
-            MoveItemFormNode("m_inputDescription", offset);
-            MoveItemFormNode("m_tmpm_inputDescriptionLabel", offset);
-            MoveItemFormNode("m_inputNotes", offset);
-            MoveItemFormNode("m_tmpm_inputNotesLabel", offset);
-        }
-
-        private void CacheItemFormBasePositions()
-        {
-            if (m_rectItemFormContent == null)
-            {
-                return;
-            }
-
-            m_itemFormBasePositions.Clear();
-            for (int index = 0; index < m_rectItemFormContent.childCount; index++)
-            {
-                RectTransform child = m_rectItemFormContent.GetChild(index) as RectTransform;
-                if (child != null)
-                {
-                    m_itemFormBasePositions[child] = child.anchoredPosition;
-                }
-            }
-        }
-
-        private void MoveItemFormNode(string nodeName, float yOffset)
-        {
-            if (m_rectItemFormContent == null || string.IsNullOrWhiteSpace(nodeName))
-            {
-                return;
-            }
-
-            RectTransform node = m_rectItemFormContent.Find(nodeName) as RectTransform;
-            if (node == null)
-            {
-                return;
-            }
-
-            if (!m_itemFormBasePositions.TryGetValue(node, out Vector2 basePosition))
-            {
-                basePosition = node.anchoredPosition;
-                m_itemFormBasePositions[node] = basePosition;
-            }
-
-            node.anchoredPosition = new Vector2(basePosition.x, basePosition.y - yOffset);
         }
 
         private void SetControlWithLabelActive(Component control, bool active)
@@ -1608,6 +1544,11 @@ namespace GameLogic
 
             string labelName = $"m_tmp{control.name}Label";
             Transform label = control.parent.Find(labelName);
+            if (label == null && string.Equals(control.name, "m_inputWeight", StringComparison.OrdinalIgnoreCase))
+            {
+                label = control.parent.Find("m_tmpWeightLabel");
+            }
+
             return label != null ? label.gameObject : null;
         }
 
@@ -1839,84 +1780,13 @@ namespace GameLogic
 
         private TMP_Dropdown CreateDropdownFromInput(TMP_InputField source, string name)
         {
-            if (source == null || source.transform.parent == null)
-            {
-                return null;
-            }
-
-            TMP_Dropdown template = m_dropdownEffectType ?? m_dropdownItemType ?? FindChildComponent<TMP_Dropdown>("m_dropdownEffectType");
-            if (template == null)
-            {
-                return null;
-            }
-
-            int siblingIndex = source.transform.GetSiblingIndex();
-            TMP_Dropdown dropdown = UnityEngine.Object.Instantiate(template, source.transform.parent);
-            dropdown.name = name;
-            RebindClonedDropdownReferences(dropdown, source);
-            RectTransform rect = dropdown.GetComponent<RectTransform>();
-            RectTransform sourceRect = source.GetComponent<RectTransform>();
-            if (rect != null && sourceRect != null)
-            {
-                rect.anchorMin = sourceRect.anchorMin;
-                rect.anchorMax = sourceRect.anchorMax;
-                rect.pivot = sourceRect.pivot;
-                rect.sizeDelta = sourceRect.sizeDelta;
-                rect.anchoredPosition = sourceRect.anchoredPosition;
-                rect.offsetMin = sourceRect.offsetMin;
-                rect.offsetMax = sourceRect.offsetMax;
-                rect.localPosition = sourceRect.localPosition;
-                rect.localRotation = sourceRect.localRotation;
-                rect.localScale = sourceRect.localScale;
-            }
-
-            dropdown.transform.SetSiblingIndex(siblingIndex);
-            SetActive(source.gameObject, false);
-            return dropdown;
+            Log.Warning($"ItemInfoEditorUI: {name} is missing. Please add and bind this dropdown in prefab.");
+            return null;
         }
 
         private static void RebindClonedDropdownReferences(TMP_Dropdown dropdown, TMP_InputField source)
         {
-            if (dropdown == null)
-            {
-                return;
-            }
-
-            ApplyDropdownUiLayer(dropdown);
-
-            Image background = dropdown.GetComponent<Image>();
-            if (background != null)
-            {
-                dropdown.targetGraphic = background;
-            }
-
-            RectTransform template = EnsureOwnedDropdownTemplate(dropdown);
-            if (template != null)
-            {
-                dropdown.template = template;
-            }
-
-            TMP_Text label = FindDescendantComponent<TMP_Text>(dropdown.transform, "Label")
-                ?? FindDescendantComponent<TMP_Text>(dropdown.transform, "m_tmpPlaceholder")
-                ?? FindDescendantComponent<TMP_Text>(dropdown.transform, "m_tmpInputText");
-            if (label != null && (dropdown.template == null || !label.transform.IsChildOf(dropdown.template)))
-            {
-                dropdown.captionText = label;
-                SyncDropdownCaptionRect(label, source);
-            }
-
-            TMP_Text itemLabel = dropdown.template != null
-                ? FindDescendantComponent<TMP_Text>(dropdown.template, "Item Label")
-                : null;
-            if (itemLabel != null)
-            {
-                dropdown.itemText = itemLabel;
-            }
-
-            if (dropdown.template != null)
-            {
-                SetActive(dropdown.template.gameObject, false);
-            }
+            Log.Warning("ItemInfoEditorUI: runtime dropdown cloning is disabled. Please bind dropdown nodes in prefab.");
         }
 
         private static void EnsureDropdownTemplate(TMP_Dropdown dropdown)
@@ -1982,6 +1852,8 @@ namespace GameLogic
             RefreshDropdownRuntimeLayer(m_dropdownToolCategory);
             RefreshDropdownRuntimeLayer(m_dropdownConsumable);
             RefreshDropdownRuntimeLayer(m_dropdownConsumeOnUse);
+            RefreshDropdownRuntimeLayer(m_dropdownEquipmentSlot);
+            RefreshDropdownRuntimeLayer(m_dropdownRequiresAttunement);
             RefreshDropdownRuntimeLayer(m_dropdownEffectType);
             RefreshDropdownRuntimeLayer(m_dropdownEffectTarget);
             RefreshDropdownRuntimeLayer(m_dropdownEffectCondition);
@@ -2025,36 +1897,16 @@ namespace GameLogic
                 return null;
             }
 
-            RectTransform currentTemplate = dropdown.template;
-            if (currentTemplate != null && currentTemplate.transform.IsChildOf(dropdown.transform))
-            {
-                ApplyDropdownUiLayer(dropdown);
-                SetActive(currentTemplate.gameObject, false);
-                return currentTemplate;
-            }
-
-            RectTransform sourceTemplate = currentTemplate
+            RectTransform currentTemplate = dropdown.template
                 ?? FindDescendantByName(dropdown.transform, "Template") as RectTransform;
-            if (sourceTemplate == null)
+            if (currentTemplate == null)
             {
                 return null;
             }
 
-            RectTransform ownedTemplate = UnityEngine.Object.Instantiate(sourceTemplate, dropdown.transform);
-            ownedTemplate.name = "Template";
-            ownedTemplate.localRotation = sourceTemplate.localRotation;
-            ownedTemplate.localScale = sourceTemplate.localScale;
-            ownedTemplate.anchorMin = new Vector2(0f, 0f);
-            ownedTemplate.anchorMax = new Vector2(1f, 0f);
-            ownedTemplate.pivot = new Vector2(0.5f, 1f);
-            float templateHeight = sourceTemplate.rect.height > 0f
-                ? sourceTemplate.rect.height
-                : Mathf.Max(Mathf.Abs(sourceTemplate.sizeDelta.y), 180f);
-            ownedTemplate.anchoredPosition = Vector2.zero;
-            ownedTemplate.sizeDelta = new Vector2(0f, templateHeight);
-            SetLayerRecursively(ownedTemplate.gameObject, ResolveDropdownLayer(dropdown));
-            SetActive(ownedTemplate.gameObject, false);
-            return ownedTemplate;
+            ApplyDropdownUiLayer(dropdown);
+            SetActive(currentTemplate.gameObject, false);
+            return currentTemplate;
         }
 
         private static void ApplyDropdownUiLayer(TMP_Dropdown dropdown)
@@ -2124,56 +1976,13 @@ namespace GameLogic
 
         private static void SyncDropdownCaptionRect(TMP_Text label, TMP_InputField source)
         {
-            if (label == null || source == null)
-            {
-                return;
-            }
-
-            RectTransform labelRect = label.rectTransform;
-            RectTransform sourceViewport = FindDescendantByName(source.transform, "m_textViewport") as RectTransform;
-            RectTransform sourceText = source.textComponent != null ? source.textComponent.rectTransform : null;
-            RectTransform reference = sourceText ?? sourceViewport ?? source.GetComponent<RectTransform>();
-            if (labelRect != null && reference != null)
-            {
-                labelRect.anchorMin = reference.anchorMin;
-                labelRect.anchorMax = reference.anchorMax;
-                labelRect.pivot = reference.pivot;
-                labelRect.sizeDelta = reference.sizeDelta;
-                labelRect.anchoredPosition = reference.anchoredPosition;
-            }
-
-            label.enableWordWrapping = false;
-            label.overflowMode = TextOverflowModes.Ellipsis;
+            Log.Warning("ItemInfoEditorUI: runtime dropdown caption rect syncing is disabled. Please configure caption layout in prefab.");
         }
 
         private TMP_InputField CreateEffectConditionDescriptionInput()
         {
-            if (m_inputEffectDescription == null || m_inputEffectDescription.transform.parent == null)
-            {
-                return null;
-            }
-
-            TMP_InputField input = UnityEngine.Object.Instantiate(m_inputEffectDescription, m_inputEffectDescription.transform.parent);
-            input.name = "m_inputEffectConditionDescription";
-            RectTransform rect = input.GetComponent<RectTransform>();
-            RectTransform sourceRect = m_inputEffectDescription.GetComponent<RectTransform>();
-            if (rect != null && sourceRect != null)
-            {
-                rect.anchorMin = sourceRect.anchorMin;
-                rect.anchorMax = sourceRect.anchorMax;
-                rect.pivot = sourceRect.pivot;
-                rect.sizeDelta = new Vector2(470f, sourceRect.sizeDelta.y);
-                rect.anchoredPosition = new Vector2(169.6f, -132.5f);
-            }
-
-            TMP_Text placeholder = input.placeholder as TMP_Text;
-            if (placeholder != null)
-            {
-                placeholder.text = "条件描述：例如仅在持握时、每日一次等";
-            }
-
-            SetInputText(input, string.Empty);
-            return input;
+            Log.Warning("ItemInfoEditorUI: m_inputEffectConditionDescription is missing. Please add and bind this input in prefab.");
+            return null;
         }
 
         private static void SetupDropdown(TMP_Dropdown dropdown, IReadOnlyList<DropdownOption> options)
@@ -2198,23 +2007,23 @@ namespace GameLogic
             }
 
             dropdown.RefreshShownValue();
+            RefreshDropdownCaptionState(dropdown);
         }
 
         private static List<DropdownOption> BuildItemTypeOptions()
         {
             List<DropdownOption> result = new List<DropdownOption>();
-            HashSet<string> seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            IReadOnlyList<DndItemDefineData> items = DndRuleContentService.Instance.Items;
-            for (int index = 0; index < items.Count; index++)
+            IReadOnlyList<DndItemTypeDefineData> itemTypes = DndRuleContentService.Instance.GetSelectableItemTypes();
+            for (int index = 0; index < itemTypes.Count; index++)
             {
-                DndItemDefineData item = items[index];
-                string itemType = item?.ItemType?.Trim() ?? string.Empty;
-                if (string.IsNullOrWhiteSpace(itemType) || !seen.Add(itemType))
+                DndItemTypeDefineData itemType = itemTypes[index];
+                string itemTypeId = itemType?.ItemTypeId?.Trim() ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(itemTypeId))
                 {
                     continue;
                 }
 
-                result.Add(new DropdownOption(itemType, ResolveItemTypeDisplayName(itemType)));
+                result.Add(new DropdownOption(itemTypeId, FirstNonEmpty(itemType.Name, itemTypeId)));
             }
 
             if (result.Count > 0)
@@ -2222,21 +2031,50 @@ namespace GameLogic
                 return result;
             }
 
-            Log.Warning("ItemInfoEditorUI: item type options are empty. Check TbDndItemDefine item_type data.");
+            Log.Warning("ItemInfoEditorUI: item type options are empty. Check TbDndItemTypeDefine selectable data.");
             return result;
         }
 
-        private static string ResolveItemTypeDisplayName(string itemType)
+        private static DndItemTypeDefineData FindItemType(string itemTypeId)
         {
-            string normalized = itemType?.Trim() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(normalized))
+            string normalized = itemTypeId?.Trim() ?? string.Empty;
+            return DndRuleContentService.Instance.TryGetItemType(normalized, out DndItemTypeDefineData itemType)
+                ? itemType
+                : null;
+        }
+
+        private static bool IsItemTypeOrParent(DndItemTypeDefineData itemType, string expectedTypeId)
+        {
+            string expected = expectedTypeId?.Trim() ?? string.Empty;
+            if (itemType == null || string.IsNullOrWhiteSpace(expected))
             {
-                return string.Empty;
+                return false;
             }
 
-            return ItemTypeDisplayNameById.TryGetValue(normalized, out string displayName)
-                ? displayName
-                : normalized;
+            DndItemTypeDefineData current = itemType;
+            HashSet<string> visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            for (int depth = 0; current != null && depth < 16; depth++)
+            {
+                string currentId = current.ItemTypeId?.Trim() ?? string.Empty;
+                if (string.Equals(currentId, expected, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                if (string.IsNullOrWhiteSpace(current.ParentTypeId) || !visited.Add(currentId))
+                {
+                    return false;
+                }
+
+                current = FindItemType(current.ParentTypeId);
+            }
+
+            return false;
+        }
+
+        private static string ResolveSelectableItemType(ItemEditorRuleItemViewState ruleItem)
+        {
+            return CharacterItemTypeBehaviorUtility.ResolveRuleItemTypeId(ruleItem);
         }
 
         private static string NormalizeOptionOrFirst(IReadOnlyList<DropdownOption> options, string value)
@@ -2290,6 +2128,7 @@ namespace GameLogic
                 {
                     dropdown.SetValueWithoutNotify(index);
                     dropdown.RefreshShownValue();
+                    RefreshDropdownCaptionState(dropdown);
                     return;
                 }
             }
@@ -2341,7 +2180,31 @@ namespace GameLogic
             }
 
             dropdown.onValueChanged.RemoveAllListeners();
-            dropdown.onValueChanged.AddListener(_ => action?.Invoke());
+            dropdown.onValueChanged.AddListener(_ =>
+            {
+                RefreshDropdownCaptionState(dropdown);
+                action?.Invoke();
+            });
+        }
+
+        private static void RefreshDropdownCaptionState(TMP_Dropdown dropdown)
+        {
+            if (dropdown == null)
+            {
+                return;
+            }
+
+            TMP_Text captionText = dropdown.captionText;
+            Transform placeholder = FindDescendantByName(dropdown.transform, "m_tmpPlaceholder");
+            bool hasSelection = dropdown.options.Count > 0;
+            if (hasSelection && captionText != null)
+            {
+                int index = Mathf.Clamp(dropdown.value, 0, dropdown.options.Count - 1);
+                captionText.text = dropdown.options[index].text ?? string.Empty;
+                SetActive(captionText.gameObject, true);
+            }
+
+            SetActive(placeholder != null ? placeholder.gameObject : null, !hasSelection);
         }
 
         private static string GetInputText(TMP_InputField input)

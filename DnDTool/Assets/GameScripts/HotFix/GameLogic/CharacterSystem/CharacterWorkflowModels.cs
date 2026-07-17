@@ -20,6 +20,19 @@ namespace GameLogic
         View
     }
 
+    internal enum CharacterInventoryQuickRollPurpose
+    {
+        DisplayOnly,
+        HealHp,
+        AttackHit,
+        Damage,
+        SkillCheck,
+        SavingThrow,
+        SpellAttack,
+        SpellSaveDc,
+        Custom
+    }
+
     internal sealed class CharacterOperationResult
     {
         public bool Success { get; private set; }
@@ -56,6 +69,7 @@ namespace GameLogic
         public string ItemInstanceId { get; set; } = string.Empty;
         public string ItemName { get; set; } = string.Empty;
         public string EffectName { get; set; } = string.Empty;
+        public string EffectDescription { get; set; } = string.Empty;
         public string DiceExpression { get; set; } = string.Empty;
     }
 
@@ -485,6 +499,52 @@ namespace GameLogic
         public List<CharacterChoiceSelectionSaveData> ChoiceSelections { get; } = new List<CharacterChoiceSelectionSaveData>();
     }
 
+    internal sealed class CharacterSheetDisplayViewState
+    {
+        public CharacterCardDraftSaveData Character { get; set; } = new CharacterCardDraftSaveData();
+        public CharacterRuntimeSnapshotData RuntimeSnapshot { get; set; } = new CharacterRuntimeSnapshotData();
+        public string CharacterNameText { get; set; } = string.Empty;
+        public string RaceText { get; set; } = string.Empty;
+        public string ClassText { get; set; } = string.Empty;
+        public string CurrentHpText { get; set; } = string.Empty;
+        public string MaxHpText { get; set; } = string.Empty;
+        public string TemporaryHpText { get; set; } = string.Empty;
+        public string DeathSaveSuccessesText { get; set; } = string.Empty;
+        public string DeathSaveFailuresText { get; set; } = string.Empty;
+        public string ArmorClassText { get; set; } = string.Empty;
+        public string InitiativeText { get; set; } = string.Empty;
+        public string SpeedText { get; set; } = string.Empty;
+        public string PassivePerceptionText { get; set; } = string.Empty;
+        public string SpellSaveDcText { get; set; } = string.Empty;
+        public string SpellAttackBonusText { get; set; } = string.Empty;
+        public string ProficiencyBonusText { get; set; } = string.Empty;
+        public string CopperText { get; set; } = string.Empty;
+        public string SilverText { get; set; } = string.Empty;
+        public string ElectrumText { get; set; } = string.Empty;
+        public string GoldText { get; set; } = string.Empty;
+        public string PlatinumText { get; set; } = string.Empty;
+        public string HitDiceCountText { get; set; } = string.Empty;
+        public string HitDiceDieText { get; set; } = string.Empty;
+        public CharacterAbilityDisplayViewState AbilityDisplay { get; set; } = new CharacterAbilityDisplayViewState();
+        public CharacterHpDisplayViewState HpDisplay { get; set; } = new CharacterHpDisplayViewState();
+        public CharacterCombatOverviewViewState CombatOverview { get; set; } = new CharacterCombatOverviewViewState();
+        public CharacterExperienceDisplayViewState Experience { get; set; } = new CharacterExperienceDisplayViewState();
+        public List<CharacterSheetSkillViewState> Skills { get; } = new List<CharacterSheetSkillViewState>();
+        public List<string> EquipmentToolLabels { get; } = new List<string>();
+        public List<CharacterStatusEffectDisplayEntry> StatusEffects { get; } = new List<CharacterStatusEffectDisplayEntry>();
+        public List<CharacterInventoryDisplayEntry> InventoryItems { get; } = new List<CharacterInventoryDisplayEntry>();
+    }
+
+    internal sealed class CharacterSheetSkillViewState
+    {
+        public string SkillId { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public int Bonus { get; set; }
+        public string BonusText { get; set; } = string.Empty;
+        public bool HasProficiency { get; set; }
+        public bool HasExpertise { get; set; }
+    }
+
     internal sealed class CharacterCombatOverviewViewState
     {
         public int ArmorClass { get; set; }
@@ -554,14 +614,16 @@ namespace GameLogic
         public readonly string Label;
         public readonly string Title;
         public readonly string Description;
+        public readonly int Quantity;
         public readonly bool IsEquipped;
 
-        public CharacterInventoryDisplayEntry(string itemInstanceId, string label, string title, string description, bool isEquipped)
+        public CharacterInventoryDisplayEntry(string itemInstanceId, string label, string title, string description, int quantity, bool isEquipped)
         {
             ItemInstanceId = itemInstanceId?.Trim() ?? string.Empty;
             Label = label ?? string.Empty;
             Title = title ?? string.Empty;
             Description = description ?? string.Empty;
+            Quantity = Math.Max(1, quantity);
             IsEquipped = isEquipped;
         }
     }
@@ -631,6 +693,10 @@ namespace GameLogic
         public int Charges { get; set; }
         public bool ConsumeOnUse { get; set; }
         public string Weight { get; set; } = string.Empty;
+        public int PriceGp { get; set; }
+        public bool IsEquippable { get; set; }
+        public string EquipmentSlot { get; set; } = string.Empty;
+        public bool RequiresAttunement { get; set; }
         public List<string> EffectIds { get; } = new List<string>();
         public string EffectApplyCondition { get; set; } = string.Empty;
     }

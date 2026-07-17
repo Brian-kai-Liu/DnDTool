@@ -55,6 +55,8 @@ namespace GameLogic
 
         public List<DndItemDefineData> Items { get; } = new List<DndItemDefineData>();
 
+        public List<DndItemTypeDefineData> ItemTypes { get; } = new List<DndItemTypeDefineData>();
+
         public List<DndToolDefineData> Tools { get; } = new List<DndToolDefineData>();
 
         public List<DndLanguageDefineData> Languages { get; } = new List<DndLanguageDefineData>();
@@ -626,6 +628,35 @@ namespace GameLogic
         public List<string> EffectIds { get; } = new List<string>();
 
         public string EffectApplyCondition { get; set; } = string.Empty;
+    }
+
+    internal sealed class DndItemTypeDefineData
+    {
+        public string ItemTypeId { get; set; } = string.Empty;
+
+        public string ParentTypeId { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public bool Selectable { get; set; }
+
+        public bool CanUseByDefault { get; set; }
+
+        public bool StackableByDefault { get; set; }
+
+        public bool ConsumeQuantityOnUseByDefault { get; set; }
+
+        public bool CanHaveCharges { get; set; }
+
+        public bool ConsumeChargeOnUseByDefault { get; set; }
+
+        public bool IsEquipmentType { get; set; }
+
+        public string DefaultEquipmentSlot { get; set; } = string.Empty;
+
+        public int SortOrder { get; set; }
+
+        public string Description { get; set; } = string.Empty;
     }
 
     internal sealed class DndToolDefineData

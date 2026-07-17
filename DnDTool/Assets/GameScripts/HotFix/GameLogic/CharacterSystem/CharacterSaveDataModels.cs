@@ -628,7 +628,10 @@ namespace GameLogic
                 character.TemporaryHp = TemporaryHp;
             }
 
-            character.DeathSaves ??= new CharacterDeathSaveData();
+            if (character.DeathSaves == null)
+            {
+                character.DeathSaves = new CharacterDeathSaveData();
+            }
             if (HasDeathSaveSuccesses)
             {
                 character.DeathSaves.Successes = DeathSaveSuccesses;
@@ -639,7 +642,10 @@ namespace GameLogic
                 character.DeathSaves.Failures = DeathSaveFailures;
             }
 
-            character.Currency ??= new CharacterCurrencySaveData();
+            if (character.Currency == null)
+            {
+                character.Currency = new CharacterCurrencySaveData();
+            }
             if (HasCopper)
             {
                 character.Currency.Copper = Copper;
@@ -1088,9 +1094,13 @@ namespace GameLogic
         public string ToolCategory = string.Empty;
         public bool Consumable;
         public int Charges;
+        public int MaxCharges;
         public bool ConsumeOnUse;
         public string Weight = string.Empty;
+        public int PriceGp;
         public int Quantity = 1;
+        public bool IsEquippable;
+        public string EquipmentSlot = string.Empty;
         public bool IsEquipped;
         public bool RequiresAttunement;
         public bool IsAttuned;
@@ -1133,9 +1143,13 @@ namespace GameLogic
                 ToolCategory = source.ToolCategory?.Trim() ?? string.Empty,
                 Consumable = source.Consumable,
                 Charges = Math.Max(0, source.Charges),
+                MaxCharges = Math.Max(0, source.MaxCharges),
                 ConsumeOnUse = source.ConsumeOnUse,
                 Weight = source.Weight?.Trim() ?? string.Empty,
+                PriceGp = Math.Max(0, source.PriceGp),
                 Quantity = Math.Max(1, source.Quantity),
+                IsEquippable = source.IsEquippable,
+                EquipmentSlot = source.EquipmentSlot?.Trim() ?? string.Empty,
                 IsEquipped = source.IsEquipped,
                 RequiresAttunement = source.RequiresAttunement,
                 IsAttuned = source.IsAttuned,
@@ -1153,6 +1167,7 @@ namespace GameLogic
                 && (!string.IsNullOrWhiteSpace(item.SourceItemId)
                     || !string.IsNullOrWhiteSpace(item.ItemId)
                     || !string.IsNullOrWhiteSpace(item.ItemName)
+                    || !string.IsNullOrWhiteSpace(item.ItemType)
                     || !string.IsNullOrWhiteSpace(item.Rarity)
                     || !string.IsNullOrWhiteSpace(item.Weight)
                     || item.ArmorBaseAc > 0
@@ -1169,9 +1184,8 @@ namespace GameLogic
                     || item.LongRange > 0
                     || !string.IsNullOrWhiteSpace(item.TwoHandDamageDice)
                     || !string.IsNullOrWhiteSpace(item.ToolCategory)
-                    || item.Consumable
-                    || item.Charges > 0
-                    || item.ConsumeOnUse
+                    || item.PriceGp > 0
+                    || !string.IsNullOrWhiteSpace(item.EquipmentSlot)
                     || (item.EffectIds != null && item.EffectIds.Count > 0)
                     || (item.CustomEffects != null && item.CustomEffects.Count > 0));
         }
@@ -1797,14 +1811,7 @@ namespace GameLogic
         public static CharacterEquipmentItemSaveData CreateCharacterItemSnapshot(LocalCustomItemSaveData customItem, int quantity)
         {
             LocalCustomItemSaveData normalized = NormalizeItem(customItem, false);
-            CharacterEquipmentItemSaveData snapshot = CharacterEquipmentItemSaveData.Clone(normalized.Item);
-            snapshot.ItemInstanceId = $"item_instance_{DateTime.UtcNow:yyyyMMddHHmmssfff}";
-            snapshot.ItemSourceType = CharacterItemSourceTypes.Custom;
-            snapshot.SourceItemId = normalized.CustomItemId;
-            snapshot.ItemId = string.IsNullOrWhiteSpace(snapshot.ItemId) ? normalized.CustomItemId : snapshot.ItemId;
-            snapshot.Quantity = Math.Max(1, quantity);
-            snapshot.IsEquipped = false;
-            return snapshot;
+            return CharacterItemSnapshotBuilder.BuildInstanceFromCustomItem(normalized, quantity);
         }
 
         private static LocalCustomItemLibrarySaveData NormalizeLibrary(LocalCustomItemLibrarySaveData data)
@@ -1835,13 +1842,7 @@ namespace GameLogic
                 item.CustomItemId = $"custom_item_{DateTime.UtcNow:yyyyMMddHHmmssfff}";
             }
 
-            item.Item = CharacterEquipmentItemSaveData.Clone(item.Item);
-            item.Item.ItemSourceType = CharacterItemSourceTypes.Custom;
-            item.Item.SourceItemId = item.CustomItemId;
-            if (string.IsNullOrWhiteSpace(item.Item.ItemId))
-            {
-                item.Item.ItemId = item.CustomItemId;
-            }
+            item.Item = CharacterItemSnapshotBuilder.BuildTemplateFromCustomItem(item.Item, item.CustomItemId);
 
             string now = DateTime.UtcNow.ToString("O");
             if (string.IsNullOrWhiteSpace(item.CreatedAt))
@@ -2237,15 +2238,41 @@ namespace GameLogic
                 character.CharacterName = "未命名角色";
             }
 
-            character.Alignment ??= string.Empty;
-            character.RaceId ??= string.Empty;
-            character.ClassId ??= string.Empty;
+            if (character.Alignment == null)
+            {
+                character.Alignment = string.Empty;
+            }
+
+            if (character.RaceId == null)
+            {
+                character.RaceId = string.Empty;
+            }
+
+            if (character.ClassId == null)
+            {
+                character.ClassId = string.Empty;
+            }
             character.ClassProgresses = NormalizeClassProgresses(character.ClassProgresses, character.ClassId, character.Level);
             character.ChoiceSelections = NormalizeChoiceSelections(character.ChoiceSelections);
-            character.BackgroundId ??= string.Empty;
-            character.FeatId ??= string.Empty;
-            character.SpellId ??= string.Empty;
-            character.PreviewImagePath ??= string.Empty;
+            if (character.BackgroundId == null)
+            {
+                character.BackgroundId = string.Empty;
+            }
+
+            if (character.FeatId == null)
+            {
+                character.FeatId = string.Empty;
+            }
+
+            if (character.SpellId == null)
+            {
+                character.SpellId = string.Empty;
+            }
+
+            if (character.PreviewImagePath == null)
+            {
+                character.PreviewImagePath = string.Empty;
+            }
             character.IdentityProfile = CharacterIdentityProfileSaveData.Clone(character.IdentityProfile);
             character.RoleplayProfile = CharacterRoleplayProfileSaveData.Clone(character.RoleplayProfile);
             character.Level = Math.Max(1, character.Level);

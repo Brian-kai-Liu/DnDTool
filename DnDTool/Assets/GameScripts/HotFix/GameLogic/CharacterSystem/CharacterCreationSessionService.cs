@@ -152,7 +152,10 @@ namespace GameLogic
         public void ApplyCreationInput(CharacterCreationDraftInput input)
         {
             EnsureState();
-            input ??= new CharacterCreationDraftInput();
+            if (input == null)
+            {
+                input = new CharacterCreationDraftInput();
+            }
             m_state.Character.CharacterName = input.CharacterName?.Trim() ?? string.Empty;
             m_state.Character.RaceId = input.RaceId?.Trim() ?? string.Empty;
             m_state.Character.ClassId = input.ClassId?.Trim() ?? string.Empty;
@@ -191,7 +194,10 @@ namespace GameLogic
                 normalizedName = "自定义特性";
             }
 
-            m_state.Character.CustomFeatures ??= new List<CharacterCustomFeatureSaveData>();
+            if (m_state.Character.CustomFeatures == null)
+            {
+                m_state.Character.CustomFeatures = new List<CharacterCustomFeatureSaveData>();
+            }
             m_state.Character.CustomFeatures.Add(new CharacterCustomFeatureSaveData
             {
                 Name = normalizedName,
@@ -213,7 +219,10 @@ namespace GameLogic
             EnsureState();
             if (CharacterItemCategoryUtility.IsCurrencyItem(item))
             {
-                m_state.Character.Currency ??= new CharacterCurrencySaveData();
+                if (m_state.Character.Currency == null)
+                {
+                    m_state.Character.Currency = new CharacterCurrencySaveData();
+                }
                 int amount = CharacterItemCategoryUtility.AddCurrency(m_state.Character.Currency, item, quantity);
                 if (amount <= 0)
                 {
@@ -243,16 +252,7 @@ namespace GameLogic
                 && DndRuleContentService.Instance.TryGetItem(sourceItemId.Trim(), out DndItemDefineData ruleItem)
                 && ruleItem != null)
             {
-                CharacterEquipmentItemSaveData item = new CharacterEquipmentItemSaveData
-                {
-                    ItemSourceType = CharacterItemSourceTypes.RuleTable,
-                    SourceItemId = ruleItem.ItemId?.Trim() ?? string.Empty,
-                    ItemId = ruleItem.ItemId?.Trim() ?? string.Empty,
-                    ItemName = ruleItem.Name?.Trim() ?? string.Empty,
-                    ItemType = ruleItem.ItemType?.Trim() ?? string.Empty,
-                    Quantity = Math.Max(1, quantity > 0 ? quantity : ruleItem.DefaultQuantity),
-                    Consumable = ruleItem.Consumable
-                };
+                CharacterEquipmentItemSaveData item = CharacterItemSnapshotBuilder.BuildInstanceFromRuleItem(ruleItem, quantity);
                 if (CharacterItemCategoryUtility.IsCurrencyItem(item))
                 {
                     return AddInventoryItem(item, item.Quantity);
@@ -292,37 +292,6 @@ namespace GameLogic
             return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.UnattuneItem(equipment, itemInstanceId));
         }
 
-        public CharacterInventoryOperationResult UseInventoryItem(string itemInstanceId, int consumeCount = 1)
-        {
-            return ApplyInventoryOperation(equipment => CharacterInventoryApplicationService.Instance.UseItem(equipment, itemInstanceId, consumeCount));
-        }
-
-        public bool HealCurrentHp(int healAmount, int finalMaxHp)
-        {
-            EnsureState();
-            CharacterCardDraftSaveData character = m_state.Character;
-            if (character == null || healAmount <= 0)
-            {
-                return false;
-            }
-
-            int maxHp = Math.Max(0, finalMaxHp);
-            if (maxHp <= 0)
-            {
-                maxHp = Math.Max(0, character.MaxHp);
-            }
-
-            if (maxHp <= 0)
-            {
-                return false;
-            }
-
-            int currentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.CurrentHp, maxHp);
-            character.CurrentHp = Math.Min(maxHp, currentHp + healAmount);
-            m_state.IsDirty = true;
-            return true;
-        }
-
         public bool ChangeCurrentHp(int delta, int finalMaxHp)
         {
             EnsureState();
@@ -355,57 +324,6 @@ namespace GameLogic
             return true;
         }
 
-        public CharacterDiceRollHistoryEntry AddDiceRollHistoryEntry(
-            CharacterInventoryQuickRollContext context,
-            CharacterDiceRollResultData result,
-            string purpose)
-        {
-            CharacterDiceRollHistoryEntry entry = new CharacterDiceRollHistoryEntry
-            {
-                EntryId = Guid.NewGuid().ToString("N"),
-                CreatedAt = DateTime.Now,
-                SourceItemInstanceId = context?.ItemInstanceId ?? string.Empty,
-                SourceItemName = context?.ItemName ?? string.Empty,
-                SourceEffectName = context?.EffectName ?? string.Empty,
-                DiceExpression = context?.DiceExpression ?? result?.Expression ?? string.Empty,
-                Purpose = purpose?.Trim() ?? string.Empty,
-                Summary = result?.Summary ?? string.Empty,
-                Total = result?.Total ?? 0,
-                Success = result != null && result.Success,
-                Error = result?.Error ?? string.Empty
-            };
-
-            m_diceRollHistory.Insert(0, entry);
-            while (m_diceRollHistory.Count > MaxDiceRollHistoryCount)
-            {
-                m_diceRollHistory.RemoveAt(m_diceRollHistory.Count - 1);
-            }
-
-            SyncDiceRollHistoryToCharacter(true);
-            return entry;
-        }
-
-        public void UpdateDiceRollHistoryPurpose(string entryId, string purpose)
-        {
-            CharacterDiceRollHistoryEntry entry = FindDiceRollHistoryEntry(entryId);
-            if (entry != null)
-            {
-                entry.Purpose = purpose?.Trim() ?? string.Empty;
-                SyncDiceRollHistoryToCharacter(true);
-            }
-        }
-
-        public void MarkDiceRollHistoryApplied(string entryId, string appliedMessage)
-        {
-            CharacterDiceRollHistoryEntry entry = FindDiceRollHistoryEntry(entryId);
-            if (entry != null)
-            {
-                entry.Applied = true;
-                entry.AppliedMessage = appliedMessage?.Trim() ?? string.Empty;
-                SyncDiceRollHistoryToCharacter(true);
-            }
-        }
-
         private void LoadDiceRollHistoryFromCharacter(CharacterCardDraftSaveData character)
         {
             m_diceRollHistory.Clear();
@@ -422,51 +340,6 @@ namespace GameLogic
                     m_diceRollHistory.Add(entry);
                 }
             }
-        }
-
-        private void SyncDiceRollHistoryToCharacter(bool markDirty)
-        {
-            EnsureState();
-            if (m_state.Character == null)
-            {
-                return;
-            }
-
-            List<CharacterDiceRollHistorySaveData> saveData = new List<CharacterDiceRollHistorySaveData>();
-            for (int index = 0; index < m_diceRollHistory.Count && saveData.Count < MaxDiceRollHistoryCount; index++)
-            {
-                CharacterDiceRollHistorySaveData entry = CharacterDiceRollHistoryFormatter.ToSaveData(m_diceRollHistory[index]);
-                if (entry != null)
-                {
-                    saveData.Add(entry);
-                }
-            }
-
-            m_state.Character.DiceRollHistory = CharacterDiceRollHistorySaveData.CloneList(saveData, MaxDiceRollHistoryCount);
-            if (markDirty)
-            {
-                m_state.IsDirty = true;
-            }
-        }
-
-        private CharacterDiceRollHistoryEntry FindDiceRollHistoryEntry(string entryId)
-        {
-            if (string.IsNullOrWhiteSpace(entryId))
-            {
-                return null;
-            }
-
-            string normalized = entryId.Trim();
-            for (int index = 0; index < m_diceRollHistory.Count; index++)
-            {
-                CharacterDiceRollHistoryEntry entry = m_diceRollHistory[index];
-                if (entry != null && string.Equals(entry.EntryId, normalized, StringComparison.OrdinalIgnoreCase))
-                {
-                    return entry;
-                }
-            }
-
-            return null;
         }
 
         public CharacterCreationToolChoiceState FindToolChoiceState(string choiceGroupId)
@@ -1602,7 +1475,10 @@ namespace GameLogic
 
         public CharacterCreationDraftInput BuildDraftInput(CharacterCreationFormInput form)
         {
-            form ??= new CharacterCreationFormInput();
+            if (form == null)
+            {
+                form = new CharacterCreationFormInput();
+            }
             int baseAbilityScore = form.BaseAbilityScore > 0 ? form.BaseAbilityScore : 10;
             string classId = form.ClassId?.Trim() ?? string.Empty;
             CharacterCardDraftSaveData character = m_state?.Character ?? new CharacterCardDraftSaveData();
@@ -1617,12 +1493,12 @@ namespace GameLogic
                 AlignmentId = form.AlignmentId?.Trim() ?? string.Empty,
                 Level = Math.Max(1, form.Level),
                 Speed = Math.Max(0, form.Speed),
-                Strength = GetBaseAbilityScore("Strength", baseAbilityScore),
-                Dexterity = GetBaseAbilityScore("Dexterity", baseAbilityScore),
-                Constitution = GetBaseAbilityScore("Constitution", baseAbilityScore),
-                Intelligence = GetBaseAbilityScore("Intelligence", baseAbilityScore),
-                Wisdom = GetBaseAbilityScore("Wisdom", baseAbilityScore),
-                Charisma = GetBaseAbilityScore("Charisma", baseAbilityScore),
+                Strength = GetCurrentBaseAbilityScore("Strength", baseAbilityScore),
+                Dexterity = GetCurrentBaseAbilityScore("Dexterity", baseAbilityScore),
+                Constitution = GetCurrentBaseAbilityScore("Constitution", baseAbilityScore),
+                Intelligence = GetCurrentBaseAbilityScore("Intelligence", baseAbilityScore),
+                Wisdom = GetCurrentBaseAbilityScore("Wisdom", baseAbilityScore),
+                Charisma = GetCurrentBaseAbilityScore("Charisma", baseAbilityScore),
                 HpModeId = CharacterHpModeIds.Normalize(character.HpModeId),
                 MaxHp = Math.Max(0, character.MaxHp),
                 CurrentHp = CharacterCreationCalculationService.Instance.NormalizeCurrentHp(character.CurrentHp, character.MaxHp),
@@ -2547,7 +2423,7 @@ namespace GameLogic
         public int GetCurrentAbilityScore(string abilityId, int baseScore)
         {
             string normalized = NormalizeAbilityId(abilityId);
-            return GetCurrentBaseAbilityScore(normalized, baseScore)
+            return GetBaseAbilityScore(normalized, baseScore)
                 + GetFeatureAbilityScoreIncrease(normalized);
         }
 
@@ -2564,7 +2440,7 @@ namespace GameLogic
 
         public int GetCurrentBaseAbilityScore(string abilityId, int baseScore)
         {
-            return GetBaseAbilityScore(abilityId, baseScore);
+            return GetGeneratedOrDefaultAbilityScore(NormalizeAbilityId(abilityId), baseScore);
         }
 
         private int GetBaseAbilityScore(string abilityId, int baseScore)
@@ -3619,17 +3495,28 @@ namespace GameLogic
 
         private static int GetPointBuyCost(int score)
         {
-            return score switch
+            if (score <= 8)
             {
-                <= 8 => 0,
-                9 => 1,
-                10 => 2,
-                11 => 3,
-                12 => 4,
-                13 => 5,
-                14 => 7,
-                _ => 9
-            };
+                return 0;
+            }
+
+            switch (score)
+            {
+                case 9:
+                    return 1;
+                case 10:
+                    return 2;
+                case 11:
+                    return 3;
+                case 12:
+                    return 4;
+                case 13:
+                    return 5;
+                case 14:
+                    return 7;
+                default:
+                    return 9;
+            }
         }
 
         private bool IsPointBuyMode()

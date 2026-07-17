@@ -48,6 +48,10 @@ namespace GameLogic
                 Charges = ruleItem.Charges,
                 ConsumeOnUse = ruleItem.ConsumeOnUse,
                 Weight = ruleItem.Weight > 0f ? ruleItem.Weight.ToString("0.##") : string.Empty,
+                PriceGp = Math.Max(0, ruleItem.PriceGp),
+                IsEquippable = ruleItem.IsEquippable,
+                EquipmentSlot = ruleItem.EquipmentSlot ?? string.Empty,
+                RequiresAttunement = ruleItem.RequiresAttunement,
                 EffectApplyCondition = ruleItem.EffectApplyCondition ?? string.Empty
             };
             state.WeaponProperties.AddRange(ruleItem.WeaponProperties);
@@ -66,7 +70,7 @@ namespace GameLogic
             LocalCustomItemRepository.Upsert(new LocalCustomItemSaveData
             {
                 CustomItemId = customItemId,
-                Item = CharacterEquipmentItemSaveData.Clone(item)
+                Item = CharacterItemSnapshotBuilder.BuildTemplateFromCustomItem(item, customItemId)
             });
             return CharacterOperationResult.Ok();
         }
@@ -122,14 +126,18 @@ namespace GameLogic
                 return FailAdd("Character not found.");
             }
 
+            int addQuantity = Math.Max(1, quantity);
             CharacterEquipmentItemSaveData characterItem = LocalCustomItemRepository.CreateCharacterItemSnapshot(
                 normalizedItem,
-                Math.Max(1, quantity));
+                addQuantity);
 
             if (CharacterItemCategoryUtility.IsCurrencyItem(characterItem))
             {
-                character.Currency ??= new CharacterCurrencySaveData();
-                int amount = CharacterItemCategoryUtility.AddCurrency(character.Currency, characterItem, quantity);
+                if (character.Currency == null)
+                {
+                    character.Currency = new CharacterCurrencySaveData();
+                }
+                int amount = CharacterItemCategoryUtility.AddCurrency(character.Currency, characterItem, addQuantity);
                 if (amount <= 0)
                 {
                     return FailAdd("Currency item data is invalid.");
@@ -148,7 +156,7 @@ namespace GameLogic
             CharacterInventoryOperationResult inventoryResult = CharacterInventoryApplicationService.Instance.AddItem(
                 character.Equipment,
                 characterItem,
-                Math.Max(1, quantity));
+                addQuantity);
             if (!inventoryResult.Success)
             {
                 return FailAdd(inventoryResult.Message);

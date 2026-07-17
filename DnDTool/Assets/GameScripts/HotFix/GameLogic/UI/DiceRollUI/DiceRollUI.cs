@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using TEngine;
 using UnityEngine;
@@ -18,12 +17,15 @@ namespace GameLogic
         private CharacterDiceRollResultData m_currentResult;
         private CharacterDiceRollResultData m_pendingResult;
         private readonly List<GameObject> m_diceResultItems = new List<GameObject>();
+        private readonly List<GameObject> m_affixInfoItems = new List<GameObject>();
         private readonly List<DicePurposeButtonBinding> m_purposeButtons = new List<DicePurposeButtonBinding>();
         private string m_currentPurpose = "record";
         private float m_rollAnimationRemaining;
         private bool m_isRolling;
 
         private TMP_Text m_tmpSource;
+        private RectTransform m_rectAffixInfoContent;
+        private GameObject m_itemAffixInfoTemplate;
         private TMP_InputField m_inputDiceExpression;
         private RectTransform m_rectQuickDiceButtons;
         private Button m_btnClearExpression;
@@ -40,6 +42,8 @@ namespace GameLogic
         protected override void ScriptGenerator()
         {
             m_tmpSource = FindDescendantComponent<TMP_Text>("m_tmpSource");
+            m_rectAffixInfoContent = FindDescendantComponent<RectTransform>("m_rectAffixInfoContent");
+            m_itemAffixInfoTemplate = FindDescendant("m_itemAffixInfoTemplate")?.gameObject;
             m_btnClose = FindDescendantComponent<Button>("m_btnClose");
             m_inputDiceExpression = FindDescendantComponent<TMP_InputField>("m_inputDiceExpression");
             m_rectQuickDiceButtons = FindDescendantComponent<RectTransform>("m_rectQuickDiceButtons");
@@ -71,6 +75,7 @@ namespace GameLogic
             SetButtonInteractable(m_btnRoll, true);
 
             SetText(m_tmpSource, BuildSourceText(m_request));
+            RefreshAffixInfo();
             if (m_inputDiceExpression != null)
             {
                 m_inputDiceExpression.text = string.IsNullOrWhiteSpace(m_request.DiceExpression)
@@ -230,9 +235,34 @@ namespace GameLogic
                 SourceId = m_request.SourceId,
                 SourceName = m_request.SourceName,
                 EffectName = m_request.EffectName,
+                EffectDescription = m_request.EffectDescription,
                 Purpose = m_currentPurpose,
                 RollResult = result
             });
+        }
+
+        private void RefreshAffixInfo()
+        {
+            if (m_rectAffixInfoContent == null || m_itemAffixInfoTemplate == null)
+            {
+                return;
+            }
+
+            List<AffixInfoDisplayEntry> entries = BuildAffixInfoEntries(m_request);
+            EnsureAffixInfoItemCount(entries.Count);
+            for (int index = 0; index < m_affixInfoItems.Count; index++)
+            {
+                GameObject item = m_affixInfoItems[index];
+                bool visible = index < entries.Count;
+                SetActive(item, visible);
+                if (visible)
+                {
+                    SetAffixInfoItem(item, entries[index]);
+                }
+            }
+
+            SetActive(m_itemAffixInfoTemplate, false);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(m_rectAffixInfoContent);
         }
 
         private void OnClickClose()
@@ -345,6 +375,22 @@ namespace GameLogic
             }
         }
 
+        private void EnsureAffixInfoItemCount(int count)
+        {
+            if (m_rectAffixInfoContent == null || m_itemAffixInfoTemplate == null)
+            {
+                return;
+            }
+
+            while (m_affixInfoItems.Count < count)
+            {
+                GameObject item = UnityEngine.Object.Instantiate(m_itemAffixInfoTemplate, m_rectAffixInfoContent);
+                item.name = $"m_itemAffixInfo_{m_affixInfoItems.Count + 1}";
+                item.SetActive(true);
+                m_affixInfoItems.Add(item);
+            }
+        }
+
         private static int CountDiceResults(CharacterDiceRollResultData result)
         {
             if (result == null || !result.Success)
@@ -391,6 +437,38 @@ namespace GameLogic
             return $"来源：{source}";
         }
 
+        private static List<AffixInfoDisplayEntry> BuildAffixInfoEntries(DiceRollUIRequest request)
+        {
+            return new List<AffixInfoDisplayEntry>
+            {
+                new AffixInfoDisplayEntry(
+                    FirstNonEmpty(request?.EffectName, request?.SourceName, "\u624b\u52a8\u63b7\u9ab0"),
+                    string.IsNullOrWhiteSpace(request?.DiceExpression) ? "1d20" : request.DiceExpression.Trim(),
+                    string.IsNullOrWhiteSpace(request?.EffectDescription) ? "-" : request.EffectDescription.Trim())
+            };
+        }
+
+        private static void SetAffixInfoItem(GameObject item, AffixInfoDisplayEntry entry)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            TMP_Text nameText = FindDescendantText(item.transform, "m_tmpAffixInfoName");
+            TMP_Text diceExpressionText = FindDescendantText(item.transform, "m_tmpAffixDiceExpression");
+            TMP_Text descriptionText = FindDescendantText(item.transform, "m_tmpAffixDescription");
+            TMP_InputField diceExpressionInput = FindDescendantComponent<TMP_InputField>(item.transform, "m_inputAffixDiceExpression");
+
+            SetText(nameText, entry.Name);
+            SetText(diceExpressionText, entry.DiceExpression);
+            SetText(descriptionText, entry.Description);
+            if (diceExpressionInput != null)
+            {
+                diceExpressionInput.text = entry.DiceExpression;
+            }
+        }
+
         private static void SetDiceResultItem(GameObject item, string diceName, string value)
         {
             if (item == null)
@@ -414,6 +492,18 @@ namespace GameLogic
 
             Transform child = root.Find(name);
             return child != null ? child.GetComponent<TMP_Text>() : null;
+        }
+
+        private static TMP_Text FindDescendantText(Transform root, string name)
+        {
+            Transform target = FindDescendant(root, name);
+            return target != null ? target.GetComponent<TMP_Text>() : null;
+        }
+
+        private static T FindDescendantComponent<T>(Transform root, string targetName) where T : Component
+        {
+            Transform target = FindDescendant(root, targetName);
+            return target != null ? target.GetComponent<T>() : null;
         }
 
         private T FindDescendantComponent<T>(string targetName) where T : Component
@@ -488,6 +578,39 @@ namespace GameLogic
             if (button != null)
             {
                 button.interactable = interactable;
+            }
+        }
+
+        private static string FirstNonEmpty(params string[] values)
+        {
+            if (values == null)
+            {
+                return string.Empty;
+            }
+
+            for (int index = 0; index < values.Length; index++)
+            {
+                string value = values[index];
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    return value.Trim();
+                }
+            }
+
+            return string.Empty;
+        }
+
+        private readonly struct AffixInfoDisplayEntry
+        {
+            public readonly string Name;
+            public readonly string DiceExpression;
+            public readonly string Description;
+
+            public AffixInfoDisplayEntry(string name, string diceExpression, string description)
+            {
+                Name = name ?? string.Empty;
+                DiceExpression = diceExpression ?? string.Empty;
+                Description = description ?? string.Empty;
             }
         }
 

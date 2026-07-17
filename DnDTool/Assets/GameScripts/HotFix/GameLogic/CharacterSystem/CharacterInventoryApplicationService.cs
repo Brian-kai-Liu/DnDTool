@@ -66,7 +66,7 @@ namespace GameLogic
                 return Fail("Rule item not found.", CloneEquipment(equipment));
             }
 
-            return AddItem(equipment, CreateItemFromRule(ruleItem, quantity), quantity);
+            return AddItem(equipment, CharacterItemSnapshotBuilder.BuildInstanceFromRuleItem(ruleItem, quantity), quantity);
         }
 
         public CharacterInventoryOperationResult RemoveItem(
@@ -164,16 +164,42 @@ namespace GameLogic
                 return Fail("Item not found.", working);
             }
 
+            CharacterItemTypeBehaviorUtility.ApplyTypeDefaults(item);
             int amount = Math.Max(1, consumeCount);
-            if (item.Charges > 0)
+            if (!CharacterItemTypeBehaviorUtility.IsInventoryItemUsable(item))
             {
-                item.Charges = Math.Max(0, item.Charges - amount);
+                return Fail("Item cannot be used.", working);
+            }
+
+            if (CharacterItemTypeBehaviorUtility.CanConsumeChargeOnUse(item))
+            {
+                if (item.Charges < amount)
+                {
+                    return Fail("Item does not have enough remaining charges.", working);
+                }
+
+                item.Charges -= amount;
                 return Ok("Item charge consumed.", working, item.ItemInstanceId);
             }
 
-            if (!item.Consumable && !item.ConsumeOnUse)
+            if (CharacterItemTypeBehaviorUtility.CanUseWithoutInventoryConsumption(item))
+            {
+                return Ok("Item used.", working, item.ItemInstanceId);
+            }
+
+            if (!CharacterItemTypeBehaviorUtility.CanConsumeQuantityOnUse(item))
             {
                 return Fail("Item cannot be consumed.", working);
+            }
+
+            if (item.Quantity <= 0)
+            {
+                return Fail("Item quantity is empty.", working);
+            }
+
+            if (item.Quantity < amount)
+            {
+                return Fail("Item quantity is not enough.", working);
             }
 
             string usedItemId = item.ItemInstanceId;
@@ -185,6 +211,25 @@ namespace GameLogic
 
             ClearItemAt(working, location, index);
             return Ok("Item consumed.", working, usedItemId);
+        }
+
+        public CharacterInventoryOperationResult RestoreItemCharges(CharacterEquipmentSetSaveData equipment, string itemInstanceId)
+        {
+            CharacterEquipmentSetSaveData working = CloneEquipment(equipment);
+            CharacterEquipmentItemSaveData item = FindItem(working, itemInstanceId, out _, out _);
+            if (item == null)
+            {
+                return Fail("Item not found.", working);
+            }
+
+            CharacterItemTypeBehaviorUtility.ApplyTypeDefaults(item);
+            if (item.MaxCharges <= 0)
+            {
+                return Fail("Item has no charge capacity.", working);
+            }
+
+            item.Charges = Math.Max(0, item.MaxCharges);
+            return Ok("Item charges restored.", working, item.ItemInstanceId);
         }
 
         public CharacterOperationResult AddItemToCharacter(
@@ -235,6 +280,11 @@ namespace GameLogic
             return SaveCharacterInventory(characterId, equipment => UseItem(equipment, itemInstanceId, consumeCount));
         }
 
+        public CharacterOperationResult RestoreCharacterItemCharges(string characterId, string itemInstanceId)
+        {
+            return SaveCharacterInventory(characterId, equipment => RestoreItemCharges(equipment, itemInstanceId));
+        }
+
         private CharacterOperationResult SaveCharacterInventory(
             string characterId,
             Func<CharacterEquipmentSetSaveData, CharacterInventoryOperationResult> operation)
@@ -275,50 +325,16 @@ namespace GameLogic
         {
             CharacterEquipmentItemSaveData result = CharacterEquipmentItemSaveData.Clone(item);
             result.Quantity = Math.Max(1, quantity > 0 ? quantity : result.Quantity);
+            CharacterItemTypeBehaviorUtility.ApplyTypeDefaults(result);
+
             if (string.IsNullOrWhiteSpace(result.ItemInstanceId))
             {
                 result.ItemInstanceId = CreateItemInstanceId();
             }
 
             result.IsEquipped = false;
+            result.IsAttuned = false;
             return result;
-        }
-
-        private static CharacterEquipmentItemSaveData CreateItemFromRule(DndItemDefineData ruleItem, int quantity)
-        {
-            return new CharacterEquipmentItemSaveData
-            {
-                ItemInstanceId = CreateItemInstanceId(),
-                ItemSourceType = CharacterItemSourceTypes.RuleTable,
-                SourceItemId = ruleItem.ItemId?.Trim() ?? string.Empty,
-                ItemId = ruleItem.ItemId?.Trim() ?? string.Empty,
-                ItemName = ruleItem.Name?.Trim() ?? string.Empty,
-                ItemType = ruleItem.ItemType?.Trim() ?? string.Empty,
-                ArmorCategory = CharacterArmorCategoryIds.Normalize(ruleItem.ArmorCategory),
-                ArmorBaseAc = Math.Max(0, ruleItem.ArmorBaseAc),
-                AcBonus = ruleItem.AcBonus,
-                MaxDexBonus = Math.Max(0, ruleItem.MaxDexBonus),
-                StrengthRequirement = Math.Max(0, ruleItem.StrengthRequirement),
-                StealthDisadvantage = ruleItem.StealthDisadvantage,
-                WeaponCategory = ruleItem.WeaponCategory?.Trim() ?? string.Empty,
-                WeaponRangeType = ruleItem.WeaponRangeType?.Trim() ?? string.Empty,
-                DamageDice = ruleItem.DamageDice?.Trim() ?? string.Empty,
-                DamageType = ruleItem.DamageType?.Trim() ?? string.Empty,
-                WeaponProperties = FormatStringList(ruleItem.WeaponProperties),
-                NormalRange = Math.Max(0, ruleItem.NormalRange),
-                LongRange = Math.Max(0, ruleItem.LongRange),
-                TwoHandDamageDice = ruleItem.TwoHandDamageDice?.Trim() ?? string.Empty,
-                ToolCategory = ruleItem.ToolCategory?.Trim() ?? string.Empty,
-                Consumable = ruleItem.Consumable,
-                Charges = Math.Max(0, ruleItem.Charges),
-                ConsumeOnUse = ruleItem.ConsumeOnUse,
-                Weight = ruleItem.Weight > 0f ? ruleItem.Weight.ToString("0.##") : string.Empty,
-                Quantity = Math.Max(1, quantity > 0 ? quantity : ruleItem.DefaultQuantity),
-                RequiresAttunement = ruleItem.RequiresAttunement,
-                EffectApplyCondition = ruleItem.EffectApplyCondition?.Trim() ?? string.Empty,
-                EffectIds = CloneStringList(ruleItem.EffectIds),
-                Description = ruleItem.Description ?? string.Empty
-            };
         }
 
         private static CharacterEquipmentItemSaveData FindItem(
@@ -427,10 +443,25 @@ namespace GameLogic
                 return;
             }
 
-            equipment.Armor ??= new CharacterEquipmentItemSaveData();
-            equipment.Shield ??= new CharacterEquipmentItemSaveData();
-            equipment.EquippedItems ??= new List<CharacterEquipmentItemSaveData>();
-            equipment.InventoryItems ??= new List<CharacterEquipmentItemSaveData>();
+            if (equipment.Armor == null)
+            {
+                equipment.Armor = new CharacterEquipmentItemSaveData();
+            }
+
+            if (equipment.Shield == null)
+            {
+                equipment.Shield = new CharacterEquipmentItemSaveData();
+            }
+
+            if (equipment.EquippedItems == null)
+            {
+                equipment.EquippedItems = new List<CharacterEquipmentItemSaveData>();
+            }
+
+            if (equipment.InventoryItems == null)
+            {
+                equipment.InventoryItems = new List<CharacterEquipmentItemSaveData>();
+            }
         }
 
         private static bool TryMergeStackableInventoryItem(
@@ -447,7 +478,7 @@ namespace GameLogic
             for (int index = 0; index < inventoryItems.Count; index++)
             {
                 CharacterEquipmentItemSaveData candidate = inventoryItems[index];
-                if (!CanStackTogether(candidate, item))
+                if (!CharacterItemCategoryUtility.CanStackTogether(candidate, item))
                 {
                     continue;
                 }
@@ -458,77 +489,6 @@ namespace GameLogic
             }
 
             return false;
-        }
-
-        private static bool CanStackTogether(CharacterEquipmentItemSaveData left, CharacterEquipmentItemSaveData right)
-        {
-            if (left == null || right == null)
-            {
-                return false;
-            }
-
-            if (!CharacterItemCategoryUtility.IsInventoryStackable(left)
-                || !CharacterItemCategoryUtility.IsInventoryStackable(right))
-            {
-                return false;
-            }
-
-            if (left.IsEquipped || left.IsAttuned || right.IsEquipped || right.IsAttuned)
-            {
-                return false;
-            }
-
-            return string.Equals(left.ItemSourceType, right.ItemSourceType, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(GetStackIdentity(left), GetStackIdentity(right), StringComparison.OrdinalIgnoreCase)
-                && string.Equals(left.ItemType?.Trim() ?? string.Empty, right.ItemType?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(left.Rarity?.Trim() ?? string.Empty, right.Rarity?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(left.Description ?? string.Empty, right.Description ?? string.Empty, StringComparison.Ordinal);
-        }
-
-        private static string GetStackIdentity(CharacterEquipmentItemSaveData item)
-        {
-            if (item == null)
-            {
-                return string.Empty;
-            }
-
-            if (!string.IsNullOrWhiteSpace(item.SourceItemId))
-            {
-                return item.SourceItemId.Trim();
-            }
-
-            if (!string.IsNullOrWhiteSpace(item.ItemId))
-            {
-                return item.ItemId.Trim();
-            }
-
-            return item.ItemName?.Trim() ?? string.Empty;
-        }
-
-        private static string FormatStringList(IReadOnlyList<string> source)
-        {
-            List<string> result = CloneStringList(source);
-            return result.Count > 0 ? string.Join(";", result) : string.Empty;
-        }
-
-        private static List<string> CloneStringList(IReadOnlyList<string> source)
-        {
-            List<string> result = new List<string>();
-            if (source == null)
-            {
-                return result;
-            }
-
-            for (int index = 0; index < source.Count; index++)
-            {
-                string value = source[index];
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    result.Add(value.Trim());
-                }
-            }
-
-            return result;
         }
 
         private static CharacterInventoryOperationResult Ok(

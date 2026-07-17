@@ -19,6 +19,7 @@ namespace GameLogic
         private readonly Dictionary<string, DndSkillDefineData> m_skillById = new Dictionary<string, DndSkillDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndSpellDefineData> m_spellById = new Dictionary<string, DndSpellDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndItemDefineData> m_itemById = new Dictionary<string, DndItemDefineData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, DndItemTypeDefineData> m_itemTypeById = new Dictionary<string, DndItemTypeDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndToolDefineData> m_toolById = new Dictionary<string, DndToolDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndLanguageDefineData> m_languageById = new Dictionary<string, DndLanguageDefineData>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, DndAlignmentData> m_alignmentById = new Dictionary<string, DndAlignmentData>(StringComparer.OrdinalIgnoreCase);
@@ -87,6 +88,8 @@ namespace GameLogic
         public IReadOnlyList<DndSkillDefineData> Skills => GetLibrary().Skills;
 
         public IReadOnlyList<DndItemDefineData> Items => GetLibrary().Items;
+
+        public IReadOnlyList<DndItemTypeDefineData> ItemTypes => GetLibrary().ItemTypes;
 
         public IReadOnlyList<DndItemEffectData> ItemEffects => GetLibrary().ItemEffects;
 
@@ -180,6 +183,35 @@ namespace GameLogic
         {
             GetLibrary();
             return m_itemById.TryGetValue(itemId ?? string.Empty, out item);
+        }
+
+        public bool TryGetItemType(string itemTypeId, out DndItemTypeDefineData itemType)
+        {
+            GetLibrary();
+            return m_itemTypeById.TryGetValue(itemTypeId ?? string.Empty, out itemType);
+        }
+
+        public IReadOnlyList<DndItemTypeDefineData> GetSelectableItemTypes()
+        {
+            GetLibrary();
+            List<DndItemTypeDefineData> result = new List<DndItemTypeDefineData>();
+            for (int index = 0; index < m_library.ItemTypes.Count; index++)
+            {
+                DndItemTypeDefineData itemType = m_library.ItemTypes[index];
+                if (itemType != null && itemType.Selectable)
+                {
+                    result.Add(itemType);
+                }
+            }
+
+            result.Sort((left, right) =>
+            {
+                int orderCompare = left.SortOrder.CompareTo(right.SortOrder);
+                return orderCompare != 0
+                    ? orderCompare
+                    : string.Compare(left.ItemTypeId, right.ItemTypeId, StringComparison.OrdinalIgnoreCase);
+            });
+            return result;
         }
 
         public bool TryGetTool(string toolId, out DndToolDefineData tool)
@@ -389,6 +421,7 @@ namespace GameLogic
             m_skillById.Clear();
             m_spellById.Clear();
             m_itemById.Clear();
+            m_itemTypeById.Clear();
             m_toolById.Clear();
             m_languageById.Clear();
             m_alignmentById.Clear();
@@ -510,6 +543,15 @@ namespace GameLogic
                 if (!string.IsNullOrWhiteSpace(item.ItemId))
                 {
                     m_itemById[item.ItemId] = item;
+                }
+            }
+
+            for (int index = 0; index < m_library.ItemTypes.Count; index++)
+            {
+                DndItemTypeDefineData itemType = m_library.ItemTypes[index];
+                if (!string.IsNullOrWhiteSpace(itemType.ItemTypeId))
+                {
+                    m_itemTypeById[itemType.ItemTypeId] = itemType;
                 }
             }
 

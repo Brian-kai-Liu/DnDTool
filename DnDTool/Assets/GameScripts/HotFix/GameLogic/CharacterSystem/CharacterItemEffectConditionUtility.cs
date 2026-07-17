@@ -21,7 +21,8 @@ namespace GameLogic
                 || string.Equals(normalized, "Wielded", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalized, "WearingArmor", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalized, "Attuned", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "EquippedAndAttuned", StringComparison.OrdinalIgnoreCase))
+                || string.Equals(normalized, "EquippedAndAttuned", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(normalized, "Max20", StringComparison.OrdinalIgnoreCase))
             {
                 return CharacterItemEffectConditionKind.Automatic;
             }
@@ -88,6 +89,11 @@ namespace GameLogic
             if (string.Equals(normalized, "EquippedAndAttuned", StringComparison.OrdinalIgnoreCase))
             {
                 return (equippedContext || item?.IsEquipped == true) && item?.IsAttuned == true;
+            }
+
+            if (string.Equals(normalized, "Max20", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
             }
 
             return false;

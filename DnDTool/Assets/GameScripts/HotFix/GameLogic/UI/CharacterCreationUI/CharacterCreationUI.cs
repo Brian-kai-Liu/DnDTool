@@ -11,19 +11,6 @@ using Log = TEngine.Log;
 
 namespace GameLogic
 {
-    internal enum CharacterInventoryQuickRollPurpose
-    {
-        DisplayOnly,
-        HealHp,
-        AttackHit,
-        Damage,
-        SkillCheck,
-        SavingThrow,
-        SpellAttack,
-        SpellSaveDc,
-        Custom
-    }
-
     internal readonly struct CharacterCreationSkillDisplayBinding
     {
         public readonly string SkillId;
@@ -85,19 +72,6 @@ namespace GameLogic
         private readonly Button[] m_btnAbilityItems = new Button[6];
         private Button m_btnCurrentHpDecrease;
         private Button m_btnCurrentHpIncrease;
-        private Button m_btnInventoryQuickRollAction;
-        private TMP_Text m_tmpInventoryQuickRollActionLabel;
-        private RectTransform m_rectInventoryQuickRollPurposeButtons;
-        private Button m_btnQuickRollPurposeDisplayOnly;
-        private Button m_btnQuickRollPurposeHealHp;
-        private Button m_btnQuickRollPurposeAttackHit;
-        private Button m_btnQuickRollPurposeDamage;
-        private Button m_btnQuickRollPurposeSkillCheck;
-        private Button m_btnQuickRollPurposeSavingThrow;
-        private Button m_btnQuickRollPurposeSpellAttack;
-        private Button m_btnQuickRollPurposeSpellSaveDc;
-        private Button m_btnQuickRollPurposeCustom;
-        private Button m_btnQuickRollApplyResult;
         private GameObject m_goCustomFeaturePopup;
         private bool m_isUpdatingLevelInput;
         private string m_pendingAbilityGenerationMethodId = string.Empty;
@@ -108,10 +82,6 @@ namespace GameLogic
         private int m_portraitLoadVersion;
         private CharacterCreationFeatureChoiceState m_visibleFeatureChoiceState;
         private string m_visibleInventoryItemInstanceId = string.Empty;
-        private CharacterInventoryQuickRollContext m_visibleInventoryQuickRollContext;
-        private CharacterDiceRollResultData m_visibleInventoryQuickRollResult;
-        private CharacterInventoryQuickRollPurpose m_visibleInventoryQuickRollPurpose = CharacterInventoryQuickRollPurpose.DisplayOnly;
-        private string m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
 
         private const int MinCharacterLevel = 1;
         private const int MaxCharacterLevel = 20;
@@ -271,8 +241,7 @@ namespace GameLogic
             m_goItemInfoTemplate = m_itemItemInfoTemplate;
             m_goLearnedSpellTemplate = m_goSpellTemplate;
             BindCurrentHpAdjustButtons();
-            BindInventoryQuickRollAction();
-            BindInventoryQuickRollPurposeActions();
+            HideCreationInventoryUseControls();
             HideInventoryActionButtons();
             BindSkillItems();
             BindAbilityItems();
@@ -297,54 +266,6 @@ namespace GameLogic
                 m_btnCurrentHpIncrease.onClick.RemoveAllListeners();
                 m_btnCurrentHpIncrease.onClick.AddListener(() => ChangeCurrentHpByButton(1));
             }
-        }
-
-        private void BindInventoryQuickRollAction()
-        {
-            m_btnInventoryQuickRollAction = FindChildComponent<Button>("m_btnInventoryQuickRollAction");
-            m_tmpInventoryQuickRollActionLabel = FindChildComponent<TMP_Text>("m_tmpInventoryQuickRollActionLabel");
-            if (m_btnInventoryQuickRollAction == null)
-            {
-                return;
-            }
-
-            m_btnInventoryQuickRollAction.onClick.RemoveAllListeners();
-            m_btnInventoryQuickRollAction.onClick.AddListener(OnClickInventoryQuickRollActionBtn);
-        }
-
-        private void BindInventoryQuickRollPurposeActions()
-        {
-            m_rectInventoryQuickRollPurposeButtons = FindChildComponent<RectTransform>("m_rectInventoryQuickRollPurposeButtons");
-            m_btnQuickRollPurposeDisplayOnly = BindQuickRollPurposeButton("m_btnQuickRollPurposeDisplayOnly", CharacterInventoryQuickRollPurpose.DisplayOnly);
-            m_btnQuickRollPurposeHealHp = BindQuickRollPurposeButton("m_btnQuickRollPurposeHealHp", CharacterInventoryQuickRollPurpose.HealHp);
-            m_btnQuickRollPurposeAttackHit = BindQuickRollPurposeButton("m_btnQuickRollPurposeAttackHit", CharacterInventoryQuickRollPurpose.AttackHit);
-            m_btnQuickRollPurposeDamage = BindQuickRollPurposeButton("m_btnQuickRollPurposeDamage", CharacterInventoryQuickRollPurpose.Damage);
-            m_btnQuickRollPurposeSkillCheck = BindQuickRollPurposeButton("m_btnQuickRollPurposeSkillCheck", CharacterInventoryQuickRollPurpose.SkillCheck);
-            m_btnQuickRollPurposeSavingThrow = BindQuickRollPurposeButton("m_btnQuickRollPurposeSavingThrow", CharacterInventoryQuickRollPurpose.SavingThrow);
-            m_btnQuickRollPurposeSpellAttack = BindQuickRollPurposeButton("m_btnQuickRollPurposeSpellAttack", CharacterInventoryQuickRollPurpose.SpellAttack);
-            m_btnQuickRollPurposeSpellSaveDc = BindQuickRollPurposeButton("m_btnQuickRollPurposeSpellSaveDc", CharacterInventoryQuickRollPurpose.SpellSaveDc);
-            m_btnQuickRollPurposeCustom = BindQuickRollPurposeButton("m_btnQuickRollPurposeCustom", CharacterInventoryQuickRollPurpose.Custom);
-            m_btnQuickRollApplyResult = FindChildComponent<Button>("m_btnQuickRollApplyResult");
-            if (m_btnQuickRollApplyResult != null)
-            {
-                m_btnQuickRollApplyResult.onClick.RemoveAllListeners();
-                m_btnQuickRollApplyResult.onClick.AddListener(OnClickQuickRollApplyResultButton);
-            }
-
-            SetActive(m_rectInventoryQuickRollPurposeButtons != null ? m_rectInventoryQuickRollPurposeButtons.gameObject : null, false);
-        }
-
-        private Button BindQuickRollPurposeButton(string buttonName, CharacterInventoryQuickRollPurpose purpose)
-        {
-            Button button = FindChildComponent<Button>(buttonName);
-            if (button == null)
-            {
-                return null;
-            }
-
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => OnClickQuickRollPurposeButton(purpose));
-            return button;
         }
 
         private void ChangeCurrentHpByButton(int delta)
@@ -2496,77 +2417,36 @@ namespace GameLogic
             }
 
             SetActive(m_rectInventoryActionButtons != null ? m_rectInventoryActionButtons.gameObject : null, true);
-            m_visibleInventoryQuickRollContext = BuildInventoryQuickRollContext(item);
-            m_visibleInventoryQuickRollResult = null;
-            m_visibleInventoryQuickRollPurpose = CharacterInventoryQuickRollPurpose.DisplayOnly;
-            m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
-            SetActive(m_rectInventoryQuickRollPurposeButtons != null ? m_rectInventoryQuickRollPurposeButtons.gameObject : null, false);
             if (m_tmpInputInventoryUseAmount != null)
             {
-                m_tmpInputInventoryUseAmount.text = "1";
+                m_tmpInputInventoryUseAmount.SetTextWithoutNotify("1");
             }
 
             SetInventoryActionButton(m_btnInventoryEquipAction, m_tmpInventoryEquipActionLabel, "装备/卸下");
             SetInventoryActionButton(m_btnInventoryAttuneAction, m_tmpInventoryAttuneActionLabel, "同调/解除同调");
-            SetInventoryActionButton(m_btnInventoryUseAction, m_tmpInventoryUseActionLabel, "使用");
-            SetInventoryActionButton(m_btnInventoryQuickRollAction, m_tmpInventoryQuickRollActionLabel, "快捷掷骰");
+            HideCreationInventoryUseControls();
         }
 
         private void HideInventoryActionButtons()
         {
             m_visibleInventoryItemInstanceId = string.Empty;
-            m_visibleInventoryQuickRollContext = null;
-            m_visibleInventoryQuickRollResult = null;
-            m_visibleInventoryQuickRollPurpose = CharacterInventoryQuickRollPurpose.DisplayOnly;
-            m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
             SetActive(m_rectInventoryActionButtons != null ? m_rectInventoryActionButtons.gameObject : null, false);
-            SetActive(m_rectInventoryQuickRollPurposeButtons != null ? m_rectInventoryQuickRollPurposeButtons.gameObject : null, false);
+            HideCreationInventoryUseControls();
         }
 
-        private int GetInventoryUseAmount()
+        private void HideCreationInventoryUseControls()
         {
-            if (m_tmpInputInventoryUseAmount == null)
-            {
-                return 1;
-            }
-
-            return int.TryParse(m_tmpInputInventoryUseAmount.text, out int amount) && amount > 0
-                ? amount
-                : 1;
+            SetActive(m_btnInventoryUseAction != null ? m_btnInventoryUseAction.gameObject : null, false);
+            SetActive(m_tmpInputInventoryUseAmount != null ? m_tmpInputInventoryUseAmount.gameObject : null, false);
+            SetActive(FindChildComponent<Button>("m_btnInventoryQuickRollAction")?.gameObject, false);
+            SetActive(FindChildComponent<RectTransform>("m_rectInventoryQuickRollPurposeButtons")?.gameObject, false);
+            SetActive(FindChildComponent<Button>("m_btnQuickRollApplyResult")?.gameObject, false);
         }
 
         private static void SetInventoryActionButton(Button button, TMP_Text label, string text)
         {
             SetActive(button != null ? button.gameObject : null, true);
             SetText(label, text);
-        }
-
-        private static CharacterInventoryQuickRollContext BuildInventoryQuickRollContext(CharacterEquipmentItemSaveData item)
-        {
-            if (item?.CustomEffects == null)
-            {
-                return null;
-            }
-
-            for (int index = 0; index < item.CustomEffects.Count; index++)
-            {
-                CharacterItemEffectSaveData effect = item.CustomEffects[index];
-                string diceExpression = effect?.DiceExpression?.Trim() ?? string.Empty;
-                if (string.IsNullOrWhiteSpace(diceExpression))
-                {
-                    continue;
-                }
-
-                return new CharacterInventoryQuickRollContext
-                {
-                    ItemInstanceId = item.ItemInstanceId ?? string.Empty,
-                    ItemName = FirstNonEmpty(item.ItemName, item.ItemId),
-                    EffectName = FirstNonEmpty(effect.Name, effect.Description),
-                    DiceExpression = diceExpression
-                };
-            }
-
-            return null;
         }
 
         private CharacterEquipmentItemSaveData FindDraftInventoryItem(string itemInstanceId)
@@ -2607,48 +2487,12 @@ namespace GameLogic
 
         private static bool IsInventoryItemEquippable(CharacterEquipmentItemSaveData item)
         {
-            if (item == null)
-            {
-                return false;
-            }
-
-            if (item.IsEquipped)
-            {
-                return true;
-            }
-
-            if (item.Consumable && item.Charges <= 0)
-            {
-                return false;
-            }
-
-            string itemType = item.ItemType?.Trim() ?? string.Empty;
-            string condition = item.EffectApplyCondition?.Trim() ?? string.Empty;
-            return item.IsEquipped
-                || string.Equals(itemType, "armor", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(itemType, "shield", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(itemType, "weapon", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(itemType, "tool", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(condition, "Equipped", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(condition, "Worn", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(condition, "Wielded", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(condition, "EquippedAndAttuned", StringComparison.OrdinalIgnoreCase)
-                || !string.Equals(CharacterArmorCategoryIds.Normalize(item.ArmorCategory), CharacterArmorCategoryIds.None, StringComparison.OrdinalIgnoreCase)
-                || !string.IsNullOrWhiteSpace(item.WeaponCategory)
-                || !string.IsNullOrWhiteSpace(item.ToolCategory)
-                || item.ArmorBaseAc > 0
-                || item.AcBonus != 0;
+            return CharacterItemTypeBehaviorUtility.IsInventoryItemEquippable(item);
         }
 
         private static bool IsInventoryItemUsable(CharacterEquipmentItemSaveData item)
         {
-            if (item == null)
-            {
-                return false;
-            }
-
-            return item.Charges > 0
-                || (item.Quantity > 0 && (item.Consumable || item.ConsumeOnUse));
+            return CharacterItemTypeBehaviorUtility.IsInventoryItemUsable(item);
         }
 
         private partial void OnClickInventoryEquipActionBtn()
@@ -2693,504 +2537,8 @@ namespace GameLogic
 
         private partial void OnClickInventoryUseActionBtn()
         {
-            CharacterEquipmentItemSaveData item = FindDraftInventoryItem(m_visibleInventoryItemInstanceId);
-            if (item == null)
-            {
-                HideInventoryActionButtons();
-                return;
-            }
-
-            if (!IsInventoryItemUsable(item))
-            {
-                return;
-            }
-
-            CharacterInventoryOperationResult result = CharacterCreationSessionService.Instance.UseInventoryItem(
-                m_visibleInventoryItemInstanceId,
-                GetInventoryUseAmount());
-            RefreshAfterInventoryAction(result, "物品已使用。");
-        }
-
-        private void OnClickInventoryQuickRollActionBtn()
-        {
-            CharacterEquipmentItemSaveData item = FindDraftInventoryItem(m_visibleInventoryItemInstanceId);
-            CharacterInventoryQuickRollContext context = BuildInventoryQuickRollContext(item)
-                ?? BuildManualInventoryRollContext(item);
-
-            Log.Info($"打开 DiceRollUI：{context.ItemName} / {context.EffectName} / {context.DiceExpression}");
-            m_visibleInventoryQuickRollContext = context;
-            m_visibleInventoryQuickRollPurpose = CharacterInventoryQuickRollPurpose.DisplayOnly;
-            m_visibleInventoryQuickRollResult = null;
-            m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
-            SetActive(m_rectInventoryQuickRollPurposeButtons != null ? m_rectInventoryQuickRollPurposeButtons.gameObject : null, false);
-            RefreshQuickRollApplyResultButtonState();
-            SetText(m_tmpFeatureDetailTitle, "快捷掷骰");
-            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollPendingText(context));
-            GameModule.UI.ShowUIAsync<DiceRollUI>(new DiceRollUIRequest
-            {
-                SourceType = "inventory_item",
-                SourceId = context.ItemInstanceId,
-                SourceName = context.ItemName,
-                EffectName = context.EffectName,
-                DiceExpression = context.DiceExpression,
-                OnResult = OnInventoryDiceRollUIResult
-            });
-        }
-
-        private static CharacterInventoryQuickRollContext BuildManualInventoryRollContext(CharacterEquipmentItemSaveData item)
-        {
-            return new CharacterInventoryQuickRollContext
-            {
-                ItemInstanceId = item?.ItemInstanceId ?? string.Empty,
-                ItemName = FirstNonEmpty(item?.ItemName, item?.ItemId),
-                EffectName = "手动掷骰",
-                DiceExpression = "1d20"
-            };
-        }
-
-        private void OnInventoryDiceRollUIResult(DiceRollUIResult result)
-        {
-            if (result == null)
-            {
-                return;
-            }
-
-            if (m_visibleInventoryQuickRollContext == null
-                || (!string.IsNullOrWhiteSpace(m_visibleInventoryQuickRollContext.ItemInstanceId)
-                    && !string.Equals(m_visibleInventoryQuickRollContext.ItemInstanceId, result.SourceId?.Trim() ?? string.Empty, StringComparison.OrdinalIgnoreCase)))
-            {
-                return;
-            }
-
-            bool isNewRollResult = !ReferenceEquals(m_visibleInventoryQuickRollResult, result.RollResult);
-            m_visibleInventoryQuickRollResult = result.RollResult;
-            m_visibleInventoryQuickRollPurpose = ConvertDiceRollPurpose(result.Purpose);
-            string purposeDisplayName = GetQuickRollPurposeDisplayName(m_visibleInventoryQuickRollPurpose);
-            if (isNewRollResult || string.IsNullOrWhiteSpace(m_visibleInventoryQuickRollHistoryEntryId))
-            {
-                CharacterDiceRollHistoryEntry historyEntry = CharacterCreationSessionService.Instance.AddDiceRollHistoryEntry(
-                    m_visibleInventoryQuickRollContext,
-                    m_visibleInventoryQuickRollResult,
-                    purposeDisplayName);
-                m_visibleInventoryQuickRollHistoryEntryId = historyEntry?.EntryId ?? string.Empty;
-            }
-            else
-            {
-                CharacterCreationSessionService.Instance.UpdateDiceRollHistoryPurpose(
-                    m_visibleInventoryQuickRollHistoryEntryId,
-                    purposeDisplayName);
-            }
-
-            SetActive(m_rectInventoryQuickRollPurposeButtons != null ? m_rectInventoryQuickRollPurposeButtons.gameObject : null, false);
-            RefreshQuickRollApplyResultButtonState();
-            SetText(m_tmpFeatureDetailTitle, "快捷掷骰");
-            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollResultText(
-                m_visibleInventoryQuickRollContext,
-                m_visibleInventoryQuickRollResult,
-                m_visibleInventoryQuickRollPurpose));
-        }
-
-        private void OnClickQuickRollPurposeButton(CharacterInventoryQuickRollPurpose purpose)
-        {
-            if (m_visibleInventoryQuickRollContext == null)
-            {
-                return;
-            }
-
-            m_visibleInventoryQuickRollPurpose = purpose;
-            CharacterCreationSessionService.Instance.UpdateDiceRollHistoryPurpose(
-                m_visibleInventoryQuickRollHistoryEntryId,
-                GetQuickRollPurposeDisplayName(m_visibleInventoryQuickRollPurpose));
-            SetActive(m_rectInventoryQuickRollPurposeButtons != null ? m_rectInventoryQuickRollPurposeButtons.gameObject : null, true);
-            RefreshQuickRollApplyResultButtonState();
-            SetText(m_tmpFeatureDetailTitle, "快捷掷骰");
-            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollResultText(
-                m_visibleInventoryQuickRollContext,
-                m_visibleInventoryQuickRollResult,
-                m_visibleInventoryQuickRollPurpose));
-        }
-
-        private void RefreshQuickRollApplyResultButtonState()
-        {
-            if (m_btnQuickRollApplyResult == null)
-            {
-                return;
-            }
-
-            m_btnQuickRollApplyResult.interactable = m_visibleInventoryQuickRollResult != null
-                && m_visibleInventoryQuickRollResult.Success
-                && m_visibleInventoryQuickRollPurpose == CharacterInventoryQuickRollPurpose.HealHp;
-        }
-
-        private void OnClickQuickRollApplyResultButton()
-        {
-            if (m_visibleInventoryQuickRollContext == null
-                || m_visibleInventoryQuickRollResult == null
-                || !m_visibleInventoryQuickRollResult.Success
-                || m_visibleInventoryQuickRollPurpose != CharacterInventoryQuickRollPurpose.HealHp)
-            {
-                return;
-            }
-
-            CharacterCreationViewState state = CharacterCreationViewStateService.Instance.BuildCurrentViewState(
-                ParseLevel(m_tmpInputLevel != null ? m_tmpInputLevel.text : string.Empty));
-            int maxHp = ParsePlainInt(state?.MaxHpText);
-            int previousHp = ParsePlainInt(state?.CurrentHpText);
-            int healAmount = Math.Max(0, m_visibleInventoryQuickRollResult.Total);
-            if (maxHp <= 0 || healAmount <= 0)
-            {
-                return;
-            }
-
-            CharacterEquipmentItemSaveData item = FindDraftInventoryItem(m_visibleInventoryItemInstanceId);
-            string consumeMessage = string.Empty;
-            if (IsInventoryItemUsable(item))
-            {
-                CharacterInventoryOperationResult consumeResult = CharacterCreationSessionService.Instance.UseInventoryItem(
-                    m_visibleInventoryItemInstanceId,
-                    GetInventoryUseAmount());
-                if (consumeResult == null || !consumeResult.Success)
-                {
-                    Log.Warning(consumeResult == null || string.IsNullOrWhiteSpace(consumeResult.Message) ? "物品消耗失败。" : consumeResult.Message);
-                    return;
-                }
-
-                consumeMessage = BuildQuickRollConsumeMessage(consumeResult);
-            }
-
-            if (!CharacterCreationSessionService.Instance.HealCurrentHp(healAmount, maxHp))
-            {
-                return;
-            }
-
-            RefreshCreationView();
-            CharacterCreationViewState refreshedState = CharacterCreationViewStateService.Instance.BuildCurrentViewState(
-                ParseLevel(m_tmpInputLevel != null ? m_tmpInputLevel.text : string.Empty));
-            int currentHp = ParsePlainInt(refreshedState?.CurrentHpText);
-            bool itemStillExists = TryFindInventoryDisplayEntry(m_visibleInventoryItemInstanceId, out _);
-            string appliedMessage = BuildQuickRollAppliedMessage(previousHp, currentHp, refreshedState?.MaxHpText, consumeMessage);
-            CharacterCreationSessionService.Instance.MarkDiceRollHistoryApplied(m_visibleInventoryQuickRollHistoryEntryId, appliedMessage);
-            SetText(m_tmpFeatureDetailTitle, "快捷掷骰");
-            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollResultText(
-                m_visibleInventoryQuickRollContext,
-                m_visibleInventoryQuickRollResult,
-                m_visibleInventoryQuickRollPurpose,
-                appliedMessage));
-            m_visibleInventoryQuickRollResult = null;
-            RefreshQuickRollApplyResultButtonState();
-            if (!itemStillExists)
-            {
-                HideInventoryActionButtons();
-            }
-        }
-
-        private static string BuildQuickRollConsumeMessage(CharacterInventoryOperationResult result)
-        {
-            if (result == null || string.IsNullOrWhiteSpace(result.Message))
-            {
-                return string.Empty;
-            }
-
-            string message = result.Message.Trim();
-            if (string.Equals(message, "Item charge consumed.", StringComparison.OrdinalIgnoreCase))
-            {
-                return "已消耗充能。";
-            }
-
-            if (string.Equals(message, "Item quantity consumed.", StringComparison.OrdinalIgnoreCase))
-            {
-                return "已消耗数量。";
-            }
-
-            if (string.Equals(message, "Item consumed.", StringComparison.OrdinalIgnoreCase))
-            {
-                return "物品已消耗。";
-            }
-
-            return message;
-        }
-
-        private static string BuildQuickRollAppliedMessage(int previousHp, int currentHp, string maxHpText, string consumeMessage)
-        {
-            string message = $"已应用恢复生命值：{previousHp} -> {currentHp}/{(string.IsNullOrWhiteSpace(maxHpText) ? "-" : maxHpText.Trim())}";
-            if (!string.IsNullOrWhiteSpace(consumeMessage))
-            {
-                message = $"{message}\n{consumeMessage.Trim()}";
-            }
-
-            return message;
-        }
-
-        private string BuildInventoryQuickRollResultText(
-            CharacterInventoryQuickRollContext context,
-            CharacterDiceRollResultData result,
-            CharacterInventoryQuickRollPurpose purpose,
-            string appliedMessage = "")
-        {
-            if (context == null)
-            {
-                return string.Empty;
-            }
-
-            StringBuilder builder = new StringBuilder();
-            AppendLocalItemDetailLine(builder, "来源物品", context.ItemName);
-            AppendLocalItemDetailLine(builder, "词条", context.EffectName);
-            AppendLocalItemDetailLine(builder, "骰子表达式", context.DiceExpression);
-
-            if (result == null || !result.Success)
-            {
-                AppendLocalItemDetailLine(builder, "掷骰失败", result?.Error ?? "未知掷骰错误。");
-                return builder.ToString();
-            }
-
-            AppendLocalItemDetailLine(builder, "掷骰结果", result.Summary);
-            AppendLocalItemDetailLine(builder, "总值", result.Total.ToString());
-            AppendInventoryQuickRollPurposeText(builder, purpose, result);
-            AppendLocalItemDetailLine(builder, "应用结果", appliedMessage);
-            AppendDiceRollHistoryText(builder);
-            return builder.ToString();
-        }
-
-        private static string BuildInventoryQuickRollPendingText(CharacterInventoryQuickRollContext context)
-        {
-            if (context == null)
-            {
-                return string.Empty;
-            }
-
-            StringBuilder builder = new StringBuilder();
-            AppendLocalItemDetailLine(builder, "来源物品", context.ItemName);
-            AppendLocalItemDetailLine(builder, "词条", context.EffectName);
-            AppendLocalItemDetailLine(builder, "骰子表达式", context.DiceExpression);
-            AppendLocalItemDetailLine(builder, "状态", "已打开掷骰弹窗，请在弹窗中完成掷骰。");
-            return builder.ToString();
-        }
-
-        private static void AppendDiceRollHistoryText(StringBuilder builder)
-        {
-            if (builder == null)
-            {
-                return;
-            }
-
-            IReadOnlyList<CharacterDiceRollHistoryEntry> history = CharacterCreationSessionService.Instance.DiceRollHistory;
-            if (history == null || history.Count == 0)
-            {
-                return;
-            }
-
-            builder.AppendLine();
-            builder.AppendLine(CharacterDiceRollHistoryFormatter.BuildRecentHistoryText(history, 5, true));
-        }
-
-        private void AppendInventoryQuickRollPurposeText(
-            StringBuilder builder,
-            CharacterInventoryQuickRollPurpose purpose,
-            CharacterDiceRollResultData result)
-        {
-            if (builder == null || result == null || !result.Success)
-            {
-                return;
-            }
-
-            CharacterCreationViewState state = CharacterCreationViewStateService.Instance.BuildCurrentViewState(
-                ParseLevel(m_tmpInputLevel != null ? m_tmpInputLevel.text : string.Empty));
-            CharacterRuntimeSnapshotData snapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(
-                CharacterCreationSessionService.Instance.CurrentState?.Character);
-
-            AppendLocalItemDetailLine(builder, "用途", GetQuickRollPurposeDisplayName(purpose));
-            switch (purpose)
-            {
-                case CharacterInventoryQuickRollPurpose.HealHp:
-                    AppendLocalItemDetailLine(builder, "当前生命值", $"{state.CurrentHpText}/{state.MaxHpText}");
-                    AppendLocalItemDetailLine(builder, "恢复后预览", BuildHealHpPreviewText(state, result.Total));
-                    break;
-                case CharacterInventoryQuickRollPurpose.AttackHit:
-                    AppendLocalItemDetailLine(builder, "当前通用命中加值", BuildSignedSnapshotValue(snapshot?.AttackBonus ?? 0));
-                    AppendLocalItemDetailLine(builder, "当前武器命中加值", BuildSignedSnapshotValue(snapshot?.WeaponAttackBonus ?? 0));
-                    AppendLocalItemDetailLine(builder, "通用命中预览", BuildTotalWithBonusPreview(result.Total, snapshot?.AttackBonus ?? 0));
-                    AppendLocalItemDetailLine(builder, "物品武器命中预览", BuildTotalWithBonusPreview(result.Total, (snapshot?.AttackBonus ?? 0) + (snapshot?.WeaponAttackBonus ?? 0)));
-                    AppendLocalItemDetailLine(builder, "说明", "这里显示物品/装备提供的通用命中加值；具体攻击动作的属性调整值和熟练项仍由玩家选择判断。");
-                    break;
-                case CharacterInventoryQuickRollPurpose.Damage:
-                    AppendLocalItemDetailLine(builder, "当前伤害加值", BuildSignedSnapshotValue(snapshot?.DamageBonus ?? 0));
-                    AppendLocalItemDetailLine(builder, "伤害预览", BuildTotalWithBonusPreview(result.Total, snapshot?.DamageBonus ?? 0));
-                    break;
-                case CharacterInventoryQuickRollPurpose.SkillCheck:
-                    AppendLocalItemDetailLine(builder, "技能加值", BuildSkillReferenceText(state));
-                    AppendLocalItemDetailLine(builder, "技能结果预览", BuildSkillRollPreviewText(state, result.Total));
-                    AppendLocalItemDetailLine(builder, "说明", "请选择本次检定对应的技能，使用对应预览结果。");
-                    break;
-                case CharacterInventoryQuickRollPurpose.SavingThrow:
-                    AppendLocalItemDetailLine(builder, "当前豁免通用加值", BuildSignedSnapshotValue(snapshot?.SavingThrowBonus ?? 0));
-                    AppendLocalItemDetailLine(builder, "通用豁免预览", BuildTotalWithBonusPreview(result.Total, snapshot?.SavingThrowBonus ?? 0));
-                    AppendLocalItemDetailLine(builder, "说明", "这里显示物品/装备提供的通用豁免加值；具体豁免仍需结合对应属性调整值和豁免熟练项判断。");
-                    break;
-                case CharacterInventoryQuickRollPurpose.SpellAttack:
-                    AppendLocalItemDetailLine(builder, "当前法术攻击加值", state.SpellAttackBonusText);
-                    AppendLocalItemDetailLine(builder, "法术攻击预览", BuildTotalWithBonusPreview(result.Total, ParseSignedText(state.SpellAttackBonusText)));
-                    break;
-                case CharacterInventoryQuickRollPurpose.SpellSaveDc:
-                    AppendLocalItemDetailLine(builder, "当前法术豁免DC", state.SpellSaveDcText);
-                    AppendLocalItemDetailLine(builder, "掷骰结果", result.Total.ToString());
-                    AppendLocalItemDetailLine(builder, "说明", "法术豁免DC通常不与掷骰总值相加，这里仅显示当前最终DC供判断。");
-                    break;
-                case CharacterInventoryQuickRollPurpose.Custom:
-                    AppendLocalItemDetailLine(builder, "说明", "自定义用途由玩家和DM根据物品描述判断。");
-                    break;
-                default:
-                    AppendLocalItemDetailLine(builder, "说明", "仅显示本次掷骰结果，不应用到角色数据。");
-                    break;
-            }
-        }
-
-        private static string GetQuickRollPurposeDisplayName(CharacterInventoryQuickRollPurpose purpose)
-        {
-            switch (purpose)
-            {
-                case CharacterInventoryQuickRollPurpose.HealHp:
-                    return "恢复生命值";
-                case CharacterInventoryQuickRollPurpose.AttackHit:
-                    return "攻击命中";
-                case CharacterInventoryQuickRollPurpose.Damage:
-                    return "伤害数值";
-                case CharacterInventoryQuickRollPurpose.SkillCheck:
-                    return "技能检定";
-                case CharacterInventoryQuickRollPurpose.SavingThrow:
-                    return "豁免检定";
-                case CharacterInventoryQuickRollPurpose.SpellAttack:
-                    return "法术攻击";
-                case CharacterInventoryQuickRollPurpose.SpellSaveDc:
-                    return "法术豁免DC";
-                case CharacterInventoryQuickRollPurpose.Custom:
-                    return "自定义/DM判断";
-                default:
-                    return "仅显示结果";
-            }
-        }
-
-        private static CharacterInventoryQuickRollPurpose ConvertDiceRollPurpose(string purpose)
-        {
-            switch (purpose?.Trim())
-            {
-                case "heal_hp":
-                    return CharacterInventoryQuickRollPurpose.HealHp;
-                case "attack_hit":
-                    return CharacterInventoryQuickRollPurpose.AttackHit;
-                case "damage":
-                    return CharacterInventoryQuickRollPurpose.Damage;
-                case "skill_check":
-                    return CharacterInventoryQuickRollPurpose.SkillCheck;
-                case "saving_throw":
-                    return CharacterInventoryQuickRollPurpose.SavingThrow;
-                case "spell_attack":
-                    return CharacterInventoryQuickRollPurpose.SpellAttack;
-                case "spell_save_dc":
-                    return CharacterInventoryQuickRollPurpose.SpellSaveDc;
-                case "custom":
-                    return CharacterInventoryQuickRollPurpose.Custom;
-                default:
-                    return CharacterInventoryQuickRollPurpose.DisplayOnly;
-            }
-        }
-
-        private static string BuildHealHpPreviewText(CharacterCreationViewState state, int healValue)
-        {
-            int currentHp = ParsePlainInt(state?.CurrentHpText);
-            int maxHp = ParsePlainInt(state?.MaxHpText);
-            if (maxHp <= 0)
-            {
-                return $"恢复 {Math.Max(0, healValue)} 点，当前最大生命值未知。";
-            }
-
-            int healedHp = Mathf.Clamp(currentHp + Math.Max(0, healValue), 0, maxHp);
-            return $"{currentHp} + {Math.Max(0, healValue)} => {healedHp}/{maxHp}";
-        }
-
-        private static string BuildTotalWithBonusPreview(int rollTotal, int bonus)
-        {
-            if (bonus == 0)
-            {
-                return rollTotal.ToString();
-            }
-
-            return $"{rollTotal} {FormatSigned(bonus)} = {rollTotal + bonus}";
-        }
-
-        private static string BuildSignedSnapshotValue(int value)
-        {
-            return value == 0 ? "0" : FormatSigned(value);
-        }
-
-        private static string BuildSkillReferenceText(CharacterCreationViewState state)
-        {
-            if (state?.Skills == null || state.Skills.Count == 0)
-            {
-                return string.Empty;
-            }
-
-            StringBuilder builder = new StringBuilder();
-            for (int index = 0; index < SkillDisplayBindings.Length && index < state.Skills.Count; index++)
-            {
-                CharacterCreationSkillViewState skill = state.Skills[index];
-                if (skill == null)
-                {
-                    continue;
-                }
-
-                AppendSkillPreviewSeparator(builder, index);
-
-                builder.Append(SkillDisplayBindings[index].DisplayName);
-                builder.Append(skill.BonusText);
-            }
-
-            return builder.ToString();
-        }
-
-        private static string BuildSkillRollPreviewText(CharacterCreationViewState state, int rollTotal)
-        {
-            if (state?.Skills == null || state.Skills.Count == 0)
-            {
-                return string.Empty;
-            }
-
-            StringBuilder builder = new StringBuilder();
-            for (int index = 0; index < SkillDisplayBindings.Length && index < state.Skills.Count; index++)
-            {
-                CharacterCreationSkillViewState skill = state.Skills[index];
-                if (skill == null)
-                {
-                    continue;
-                }
-
-                AppendSkillPreviewSeparator(builder, index);
-
-                builder.Append(SkillDisplayBindings[index].DisplayName);
-                builder.Append("：");
-                builder.Append(rollTotal + skill.Bonus);
-            }
-
-            return builder.ToString();
-        }
-
-        private static void AppendSkillPreviewSeparator(StringBuilder builder, int index)
-        {
-            if (builder == null || builder.Length == 0)
-            {
-                return;
-            }
-
-            builder.Append(index > 0 && index % 6 == 0 ? "\n" : "，");
-        }
-
-        private static int ParseSignedText(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value) || value.Trim() == "-")
-            {
-                return 0;
-            }
-
-            return int.TryParse(value.Trim(), out int result) ? result : 0;
+            SetText(m_tmpFeatureDetailTitle, "物品");
+            SetText(m_tmpFeatureDetailDescription, "创建角色界面不支持使用物品。请在角色卡窗口中使用物品。");
         }
 
         private static int ParsePlainInt(string value)
@@ -3969,7 +3317,9 @@ namespace GameLogic
             StringBuilder builder = new StringBuilder();
             AppendLocalItemDetailLine(builder, "类型", data.ItemType);
             AppendLocalItemDetailLine(builder, "稀有度", data.Rarity);
-            AppendLocalItemDetailLine(builder, "数量", Math.Max(1, data.Quantity).ToString());
+            AppendLocalItemDetailLine(builder, "价格", data.PriceGp > 0 ? $"{data.PriceGp} gp" : string.Empty);
+            AppendLocalItemDetailLine(builder, "装备栏位", data.EquipmentSlot);
+            AppendLocalItemDetailLine(builder, "需要同调", data.RequiresAttunement ? "是" : string.Empty);
             AppendLocalItemDetailLine(builder, "护甲类型", data.ArmorCategory);
             if (data.ArmorBaseAc > 0)
             {
@@ -3984,9 +3334,9 @@ namespace GameLogic
             AppendLocalItemDetailLine(builder, "武器类型", data.WeaponCategory);
             AppendLocalItemDetailLine(builder, "伤害", BuildLocalItemDamageText(data));
             AppendLocalItemDetailLine(builder, "工具类型", data.ToolCategory);
-            if (data.Charges > 0)
+            if (data.MaxCharges > 0)
             {
-                AppendLocalItemDetailLine(builder, "充能", data.Charges.ToString());
+                AppendLocalItemDetailLine(builder, "最大充能", data.MaxCharges.ToString());
             }
 
             AppendLocalItemDetailLine(builder, "生效条件", data.EffectApplyCondition);

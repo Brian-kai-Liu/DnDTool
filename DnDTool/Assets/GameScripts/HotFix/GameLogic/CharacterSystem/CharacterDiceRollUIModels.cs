@@ -8,6 +8,7 @@ namespace GameLogic
         public string SourceId { get; set; } = string.Empty;
         public string SourceName { get; set; } = string.Empty;
         public string EffectName { get; set; } = string.Empty;
+        public string EffectDescription { get; set; } = string.Empty;
         public string DiceExpression { get; set; } = string.Empty;
         public Action<DiceRollUIResult> OnResult { get; set; }
     }
@@ -18,6 +19,7 @@ namespace GameLogic
         public string SourceId { get; set; } = string.Empty;
         public string SourceName { get; set; } = string.Empty;
         public string EffectName { get; set; } = string.Empty;
+        public string EffectDescription { get; set; } = string.Empty;
         public string Purpose { get; set; } = string.Empty;
         public CharacterDiceRollResultData RollResult { get; set; }
     }

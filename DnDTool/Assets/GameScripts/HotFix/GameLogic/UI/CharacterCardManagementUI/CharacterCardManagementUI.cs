@@ -24,6 +24,14 @@ namespace GameLogic
         }
     }
 
+    internal enum CharacterCardPopupMode
+    {
+        None,
+        Info,
+        OptionList,
+        Form
+    }
+
     [Window(UILayer.UI, location: "CharacterCardManagementUI", fullScreen: true)]
     internal sealed class CharacterCardManagementUI : UIWindow
     {
@@ -83,8 +91,8 @@ namespace GameLogic
         private TMP_Text m_tmpCurrentHp;
         private TMP_Text m_tmpMaxHp;
         private TMP_Text m_tmpTempHp;
-        private TMP_Text m_tmpDeathSaveSuccesses;
-        private TMP_Text m_tmpDeathSaveFailures;
+        private TMP_Text m_tmpDeathSaveSuccessesCount;
+        private TMP_Text m_tmpDeathSaveFailuresCount;
         private TMP_Text m_tmpAc;
         private TMP_Text m_tmpInitiative;
         private TMP_Text m_tmpSpeed;
@@ -142,33 +150,78 @@ namespace GameLogic
         private TMP_Text m_tmpRaceFeatureRaceName;
         private TMP_Text m_tmpRaceFeatureSubRaceName;
         private GameObject m_goRaceFeatureTemplate;
+        private Button m_btnSectionSpells;
+        private RectTransform m_rectSpellContent;
+        private GameObject m_goSpellTemplate;
         private Button m_btnSectionInventory;
+        private Button m_btnAddInventoryItem;
         private RectTransform m_rectInventoryContent;
         private GameObject m_goInventoryItemTemplate;
         private TMP_Text m_tmpInventorySectionTitle;
         private TMP_Text m_tmpCurrentWeight;
         private TMP_Text m_tmpWeightLine;
         private TMP_Text m_tmpMaxWeight;
+        private GameObject m_panelInventoryActionButtons;
+        private GameObject m_goInventoryUseAmount;
+        private TMP_Text m_tmpInventoryUseAmountLabel;
+        private TMP_InputField m_tmpInputInventoryUseAmount;
+        private Button m_btnInventoryUseAction;
+        private TMP_Text m_tmpInventoryUseActionLabel;
+        private Button m_btnInventoryRestoreChargesAction;
+        private TMP_Text m_tmpInventoryRestoreChargesActionLabel;
+        private Button m_btnInventoryEquipAction;
+        private TMP_Text m_tmpInventoryEquipActionLabel;
+        private Button m_btnInventoryAttuneAction;
+        private TMP_Text m_tmpInventoryAttuneActionLabel;
+        private Button m_btnInventoryRemoveAction;
+        private TMP_Text m_tmpInventoryRemoveActionLabel;
+        private Button m_btnDiceHistory;
         private RectTransform m_gridStatusEffects;
         private GameObject m_goStatusEffectTemplate;
+        private GameObject m_panelCharacterPopup;
+        private TMP_Text m_tmpCharacterPopupTitle;
+        private TMP_Text m_tmpCharacterPopupDescription;
+        private Button m_btnCharacterPopupClose;
+        private Button m_btnCharacterPopupConfirm;
+        private TMP_Text m_tmpCharacterPopupConfirm;
+        private GameObject m_goCharacterPopupList;
+        private RectTransform m_rectCharacterPopupContent;
+        private RectTransform m_rectCharacterPopupOptionContentRoot;
+        private RectTransform m_rectCharacterPopupSelectedContent;
+        private RectTransform m_rectCharacterPopupSelectedContentRoot;
+        private GameObject m_goCharacterPopupOptionTemplate;
+        private GameObject m_goCharacterPopupSelectedTemplate;
+        private GameObject m_panelCharacterPopupForm;
+        private TMP_InputField m_inputCharacterPopupName;
+        private TMP_InputField m_inputCharacterPopupDescription;
         private readonly TMP_Text[] m_tmpSkillBonuses = new TMP_Text[18];
         private readonly Image[] m_imgSkillBackgrounds = new Image[18];
         private readonly Color[] m_defaultSkillBackgroundColors = new Color[18];
         private readonly List<CharacterClassSectionView> m_classSectionViews = new List<CharacterClassSectionView>();
         private readonly List<GameObject> m_equipmentToolItems = new List<GameObject>();
         private readonly List<GameObject> m_raceFeatureItems = new List<GameObject>();
+        private readonly List<GameObject> m_spellItems = new List<GameObject>();
         private readonly List<GameObject> m_otherFeatureItems = new List<GameObject>();
         private readonly List<GameObject> m_inventoryItems = new List<GameObject>();
+        private readonly List<GameObject> m_characterPopupOptionItems = new List<GameObject>();
+        private readonly List<GameObject> m_characterPopupSelectedItems = new List<GameObject>();
         private readonly List<GameObject> m_statusEffectItems = new List<GameObject>();
 
         private readonly List<CharacterCardDraftSaveData> m_characterCards = new List<CharacterCardDraftSaveData>();
         private readonly List<CharacterListItemViewState> m_characterListItems = new List<CharacterListItemViewState>();
         private readonly List<CharacterCardListItemView> m_cardViews = new List<CharacterCardListItemView>();
+        private List<LocalCustomItemSaveData> m_localItemOptions = new List<LocalCustomItemSaveData>();
+        private readonly List<string> m_pendingLocalItemOrder = new List<string>();
+        private readonly Dictionary<string, int> m_pendingLocalItemCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         private int m_selectedCharacterIndex = -1;
+        private string m_pendingLocalItemId = string.Empty;
+        private bool m_showingLocalItemOptions;
+        private CharacterCardPopupMode m_popupMode = CharacterCardPopupMode.None;
         private CharacterInventoryQuickRollContext m_visibleInventoryQuickRollContext;
         private CharacterDiceRollResultData m_visibleInventoryQuickRollResult;
         private string m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
         private string m_visibleInventoryQuickRollCharacterId = string.Empty;
+        private string m_visibleInventoryItemInstanceId = string.Empty;
         private Texture2D m_loadedPortraitTexture;
         private Sprite m_loadedPortraitSprite;
         private string m_loadedPortraitPath = string.Empty;
@@ -196,8 +249,8 @@ namespace GameLogic
             m_tmpCurrentHp = FindRightPanelComponent<TextMeshProUGUI>("m_imgHpBackground/m_tmpCurrentHp");
             m_tmpMaxHp = FindRightPanelComponent<TextMeshProUGUI>("m_imgHpBackground/m_tmpMaxHp");
             m_tmpTempHp = FindRightPanelComponent<TextMeshProUGUI>("m_imgHpBackground/m_tmpTempHp");
-            m_tmpDeathSaveSuccesses = FindRightPanelComponent<TextMeshProUGUI>("m_imgDeathSavesBackground/m_tmpDeathSaveSuccesses");
-            m_tmpDeathSaveFailures = FindRightPanelComponent<TextMeshProUGUI>("m_imgDeathSavesBackground/m_tmpDeathSaveFailures");
+            m_tmpDeathSaveSuccessesCount = FindRightPanelComponent<TextMeshProUGUI>("m_imgDeathSavesBackground/m_tmpDeathSaveSuccessesCount");
+            m_tmpDeathSaveFailuresCount = FindRightPanelComponent<TextMeshProUGUI>("m_imgDeathSavesBackground/m_tmpDeathSaveFailuresCount");
             m_sliderExperience = FindRightPanelComponent<Slider>("m_sliderExperience");
             m_tmpExperienceValue = FindRightPanelComponent<TextMeshProUGUI>("m_sliderExperience/m_tmpExperienceValue");
             m_imgCharacterPortrait = FindRightPanelComponent<Image>("m_imgCharacterPortrait");
@@ -213,7 +266,7 @@ namespace GameLogic
             m_tmpIntelligenceModifier = GetBoundComponent<TextMeshProUGUI>(20, nameof(m_tmpIntelligenceModifier));
             m_tmpWisdomModifier = GetBoundComponent<TextMeshProUGUI>(21, nameof(m_tmpWisdomModifier));
             m_tmpCharismaModifier = GetBoundComponent<TextMeshProUGUI>(22, nameof(m_tmpCharismaModifier));
-            m_tmpProficiencyBonus = GetBoundComponent<TextMeshProUGUI>(23, nameof(m_tmpProficiencyBonus));
+            m_tmpProficiencyBonus = FindRightPanelComponent<TextMeshProUGUI>("m_imgProficiencyBonusBackground/m_tmpProficiencyBonus");
             m_tmpEquipmentTools = GetBoundComponent<TextMeshProUGUI>(24, nameof(m_tmpEquipmentTools));
             m_btnSectionSkills = GetBoundComponent<Button>(28, nameof(m_btnSectionSkills));
             m_rectSkillProficiencies = GetBoundComponent<RectTransform>(29, nameof(m_rectSkillProficiencies));
@@ -241,24 +294,43 @@ namespace GameLogic
             m_tmpRaceFeatureRaceName = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionRace/m_panelRaceFeatureHeader/m_tmpRaceFeatureRaceName");
             m_tmpRaceFeatureSubRaceName = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionRace/m_panelRaceFeatureHeader/m_tmpRaceFeatureSubRaceName");
             m_goRaceFeatureTemplate = FindRightPanelComponent<RectTransform>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_rectRaceFeatureContent/m_itemRaceFeatureTemplate")?.gameObject;
+            m_btnSectionSpells = FindRightPanelComponent<Button>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_btnSectionSpells");
+            m_rectSpellContent = FindRightPanelComponent<RectTransform>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_rectSpellContent");
+            m_goSpellTemplate = FindRightPanelComponent<RectTransform>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_rectSpellContent/m_itemSpellTemplate")?.gameObject;
             m_tmpClassLevel = GetBoundComponent<TextMeshProUGUI>(51, nameof(m_tmpClassLevel));
             m_rectClassFeatureContent = GetBoundComponent<RectTransform>(52, nameof(m_rectClassFeatureContent));
             m_goClassFeatureTemplate = GetBoundComponent<RectTransform>(53, nameof(m_goClassFeatureTemplate))?.gameObject;
             m_tmpClassFeatureClassName = GetBoundComponent<TextMeshProUGUI>(54, nameof(m_tmpClassFeatureClassName));
             m_tmpClassFeatureSubclassName = GetBoundComponent<TextMeshProUGUI>(55, nameof(m_tmpClassFeatureSubclassName));
             m_btnSectionInventory = GetBoundComponent<Button>(62, nameof(m_btnSectionInventory));
+            m_btnAddInventoryItem = FindRightPanelComponent<Button>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_btnAddInventoryItem");
             m_rectInventoryContent = GetBoundComponent<RectTransform>(63, nameof(m_rectInventoryContent));
             m_goInventoryItemTemplate = GetBoundComponent<RectTransform>(64, nameof(m_goInventoryItemTemplate))?.gameObject;
             m_tmpInventorySectionTitle = GetBoundComponent<TextMeshProUGUI>(65, nameof(m_tmpInventorySectionTitle));
             m_tmpCurrentWeight = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_tmpCurrentWeight");
             m_tmpWeightLine = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_tmpWeightLine");
             m_tmpMaxWeight = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionInventory/m_panelInventoryHeader/m_tmpMaxWeight");
+            m_panelInventoryActionButtons = FindRightPanelComponent<RectTransform>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons")?.gameObject;
+            m_goInventoryUseAmount = FindRightPanelComponent<RectTransform>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/InventoryUseAmount")?.gameObject;
+            m_tmpInventoryUseAmountLabel = FindRightPanelComponent<TextMeshProUGUI>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/InventoryUseAmount/m_tmpInventoryUseAmountLabel");
+            m_tmpInputInventoryUseAmount = FindRightPanelComponent<TMP_InputField>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/InventoryUseAmount/m_tmpInputInventoryUseAmount");
+            m_btnInventoryUseAction = FindRightPanelComponent<Button>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryUseAction");
+            m_tmpInventoryUseActionLabel = FindRightPanelComponent<TextMeshProUGUI>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryUseAction/m_tmpInventoryUseActionLabel");
+            m_btnInventoryRestoreChargesAction = FindRightPanelComponent<Button>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryRestoreChargesAction");
+            m_tmpInventoryRestoreChargesActionLabel = FindRightPanelComponent<TextMeshProUGUI>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryRestoreChargesAction/m_tmpInventoryRestoreChargesActionLabel");
+            m_btnInventoryEquipAction = FindRightPanelComponent<Button>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryEquipAction");
+            m_tmpInventoryEquipActionLabel = FindRightPanelComponent<TextMeshProUGUI>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryEquipAction/m_tmpInventoryEquipActionLabel");
+            m_btnInventoryAttuneAction = FindRightPanelComponent<Button>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryAttuneAction");
+            m_tmpInventoryAttuneActionLabel = FindRightPanelComponent<TextMeshProUGUI>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryAttuneAction/m_tmpInventoryAttuneActionLabel");
+            m_btnInventoryRemoveAction = FindRightPanelComponent<Button>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryRemoveAction");
+            m_tmpInventoryRemoveActionLabel = FindRightPanelComponent<TextMeshProUGUI>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnInventoryRemoveAction/m_tmpInventoryRemoveActionLabel");
+            m_btnDiceHistory = FindRightPanelComponent<Button>("m_scrollDetailInfoPanel/m_panelFeatureDetailDescription/m_panelInventoryActionButtons/m_btnDiceHistory");
             m_gridStatusEffects = FindRightPanelComponent<RectTransform>("m_gridStatusEffects");
             m_goStatusEffectTemplate = FindRightPanelComponent<RectTransform>("m_gridStatusEffects/m_itemStatusEffectTemplate")?.gameObject;
             m_tmpAc = FindRightPanelComponent<TextMeshProUGUI>("m_imgAcBackground/m_tmpAc");
             m_tmpInitiative = FindRightPanelComponent<TextMeshProUGUI>("m_imgInitiativeBackground/m_tmpInitiative");
             m_tmpSpeed = FindRightPanelComponent<TextMeshProUGUI>("m_imgSpeedBackground/m_tmpSpeed");
-            m_tmpPassivePerception = FindRightPanelComponent<TextMeshProUGUI>("m_img被动感知/m_tmp被动感知");
+            m_tmpPassivePerception = FindRightPanelComponent<TextMeshProUGUI>("m_imgPassivePerceptionBackground/m_tmpPassivePerception");
             m_tmpDc = FindRightPanelComponent<TextMeshProUGUI>("m_imgDcBackground/m_tmpDc");
             m_tmpSpellAttackBonus = FindRightPanelComponent<TextMeshProUGUI>("m_imgSpellAttackBonusBackground/m_tmpSpellAttackBonus");
             m_tmpCopper = FindRightPanelComponent<TextMeshProUGUI>("m_imgCopperBackground/m_tmpCopper");
@@ -272,6 +344,7 @@ namespace GameLogic
             m_tmpIdeals = FindRightPanelComponent<TextMeshProUGUI>("m_imgIdealsBackground/m_tmpIdeals");
             m_tmpFlaws = FindRightPanelComponent<TextMeshProUGUI>("m_imgFlawsBackground/m_tmpFlaws");
             m_tmpBackgroundFeatureBackgroundName = FindRightPanelComponent<TextMeshProUGUI>("m_scrollCharacterDetail/m_viewportCharacterDetail/m_rectCharacterDetailContent/m_sectionBackground/m_panelBackgroundFeatureHeader/m_tmpBackgroundFeatureBackgroundName");
+            EnsureCharacterPopupBindings();
             m_goClassSectionTemplate = m_tmpClassFeatureClassName != null
                 ? m_tmpClassFeatureClassName.transform.parent?.parent?.gameObject
                 : null;
@@ -292,6 +365,20 @@ namespace GameLogic
             BindButton(m_btnSectionOtherFeatures, OnClickToggleOtherFeatures);
             BindButton(m_btnSectionRace, OnClickToggleRaceFeatures);
             BindButton(m_btnSectionInventory, OnClickToggleInventory);
+            BindButton(m_btnAddInventoryItem, OnClickAddInventoryItem);
+            BindButton(m_btnSectionSpells, OnClickToggleSpells);
+            BindButton(m_btnInventoryUseAction, OnClickInventoryUseAction);
+            BindButton(m_btnInventoryRestoreChargesAction, OnClickInventoryRestoreChargesAction);
+            BindButton(m_btnInventoryEquipAction, OnClickInventoryEquipAction);
+            BindButton(m_btnInventoryAttuneAction, OnClickInventoryAttuneAction);
+            BindButton(m_btnInventoryRemoveAction, OnClickInventoryRemoveAction);
+            BindButton(m_btnDiceHistory, OnClickDiceHistory);
+            BindButton(m_btnCharacterPopupClose, CloseCharacterPopup);
+            BindButton(m_btnCharacterPopupConfirm, OnClickCharacterPopupConfirm);
+            if (m_btnAddInventoryItem == null)
+            {
+                Log.Warning("角色卡管理：m_btnAddInventoryItem 未绑定，请确认按钮位于 m_sectionInventory/m_panelInventoryHeader/m_btnAddInventoryItem。");
+            }
             SetText(m_tmpTitle, "角色卡管理");
             SetText(m_tmpCreateCharacterText, "新建角色");
             SetText(m_tmpDeleteSelectedText, "删除所选");
@@ -302,9 +389,14 @@ namespace GameLogic
             SetActive(m_goEquipmentToolTemplate, false);
             SetActive(m_goClassFeatureTemplate, false);
             SetActive(m_goRaceFeatureTemplate, false);
+            SetActive(m_goSpellTemplate, false);
             SetActive(m_goOtherFeatureTemplate, false);
             SetActive(m_goInventoryItemTemplate, false);
             SetActive(m_goStatusEffectTemplate, false);
+            HideInventoryActionButtons();
+            SetActive(m_goCharacterPopupOptionTemplate, false);
+            SetActive(m_goCharacterPopupSelectedTemplate, false);
+            CloseCharacterPopup();
             ShowFeatureDetail("特性详情", string.Empty);
         }
 
@@ -335,6 +427,67 @@ namespace GameLogic
             }
 
             return component;
+        }
+
+        private void EnsureCharacterPopupBindings()
+        {
+            Transform popup = transform.Find("m_panelCharacterMgr/m_panelCharacterPopup")
+                ?? transform.Find("m_panelCharacterMgr/m_panelRight/m_panelCharacterPopup");
+            if (popup == null)
+            {
+                Log.Warning("角色卡管理：通用弹窗节点 m_panelCharacterPopup 缺失，请先在 prefab 中创建该弹窗。");
+                return;
+            }
+
+            m_panelCharacterPopup = popup.gameObject;
+            m_tmpCharacterPopupTitle = FirstComponent<TMP_Text>(popup,
+                "m_tmpCharacterPopupTitle",
+                "m_panelCharacterPopupHeader/m_tmpCharacterPopupTitle");
+            m_tmpCharacterPopupDescription = FirstComponent<TMP_Text>(popup,
+                "m_tmpCharacterPopupDescription",
+                "m_panelCharacterPopupDescription/m_tmpCharacterPopupDescription");
+            m_btnCharacterPopupClose = FirstComponent<Button>(popup,
+                "m_btnCharacterPopupClose",
+                "m_panelCharacterPopupFooter/m_btnCharacterPopupClose");
+            m_btnCharacterPopupConfirm = FirstComponent<Button>(popup,
+                "m_btnCharacterPopupConfirm",
+                "m_panelCharacterPopupFooter/m_btnCharacterPopupConfirm");
+            m_tmpCharacterPopupConfirm = FirstComponent<TMP_Text>(popup,
+                "m_btnCharacterPopupConfirm/m_tmpCharacterPopupConfirm",
+                "m_panelCharacterPopupFooter/m_btnCharacterPopupConfirm/m_tmpCharacterPopupConfirm");
+            m_goCharacterPopupList = FirstGameObject(popup,
+                "m_scrollCharacterPopupList",
+                "m_panelCharacterPopupList");
+            m_rectCharacterPopupContent = FirstComponent<RectTransform>(popup,
+                "m_scrollCharacterPopupList/m_viewportCharacterPopupList/m_rectCharacterPopupContent",
+                "m_panelCharacterPopupList/m_rectCharacterPopupContent");
+            m_rectCharacterPopupOptionContentRoot = ResolveScrollContentRoot(m_rectCharacterPopupContent,
+                "m_rectCharacterPopupOptionContent",
+                "m_contentCharacterPopupOptions",
+                "m_rectContent",
+                "Content",
+                "Viewport/Content",
+                "m_viewport/Content");
+            m_rectCharacterPopupSelectedContent = FirstComponent<RectTransform>(popup,
+                "m_panelCharacterPopupList/m_rectCharacterPopupSelectedContent");
+            m_rectCharacterPopupSelectedContentRoot = ResolveScrollContentRoot(m_rectCharacterPopupSelectedContent,
+                "m_rectCharacterPopupSelectedItemContent",
+                "m_contentCharacterPopupSelectedItems",
+                "m_rectContent",
+                "Content",
+                "Viewport/Content",
+                "m_viewport/Content");
+            m_goCharacterPopupOptionTemplate = m_rectCharacterPopupOptionContentRoot != null
+                ? FirstGameObject(m_rectCharacterPopupOptionContentRoot.transform,
+                    "m_itemCharacterPopupOptionTemplate")
+                : null;
+            m_goCharacterPopupSelectedTemplate = m_rectCharacterPopupSelectedContentRoot != null
+                ? FirstGameObject(m_rectCharacterPopupSelectedContentRoot.transform,
+                    "m_itemCharacterPopupSelectedTemplate")
+                : null;
+            m_panelCharacterPopupForm = FirstGameObject(popup, "m_panelCharacterPopupForm");
+            m_inputCharacterPopupName = FirstComponent<TMP_InputField>(popup, "m_panelCharacterPopupForm/m_inputCharacterPopupName");
+            m_inputCharacterPopupDescription = FirstComponent<TMP_InputField>(popup, "m_panelCharacterPopupForm/m_inputCharacterPopupDescription");
         }
 
         protected override void OnRefresh()
@@ -382,6 +535,24 @@ namespace GameLogic
             else if (m_selectedCharacterIndex < 0 || m_selectedCharacterIndex >= m_characterCards.Count)
             {
                 m_selectedCharacterIndex = 0;
+            }
+        }
+
+        private void RestoreSelectedCharacter(string characterId)
+        {
+            if (string.IsNullOrWhiteSpace(characterId))
+            {
+                return;
+            }
+
+            for (int index = 0; index < m_characterCards.Count; index++)
+            {
+                CharacterCardDraftSaveData character = m_characterCards[index];
+                if (character != null && string.Equals(character.CharacterId, characterId, StringComparison.OrdinalIgnoreCase))
+                {
+                    m_selectedCharacterIndex = index;
+                    return;
+                }
             }
         }
 
@@ -447,28 +618,30 @@ namespace GameLogic
                 snapshot = detail.RuntimeSnapshot;
             }
 
-            SetText(m_tmpCharacterName, FormatTextOrDefault(snapshot.CharacterName, "未选择角色"));
-            SetText(m_tmpRace, FormatTextOrDefault(snapshot.RaceName, "未选择种族"));
-            SetText(m_tmpClass, CharacterDetailDisplayService.Instance.BuildClassNameSummary(character, snapshot));
+            CharacterSheetDisplayViewState sheetState = CharacterSheetViewStateService.Instance.Build(character, snapshot);
+            SetText(m_tmpCharacterName, sheetState.CharacterNameText);
+            SetText(m_tmpRace, sheetState.RaceText);
+            SetText(m_tmpClass, sheetState.ClassText);
             ApplyPortrait(character.PreviewImagePath);
             RefreshClassSections(character);
-            SetAbilityTexts(snapshot);
-            SetHpTexts(snapshot);
-            SetCombatOverviewTexts(character, snapshot);
-            RefreshStatusEffectItems(character);
-            SetExperienceProgress(character.Experience, snapshot.Level);
-            SetCurrencyTexts(character.Currency);
+            SetAbilityTexts(sheetState.AbilityDisplay);
+            SetHpTexts(sheetState);
+            SetCombatOverviewTexts(sheetState);
+            RefreshStatusEffectItems(sheetState.StatusEffects);
+            SetExperienceProgress(sheetState.Experience);
+            SetCurrencyTexts(sheetState);
             SetCarryingWeightTexts();
-            SetDeathSaveTexts(character.DeathSaves);
-            SetHitDiceTexts(character);
+            SetDeathSaveTexts(sheetState);
+            SetHitDiceTexts(sheetState);
             SetRoleplayTexts(character.RoleplayProfile);
             SetBackgroundText(snapshot);
-            SetText(m_tmpProficiencyBonus, CharacterDetailCalculationService.Instance.BuildProficiencyBonusDisplay(snapshot.Level).Label);
-            SetSkillBonusTexts(character, snapshot);
+            SetText(m_tmpProficiencyBonus, sheetState.ProficiencyBonusText);
+            SetSkillBonusTexts(sheetState.Skills);
             SetText(m_tmpEquipmentTools, "装备与工具熟练项");
-            RefreshEquipmentToolItems(snapshot);
-            RefreshInventoryItems(character.Equipment);
+            RefreshEquipmentToolItems(sheetState.EquipmentToolLabels);
+            RefreshInventoryItems(sheetState.InventoryItems);
             RefreshRaceFeatureSection(character, snapshot, character.RaceId);
+            RefreshSpellItems(character);
             RefreshOtherFeatureSection(character);
             ShowFeatureDetail("特性详情", string.Empty);
         }
@@ -484,20 +657,21 @@ namespace GameLogic
             SetAbilityTexts(empty);
             SetHpTexts(empty);
             SetEmptyCombatOverviewTexts();
-            RefreshStatusEffectItems(null);
+            RefreshStatusEffectItems((CharacterCardDraftSaveData)null);
             SetExperienceProgress(0, 1);
-            SetCurrencyTexts(null);
+            SetCurrencyTexts((CharacterCurrencySaveData)null);
             SetCarryingWeightTexts();
-            SetDeathSaveTexts(null);
-            SetHitDiceTexts(null);
+            SetDeathSaveTexts((CharacterDeathSaveData)null);
+            SetHitDiceTexts((CharacterCardDraftSaveData)null);
             SetRoleplayTexts(null);
             SetBackgroundText(empty);
             SetText(m_tmpProficiencyBonus, CharacterDetailCalculationService.Instance.BuildProficiencyBonusDisplay(1).Label);
             SetSkillBonusTexts(null, empty);
             SetText(m_tmpEquipmentTools, "装备与工具熟练项");
             RefreshEquipmentToolItems(empty);
-            RefreshInventoryItems(null);
+            RefreshInventoryItems((CharacterEquipmentSetSaveData)null);
             RefreshRaceFeatureSection(null, empty, string.Empty);
+            RefreshSpellItems(null);
             RefreshOtherFeatureSection(null);
             ShowFeatureDetail("特性详情", string.Empty);
         }
@@ -505,6 +679,15 @@ namespace GameLogic
         private void SetAbilityTexts(CharacterRuntimeSnapshotData snapshot)
         {
             CharacterAbilityDisplayViewState state = CharacterDetailCalculationService.Instance.BuildAbilityDisplay(snapshot);
+            SetAbilityTexts(state);
+        }
+
+        private void SetAbilityTexts(CharacterAbilityDisplayViewState state)
+        {
+            if (state == null)
+            {
+                state = new CharacterAbilityDisplayViewState();
+            }
             SetText(m_tmpStrength, state.Strength.ToString());
             SetText(m_tmpDexterity, state.Dexterity.ToString());
             SetText(m_tmpConstitution, state.Constitution.ToString());
@@ -525,6 +708,13 @@ namespace GameLogic
             SetText(m_tmpCurrentHp, state.CurrentHp.ToString());
             SetText(m_tmpMaxHp, state.MaxHp.ToString());
             SetText(m_tmpTempHp, state.TemporaryHp.ToString());
+        }
+
+        private void SetHpTexts(CharacterSheetDisplayViewState state)
+        {
+            SetText(m_tmpCurrentHp, state?.CurrentHpText ?? string.Empty);
+            SetText(m_tmpMaxHp, state?.MaxHpText ?? string.Empty);
+            SetText(m_tmpTempHp, state?.TemporaryHpText ?? string.Empty);
         }
 
         private void SetCombatOverviewTexts(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot)
@@ -553,6 +743,22 @@ namespace GameLogic
             }
         }
 
+        private void SetCombatOverviewTexts(CharacterSheetDisplayViewState state)
+        {
+            if (state == null)
+            {
+                SetEmptyCombatOverviewTexts();
+                return;
+            }
+
+            SetText(m_tmpAc, state.ArmorClassText);
+            SetText(m_tmpInitiative, state.InitiativeText);
+            SetText(m_tmpSpeed, state.SpeedText);
+            SetText(m_tmpPassivePerception, state.PassivePerceptionText);
+            SetText(m_tmpDc, state.SpellSaveDcText);
+            SetText(m_tmpSpellAttackBonus, state.SpellAttackBonusText);
+        }
+
         private void SetEmptyCombatOverviewTexts()
         {
             SetText(m_tmpAc, string.Empty);
@@ -566,6 +772,15 @@ namespace GameLogic
         private void SetExperienceProgress(int experience, int level)
         {
             CharacterExperienceDisplayViewState state = CharacterDetailCalculationService.Instance.BuildExperienceDisplay(experience, level);
+            SetExperienceProgress(state);
+        }
+
+        private void SetExperienceProgress(CharacterExperienceDisplayViewState state)
+        {
+            if (state == null)
+            {
+                state = new CharacterExperienceDisplayViewState();
+            }
 
             if (m_sliderExperience == null)
             {
@@ -593,6 +808,18 @@ namespace GameLogic
             }
         }
 
+        private void SetSkillBonusTexts(IReadOnlyList<CharacterSheetSkillViewState> skills)
+        {
+            for (int index = 0; index < SkillDisplayBindings.Length; index++)
+            {
+                CharacterSheetSkillViewState state = skills != null && index < skills.Count
+                    ? skills[index]
+                    : null;
+                SetSkillBonus(index, state != null ? state.Bonus : 0);
+                SetSkillBackground(index, state != null && state.HasProficiency, state != null && state.HasExpertise);
+            }
+        }
+
         private void SetCurrencyTexts(CharacterCurrencySaveData currency)
         {
             CharacterCurrencySaveData normalized = CharacterCurrencySaveData.Clone(currency);
@@ -601,6 +828,15 @@ namespace GameLogic
             SetText(m_tmpElectrum, normalized.Electrum.ToString());
             SetText(m_tmpGold, normalized.Gold.ToString());
             SetText(m_tmpPlatinum, normalized.Platinum.ToString());
+        }
+
+        private void SetCurrencyTexts(CharacterSheetDisplayViewState state)
+        {
+            SetText(m_tmpCopper, state?.CopperText ?? string.Empty);
+            SetText(m_tmpSilver, state?.SilverText ?? string.Empty);
+            SetText(m_tmpElectrum, state?.ElectrumText ?? string.Empty);
+            SetText(m_tmpGold, state?.GoldText ?? string.Empty);
+            SetText(m_tmpPlatinum, state?.PlatinumText ?? string.Empty);
         }
 
         private void SetCarryingWeightTexts()
@@ -613,6 +849,15 @@ namespace GameLogic
         private void RefreshStatusEffectItems(CharacterCardDraftSaveData character)
         {
             List<CharacterStatusEffectDisplayEntry> entries = CharacterDetailDisplayService.Instance.BuildStatusEffectEntries(character);
+            RefreshStatusEffectItems(entries);
+        }
+
+        private void RefreshStatusEffectItems(IReadOnlyList<CharacterStatusEffectDisplayEntry> entries)
+        {
+            if (entries == null)
+            {
+                entries = Array.Empty<CharacterStatusEffectDisplayEntry>();
+            }
             EnsureStatusEffectItemCount(entries.Count);
 
             for (int index = 0; index < m_statusEffectItems.Count; index++)
@@ -662,8 +907,33 @@ namespace GameLogic
         private void SetDeathSaveTexts(CharacterDeathSaveData deathSaves)
         {
             CharacterDeathSaveData normalized = CharacterDeathSaveData.Clone(deathSaves);
-            SetText(m_tmpDeathSaveSuccesses, $"成功 {normalized.Successes}/3");
-            SetText(m_tmpDeathSaveFailures, $"失败 {normalized.Failures}/3");
+            SetText(m_tmpDeathSaveSuccessesCount, FormatDeathSaveCountText(normalized.Successes));
+            SetText(m_tmpDeathSaveFailuresCount, FormatDeathSaveCountText(normalized.Failures));
+        }
+
+        private void SetDeathSaveTexts(CharacterSheetDisplayViewState state)
+        {
+            SetText(m_tmpDeathSaveSuccessesCount, ExtractDeathSaveCountText(state?.DeathSaveSuccessesText));
+            SetText(m_tmpDeathSaveFailuresCount, ExtractDeathSaveCountText(state?.DeathSaveFailuresText));
+        }
+
+        private static string FormatDeathSaveCountText(int value)
+        {
+            return $"{Math.Max(0, Math.Min(3, value))}/3";
+        }
+
+        private static string ExtractDeathSaveCountText(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            string trimmed = value.Trim();
+            int separatorIndex = trimmed.LastIndexOf(' ');
+            return separatorIndex >= 0 && separatorIndex < trimmed.Length - 1
+                ? trimmed.Substring(separatorIndex + 1)
+                : trimmed;
         }
 
         private void SetHitDiceTexts(CharacterCardDraftSaveData character)
@@ -699,6 +969,12 @@ namespace GameLogic
 
             SetText(m_tmpHitDiceDie, $"x{Math.Max(0, remaining)}");
             SetText(m_tmpHitDiceRemaining, dice.Count > 0 ? string.Join("/", dice) : "-");
+        }
+
+        private void SetHitDiceTexts(CharacterSheetDisplayViewState state)
+        {
+            SetText(m_tmpHitDiceDie, state?.HitDiceCountText ?? string.Empty);
+            SetText(m_tmpHitDiceRemaining, state?.HitDiceDieText ?? string.Empty);
         }
 
         private void SetRoleplayTexts(CharacterRoleplayProfileSaveData profile)
@@ -906,6 +1182,15 @@ namespace GameLogic
         private void RefreshEquipmentToolItems(CharacterRuntimeSnapshotData snapshot)
         {
             List<string> entries = CharacterDetailDisplayService.Instance.BuildEquipmentAndToolEntries(snapshot);
+            RefreshEquipmentToolItems(entries);
+        }
+
+        private void RefreshEquipmentToolItems(IReadOnlyList<string> entries)
+        {
+            if (entries == null)
+            {
+                entries = Array.Empty<string>();
+            }
             EnsureEquipmentToolItemCount(entries.Count);
 
             for (int index = 0; index < m_equipmentToolItems.Count; index++)
@@ -956,6 +1241,16 @@ namespace GameLogic
         private void RefreshInventoryItems(CharacterEquipmentSetSaveData equipment)
         {
             List<CharacterInventoryDisplayEntry> entries = CharacterDetailDisplayService.Instance.BuildInventoryEntries(equipment);
+            RefreshInventoryItems(entries);
+        }
+
+        private void RefreshInventoryItems(IReadOnlyList<CharacterInventoryDisplayEntry> entries)
+        {
+            ExitInventoryAddMode(false);
+            if (entries == null)
+            {
+                entries = Array.Empty<CharacterInventoryDisplayEntry>();
+            }
             EnsureInventoryItemCount(entries.Count);
 
             for (int index = 0; index < m_inventoryItems.Count; index++)
@@ -1002,6 +1297,9 @@ namespace GameLogic
                 label.text = entry.Label;
             }
 
+            TMP_Text quantity = item.transform.Find("m_tmpInventoryNum")?.GetComponent<TMP_Text>();
+            SetText(quantity, $"X{Math.Max(1, entry.Quantity)}");
+
             Transform equippedMark = item.transform.Find("m_tmpInventoryEquippedMark");
             SetActive(equippedMark != null ? equippedMark.gameObject : null, entry.IsEquipped);
         }
@@ -1025,36 +1323,1074 @@ namespace GameLogic
 
         private void OnClickInventoryItem(CharacterInventoryDisplayEntry entry)
         {
-            ShowFeatureDetail(entry.Title, entry.Description);
             if (!HasSelectedCharacter())
             {
+                ShowFeatureDetail(entry.Title, entry.Description);
                 return;
             }
 
             CharacterCardDraftSaveData character = m_characterCards[m_selectedCharacterIndex];
             CharacterEquipmentItemSaveData item = FindInventoryItem(character?.Equipment, entry.ItemInstanceId);
-            CharacterInventoryQuickRollContext context = BuildInventoryQuickRollContext(item);
-            if (context == null)
+            ShowInventoryItemDetail(entry, item);
+        }
+
+        private void ShowInventoryItemDetail(CharacterInventoryDisplayEntry entry, CharacterEquipmentItemSaveData item)
+        {
+            SetText(m_tmpFeatureDetailTitle, entry.Title);
+            SetText(m_tmpFeatureDetailDescription, entry.Description);
+            m_visibleInventoryItemInstanceId = entry.ItemInstanceId;
+            m_visibleInventoryQuickRollContext = null;
+            m_visibleInventoryQuickRollResult = null;
+            m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
+            m_visibleInventoryQuickRollCharacterId = string.Empty;
+            RefreshInventoryActionButtons(item);
+        }
+
+        private void RefreshInventoryActionButtons(CharacterEquipmentItemSaveData item)
+        {
+            if (item == null)
+            {
+                HideInventoryActionButtons();
+                return;
+            }
+
+            SetActive(m_panelInventoryActionButtons, true);
+            if (m_tmpInputInventoryUseAmount != null)
+            {
+                m_tmpInputInventoryUseAmount.SetTextWithoutNotify("1");
+            }
+
+            bool equippable = IsInventoryItemEquippable(item);
+            bool requiresAttunement = item.RequiresAttunement || item.IsAttuned;
+            bool usable = IsInventoryItemUsable(item);
+            bool canRestoreCharges = CanRestoreInventoryItemCharges(item);
+
+            SetActive(m_goInventoryUseAmount, false);
+            SetActive(m_tmpInventoryUseAmountLabel != null ? m_tmpInventoryUseAmountLabel.gameObject : null, false);
+            SetActive(m_tmpInputInventoryUseAmount != null ? m_tmpInputInventoryUseAmount.gameObject : null, false);
+            SetInventoryActionButton(m_btnInventoryUseAction, m_tmpInventoryUseActionLabel, "使用", usable);
+            SetInventoryActionButton(m_btnInventoryRestoreChargesAction, m_tmpInventoryRestoreChargesActionLabel, "恢复充能", canRestoreCharges);
+            SetInventoryActionButton(m_btnInventoryEquipAction, m_tmpInventoryEquipActionLabel, item.IsEquipped ? "卸下" : "装备", equippable);
+            SetInventoryActionButton(m_btnInventoryAttuneAction, m_tmpInventoryAttuneActionLabel, item.IsAttuned ? "解除同调" : "同调", requiresAttunement);
+            SetInventoryActionButton(m_btnInventoryRemoveAction, m_tmpInventoryRemoveActionLabel, "移除1个", true);
+            SetActive(m_btnDiceHistory != null ? m_btnDiceHistory.gameObject : null, HasSelectedCharacter());
+        }
+
+        private void HideInventoryActionButtons()
+        {
+            m_visibleInventoryItemInstanceId = string.Empty;
+            bool showHistoryButton = HasSelectedCharacter() && m_btnDiceHistory != null;
+            SetActive(m_panelInventoryActionButtons, showHistoryButton);
+            if (m_tmpInputInventoryUseAmount != null)
+            {
+                m_tmpInputInventoryUseAmount.SetTextWithoutNotify("1");
+            }
+            SetActive(m_goInventoryUseAmount, false);
+            SetActive(m_tmpInventoryUseAmountLabel != null ? m_tmpInventoryUseAmountLabel.gameObject : null, false);
+            SetActive(m_tmpInputInventoryUseAmount != null ? m_tmpInputInventoryUseAmount.gameObject : null, false);
+            SetActive(m_btnInventoryUseAction != null ? m_btnInventoryUseAction.gameObject : null, false);
+            SetActive(m_btnInventoryRestoreChargesAction != null ? m_btnInventoryRestoreChargesAction.gameObject : null, false);
+            SetActive(m_btnInventoryEquipAction != null ? m_btnInventoryEquipAction.gameObject : null, false);
+            SetActive(m_btnInventoryAttuneAction != null ? m_btnInventoryAttuneAction.gameObject : null, false);
+            SetActive(m_btnInventoryRemoveAction != null ? m_btnInventoryRemoveAction.gameObject : null, false);
+            SetActive(m_btnDiceHistory != null ? m_btnDiceHistory.gameObject : null, showHistoryButton);
+        }
+
+        private static void SetInventoryActionButton(Button button, TMP_Text label, string text, bool active)
+        {
+            SetActive(button != null ? button.gameObject : null, active);
+            SetText(label, text);
+        }
+
+        private static bool IsInventoryItemEquippable(CharacterEquipmentItemSaveData item)
+        {
+            return CharacterItemTypeBehaviorUtility.IsInventoryItemEquippable(item);
+        }
+
+        private static bool IsInventoryItemUsable(CharacterEquipmentItemSaveData item)
+        {
+            return CharacterItemTypeBehaviorUtility.IsInventoryItemUsable(item);
+        }
+
+        private static bool CanRestoreInventoryItemCharges(CharacterEquipmentItemSaveData item)
+        {
+            return CharacterItemTypeBehaviorUtility.CanRestoreInventoryItemCharges(item);
+        }
+
+        private void OnClickInventoryUseAction()
+        {
+            if (!TryGetVisibleInventoryItem(out CharacterCardDraftSaveData character, out CharacterEquipmentItemSaveData item))
             {
                 return;
             }
 
+            if (!IsInventoryItemUsable(item))
+            {
+                SetInventoryActionFeedback("物品操作", "该物品当前不可使用。");
+                return;
+            }
+
+            OpenInventoryUseDiceRollUI(character, item);
+        }
+
+        private void OnClickInventoryRestoreChargesAction()
+        {
+            if (!TryGetVisibleInventoryItem(out CharacterCardDraftSaveData character, out CharacterEquipmentItemSaveData item))
+            {
+                return;
+            }
+
+            if (!CanRestoreInventoryItemCharges(item))
+            {
+                SetInventoryActionFeedback("物品操作", "该物品当前不需要恢复充能。");
+                return;
+            }
+
+            CharacterOperationResult result = CharacterInventoryApplicationService.Instance.RestoreCharacterItemCharges(
+                character.CharacterId,
+                item.ItemInstanceId);
+            RefreshAfterCharacterInventoryAction(character.CharacterId, item.ItemInstanceId, result, "物品充能已恢复。");
+        }
+
+        private void OpenInventoryUseDiceRollUI(CharacterCardDraftSaveData character, CharacterEquipmentItemSaveData item)
+        {
+            if (character == null || item == null)
+            {
+                return;
+            }
+
+            CharacterInventoryQuickRollContext context = BuildInventoryQuickRollContext(item)
+                ?? BuildManualInventoryRollContext(item);
+            string currentDescription = m_tmpFeatureDetailDescription != null
+                ? m_tmpFeatureDetailDescription.text
+                : string.Empty;
+
+            Log.Info($"打开 DiceRollUI：{context.ItemName} / {context.EffectName} / {context.DiceExpression}");
             m_visibleInventoryQuickRollContext = context;
             m_visibleInventoryQuickRollResult = null;
             m_visibleInventoryQuickRollHistoryEntryId = string.Empty;
-            m_visibleInventoryQuickRollCharacterId = character?.CharacterId?.Trim() ?? string.Empty;
+            m_visibleInventoryQuickRollCharacterId = character.CharacterId ?? string.Empty;
 
-            SetText(m_tmpFeatureDetailTitle, "快捷掷骰");
-            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollPendingText(context, entry.Description));
+            SetText(m_tmpFeatureDetailTitle, "使用物品");
+            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollPendingText(context, currentDescription));
             GameModule.UI.ShowUIAsync<DiceRollUI>(new DiceRollUIRequest
             {
-                SourceType = "character_inventory_item",
+                SourceType = "inventory_item",
                 SourceId = context.ItemInstanceId,
                 SourceName = context.ItemName,
                 EffectName = context.EffectName,
+                EffectDescription = context.EffectDescription,
                 DiceExpression = context.DiceExpression,
                 OnResult = OnInventoryDiceRollUIResult
             });
+        }
+
+        private void OnClickInventoryEquipAction()
+        {
+            if (!TryGetVisibleInventoryItem(out CharacterCardDraftSaveData character, out CharacterEquipmentItemSaveData item))
+            {
+                return;
+            }
+
+            if (!IsInventoryItemEquippable(item))
+            {
+                SetInventoryActionFeedback("物品操作", "该物品当前不可装备。");
+                return;
+            }
+
+            bool wasEquipped = item.IsEquipped;
+            CharacterOperationResult result = wasEquipped
+                ? CharacterInventoryApplicationService.Instance.UnequipCharacterItem(character.CharacterId, item.ItemInstanceId)
+                : CharacterInventoryApplicationService.Instance.EquipCharacterItem(character.CharacterId, item.ItemInstanceId);
+            RefreshAfterCharacterInventoryAction(character.CharacterId, item.ItemInstanceId, result, wasEquipped ? "物品已卸下。" : "物品已装备。");
+        }
+
+        private void OnClickInventoryAttuneAction()
+        {
+            if (!TryGetVisibleInventoryItem(out CharacterCardDraftSaveData character, out CharacterEquipmentItemSaveData item))
+            {
+                return;
+            }
+
+            if (!item.RequiresAttunement && !item.IsAttuned)
+            {
+                SetInventoryActionFeedback("物品操作", "该物品不需要同调。");
+                return;
+            }
+
+            bool wasAttuned = item.IsAttuned;
+            CharacterOperationResult result = wasAttuned
+                ? CharacterInventoryApplicationService.Instance.UnattuneCharacterItem(character.CharacterId, item.ItemInstanceId)
+                : CharacterInventoryApplicationService.Instance.AttuneCharacterItem(character.CharacterId, item.ItemInstanceId);
+            RefreshAfterCharacterInventoryAction(character.CharacterId, item.ItemInstanceId, result, wasAttuned ? "物品已解除同调。" : "物品已同调。");
+        }
+
+        private void OnClickInventoryRemoveAction()
+        {
+            if (!TryGetVisibleInventoryItem(out CharacterCardDraftSaveData character, out CharacterEquipmentItemSaveData item))
+            {
+                return;
+            }
+
+            CharacterOperationResult result = CharacterInventoryApplicationService.Instance.RemoveItemFromCharacter(
+                character.CharacterId,
+                item.ItemInstanceId,
+                1);
+            RefreshAfterCharacterInventoryAction(character.CharacterId, item.ItemInstanceId, result, "已移除 1 个物品。");
+        }
+
+        private void OnClickDiceHistory()
+        {
+            if (!HasSelectedCharacter())
+            {
+                HideInventoryActionButtons();
+                SetText(m_tmpFeatureDetailTitle, "掷骰记录");
+                SetText(m_tmpFeatureDetailDescription, "请先选择一个角色。");
+                return;
+            }
+
+            CharacterCardDraftSaveData character = m_characterCards[m_selectedCharacterIndex];
+            SetText(m_tmpFeatureDetailTitle, "掷骰记录");
+            SetText(m_tmpFeatureDetailDescription, BuildCharacterDiceHistorySummary(character));
+            HideInventorySpecificActionButtons();
+        }
+
+        private void HideInventorySpecificActionButtons()
+        {
+            SetActive(m_panelInventoryActionButtons, m_btnDiceHistory != null);
+            SetActive(m_goInventoryUseAmount, false);
+            SetActive(m_tmpInventoryUseAmountLabel != null ? m_tmpInventoryUseAmountLabel.gameObject : null, false);
+            SetActive(m_tmpInputInventoryUseAmount != null ? m_tmpInputInventoryUseAmount.gameObject : null, false);
+            SetActive(m_btnInventoryUseAction != null ? m_btnInventoryUseAction.gameObject : null, false);
+            SetActive(m_btnInventoryRestoreChargesAction != null ? m_btnInventoryRestoreChargesAction.gameObject : null, false);
+            SetActive(m_btnInventoryEquipAction != null ? m_btnInventoryEquipAction.gameObject : null, false);
+            SetActive(m_btnInventoryAttuneAction != null ? m_btnInventoryAttuneAction.gameObject : null, false);
+            SetActive(m_btnInventoryRemoveAction != null ? m_btnInventoryRemoveAction.gameObject : null, false);
+            SetActive(m_btnDiceHistory != null ? m_btnDiceHistory.gameObject : null, m_btnDiceHistory != null);
+        }
+
+        private bool TryGetVisibleInventoryItem(out CharacterCardDraftSaveData character, out CharacterEquipmentItemSaveData item)
+        {
+            character = null;
+            item = null;
+            if (!HasSelectedCharacter() || string.IsNullOrWhiteSpace(m_visibleInventoryItemInstanceId))
+            {
+                HideInventoryActionButtons();
+                return false;
+            }
+
+            character = m_characterCards[m_selectedCharacterIndex];
+            item = FindInventoryItem(character?.Equipment, m_visibleInventoryItemInstanceId);
+            if (item != null)
+            {
+                return true;
+            }
+
+            HideInventoryActionButtons();
+            SetText(m_tmpFeatureDetailTitle, "物品操作");
+            SetText(m_tmpFeatureDetailDescription, "当前物品不存在，可能已经被移除。");
+            return false;
+        }
+
+        private void RefreshAfterCharacterInventoryAction(string characterId, string itemInstanceId, CharacterOperationResult result, string successMessage)
+        {
+            if (result == null || !result.Success)
+            {
+                SetInventoryActionFeedback("物品操作失败", result == null || string.IsNullOrWhiteSpace(result.Message) ? "物品操作失败。" : result.Message);
+                return;
+            }
+
+            RefreshCharacterRuntimeSnapshot(characterId);
+            LoadCharacterCards();
+            RestoreSelectedCharacter(characterId);
+            RefreshCharacterListView();
+            if (TryFindInventoryDisplayEntry(itemInstanceId, out CharacterInventoryDisplayEntry entry))
+            {
+                CharacterCardDraftSaveData character = HasSelectedCharacter() ? m_characterCards[m_selectedCharacterIndex] : null;
+                CharacterEquipmentItemSaveData updatedItem = FindInventoryItem(character?.Equipment, itemInstanceId);
+                ShowInventoryItemDetail(entry, updatedItem);
+                if (!string.IsNullOrWhiteSpace(successMessage))
+                {
+                    SetText(m_tmpFeatureDetailDescription, $"{entry.Description}\n\n{successMessage}");
+                }
+                return;
+            }
+
+            HideInventoryActionButtons();
+            SetText(m_tmpFeatureDetailTitle, "物品操作");
+            SetText(m_tmpFeatureDetailDescription, successMessage);
+        }
+
+        private static void RefreshCharacterRuntimeSnapshot(string characterId)
+        {
+            if (string.IsNullOrWhiteSpace(characterId)
+                || !CharacterApplicationService.Instance.TryGetCharacter(characterId, out CharacterCardDraftSaveData character)
+                || character == null)
+            {
+                return;
+            }
+
+            character.RuntimeSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(character);
+            CharacterApplicationService.Instance.Save(character);
+        }
+
+        private bool TryFindInventoryDisplayEntry(string itemInstanceId, out CharacterInventoryDisplayEntry entry)
+        {
+            entry = default;
+            if (!HasSelectedCharacter())
+            {
+                return false;
+            }
+
+            CharacterCardDraftSaveData character = m_characterCards[m_selectedCharacterIndex];
+            List<CharacterInventoryDisplayEntry> entries = CharacterDetailDisplayService.Instance.BuildInventoryEntries(character?.Equipment);
+            string normalizedId = itemInstanceId?.Trim() ?? string.Empty;
+            for (int index = 0; index < entries.Count; index++)
+            {
+                CharacterInventoryDisplayEntry candidate = entries[index];
+                if (string.Equals(candidate.ItemInstanceId, normalizedId, StringComparison.OrdinalIgnoreCase))
+                {
+                    entry = candidate;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void SetInventoryActionFeedback(string title, string description)
+        {
+            SetText(m_tmpFeatureDetailTitle, FormatTextOrDefault(title, "物品操作"));
+            SetText(m_tmpFeatureDetailDescription, description ?? string.Empty);
+        }
+
+        private void OnClickAddInventoryItem()
+        {
+            if (!HasSelectedCharacter())
+            {
+                OpenCharacterPopup("添加物品", "请先选择一个角色。", "关闭", false, false);
+                return;
+            }
+
+            ShowLocalInventoryItemOptions();
+        }
+
+        private void ShowLocalInventoryItemOptions()
+        {
+            if (m_panelCharacterPopup == null
+                || m_rectCharacterPopupOptionContentRoot == null
+                || m_goCharacterPopupOptionTemplate == null
+                || m_rectCharacterPopupSelectedContentRoot == null
+                || m_goCharacterPopupSelectedTemplate == null)
+            {
+                Log.Warning("角色卡管理：通用弹窗缺失，无法显示本地物品库。");
+                ShowFeatureDetail("添加物品", "通用弹窗节点缺失，无法打开本地物品库。");
+                return;
+            }
+
+            m_showingLocalItemOptions = true;
+            m_popupMode = CharacterCardPopupMode.OptionList;
+            m_pendingLocalItemId = string.Empty;
+            ClearPendingLocalItemSelection();
+            m_localItemOptions = LoadLocalItemOptions();
+            OpenCharacterPopup("添加物品", "点击物品卡片加入预览区，最后点击确认加入当前角色背包。", "确认", true, false);
+            RefreshLocalItemOptionCards();
+            RefreshLocalItemSelectedPreviewCards();
+
+            if (m_localItemOptions.Count == 0)
+            {
+                SetCharacterPopupDescription("当前没有已保存的本地物品。请先在物品编辑界面保存物品。");
+                return;
+            }
+        }
+
+        private void RefreshLocalItemOptionCards()
+        {
+            if (!m_showingLocalItemOptions)
+            {
+                SetCharacterPopupOptionItemsActive(false);
+                return;
+            }
+
+            EnsureLocalItemOptionItemCount(m_localItemOptions.Count);
+            for (int index = 0; index < m_characterPopupOptionItems.Count; index++)
+            {
+                GameObject item = m_characterPopupOptionItems[index];
+                bool active = index < m_localItemOptions.Count;
+                SetActive(item, active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                LocalCustomItemSaveData option = m_localItemOptions[index];
+                string customItemId = option?.CustomItemId?.Trim() ?? string.Empty;
+                bool selected = GetPendingLocalItemCount(customItemId) > 0;
+                SetLocalItemOption(item, option, selected);
+                BindLocalItemOptionButton(item, customItemId);
+            }
+
+            SetActive(m_goCharacterPopupOptionTemplate, false);
+        }
+
+        private void EnsureLocalItemOptionItemCount(int count)
+        {
+            if (m_rectCharacterPopupOptionContentRoot == null || m_goCharacterPopupOptionTemplate == null)
+            {
+                return;
+            }
+
+            while (m_characterPopupOptionItems.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goCharacterPopupOptionTemplate, m_rectCharacterPopupOptionContentRoot);
+                itemObject.name = $"m_itemCharacterPopupOption_{m_characterPopupOptionItems.Count + 1}";
+                SetActive(itemObject, true);
+                m_characterPopupOptionItems.Add(itemObject);
+            }
+        }
+
+        private void RefreshLocalItemSelectedPreviewCards()
+        {
+            EnsureLocalItemSelectedPreviewItemCount(m_pendingLocalItemOrder.Count);
+            for (int index = 0; index < m_characterPopupSelectedItems.Count; index++)
+            {
+                GameObject item = m_characterPopupSelectedItems[index];
+                bool active = index < m_pendingLocalItemOrder.Count;
+                SetActive(item, active);
+                if (!active)
+                {
+                    continue;
+                }
+
+                string customItemId = m_pendingLocalItemOrder[index];
+                LocalCustomItemSaveData option = FindLocalItemOption(customItemId);
+                SetLocalItemSelectedPreviewItem(item, option, GetPendingLocalItemCount(customItemId));
+                BindLocalItemSelectedPreviewButton(item, customItemId);
+            }
+
+            SetActive(m_goCharacterPopupSelectedTemplate, false);
+        }
+
+        private void EnsureLocalItemSelectedPreviewItemCount(int count)
+        {
+            if (m_rectCharacterPopupSelectedContentRoot == null || m_goCharacterPopupSelectedTemplate == null)
+            {
+                return;
+            }
+
+            while (m_characterPopupSelectedItems.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goCharacterPopupSelectedTemplate, m_rectCharacterPopupSelectedContentRoot);
+                itemObject.name = $"m_itemCharacterPopupSelected_{m_characterPopupSelectedItems.Count + 1}";
+                SetActive(itemObject, true);
+                m_characterPopupSelectedItems.Add(itemObject);
+            }
+        }
+
+        private void SetLocalItemSelectedPreviewItem(GameObject item, LocalCustomItemSaveData option, int count)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            TMP_Text label = FirstComponent<TMP_Text>(item.transform, "m_tmpPopupSelectedItemTitle");
+            TMP_Text quantity = FirstComponent<TMP_Text>(item.transform, "m_tmpPopupSelectedItemCount");
+            SetText(label, BuildLocalItemOptionLabel(option));
+            SetText(quantity, $"X{Math.Max(1, count)}");
+        }
+
+        private void BindLocalItemSelectedPreviewButton(GameObject item, string customItemId)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            Button button = item.GetComponent<Button>();
+            if (button == null)
+            {
+                Log.Warning("角色卡管理：弹窗已选物品模板缺少 Button 组件，无法点击减少物品数量。");
+                return;
+            }
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => OnClickLocalItemSelectedPreview(customItemId));
+        }
+
+        private void OnClickLocalItemSelectedPreview(string customItemId)
+        {
+            string normalizedId = customItemId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalizedId))
+            {
+                SetCharacterPopupDescription("请选择一个有效的已选物品。");
+                return;
+            }
+
+            RemovePendingLocalItem(normalizedId);
+            LocalCustomItemSaveData item = FindLocalItemOption(normalizedId);
+            int remainingCount = GetPendingLocalItemCount(normalizedId);
+            if (item != null && remainingCount > 0)
+            {
+                SetCharacterPopupDescription($"{BuildLocalItemDetailDescription(item)}\n\n待添加数量：X{remainingCount}");
+            }
+            else
+            {
+                SetCharacterPopupDescription("已从预览区减少 1 个物品。点击左侧物品卡片可继续添加。");
+            }
+
+            RefreshLocalItemOptionCards();
+            RefreshLocalItemSelectedPreviewCards();
+        }
+
+        private void SetLocalItemOption(GameObject item, LocalCustomItemSaveData option, bool selected)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            CharacterEquipmentItemSaveData data = option?.Item;
+            TMP_Text label = FirstComponent<TMP_Text>(item.transform,
+                "m_tmpPopupOptionTitle",
+                "m_tmpInventoryItemTitle");
+            TMP_Text subtitle = FirstComponent<TMP_Text>(item.transform,
+                "m_tmpPopupOptionSubtitle");
+            TMP_Text quantity = FirstComponent<TMP_Text>(item.transform,
+                "m_tmpPopupOptionCount",
+                "m_tmpInventoryNum");
+            Transform selectedMark = FirstTransform(item.transform,
+                "m_imgPopupOptionSelected",
+                "m_tmpInventoryEquippedMark");
+            SetText(label, BuildLocalItemOptionLabel(option));
+            SetText(subtitle, FirstNonEmpty(data?.ItemType, data?.Rarity));
+            SetText(quantity, $"X{Math.Max(1, data?.Quantity ?? 1)}");
+            SetActive(selectedMark != null ? selectedMark.gameObject : null, selected);
+        }
+
+        private void BindLocalItemOptionButton(GameObject item, string customItemId)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            Button button = item.GetComponent<Button>();
+            if (button == null)
+            {
+                Log.Warning("角色卡管理：弹窗物品模板缺少 Button 组件，无法点击选择物品。");
+                return;
+            }
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => OnClickLocalItemOption(customItemId));
+        }
+
+        private void OnClickLocalItemOption(string customItemId)
+        {
+            string normalizedId = customItemId?.Trim() ?? string.Empty;
+            LocalCustomItemSaveData item = FindLocalItemOption(normalizedId);
+            if (item != null)
+            {
+                AddPendingLocalItem(normalizedId);
+                m_pendingLocalItemId = normalizedId;
+                ShowLocalItemDetail(item);
+            }
+            else
+            {
+                SetCharacterPopupDescription("请选择一个有效的本地物品。");
+            }
+
+            RefreshLocalItemOptionCards();
+            RefreshLocalItemSelectedPreviewCards();
+        }
+
+        private void ConfirmPendingLocalItemSelection()
+        {
+            if (!HasSelectedCharacter())
+            {
+                SetCharacterPopupDescription("请先选择一个角色。");
+                return;
+            }
+
+            if (m_pendingLocalItemOrder.Count == 0)
+            {
+                SetCharacterPopupDescription("请先点击物品卡片，将物品加入预览区。");
+                return;
+            }
+
+            CharacterCardDraftSaveData character = m_characterCards[m_selectedCharacterIndex];
+            string selectedCharacterId = character?.CharacterId?.Trim() ?? string.Empty;
+            int addedItemKinds = 0;
+            int addedItemCount = 0;
+            for (int index = 0; index < m_pendingLocalItemOrder.Count; index++)
+            {
+                string customItemId = m_pendingLocalItemOrder[index];
+                int quantity = GetPendingLocalItemCount(customItemId);
+                if (quantity <= 0)
+                {
+                    continue;
+                }
+
+                LocalCustomItemSaveData item = FindLocalItemOption(customItemId);
+                if (item == null)
+                {
+                    SetCharacterPopupDescription("待添加物品不存在，请重新选择。");
+                    return;
+                }
+
+                CharacterEquipmentItemSaveData snapshot = LocalCustomItemRepository.CreateCharacterItemSnapshot(item, quantity);
+                CharacterInventoryOperationResult inventoryResult = AddInventoryItemToCharacter(character, snapshot, snapshot.Quantity);
+                if (!inventoryResult.Success)
+                {
+                    SetCharacterPopupDescription(string.IsNullOrWhiteSpace(inventoryResult.Message) ? "物品加入角色背包失败。" : inventoryResult.Message);
+                    return;
+                }
+
+                addedItemKinds++;
+                addedItemCount += quantity;
+            }
+
+            character.RuntimeSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(character);
+            CharacterOperationResult saveResult = CharacterApplicationService.Instance.Save(character);
+            if (!saveResult.Success)
+            {
+                SetCharacterPopupDescription(string.IsNullOrWhiteSpace(saveResult.Message) ? "角色保存失败。" : saveResult.Message);
+                return;
+            }
+
+            ExitInventoryAddMode(false);
+            CloseCharacterPopup();
+            LoadCharacterCards();
+            RestoreSelectedCharacter(selectedCharacterId);
+            RefreshCharacterListView();
+            ShowFeatureDetail("添加物品", $"已将 {addedItemKinds} 种、共 {addedItemCount} 个物品加入当前角色背包。");
+        }
+
+        private static CharacterInventoryOperationResult AddInventoryItemToCharacter(
+            CharacterCardDraftSaveData character,
+            CharacterEquipmentItemSaveData item,
+            int quantity)
+        {
+            if (character == null)
+            {
+                return new CharacterInventoryOperationResult
+                {
+                    Success = false,
+                    Message = "Character data is empty."
+                };
+            }
+
+            if (CharacterItemCategoryUtility.IsCurrencyItem(item))
+            {
+                if (character.Currency == null)
+                {
+                    character.Currency = new CharacterCurrencySaveData();
+                }
+                int amount = CharacterItemCategoryUtility.AddCurrency(character.Currency, item, quantity);
+                return new CharacterInventoryOperationResult
+                {
+                    Success = amount > 0,
+                    Message = amount > 0 ? "Currency added." : "Currency item data is invalid.",
+                    Equipment = CharacterEquipmentSetSaveData.Clone(character.Equipment)
+                };
+            }
+
+            if (character.Equipment == null)
+            {
+                character.Equipment = new CharacterEquipmentSetSaveData();
+            }
+            CharacterInventoryOperationResult result = CharacterInventoryApplicationService.Instance.AddItem(
+                character.Equipment,
+                item,
+                Math.Max(1, quantity));
+            if (result.Success)
+            {
+                character.Equipment = CharacterEquipmentSetSaveData.Clone(result.Equipment);
+            }
+
+            return result;
+        }
+
+        private void ExitInventoryAddMode(bool restoreInventory)
+        {
+            m_showingLocalItemOptions = false;
+            m_pendingLocalItemId = string.Empty;
+            ClearPendingLocalItemSelection();
+            SetCharacterPopupOptionItemsActive(false);
+            SetCharacterPopupSelectedItemsActive(false);
+            if (restoreInventory && HasSelectedCharacter())
+            {
+                CharacterCardDraftSaveData character = m_characterCards[m_selectedCharacterIndex];
+                RefreshInventoryItems(character?.Equipment);
+            }
+        }
+
+        private void SetInventoryItemsActive(bool active)
+        {
+            for (int index = 0; index < m_inventoryItems.Count; index++)
+            {
+                SetActive(m_inventoryItems[index], active);
+            }
+        }
+
+        private void SetCharacterPopupOptionItemsActive(bool active)
+        {
+            for (int index = 0; index < m_characterPopupOptionItems.Count; index++)
+            {
+                SetActive(m_characterPopupOptionItems[index], active);
+            }
+        }
+
+        private void SetCharacterPopupSelectedItemsActive(bool active)
+        {
+            for (int index = 0; index < m_characterPopupSelectedItems.Count; index++)
+            {
+                SetActive(m_characterPopupSelectedItems[index], active);
+            }
+        }
+
+        private void AddPendingLocalItem(string customItemId)
+        {
+            string normalizedId = customItemId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalizedId))
+            {
+                return;
+            }
+
+            if (!m_pendingLocalItemCounts.ContainsKey(normalizedId))
+            {
+                m_pendingLocalItemOrder.Add(normalizedId);
+                m_pendingLocalItemCounts[normalizedId] = 0;
+            }
+
+            m_pendingLocalItemCounts[normalizedId]++;
+        }
+
+        private void RemovePendingLocalItem(string customItemId)
+        {
+            string normalizedId = customItemId?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalizedId)
+                || !m_pendingLocalItemCounts.TryGetValue(normalizedId, out int count))
+            {
+                return;
+            }
+
+            count--;
+            if (count > 0)
+            {
+                m_pendingLocalItemCounts[normalizedId] = count;
+                return;
+            }
+
+            m_pendingLocalItemCounts.Remove(normalizedId);
+            for (int index = m_pendingLocalItemOrder.Count - 1; index >= 0; index--)
+            {
+                if (string.Equals(m_pendingLocalItemOrder[index], normalizedId, StringComparison.OrdinalIgnoreCase))
+                {
+                    m_pendingLocalItemOrder.RemoveAt(index);
+                    break;
+                }
+            }
+
+            if (string.Equals(m_pendingLocalItemId, normalizedId, StringComparison.OrdinalIgnoreCase))
+            {
+                m_pendingLocalItemId = m_pendingLocalItemOrder.Count > 0
+                    ? m_pendingLocalItemOrder[m_pendingLocalItemOrder.Count - 1]
+                    : string.Empty;
+            }
+        }
+
+        private int GetPendingLocalItemCount(string customItemId)
+        {
+            string normalizedId = customItemId?.Trim() ?? string.Empty;
+            return !string.IsNullOrWhiteSpace(normalizedId) && m_pendingLocalItemCounts.TryGetValue(normalizedId, out int count)
+                ? Math.Max(0, count)
+                : 0;
+        }
+
+        private void ClearPendingLocalItemSelection()
+        {
+            m_pendingLocalItemOrder.Clear();
+            m_pendingLocalItemCounts.Clear();
+            SetCharacterPopupSelectedItemsActive(false);
+        }
+
+        private void OpenCharacterPopup(string title, string description, string confirmText, bool showList, bool showForm)
+        {
+            SetActive(m_panelCharacterPopup, true);
+            if (m_panelCharacterPopup != null)
+            {
+                m_panelCharacterPopup.transform.SetAsLastSibling();
+            }
+
+            SetCharacterPopupTitle(title);
+            SetCharacterPopupDescription(description);
+            SetText(m_tmpCharacterPopupConfirm, confirmText);
+            SetActive(m_goCharacterPopupList, showList);
+            SetActive(m_panelCharacterPopupForm, showForm);
+            SetActive(m_btnCharacterPopupConfirm != null ? m_btnCharacterPopupConfirm.gameObject : null, !string.IsNullOrWhiteSpace(confirmText));
+            SetActive(m_goCharacterPopupOptionTemplate, false);
+            SetActive(m_goCharacterPopupSelectedTemplate, false);
+            ResetPopupScrollPositions();
+        }
+
+        private void CloseCharacterPopup()
+        {
+            m_popupMode = CharacterCardPopupMode.None;
+            m_showingLocalItemOptions = false;
+            m_pendingLocalItemId = string.Empty;
+            ClearPendingLocalItemSelection();
+            SetCharacterPopupOptionItemsActive(false);
+            SetCharacterPopupSelectedItemsActive(false);
+            SetActive(m_panelCharacterPopup, false);
+        }
+
+        private void SetCharacterPopupTitle(string value)
+        {
+            SetText(m_tmpCharacterPopupTitle, FormatTextOrDefault(value, "信息"));
+        }
+
+        private void SetCharacterPopupDescription(string value)
+        {
+            SetText(m_tmpCharacterPopupDescription, value ?? string.Empty);
+        }
+
+        private void OnClickCharacterPopupConfirm()
+        {
+            switch (m_popupMode)
+            {
+                case CharacterCardPopupMode.OptionList:
+                    ConfirmPendingLocalItemSelection();
+                    break;
+                case CharacterCardPopupMode.Form:
+                    ConfirmCustomFeaturePopup();
+                    break;
+                default:
+                    CloseCharacterPopup();
+                    break;
+            }
+        }
+
+        private void OpenCustomFeaturePopup()
+        {
+            if (!HasSelectedCharacter())
+            {
+                ShowFeatureDetail("添加自定义特性", "请先选择一个角色。");
+                return;
+            }
+
+            m_popupMode = CharacterCardPopupMode.Form;
+            OpenCharacterPopup("添加特性", "输入特性名称与描述，确认后会保存到当前角色。", "添加", false, true);
+            if (m_inputCharacterPopupName != null)
+            {
+                m_inputCharacterPopupName.SetTextWithoutNotify(string.Empty);
+                m_inputCharacterPopupName.Select();
+                m_inputCharacterPopupName.ActivateInputField();
+            }
+
+            if (m_inputCharacterPopupDescription != null)
+            {
+                m_inputCharacterPopupDescription.SetTextWithoutNotify(string.Empty);
+            }
+        }
+
+        private void ConfirmCustomFeaturePopup()
+        {
+            if (!HasSelectedCharacter())
+            {
+                SetCharacterPopupDescription("请先选择一个角色。");
+                return;
+            }
+
+            string featureName = m_inputCharacterPopupName != null ? m_inputCharacterPopupName.text?.Trim() ?? string.Empty : string.Empty;
+            string description = m_inputCharacterPopupDescription != null ? m_inputCharacterPopupDescription.text?.Trim() ?? string.Empty : string.Empty;
+            if (string.IsNullOrWhiteSpace(featureName) && string.IsNullOrWhiteSpace(description))
+            {
+                SetCharacterPopupDescription("自定义特性的名称和描述不能同时为空。");
+                return;
+            }
+
+            CharacterCardDraftSaveData character = m_characterCards[m_selectedCharacterIndex];
+            string selectedCharacterId = character?.CharacterId?.Trim() ?? string.Empty;
+            if (character.CustomFeatures == null)
+            {
+                character.CustomFeatures = new List<CharacterCustomFeatureSaveData>();
+            }
+            character.CustomFeatures.Add(new CharacterCustomFeatureSaveData
+            {
+                Name = featureName,
+                Description = description
+            });
+            character.RuntimeSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(character);
+            CharacterOperationResult saveResult = CharacterApplicationService.Instance.Save(character);
+            if (!saveResult.Success)
+            {
+                SetCharacterPopupDescription(string.IsNullOrWhiteSpace(saveResult.Message) ? "角色保存失败。" : saveResult.Message);
+                return;
+            }
+
+            CloseCharacterPopup();
+            LoadCharacterCards();
+            RestoreSelectedCharacter(selectedCharacterId);
+            RefreshCharacterListView();
+            ShowFeatureDetail(FormatTextOrDefault(featureName, "自定义特性"), description);
+        }
+
+        private static List<LocalCustomItemSaveData> LoadLocalItemOptions()
+        {
+            LocalCustomItemLibrarySaveData library = LocalCustomItemRepository.Load();
+            List<LocalCustomItemSaveData> result = new List<LocalCustomItemSaveData>();
+            if (library?.Items == null)
+            {
+                return result;
+            }
+
+            for (int index = 0; index < library.Items.Count; index++)
+            {
+                LocalCustomItemSaveData item = LocalCustomItemSaveData.Clone(library.Items[index]);
+                if (!string.IsNullOrWhiteSpace(item.CustomItemId) && CharacterEquipmentItemSaveData.HasItem(item.Item))
+                {
+                    result.Add(item);
+                }
+            }
+
+            return result;
+        }
+
+        private LocalCustomItemSaveData FindLocalItemOption(string customItemId)
+        {
+            if (string.IsNullOrWhiteSpace(customItemId))
+            {
+                return null;
+            }
+
+            string normalizedId = customItemId.Trim();
+            for (int index = 0; index < m_localItemOptions.Count; index++)
+            {
+                LocalCustomItemSaveData item = m_localItemOptions[index];
+                if (item != null && string.Equals(item.CustomItemId, normalizedId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return item;
+                }
+            }
+
+            return LocalCustomItemRepository.TryGetItem(normalizedId, out LocalCustomItemSaveData repositoryItem)
+                ? repositoryItem
+                : null;
+        }
+
+        private void ShowLocalItemDetail(LocalCustomItemSaveData item)
+        {
+            SetCharacterPopupDescription(BuildLocalItemDetailDescription(item));
+        }
+
+        private static string BuildLocalItemOptionLabel(LocalCustomItemSaveData item)
+        {
+            CharacterEquipmentItemSaveData data = item?.Item;
+            if (!string.IsNullOrWhiteSpace(data?.ItemName))
+            {
+                return data.ItemName.Trim();
+            }
+
+            if (!string.IsNullOrWhiteSpace(data?.ItemId))
+            {
+                return data.ItemId.Trim();
+            }
+
+            return !string.IsNullOrWhiteSpace(item?.CustomItemId) ? item.CustomItemId.Trim() : "未命名物品";
+        }
+
+        private static string BuildLocalItemDetailDescription(LocalCustomItemSaveData item)
+        {
+            CharacterEquipmentItemSaveData data = item?.Item;
+            if (data == null)
+            {
+                return string.Empty;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            AppendDetailLine(builder, "类型", data.ItemType);
+            AppendDetailLine(builder, "稀有度", data.Rarity);
+            AppendDetailLine(builder, "价格", data.PriceGp > 0 ? $"{data.PriceGp} gp" : string.Empty);
+            AppendDetailLine(builder, "装备栏位", data.EquipmentSlot);
+            AppendDetailLine(builder, "需要同调", data.RequiresAttunement ? "是" : string.Empty);
+            AppendDetailLine(builder, "护甲类型", data.ArmorCategory);
+            if (data.ArmorBaseAc > 0)
+            {
+                AppendDetailLine(builder, "基础AC", data.ArmorBaseAc.ToString());
+            }
+
+            if (data.AcBonus != 0)
+            {
+                AppendDetailLine(builder, "AC加值", FormatSignedNumber(data.AcBonus));
+            }
+
+            AppendDetailLine(builder, "武器类型", data.WeaponCategory);
+            AppendDetailLine(builder, "伤害", BuildLocalItemDamageText(data));
+            AppendDetailLine(builder, "工具类型", data.ToolCategory);
+            if (data.MaxCharges > 0)
+            {
+                AppendDetailLine(builder, "最大充能", data.MaxCharges.ToString());
+            }
+
+            AppendDetailLine(builder, "生效条件", data.EffectApplyCondition);
+            AppendDetailLine(builder, "描述", data.Description);
+            AppendDetailLine(builder, "效果", BuildLocalItemEffectsText(data));
+            AppendDetailLine(builder, "备注", data.Notes);
+            return builder.ToString().Trim();
+        }
+
+        private static string BuildLocalItemDamageText(CharacterEquipmentItemSaveData data)
+        {
+            if (data == null)
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(data.DamageDice) && string.IsNullOrWhiteSpace(data.DamageType))
+            {
+                return string.Empty;
+            }
+
+            return string.IsNullOrWhiteSpace(data.DamageType)
+                ? data.DamageDice.Trim()
+                : $"{data.DamageDice?.Trim()} {data.DamageType.Trim()}".Trim();
+        }
+
+        private static string BuildLocalItemEffectsText(CharacterEquipmentItemSaveData data)
+        {
+            if (data == null)
+            {
+                return string.Empty;
+            }
+
+            List<string> entries = new List<string>();
+            if (data.EffectIds != null)
+            {
+                for (int index = 0; index < data.EffectIds.Count; index++)
+                {
+                    string effectId = data.EffectIds[index];
+                    if (!string.IsNullOrWhiteSpace(effectId))
+                    {
+                        entries.Add(effectId.Trim());
+                    }
+                }
+            }
+
+            if (data.CustomEffects != null)
+            {
+                for (int index = 0; index < data.CustomEffects.Count; index++)
+                {
+                    CharacterItemEffectSaveData effect = data.CustomEffects[index];
+                    if (CharacterItemEffectSaveData.HasContent(effect))
+                    {
+                        entries.Add(FirstNonEmpty(effect.Name, effect.EffectType));
+                    }
+                }
+            }
+
+            return entries.Count > 0 ? string.Join("、", entries) : string.Empty;
         }
 
         private void OnInventoryDiceRollUIResult(DiceRollUIResult result)
@@ -1090,11 +2426,13 @@ namespace GameLogic
             }
 
             RefreshSelectedCharacterFromRepository();
-            SetText(m_tmpFeatureDetailTitle, "快捷掷骰");
-            SetText(m_tmpFeatureDetailDescription, BuildInventoryQuickRollResultText(
+            string resultText = BuildInventoryQuickRollResultText(
                 m_visibleInventoryQuickRollContext,
                 m_visibleInventoryQuickRollResult,
-                purpose));
+                purpose);
+
+            SetText(m_tmpFeatureDetailTitle, "使用物品");
+            SetText(m_tmpFeatureDetailDescription, resultText);
         }
 
         private void RefreshSelectedCharacterFromRepository()
@@ -1176,11 +2514,29 @@ namespace GameLogic
                     ItemInstanceId = item.ItemInstanceId ?? string.Empty,
                     ItemName = FirstNonEmpty(item.ItemName, item.ItemId),
                     EffectName = FirstNonEmpty(effect.Name, effect.Description),
+                    EffectDescription = BuildInventoryEffectDescription(effect),
                     DiceExpression = diceExpression
                 };
             }
 
             return null;
+        }
+
+        private static CharacterInventoryQuickRollContext BuildManualInventoryRollContext(CharacterEquipmentItemSaveData item)
+        {
+            return new CharacterInventoryQuickRollContext
+            {
+                ItemInstanceId = item?.ItemInstanceId ?? string.Empty,
+                ItemName = FirstNonEmpty(item?.ItemName, item?.ItemId),
+                EffectName = "手动掷骰",
+                EffectDescription = item?.Description ?? string.Empty,
+                DiceExpression = "1d20"
+            };
+        }
+
+        private static string BuildInventoryEffectDescription(CharacterItemEffectSaveData effect)
+        {
+            return effect?.Description?.Trim() ?? string.Empty;
         }
 
         private string BuildInventoryQuickRollPendingText(CharacterInventoryQuickRollContext context, string itemDescription)
@@ -1193,6 +2549,7 @@ namespace GameLogic
             StringBuilder builder = new StringBuilder();
             AppendDetailLine(builder, "来源物品", context.ItemName);
             AppendDetailLine(builder, "词条", context.EffectName);
+            AppendDetailLine(builder, "词条说明", context.EffectDescription);
             AppendDetailLine(builder, "骰子表达式", context.DiceExpression);
             AppendDetailLine(builder, "状态", "已打开掷骰弹窗，请在弹窗中完成掷骰。");
             if (!string.IsNullOrWhiteSpace(itemDescription))
@@ -1217,6 +2574,7 @@ namespace GameLogic
             StringBuilder builder = new StringBuilder();
             AppendDetailLine(builder, "来源物品", context.ItemName);
             AppendDetailLine(builder, "词条", context.EffectName);
+            AppendDetailLine(builder, "词条说明", context.EffectDescription);
             AppendDetailLine(builder, "骰子表达式", context.DiceExpression);
             if (result == null || !result.Success)
             {
@@ -1300,6 +2658,48 @@ namespace GameLogic
             builder.AppendLine(CharacterDiceRollHistoryFormatter.BuildRecentHistoryText(character?.DiceRollHistory, 5, true));
         }
 
+        private static string BuildCharacterDiceHistorySummary(CharacterCardDraftSaveData character)
+        {
+            if (character?.DiceRollHistory == null || character.DiceRollHistory.Count == 0)
+            {
+                return "暂无掷骰记录。";
+            }
+
+            StringBuilder builder = new StringBuilder();
+            for (int index = 0; index < character.DiceRollHistory.Count; index++)
+            {
+                CharacterDiceRollHistorySaveData entry = character.DiceRollHistory[index];
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                string itemName = FirstNonEmpty(entry.SourceItemName, entry.SourceEffectName);
+                if (string.IsNullOrWhiteSpace(itemName))
+                {
+                    itemName = "手动掷骰";
+                }
+
+                string diceExpression = string.IsNullOrWhiteSpace(entry.DiceExpression) ? "-" : entry.DiceExpression.Trim();
+                string finalValue = entry.Success
+                    ? entry.Total.ToString()
+                    : FormatTextOrDefault(entry.Error, "失败");
+
+                if (builder.Length > 0)
+                {
+                    builder.AppendLine();
+                }
+
+                builder.Append(itemName);
+                builder.Append("-");
+                builder.Append(diceExpression);
+                builder.Append("-");
+                builder.Append(finalValue);
+            }
+
+            return builder.Length > 0 ? builder.ToString() : "暂无掷骰记录。";
+        }
+
         private void RefreshRaceFeatureSection(CharacterCardDraftSaveData character, CharacterRuntimeSnapshotData snapshot, string raceId)
         {
             SetRaceFeatureHeader(snapshot, raceId);
@@ -1380,6 +2780,44 @@ namespace GameLogic
             }
         }
 
+        private void RefreshSpellItems(CharacterCardDraftSaveData character)
+        {
+            List<CharacterCreationSpellCardViewState> spells = character != null
+                ? CharacterCreationSpellDisplayService.Instance.BuildLearnedSpellCards(character)
+                : new List<CharacterCreationSpellCardViewState>();
+            EnsureSpellItemCount(spells.Count);
+
+            for (int index = 0; index < m_spellItems.Count; index++)
+            {
+                GameObject item = m_spellItems[index];
+                bool active = index < spells.Count;
+                SetActive(item, active);
+                if (active)
+                {
+                    SetSpellItem(item, spells[index]);
+                    BindSpellDetailButton(item, spells[index]);
+                }
+            }
+
+            SetActive(m_goSpellTemplate, false);
+        }
+
+        private void EnsureSpellItemCount(int count)
+        {
+            if (m_rectSpellContent == null || m_goSpellTemplate == null)
+            {
+                return;
+            }
+
+            while (m_spellItems.Count < count)
+            {
+                GameObject itemObject = UnityEngine.Object.Instantiate(m_goSpellTemplate, m_rectSpellContent);
+                itemObject.name = $"m_itemSpell_{m_spellItems.Count + 1}";
+                SetActive(itemObject, true);
+                m_spellItems.Add(itemObject);
+            }
+        }
+
         private void EnsureOtherFeatureItemCount(int count)
         {
             if (m_rectOtherFeatureContent == null || m_goOtherFeatureTemplate == null)
@@ -1405,6 +2843,53 @@ namespace GameLogic
             SetText(title, entry.Title);
             SetText(description, entry.Description);
             BindFeatureDetailButton(item, entry);
+        }
+
+        private void SetSpellItem(GameObject item, CharacterCreationSpellCardViewState spell)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            TMP_Text title = item.transform.Find("m_tmpSpellTitle")?.GetComponent<TMP_Text>()
+                ?? item.transform.Find("m_tmpSpellName")?.GetComponent<TMP_Text>();
+            TMP_Text level = item.transform.Find("m_tmpSpellLevel")?.GetComponent<TMP_Text>();
+            TMP_Text school = item.transform.Find("m_tmpSpellSchool")?.GetComponent<TMP_Text>();
+            SetText(title, spell?.Name ?? string.Empty);
+            SetText(level, spell?.LevelText ?? string.Empty);
+            SetText(school, spell?.SchoolText ?? string.Empty);
+        }
+
+        private void BindSpellDetailButton(GameObject item, CharacterCreationSpellCardViewState spell)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            Button button = item.GetComponent<Button>();
+            if (button == null)
+            {
+                return;
+            }
+
+            string spellId = spell?.SpellId ?? string.Empty;
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => OnClickSpellCard(spellId));
+        }
+
+        private void OnClickSpellCard(string spellId)
+        {
+            if (string.IsNullOrWhiteSpace(spellId))
+            {
+                ShowFeatureDetail("法术详情", string.Empty);
+                return;
+            }
+
+            ShowFeatureDetail(
+                CharacterCreationSpellDisplayService.Instance.GetSpellDetailTitle(spellId),
+                CharacterCreationSpellDisplayService.Instance.GetSpellDetailDescription(spellId));
         }
 
         private void SetOtherFeatureItem(GameObject item, ClassFeatureDisplayEntry entry)
@@ -1438,6 +2923,7 @@ namespace GameLogic
 
         private void ShowFeatureDetail(string title, string description)
         {
+            HideInventoryActionButtons();
             SetText(m_tmpFeatureDetailTitle, FormatTextOrDefault(title, "特性详情"));
             SetText(m_tmpFeatureDetailDescription, description ?? string.Empty);
         }
@@ -1500,6 +2986,17 @@ namespace GameLogic
             }
 
             GameObject targetObject = m_rectRaceFeatureContent.gameObject;
+            targetObject.SetActive(!targetObject.activeSelf);
+        }
+
+        private void OnClickToggleSpells()
+        {
+            if (m_rectSpellContent == null)
+            {
+                return;
+            }
+
+            GameObject targetObject = m_rectSpellContent.gameObject;
             targetObject.SetActive(!targetObject.activeSelf);
         }
 
@@ -1682,6 +3179,84 @@ namespace GameLogic
         {
             GameModule.UI.CloseUI<CharacterCardManagementUI>();
             GameModule.UI.ShowUIAsync<HomeUI>();
+        }
+
+        private static T FirstComponent<T>(Transform root, params string[] paths) where T : Component
+        {
+            Transform target = FirstTransform(root, paths);
+            return target != null ? target.GetComponent<T>() : null;
+        }
+
+        private static GameObject FirstGameObject(Transform root, params string[] paths)
+        {
+            Transform target = FirstTransform(root, paths);
+            return target != null ? target.gameObject : null;
+        }
+
+        private static Transform FirstTransform(Transform root, params string[] paths)
+        {
+            if (root == null || paths == null)
+            {
+                return null;
+            }
+
+            for (int index = 0; index < paths.Length; index++)
+            {
+                string path = paths[index];
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    continue;
+                }
+
+                Transform target = root.Find(path);
+                if (target != null)
+                {
+                    return target;
+                }
+            }
+
+            return null;
+        }
+
+        private static RectTransform ResolveScrollContentRoot(RectTransform scrollArea, params string[] contentPaths)
+        {
+            if (scrollArea == null)
+            {
+                return null;
+            }
+
+            ScrollRect scrollRect = scrollArea.GetComponent<ScrollRect>();
+            if (scrollRect != null && scrollRect.content != null)
+            {
+                return scrollRect.content;
+            }
+
+            RectTransform namedContent = FirstComponent<RectTransform>(scrollArea.transform, contentPaths);
+            return namedContent != null ? namedContent : scrollArea;
+        }
+
+        private void ResetPopupScrollPositions()
+        {
+            ResetScrollPosition(m_rectCharacterPopupContent, true);
+            ResetScrollPosition(m_rectCharacterPopupSelectedContent, false);
+        }
+
+        private static void ResetScrollPosition(RectTransform scrollArea, bool vertical)
+        {
+            ScrollRect scrollRect = scrollArea != null ? scrollArea.GetComponent<ScrollRect>() : null;
+            if (scrollRect == null)
+            {
+                return;
+            }
+
+            if (vertical)
+            {
+                scrollRect.verticalNormalizedPosition = 1f;
+            }
+            else
+            {
+                scrollRect.horizontalNormalizedPosition = 0f;
+            }
         }
 
         private static void SetActive(GameObject target, bool active)

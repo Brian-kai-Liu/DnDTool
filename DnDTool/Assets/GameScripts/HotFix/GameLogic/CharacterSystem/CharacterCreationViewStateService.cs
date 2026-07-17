@@ -45,18 +45,11 @@ namespace GameLogic
             state.AbilityScoreOptions.AddRange(CharacterCreationSessionService.Instance.BuildGeneratedAbilityScoreOptions());
             CharacterCardDraftSaveData previewCharacter = BuildPreviewCharacter(character, normalizedLevel);
             CharacterRuntimeSnapshotData previewSnapshot = CharacterDetailCalculationService.Instance.BuildDisplaySnapshot(previewCharacter);
-            FillAbilityStates(state, previewSnapshot);
-            FillSkillStates(state, raceData, backgroundData, normalizedLevel, previewSnapshot);
-            FillPassivePerceptionState(state);
-            FillCombatOverviewState(state, previewCharacter, previewSnapshot, normalizedLevel);
-            state.Experience = CharacterDetailCalculationService.Instance.BuildExperienceDisplay(character.Experience, normalizedLevel);
-            FillCurrencyState(state, character);
+            CharacterSheetDisplayViewState sheetState = CharacterSheetViewStateService.Instance.Build(previewCharacter, previewSnapshot);
+            ApplySheetDisplayState(state, sheetState, previewSnapshot);
             FillEquipmentToolState(state, classData, raceData, backgroundData, previewSnapshot);
             state.LearnedSpells.AddRange(CharacterCreationSpellDisplayService.Instance.BuildLearnedSpellCards(previewCharacter, true));
-            FillStatusEffectState(state, character);
-            state.InventoryItems.AddRange(CharacterDetailDisplayService.Instance.BuildInventoryEntries(character.Equipment));
             FillOtherFeatureState(state, character);
-            ApplyManualOverrideViewState(state, character.ManualOverrides);
             return state;
         }
 
@@ -189,6 +182,72 @@ namespace GameLogic
             }
 
             return CharacterCreationSessionService.Instance.GetCurrentAbilityScore(abilityId, BaseAbilityScore);
+        }
+
+        private static void ApplySheetDisplayState(
+            CharacterCreationViewState state,
+            CharacterSheetDisplayViewState sheetState,
+            CharacterRuntimeSnapshotData snapshot)
+        {
+            if (state == null || sheetState == null)
+            {
+                return;
+            }
+
+            state.HitDiceCountText = sheetState.HitDiceCountText;
+            state.HitDiceDieText = sheetState.HitDiceDieText;
+            state.CurrentHpText = sheetState.CurrentHpText;
+            state.MaxHpText = sheetState.MaxHpText;
+            state.TemporaryHpText = sheetState.TemporaryHpText;
+            state.ShouldShowHitPointGenerationButton = sheetState.HpDisplay == null || sheetState.HpDisplay.MaxHp <= 0;
+            state.CopperText = sheetState.CopperText;
+            state.SilverText = sheetState.SilverText;
+            state.ElectrumText = sheetState.ElectrumText;
+            state.GoldText = sheetState.GoldText;
+            state.PlatinumText = sheetState.PlatinumText;
+            state.SpeedText = sheetState.SpeedText;
+            state.ArmorClassText = sheetState.ArmorClassText;
+            state.InitiativeText = sheetState.InitiativeText;
+            state.ProficiencyBonusText = sheetState.ProficiencyBonusText;
+            state.PassivePerceptionText = sheetState.PassivePerceptionText;
+            state.SpellSaveDcText = sheetState.SpellSaveDcText;
+            state.SpellAttackBonusText = sheetState.SpellAttackBonusText;
+            state.DeathSaveSuccessesText = sheetState.DeathSaveSuccessesText;
+            state.DeathSaveFailuresText = sheetState.DeathSaveFailuresText;
+            state.Experience = sheetState.Experience;
+            FillAbilityStates(state, snapshot);
+            ApplySheetSkillStates(state, sheetState.Skills, snapshot?.SkillProficiencyIds);
+            state.StatusEffects.AddRange(sheetState.StatusEffects);
+            state.InventoryItems.AddRange(sheetState.InventoryItems);
+        }
+
+        private static void ApplySheetSkillStates(
+            CharacterCreationViewState state,
+            IReadOnlyList<CharacterSheetSkillViewState> skills,
+            IReadOnlyList<string> currentProficiencyIds)
+        {
+            if (state == null || skills == null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < skills.Count; index++)
+            {
+                CharacterSheetSkillViewState skill = skills[index];
+                if (skill == null)
+                {
+                    continue;
+                }
+
+                state.Skills.Add(new CharacterCreationSkillViewState
+                {
+                    SkillId = skill.SkillId,
+                    Bonus = skill.Bonus,
+                    BonusText = skill.BonusText,
+                    HasProficiency = skill.HasProficiency,
+                    IsChoiceCandidate = CharacterCreationSessionService.Instance.IsSkillChoiceCandidate(skill.SkillId, currentProficiencyIds)
+                });
+            }
         }
 
         private static void FillSkillStates(

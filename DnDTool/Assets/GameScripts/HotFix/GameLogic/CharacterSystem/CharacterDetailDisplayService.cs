@@ -1175,10 +1175,72 @@ namespace GameLogic
                 return;
             }
 
+            if (!equipped)
+            {
+                List<CharacterEquipmentItemSaveData> displayItems = BuildStackedInventoryDisplayItems(items);
+                for (int index = 0; index < displayItems.Count; index++)
+                {
+                    AppendInventoryItemEntry(entries, displayItems[index], false);
+                }
+
+                return;
+            }
+
             for (int index = 0; index < items.Count; index++)
             {
                 AppendInventoryItemEntry(entries, items[index], equipped);
             }
+        }
+
+        private static List<CharacterEquipmentItemSaveData> BuildStackedInventoryDisplayItems(IReadOnlyList<CharacterEquipmentItemSaveData> items)
+        {
+            List<CharacterEquipmentItemSaveData> displayItems = new List<CharacterEquipmentItemSaveData>();
+            if (items == null)
+            {
+                return displayItems;
+            }
+
+            for (int index = 0; index < items.Count; index++)
+            {
+                CharacterEquipmentItemSaveData item = items[index];
+                if (!CharacterEquipmentItemSaveData.HasItem(item)
+                    || CharacterItemCategoryUtility.IsCurrencyItem(item))
+                {
+                    continue;
+                }
+
+                if (CharacterItemCategoryUtility.IsInventoryStackable(item)
+                    && TryMergeStackedInventoryDisplayItem(displayItems, item))
+                {
+                    continue;
+                }
+
+                displayItems.Add(CharacterEquipmentItemSaveData.Clone(item));
+            }
+
+            return displayItems;
+        }
+
+        private static bool TryMergeStackedInventoryDisplayItem(List<CharacterEquipmentItemSaveData> displayItems, CharacterEquipmentItemSaveData item)
+        {
+            if (displayItems == null || item == null)
+            {
+                return false;
+            }
+
+            for (int index = 0; index < displayItems.Count; index++)
+            {
+                CharacterEquipmentItemSaveData candidate = displayItems[index];
+                if (!CharacterItemCategoryUtility.CanStackTogether(candidate, item))
+                {
+                    continue;
+                }
+
+                candidate.Quantity = Math.Max(1, candidate.Quantity) + Math.Max(1, item.Quantity);
+                return true;
+            }
+
+            return false;
         }
 
         private static void AppendInventoryItemEntry(List<CharacterInventoryDisplayEntry> entries, CharacterEquipmentItemSaveData item, bool equipped)
@@ -1196,7 +1258,7 @@ namespace GameLogic
             {
                 string title = BuildInventoryItemName(item);
                 string description = BuildInventoryItemDetailDescription(item, isEquipped);
-                entries.Add(new CharacterInventoryDisplayEntry(item.ItemInstanceId, label, title, description, isEquipped));
+                entries.Add(new CharacterInventoryDisplayEntry(item.ItemInstanceId, label, title, description, item.Quantity, isEquipped));
             }
         }
 
@@ -1217,18 +1279,22 @@ namespace GameLogic
 
             StringBuilder builder = new StringBuilder(name);
             if (item.Quantity > 1
-                || item.Consumable
-                || item.ConsumeOnUse
-                || CharacterItemCategoryUtility.IsAmmunitionItem(item))
+                || CharacterItemCategoryUtility.IsInventoryStackable(item))
             {
                 builder.Append(" x");
                 builder.Append(Math.Max(1, item.Quantity));
             }
 
-            if (item.Charges > 0)
+            if (item.Charges > 0 || item.MaxCharges > 0)
             {
                 builder.Append(" [充能:");
-                builder.Append(item.Charges);
+                builder.Append(Math.Max(0, item.Charges));
+                if (item.MaxCharges > 0)
+                {
+                    builder.Append('/');
+                    builder.Append(item.MaxCharges);
+                }
+
                 builder.Append("]");
             }
 
@@ -1243,13 +1309,14 @@ namespace GameLogic
             }
 
             DndItemDefineData ruleItem = FindDndItemDefinition(item);
+            DndItemTypeDefineData itemType = FindDndItemTypeDefinition(item);
             StringBuilder builder = new StringBuilder();
             AppendDetailLine(builder, "类型", FirstNonEmpty(item.ItemType, ruleItem?.ItemType));
             AppendDetailLine(builder, "数量", Math.Max(1, item.Quantity).ToString());
             AppendDetailLine(builder, "状态", isEquipped || item.IsEquipped ? "已装备" : "背包中");
             AppendDetailLine(builder, "来源", BuildInventoryItemSourceText(item, ruleItem));
             AppendDetailLine(builder, "稀有度", ruleItem?.Rarity);
-            AppendDetailLine(builder, "装备栏位", ruleItem?.EquipmentSlot);
+            AppendDetailLine(builder, "装备栏位", FirstNonEmpty(item.EquipmentSlot, ruleItem?.EquipmentSlot));
             AppendDetailLine(builder, "护甲类型", FirstNonEmpty(item.ArmorCategory, ruleItem?.ArmorCategory));
 
             int armorBaseAc = item.ArmorBaseAc > 0 ? item.ArmorBaseAc : ruleItem?.ArmorBaseAc ?? 0;
@@ -1267,7 +1334,8 @@ namespace GameLogic
             AppendDetailLine(builder, "伤害", BuildRuleItemDamageText(ruleItem));
             AppendDetailLine(builder, "武器属性", FormatList(ruleItem?.WeaponProperties));
             AppendDetailLine(builder, "重量", ruleItem != null && ruleItem.Weight > 0f ? $"{ruleItem.Weight:g}" : string.Empty);
-            AppendDetailLine(builder, "价格", ruleItem != null && ruleItem.PriceGp > 0 ? $"{ruleItem.PriceGp} gp" : string.Empty);
+            int priceGp = item.PriceGp > 0 ? item.PriceGp : ruleItem?.PriceGp ?? 0;
+            AppendDetailLine(builder, "价格", priceGp > 0 ? $"{priceGp} gp" : string.Empty);
 
             AppendDetailLine(builder, "武器类型", FirstNonEmpty(item.WeaponCategory, ruleItem?.WeaponCategory));
             AppendDetailLine(builder, "武器距离类型", FirstNonEmpty(item.WeaponRangeType, ruleItem?.WeaponRangeType));
@@ -1292,18 +1360,19 @@ namespace GameLogic
                 AppendDetailLine(builder, "隐匿劣势", "是");
             }
 
-            if (item.Consumable || ruleItem != null && ruleItem.Consumable)
+            if (itemType != null && itemType.ConsumeQuantityOnUseByDefault)
             {
                 AppendDetailLine(builder, "消耗品", "是");
             }
 
-            int charges = item.Charges > 0 ? item.Charges : ruleItem?.Charges ?? 0;
-            if (charges > 0)
+            int maxCharges = item.MaxCharges > 0 ? item.MaxCharges : ruleItem?.Charges ?? 0;
+            int charges = maxCharges > 0 ? Math.Max(0, item.Charges) : 0;
+            if (maxCharges > 0)
             {
-                AppendDetailLine(builder, "充能次数", charges.ToString());
+                AppendDetailLine(builder, "充能次数", $"{charges}/{maxCharges}");
             }
 
-            if (item.ConsumeOnUse || ruleItem != null && ruleItem.ConsumeOnUse)
+            if (itemType != null && itemType.ConsumeQuantityOnUseByDefault)
             {
                 AppendDetailLine(builder, "使用后消耗", "是");
             }
@@ -1349,6 +1418,15 @@ namespace GameLogic
             }
 
             return null;
+        }
+
+        private static DndItemTypeDefineData FindDndItemTypeDefinition(CharacterEquipmentItemSaveData item)
+        {
+            string itemTypeId = item?.ItemType?.Trim() ?? string.Empty;
+            return !string.IsNullOrWhiteSpace(itemTypeId)
+                && DndRuleContentService.Instance.TryGetItemType(itemTypeId, out DndItemTypeDefineData itemType)
+                    ? itemType
+                    : null;
         }
 
         private static string BuildInventoryItemSourceText(CharacterEquipmentItemSaveData item, DndItemDefineData ruleItem)

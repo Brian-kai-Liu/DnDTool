@@ -516,6 +516,27 @@ public partial class Tables
             m_TbSpellSlotProgression.ResolveRef(this);
         }
     }
+    /// <summary>
+    /// DnD 物品类型定义表。用于物品编辑默认行为、背包堆叠与使用逻辑。
+    /// </summary>
+    private dnd.TbDndItemTypeDefine m_TbDndItemTypeDefine;
+    public dnd.TbDndItemTypeDefine TbDndItemTypeDefine
+    {
+        get
+        {
+            if (m_TbDndItemTypeDefine == null)
+            {
+                m_TbDndItemTypeDefine = new dnd.TbDndItemTypeDefine(defaultLoader("dnd_tbdnditemtypedefine"));
+                m_TbDndItemTypeDefine.ResolveRef(this);
+            }
+            return m_TbDndItemTypeDefine;
+        }
+        set
+        {
+            m_TbDndItemTypeDefine = value;
+            m_TbDndItemTypeDefine.ResolveRef(this);
+        }
+    }
 
     #endregion
 

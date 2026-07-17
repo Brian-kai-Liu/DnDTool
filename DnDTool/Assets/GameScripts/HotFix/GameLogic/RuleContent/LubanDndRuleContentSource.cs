@@ -47,6 +47,7 @@ namespace GameLogic
                 LoadRows(tables, "TbClassSpellList", library.ClassSpellLists, CreateClassSpellList);
                 LoadRows(tables, "TbSpellSlotProgression", library.SpellSlotProgressions, CreateSpellSlotProgression);
                 LoadRows(tables, "TbLevelExperience", library.LevelExperiences, CreateLevelExperience);
+                LoadRows(tables, "TbDndItemTypeDefine", library.ItemTypes, CreateDndItemTypeDefine);
                 LoadRows(tables, "TbDndItemDefine", library.Items, CreateDndItemDefine);
                 LoadRows(tables, "TbDndToolDefine", library.Tools, CreateDndToolDefine);
                 LoadRows(tables, "TbDndLanguageDefine", library.Languages, CreateDndLanguageDefine);
@@ -888,6 +889,26 @@ namespace GameLogic
             data.WeaponProperties.AddRange(GetStringList(row, "WeaponProperties", "weapon_properties", "weaponProperties"));
             data.EffectIds.AddRange(GetStringList(row, "EffectIds", "effect_ids", "effectIds"));
             return data;
+        }
+
+        private static DndItemTypeDefineData CreateDndItemTypeDefine(object row)
+        {
+            return new DndItemTypeDefineData
+            {
+                ItemTypeId = GetString(row, "ItemTypeId", "item_type_id", "itemTypeId"),
+                ParentTypeId = GetString(row, "ParentTypeId", "parent_type_id", "parentTypeId"),
+                Name = GetString(row, "Name", "name"),
+                Selectable = GetBool(row, "Selectable", "selectable"),
+                CanUseByDefault = GetBool(row, "CanUseByDefault", "can_use_by_default", "canUseByDefault"),
+                StackableByDefault = GetBool(row, "StackableByDefault", "stackable_by_default", "stackableByDefault"),
+                ConsumeQuantityOnUseByDefault = GetBool(row, "ConsumeQuantityOnUseByDefault", "consume_quantity_on_use_by_default", "consumeQuantityOnUseByDefault"),
+                CanHaveCharges = GetBool(row, "CanHaveCharges", "can_have_charges", "canHaveCharges"),
+                ConsumeChargeOnUseByDefault = GetBool(row, "ConsumeChargeOnUseByDefault", "consume_charge_on_use_by_default", "consumeChargeOnUseByDefault"),
+                IsEquipmentType = GetBool(row, "IsEquipmentType", "is_equipment_type", "isEquipmentType"),
+                DefaultEquipmentSlot = GetString(row, "DefaultEquipmentSlot", "default_equipment_slot", "defaultEquipmentSlot"),
+                SortOrder = GetInt(row, "SortOrder", "sort_order", "sortOrder"),
+                Description = GetString(row, "Description", "description")
+            };
         }
 
         private static DndEnumListData CreateEnumList(object row)
